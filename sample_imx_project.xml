@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IMX xmlns="http://com.informatica.imx"
+     xmlns:project="http://com.informatica.metadata.common.project/2"
+     xmlns:folder="http://com.informatica.metadata.common.folder/2"
+     xmlns:powercenter="http://com.informatica.powercenter/1">
+
+    <!-- Project Structure -->
+    <project:Project id="PROJECT_1" name="MyBDMProject" shared="false">
+        <description>Sample Informatica BDM Project with IMX wrapper</description>
+        <contents>
+            <folder:Folder id="FOLDER_1" name="Mappings">
+                <contents>
+                    <!-- Mapping 1 -->
+                    <powercenter:TLoaderMapping id="MAPPING_1" name="Sales_Staging">
+                        <description>Extracts and transforms sales data</description>
+                        <components>
+                            <source name="SALES_SOURCE" type="HDFS" format="PARQUET"/>
+                            <transformation name="FILTER_SALES" type="Expression"/>
+                            <transformation name="AGG_SALES" type="Aggregator"/>
+                            <target name="STG_SALES" type="HIVE"/>
+                        </components>
+                    </powercenter:TLoaderMapping>
+                    
+                    <!-- Mapping 2 -->
+                    <powercenter:TLoaderMapping id="MAPPING_2" name="Customer_Dim_Load">
+                        <description>Customer dimension SCD Type 2 load</description>
+                        <components>
+                            <source name="CUSTOMER_SOURCE" type="DB2"/>
+                            <transformation name="LOOKUP_CUSTOMER" type="Lookup"/>
+                            <transformation name="SCD_LOGIC" type="Java"/>
+                            <target name="DIM_CUSTOMER" type="HIVE"/>
+                        </components>
+                    </powercenter:TLoaderMapping>
+                </contents>
+            </folder:Folder>
+            
+            <folder:Folder id="FOLDER_2" name="Workflows">
+                <contents>
+                    <powercenter:TWorkflow id="WORKFLOW_1" name="Daily_ETL_Process">
+                        <description>Main daily ETL workflow</description>
+                        <tasks>
+                            <task name="T1_Sales_Staging" type="Mapping" mapping="Sales_Staging"/>
+                            <task name="T2_Customer_Dim" type="Mapping" mapping="Customer_Dim_Load"/>
+                            <task name="T5_Send_Notification" type="Email">
+                                <properties>
+                                    <property name="Recipient" value="etl-team@company.com"/>
+                                    <property name="Subject" value="ETL Process Completed"/>
+                                </properties>
+                            </task>
+                        </tasks>
+                        <links>
+                            <link from="T1_Sales_Staging" to="T2_Customer_Dim" condition="SUCCESS"/>
+                            <link from="T2_Customer_Dim" to="T5_Send_Notification" condition="SUCCESS"/>
+                        </links>
+                    </powercenter:TWorkflow>
+                </contents>
+            </folder:Folder>
+        </contents>
+    </project:Project>
+    
+    <!-- Repository Connections -->
+    <powercenter:TRepConnection id="CONN_1" 
+                               connectionName="HDFS_CONN"
+                               connectionType="HDFS" 
+                               host="namenode.company.com" 
+                               port="8020"/>
+                               
+    <powercenter:TRepConnection id="CONN_2" 
+                               connectionName="HIVE_CONN"
+                               connectionType="HIVE"
+                               host="hiveserver.company.com" 
+                               port="10000"/>
+                               
+    <!-- Project parameters -->
+    <project:Parameter name="PROJECT_VERSION" value="1.0"/>
+    <project:Parameter name="ERROR_DIR" value="/bdm/errors"/>
+
+</IMX>
