@@ -1,0 +1,17 @@
+# Spark configuration for the PoC
+spark:
+  spark.app.name: "InformaticaToPySparkPoC"
+  spark.master: "local[*]"  # Use all available cores for local testing
+  spark.sql.adaptive.enabled: "true"
+  spark.sql.adaptive.coalescePartitions.enabled: "true"
+  spark.sql.adaptive.skewJoin.enabled: "true"
+  spark.sql.execution.arrow.pyspark.enabled: "true"
+  spark.serializer: "org.apache.spark.serializer.KryoSerializer"
+  spark.sql.warehouse.dir: "./spark-warehouse"
+  spark.sql.shuffle.partitions: "10"  # Reduced for local testing
+
+# Enable Hive support for PoC
+enable_hive_support: false  # Disabled for local testing
+
+# Logging configuration
+log_level: "INFO"

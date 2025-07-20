@@ -1,0 +1,30 @@
+# Connection configurations for the PoC
+HDFS_CONN:
+  type: HDFS
+  host: namenode.company.com
+  port: 8020
+  # For PoC, we'll use local files
+  local_path: sample_data/
+
+HIVE_CONN:
+  type: HIVE
+  host: hiveserver.company.com
+  port: 10000
+  # For PoC, we'll use local parquet files
+  local_path: output/
+
+DB2_CONN:
+  type: DB2
+  host: db2.company.com
+  port: 50000
+  database: SRC_DB
+  # For PoC, we'll use CSV files
+  local_path: sample_data/
+
+ORACLE_CONN:
+  type: ORACLE
+  host: oracle.company.com
+  port: 1521
+  service: ORCL
+  # For PoC, we'll use CSV files
+  local_path: sample_data/

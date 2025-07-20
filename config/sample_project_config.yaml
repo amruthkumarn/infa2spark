@@ -1,0 +1,31 @@
+# Sample project specific configuration
+project:
+  name: "MyBDMProject"
+  version: "1.0"
+  description: "Sample Informatica BDM Project converted to PySpark"
+
+# Parameters from the XML project
+parameters:
+  PROJECT_VERSION: "1.0"
+  ERROR_DIR: "/bdm/errors"
+  LOAD_DATE: "$$SystemDate"
+  ENV: "DEV"
+
+# Notifications configuration
+notifications:
+  smtp_server: "localhost"
+  smtp_port: 587
+  from_email: "etl-system@company.com"
+  enabled: false  # Disabled for PoC
+
+# Mapping specific configurations
+mappings:
+  sales_staging:
+    source_format: "parquet"
+    target_format: "parquet"
+    enable_caching: true
+    
+  customer_dim_load:
+    scd_type: 2
+    natural_key: "customer_id"
+    enable_caching: true

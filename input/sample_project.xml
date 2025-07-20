@@ -1,0 +1,102 @@
+<project name="MyBDMProject" version="1.0" xmlns="http://www.informatica.com/BDM/Project/10.2">
+  <description>Sample Informatica BDM Project</description>
+  
+  <!-- Folders structure -->
+  <folders>
+    <folder name="Mappings">
+      <!-- Mapping 1 -->
+      <mapping name="Sales_Staging">
+        <description>Extracts and transforms sales data</description>
+        <components>
+          <source name="SALES_SOURCE" type="HDFS" format="PARQUET"/>
+          <transformation name="FILTER_SALES" type="Expression"/>
+          <transformation name="AGG_SALES" type="Aggregator"/>
+          <target name="STG_SALES" type="HIVE"/>
+        </components>
+      </mapping>
+      
+      <!-- Mapping 2 -->
+      <mapping name="Customer_Dim_Load">
+        <description>Customer dimension SCD Type 2 load</description>
+        <components>
+          <source name="CUSTOMER_SOURCE" type="DB2"/>
+          <transformation name="LOOKUP_CUSTOMER" type="Lookup"/>
+          <transformation name="SCD_LOGIC" type="Java"/>
+          <target name="DIM_CUSTOMER" type="HIVE"/>
+        </components>
+      </mapping>
+      
+      <!-- Mapping 3 -->
+      <mapping name="Fact_Order_Load">
+        <description>Order fact table load</description>
+        <components>
+          <source name="ORDER_SOURCE" type="Oracle"/>
+          <source name="PRODUCT_SOURCE" type="HDFS" format="AVRO"/>
+          <transformation name="JOIN_ORDER_PRODUCT" type="Joiner"/>
+          <target name="FACT_ORDERS" type="HIVE"/>
+        </components>
+      </mapping>
+      
+      <!-- Mapping 4 -->
+      <mapping name="Aggregate_Reports">
+        <description>Create aggregated reporting tables</description>
+        <components>
+          <source name="FACT_SALES" type="HIVE"/>
+          <transformation name="AGG_REGION" type="Aggregator"/>
+          <target name="RPT_SALES_BY_REGION" type="HIVE"/>
+        </components>
+      </mapping>
+    </folder>
+    
+    <folder name="Workflows">
+      <workflow name="Daily_ETL_Process">
+        <description>Main daily ETL workflow</description>
+        <tasks>
+          <task name="T1_Sales_Staging" type="Mapping" mapping="Sales_Staging"/>
+          <task name="T2_Customer_Dim" type="Mapping" mapping="Customer_Dim_Load"/>
+          <task name="T3_Order_Fact" type="Mapping" mapping="Fact_Order_Load"/>
+          <task name="T4_Aggregates" type="Mapping" mapping="Aggregate_Reports"/>
+          <task name="T5_Send_Notification" type="Email">
+            <properties>
+              <property name="Recipient" value="etl-team@company.com"/>
+              <property name="Subject" value="ETL Process Completed"/>
+            </properties>
+          </task>
+        </tasks>
+        <links>
+          <link from="T1_Sales_Staging" to="T2_Customer_Dim" condition="SUCCESS"/>
+          <link from="T2_Customer_Dim" to="T3_Order_Fact" condition="SUCCESS"/>
+          <link from="T3_Order_Fact" to="T4_Aggregates" condition="SUCCESS"/>
+          <link from="T4_Aggregates" to="T5_Send_Notification" condition="SUCCESS"/>
+        </links>
+      </workflow>
+    </folder>
+    
+    <folder name="Applications">
+      <application name="DWH_Application">
+        <description>Data Warehouse Application</description>
+        <workflows>
+          <workflow-ref name="Daily_ETL_Process"/>
+        </workflows>
+        <parameters>
+          <parameter name="LOAD_DATE" value="$$SystemDate"/>
+          <parameter name="ENV" value="DEV"/>
+        </parameters>
+      </application>
+    </folder>
+  </folders>
+  
+  <!-- Connections -->
+  <connections>
+    <connection name="HDFS_CONN" type="HDFS" host="namenode.company.com" port="8020"/>
+    <connection name="HIVE_CONN" type="HIVE" host="hiveserver.company.com" port="10000"/>
+    <connection name="DB2_CONN" type="DB2" host="db2.company.com" port="50000" database="SRC_DB"/>
+    <connection name="ORACLE_CONN" type="ORACLE" host="oracle.company.com" port="1521" service="ORCL"/>
+  </connections>
+  
+  <!-- Project parameters -->
+  <parameters>
+    <parameter name="PROJECT_VERSION" value="1.0"/>
+    <parameter name="ERROR_DIR" value="/bdm/errors"/>
+  </parameters>
+</project>
