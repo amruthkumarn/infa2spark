@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<imx:IMX xmlns:imx="http://www.informatica.com/imx"
+         xmlns:project="http://www.informatica.com/project"
+         xmlns:folder="http://www.informatica.com/folder"
+         xmlns:mapping="http://www.informatica.com/mapping/v1"
+         xmlns:workflow="http://www.informatica.com/workflow/v1"
+         xmlns:datasource="http://www.informatica.com/datasource"
+         xmlns:datarecord="http://www.informatica.com/datarecord"
+         xmlns:Hive="http://www.informatica.com/adapter/Hive"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         project.version="1.0">
+
+    <!-- 
+      imx:IMX: Root element
+      project:Project: Project container
+      imx:annotations: Project-level annotations
+    -->
+    <project:Project name="Complex_Production_Project">
+        <imx:annotations>
+            <imx:lGenericAnnotations>
+                <Annotation name="ProjectOwner" value="ETL Team"/>
+                <Annotation name="Description" value="A complex production-like project with various components."/>
+            </imx:lGenericAnnotations>
+        </imx:annotations>
+
+        <!--
+          ExecutionEnvironment: Defines environments
+        -->
+        <ExecutionEnvironment name="DEV_ENV">
+            <environments>
+                <Characteristic name="SparkMaster" value="local[*]"/>
+            </environments>
+        </ExecutionEnvironment>
+
+        <!-- 
+          Hive:HiveConnectInfo: A specific connection type for Hive
+        -->
+        <Hive:HiveConnectinfo name="PROD_HIVE_CONNECTION"
+                              description="Connection to the production Hive data warehouse."
+                              host="prod-hive.company.com"
+                              port="10000"
+                              database="default"/>
+
+        <!--
+          folder:Folder: Container for project assets
+          lObject contents: Contains mappings, workflows, etc.
+        -->
+        <folder:Folder name="Production_ETL">
+            <lObject xsi:type="mapping:Mapping" name="m_Process_Customer_Data">
+
+                <!-- 
+                  mapping:Mapping: The core ETL logic container
+                  parameters: Mapping-level parameters
+                  transformations: Container for all transformation definitions
+                  instances: Instantiation of transformations in the mapping canvas
+                  fromOutlineLinks: Defines the data flow links between instances
+                -->
+                <parameters>
+                    <UserDefinedParameter name="$$StateFilter" value="CA"/>
+                </parameters>
+
+                <transformations>
+                    <!-- 
+                      Source Transformation using a Flat File Data Source
+                      SourceDataInterface / sourcelnterfaces: Defines the source port structure
+                    -->
+                    <AbstractTransformation name="SRC_Customer_File" type="Source">
+                        <SourceDataInterface name="customers_out">
+                            <sourcelnterfaces>
+                                <datasource:FlatByteDataSource name="Customer_FF_DS">
+                                    <!-- 
+                                      datarecord:Table: Defines the structure of the data source
+                                      columns: Column definitions
+                                      relationalFields: Relational-like definitions
+                                      fileDefinitions / FlatByteDefinition: Flat file specific properties
+                                    -->
+                                    <datarecord:Table name="CustomerRecord">
+                                        <columns>
+                                            <datarecord:Column name="CustomerID" type="string" length="10"/>
+                                            <datarecord:Column name="FirstName" type="string" length="50"/>
+                                            <datarecord:Column name="LastName" type="string" length="50"/>
+                                            <datarecord:Column name="Email" type="string" length="100"/>
+                                            <datarecord:Column name="RegistrationDate" type="date"/>
+                                        </columns>
+                                        <relationalFields/>
+                                    </datarecord:Table>
+                                    <fileDefinitions>
+                                        <FlatByteDefinition delimiter=","/>
+                                    </fileDefinitions>
+                                </datasource:FlatByteDataSource>
+                            </sourcelnterfaces>
+                        </SourceDataInterface>
+                    </AbstractTransformation>
+
+                    <!--
+                      Expression Transformation
+                      AbstractTransformation: Base type for all transformations
+                      ports / TransformationFieldPort: Defines input/output ports
+                      ExpressionDataInterface / expressioninterface: Interface specific to Expression transformations
+                      expressionFields / ExpressionField: Defines the expression logic
+                      sourceFields / targetFields: Maps fields within the expression interface
+                    -->
+                    <AbstractTransformation name="EXP_Standardize_Names" type="Expression">
+                        <ports>
+                            <TransformationFieldPort name="CustomerID_IN" type="string" direction="INPUT"/>
+                            <TransformationFieldPort name="FirstName_IN" type="string" direction="INPUT"/>
+                            <TransformationFieldPort name="LastName_IN" type="string" direction="INPUT"/>
+                            <TransformationFieldPort name="FullName_OUT" type="string" direction="OUTPUT"/>
+                        </ports>
+                        <ExpressionDataInterface name="default">
+                            <expressioninterface>
+                                <sourceFields/>
+                                <targetFields/>
+                                <expressionFields>
+                                    <ExpressionField name="FullName_OUT" expression="FirstName_IN || ' ' || LastName_IN"/>
+                                </expressionFields>
+                            </expressioninterface>
+                        </ExpressionDataInterface>
+                        <!--
+                          Characteristic / characteristics: Generic key-value properties for a transformation
+                        -->
+                        <characteristics>
+                            <Characteristic name="PerformanceHint" value="High"/>
+                        </characteristics>
+                    </AbstractTransformation>
+
+                    <!--
+                      Target Transformation
+                      TargetDataInterface / targetinterfaces: Defines the target port structure
+                      anonymousDso: An anonymous (inline) data source object definition for the target
+                    -->
+                    <AbstractTransformation name="TGT_Customer_DW" type="Target">
+                        <TargetDataInterface name="customers_in">
+                            <targetinterfaces>
+                                <anonymousDso>
+                                    <datarecord:Table name="DimCustomer">
+                                        <columns>
+                                            <datarecord:Column name="CustomerID" type="string" length="10"/>
+                                            <datarecord:Column name="FullName" type="string" length="101"/>
+                                        </columns>
+                                    </datarecord:Table>
+                                </anonymousDso>
+                            </targetinterfaces>
+                        </TargetDataInterface>
+                    </AbstractTransformation>
+                </transformations>
+
+                <instances>
+                    <Instance name="SRC_Customer_File_Inst" transformation="SRC_Customer_File"/>
+                    <Instance name="EXP_Standardize_Names_Inst" transformation="EXP_Standardize_Names"/>
+                    <Instance name="TGT_Customer_DW_Inst" transformation="TGT_Customer_DW"/>
+                </instances>
+
+                <fromOutlineLinks>
+                    <mapping:Link from="SRC_Customer_File_Inst.customers_out" to="EXP_Standardize_Names_Inst.default"/>
+                    <mapping:Link from="EXP_Standardize_Names_Inst.default" to="TGT_Customer_DW_Inst.customers_in"/>
+                </fromOutlineLinks>
+            </lObject>
+
+            <!--
+              workflow:Workflow: Orchestrates tasks
+              workflowVariables / Variable: Workflow-level variables
+              taskinstances / Taskinstance: Instances of tasks in the workflow
+              outgoingSequenceFlows: Defines the execution order of tasks
+            -->
+            <lObject xsi:type="workflow:Workflow" name="wf_Process_Daily_Files">
+                <workflowVariables>
+                    <Variable name="FileProcessedCount" type="integer" defaultValue="0"/>
+                </workflowVariables>
+                <taskinstances>
+                    <!-- 
+                      Mapping Task Instance
+                      mappingTaskConfig: Configuration specific to a mapping task
+                    -->
+                    <Taskinstance name="Run_Customer_Mapping" type="MappingTask">
+                        <mappingTaskConfig mapping="m_Process_Customer_Data">
+                            <configs/>
+                        </mappingTaskConfig>
+                    </Taskinstance>
+
+                    <!--
+                      Command Task Instance
+                      Task: Abstract task type
+                      command: The command to execute
+                      InputBinding / inputBindings: Binds workflow variables to command inputs
+                      OutputBinding / outputBindings: Binds command outputs to workflow variables
+                      NameValuePair / nameValuePairs: Key-value pairs for bindings
+                    -->
+                    <Taskinstance name="Archive_File" type="CommandTask">
+                        <Task command="mv /landing/customer.csv /archive/">
+                            <InputBinding name="default">
+                                <inputBindings/>
+                            </InputBinding>
+                            <OutputBinding name="default">
+                                <outputBindings>
+                                    <NameValuePair name="ExitCode" value="workflowVariables.ArchiveExitCode"/>
+                                </outputBindings>
+                            </OutputBinding>
+                        </Task>
+                    </Taskinstance>
+                    
+                    <!--
+                      Notification Task Instance
+                      EmailContactDetails / toEmailRecipients: Email recipients
+                      TransportInfo / transports: Defines how the notification is sent
+                    -->
+                    <Taskinstance name="Send_Success_Email" type="NotificationTask">
+                        <Notification subject="ETL Process Successful">
+                            <body>Workflow wf_Process_Daily_Files completed successfully.</body>
+                            <EmailContactDetails>
+                                <toEmailRecipients>etl-admins@company.com</toEmailRecipients>
+                            </EmailContactDetails>
+                            <TransportInfo>
+                                <transports name="DefaultSMTPServer"/>
+                            </TransportInfo>
+                        </Notification>
+                    </Taskinstance>
+                </taskinstances>
+                
+                <outgoingSequenceFlows>
+                    <flow from="Run_Customer_Mapping" to="Archive_File"/>
+                    <flow from="Archive_File" to="Send_Success_Email"/>
+                </outgoingSequenceFlows>
+            </lObject>
+
+        </folder:Folder>
+    </project:Project>
+</imx:IMX> 

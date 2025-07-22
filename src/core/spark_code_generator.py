@@ -479,6 +479,41 @@ class {{ class_name }}(BaseMapping):
             return transformation.transform(input_df, right_df)
         return input_df
         
+        {%- elif transformation.type == 'Sequence' %}
+        # Sequence transformation logic
+        transformation = SequenceTransformation(
+            name="{{ transformation.name }}",
+            start_value=self._get_{{ transformation.name | lower }}_start_value(),
+            increment_value=self._get_{{ transformation.name | lower }}_increment()
+        )
+        return transformation.transform(input_df)
+        
+        {%- elif transformation.type == 'Sorter' %}
+        # Sorter transformation logic
+        transformation = SorterTransformation(
+            name="{{ transformation.name }}",
+            sort_keys=self._get_{{ transformation.name | lower }}_sort_keys()
+        )
+        return transformation.transform(input_df)
+        
+        {%- elif transformation.type == 'Router' %}
+        # Router transformation logic
+        transformation = RouterTransformation(
+            name="{{ transformation.name }}",
+            output_groups=self._get_{{ transformation.name | lower }}_output_groups()
+        )
+        return transformation.transform(input_df)
+        
+        {%- elif transformation.type == 'Union' %}
+        # Union transformation logic
+        if len(additional_dfs) > 0:
+            transformation = UnionTransformation(
+                name="{{ transformation.name }}",
+                union_type=self._get_{{ transformation.name | lower }}_union_type()
+            )
+            return transformation.transform(input_df, *additional_dfs)
+        return input_df
+        
         {%- elif transformation.type == 'Java' %}
         # Java/Custom transformation logic
         transformation = JavaTransformation(
@@ -540,6 +575,35 @@ class {{ class_name }}(BaseMapping):
         # Implement lookup data retrieval
         return self.data_source_manager.read_source("LOOKUP_TABLE", "HIVE")
     {%- endif %}
+    {%- elif transformation.type == 'Sequence' %}
+    def _get_{{ transformation.name | lower }}_start_value(self) -> int:
+        """Get sequence start value"""
+        return 1  # Configure as needed
+    
+    def _get_{{ transformation.name | lower }}_increment(self) -> int:
+        """Get sequence increment value"""
+        return 1  # Configure as needed
+        
+    {%- elif transformation.type == 'Sorter' %}
+    def _get_{{ transformation.name | lower }}_sort_keys(self) -> list:
+        """Get sorter sort keys"""
+        return [
+            # Add your sort keys here
+            # {"field_name": "column_name", "direction": "ASC", "null_treatment": "LAST"}
+        ]
+        
+    {%- elif transformation.type == 'Router' %}
+    def _get_{{ transformation.name | lower }}_output_groups(self) -> list:
+        """Get router output groups"""
+        return [
+            # Add your routing conditions here
+            # {"name": "high_value", "condition": "amount > 1000", "priority": 1}
+        ]
+        
+    {%- elif transformation.type == 'Union' %}
+    def _get_{{ transformation.name | lower }}_union_type(self) -> str:
+        """Get union type"""
+        return "UNION_ALL"  # or "UNION_DISTINCT"
     {%- endif %}
     {%- endfor %}
     
@@ -596,6 +660,10 @@ from ..mappings.{{ task.mapping | lower }} import {{ task.mapping | title | repl
 {%- endif %}
 {%- endfor %}
 import time
+import subprocess
+import json
+from datetime import datetime, timedelta
+from typing import Dict, Any, List
 
 
 class {{ class_name }}(BaseWorkflow):
@@ -603,6 +671,10 @@ class {{ class_name }}(BaseWorkflow):
     
     def __init__(self, spark, config):
         super().__init__("{{ workflow.name }}", spark, config)
+        
+        # Initialize workflow parameters
+        self.workflow_parameters = config.get('workflow_parameters', {})
+        self.workflow_start_time = datetime.now()
         
         # Initialize mapping classes
         self.mapping_classes = {
@@ -620,8 +692,39 @@ class {{ class_name }}(BaseWorkflow):
             {%- endfor %}
         ]
         
+        # Task configurations
+        self.task_configs = {
+            {%- for task in workflow.tasks %}
+            "{{ task.name }}": {
+                'type': '{{ task.type }}',
+                'name': '{{ task.name }}',
+                {%- if task.type == 'Command' %}
+                'command': {{ task.properties.get('Command', "'echo Default command'") }},
+                'working_directory': {{ task.properties.get('WorkingDirectory', "''") }},
+                'timeout_seconds': {{ task.properties.get('TimeoutSeconds', 300) }},
+                {%- elif task.type == 'Decision' %}
+                'conditions': {{ task.properties.get('Conditions', [{'name': 'default', 'expression': 'True', 'target_path': 'continue', 'priority': 1}]) }},
+                'default_path': {{ task.properties.get('DefaultPath', "'continue'") }},
+                {%- elif task.type == 'Assignment' %}
+                'assignments': {{ task.properties.get('Assignments', [{'parameter_name': 'SAMPLE_PARAM', 'expression': "'assigned_value'", 'data_type': 'string'}]) }},
+                {%- elif task.type == 'StartWorkflow' %}
+                'target_workflow': {{ task.properties.get('TargetWorkflow', "'child_workflow'") }},
+                'parameter_mapping': {{ task.properties.get('ParameterMapping', {}) }},
+                'execution_mode': {{ task.properties.get('ExecutionMode', "'synchronous'") }},
+                {%- elif task.type == 'Timer' %}
+                'delay_amount': {{ task.properties.get('DelayAmount', 60) }},
+                'delay_unit': {{ task.properties.get('DelayUnit', "'seconds'") }},
+                {%- elif task.type == 'Email' %}
+                'recipients': {{ task.properties.get('Recipients', "['admin@company.com']") }},
+                'subject': {{ task.properties.get('Subject', "'Workflow Notification'") }},
+                {%- endif %}
+                'properties': {{ task.properties }}
+            },
+            {%- endfor %}
+        }
+        
     def execute(self) -> bool:
-        """Execute the complete workflow"""
+        """Execute the complete workflow with enhanced task support"""
         try:
             self.logger.info("Starting {{ workflow.name }} workflow")
             start_time = time.time()
@@ -646,10 +749,14 @@ class {{ class_name }}(BaseWorkflow):
             raise
             
     def _execute_task(self, task_name: str) -> bool:
-        """Execute a single task"""
+        """Execute a single task with enhanced task type support"""
         try:
             self.logger.info(f"Executing task: {task_name}")
             task_start_time = time.time()
+            task_config = self.task_configs.get(task_name, {})
+            task_type = task_config.get('type', 'Unknown')
+            
+            success = False
             
             if task_name in self.mapping_classes:
                 # Execute mapping task
@@ -657,16 +764,28 @@ class {{ class_name }}(BaseWorkflow):
                 mapping = mapping_class(self.spark, self.config)
                 success = mapping.execute()
                 
-            {%- for task in workflow.tasks %}
-            {%- if task.type == 'Email' %}
-            elif task_name == "{{ task.name }}":
-                # Execute email notification task
-                success = self._send_notification("{{ task.name }}")
-            {%- endif %}
-            {%- endfor %}
+            elif task_type == 'Command':
+                success = self._execute_command_task(task_config)
+                
+            elif task_type == 'Decision':
+                decision_result = self._execute_decision_task(task_config)
+                success = decision_result.get('decision_made') is not None
+                # Handle decision routing logic here if needed
+                
+            elif task_type == 'Assignment':
+                success = self._execute_assignment_task(task_config)
+                
+            elif task_type == 'StartWorkflow':
+                success = self._execute_start_workflow_task(task_config)
+                
+            elif task_type == 'Timer':
+                success = self._execute_timer_task(task_config)
+                
+            elif task_type == 'Email':
+                success = self._send_notification(task_name)
                 
             else:
-                self.logger.warning(f"Task {task_name} not implemented")
+                self.logger.warning(f"Task type '{task_type}' not implemented, skipping")
                 success = True  # Skip unimplemented tasks
                 
             task_execution_time = time.time() - task_start_time
@@ -682,6 +801,202 @@ class {{ class_name }}(BaseWorkflow):
             self.logger.error(f"Error executing task {task_name}: {str(e)}")
             return False
     
+    # Command Task Implementation
+    def _execute_command_task(self, task_config: Dict[str, Any]) -> bool:
+        """Execute command task"""
+        import subprocess
+        import os
+        from pathlib import Path
+        
+        self.logger.info(f"Executing command task: {task_config['name']}")
+        
+        try:
+            command = task_config.get('command', 'echo "No command specified"')
+            working_dir = task_config.get('working_directory', '')
+            timeout_seconds = task_config.get('timeout_seconds', 300)
+            
+            # Set working directory if specified
+            original_cwd = os.getcwd()
+            if working_dir and Path(working_dir).exists():
+                os.chdir(working_dir)
+                self.logger.info(f"Changed working directory to: {working_dir}")
+            
+            # Execute command
+            self.logger.info(f"Executing command: {command}")
+            result = subprocess.run(
+                command,
+                shell=True,
+                capture_output=True,
+                text=True,
+                timeout=timeout_seconds
+            )
+            
+            # Restore original directory
+            if working_dir:
+                os.chdir(original_cwd)
+            
+            # Log output
+            if result.stdout:
+                self.logger.info(f"Command stdout: {result.stdout}")
+            if result.stderr:
+                self.logger.warning(f"Command stderr: {result.stderr}")
+            
+            return result.returncode == 0
+            
+        except subprocess.TimeoutExpired:
+            self.logger.error("Command timed out")
+            return False
+        except Exception as e:
+            self.logger.error(f"Command execution failed: {str(e)}")
+            return False
+    
+    # Decision Task Implementation  
+    def _execute_decision_task(self, task_config: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute decision task"""
+        self.logger.info(f"Executing decision task: {task_config['name']}")
+        
+        conditions = task_config.get('conditions', [])
+        default_path = task_config.get('default_path', 'continue')
+        
+        # Evaluate conditions
+        for condition in conditions:
+            condition_name = condition['name']
+            expression = condition['expression']
+            target_path = condition['target_path']
+            
+            try:
+                # Simple expression evaluation (enhance as needed)
+                if self._evaluate_expression(expression):
+                    self.logger.info(f"Decision: {condition_name} -> {target_path}")
+                    return {
+                        'decision_made': condition_name,
+                        'execution_path': target_path
+                    }
+            except Exception as e:
+                self.logger.error(f"Error evaluating condition {condition_name}: {str(e)}")
+        
+        # Default path
+        self.logger.info(f"Decision: default -> {default_path}")
+        return {
+            'decision_made': 'default',
+            'execution_path': default_path
+        }
+    
+    # Assignment Task Implementation
+    def _execute_assignment_task(self, task_config: Dict[str, Any]) -> bool:
+        """Execute assignment task"""
+        self.logger.info(f"Executing assignment task: {task_config['name']}")
+        
+        assignments = task_config.get('assignments', [])
+        
+        try:
+            for assignment in assignments:
+                param_name = assignment['parameter_name']
+                expression = assignment['expression']
+                
+                # Evaluate expression and assign value
+                try:
+                    value = eval(expression, {"__builtins__": {}}, {
+                        'datetime': datetime,
+                        'current_date': datetime.now().strftime('%Y-%m-%d')
+                    })
+                    self.workflow_parameters[param_name] = value
+                    self.logger.info(f"Assigned {param_name} = {value}")
+                except Exception as e:
+                    self.logger.error(f"Failed to assign {param_name}: {str(e)}")
+                    return False
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Assignment task failed: {str(e)}")
+            return False
+    
+    # Start Workflow Task Implementation
+    def _execute_start_workflow_task(self, task_config: Dict[str, Any]) -> bool:
+        """Execute start workflow task"""
+        self.logger.info(f"Executing start workflow task: {task_config['name']}")
+        
+        target_workflow = task_config.get('target_workflow', 'child_workflow')
+        execution_mode = task_config.get('execution_mode', 'synchronous')
+        parameter_mapping = task_config.get('parameter_mapping', {})
+        
+        try:
+            # Prepare parameters for child workflow
+            child_params = {}
+            for child_param, parent_param in parameter_mapping.items():
+                if parent_param.startswith('$'):
+                    param_name = parent_param[1:]
+                    child_params[child_param] = self.workflow_parameters.get(param_name)
+                else:
+                    child_params[child_param] = parent_param
+            
+            # Execute child workflow
+            cmd = ['python', f'{target_workflow}.py']
+            if child_params:
+                cmd.extend(['--parameters', json.dumps(child_params)])
+            
+            self.logger.info(f"Starting child workflow: {target_workflow}")
+            
+            if execution_mode == 'synchronous':
+                result = subprocess.run(cmd, capture_output=True, text=True)
+                success = result.returncode == 0
+                if result.stdout:
+                    self.logger.info(f"Child workflow output: {result.stdout}")
+                if result.stderr:
+                    self.logger.warning(f"Child workflow errors: {result.stderr}")
+                return success
+            else:
+                # Asynchronous execution
+                process = subprocess.Popen(cmd)
+                self.logger.info(f"Child workflow started asynchronously with PID: {process.pid}")
+                return True
+                
+        except Exception as e:
+            self.logger.error(f"Start workflow task failed: {str(e)}")
+            return False
+    
+    # Timer Task Implementation
+    def _execute_timer_task(self, task_config: Dict[str, Any]) -> bool:
+        """Execute timer task"""
+        self.logger.info(f"Executing timer task: {task_config['name']}")
+        
+        delay_amount = task_config.get('delay_amount', 60)
+        delay_unit = task_config.get('delay_unit', 'seconds')
+        
+        # Convert to seconds
+        unit_multipliers = {'seconds': 1, 'minutes': 60, 'hours': 3600}
+        delay_seconds = delay_amount * unit_multipliers.get(delay_unit.lower(), 1)
+        
+        try:
+            self.logger.info(f"Timer delay: {delay_amount} {delay_unit} ({delay_seconds}s)")
+            time.sleep(delay_seconds)
+            self.logger.info("Timer task completed")
+            return True
+        except Exception as e:
+            self.logger.error(f"Timer task failed: {str(e)}")
+            return False
+    
+    def _evaluate_expression(self, expression: str) -> bool:
+        """Safely evaluate boolean expression"""
+        try:
+            # Replace workflow parameters in expression
+            eval_expr = expression
+            for param_name, param_value in self.workflow_parameters.items():
+                if isinstance(param_value, str):
+                    eval_expr = eval_expr.replace(f"${param_name}", f"'{param_value}'")
+                else:
+                    eval_expr = eval_expr.replace(f"${param_name}", str(param_value))
+            
+            # Safe evaluation
+            return eval(eval_expr, {"__builtins__": {}}, {
+                'datetime': datetime,
+                'current_hour': datetime.now().hour
+            })
+        except Exception as e:
+            self.logger.error(f"Expression evaluation failed: {str(e)}")
+            return False
+    
     {%- for task in workflow.tasks %}
     {%- if task.type == 'Email' %}
     def _send_notification(self, task_name: str) -> bool:
@@ -689,25 +1004,15 @@ class {{ class_name }}(BaseWorkflow):
         try:
             self.logger.info(f"Sending notification for task: {task_name}")
             
-            # Email notification logic
-            {%- if task.properties %}
-            {%- for prop in task.properties %}
-            {%- if prop.name == 'Recipient' %}
-            recipients = ["{{ prop.value }}"]
-            {%- endif %}
-            {%- if prop.name == 'Subject' %}
-            subject = "{{ prop.value }}"
-            {%- endif %}
-            {%- endfor %}
-            {%- else %}
-            recipients = ["admin@company.com"]
-            subject = "Workflow Completed"
-            {%- endif %}
+            task_config = self.task_configs.get(task_name, {})
+            recipients = task_config.get('recipients', ['admin@company.com'])
+            subject = task_config.get('subject', 'Workflow Notification')
             
-            message = f"{{ workflow.name }} workflow completed successfully at {time.strftime('%Y-%m-%d %H:%M:%S')}"
+            message = f"{{ workflow.name }} workflow notification at {time.strftime('%Y-%m-%d %H:%M:%S')}"
             
             # Simulate email sending (replace with actual email logic)
             self.logger.info(f"Email sent to {recipients} with subject: {subject}")
+            self.logger.info(f"Message: {message}")
             return True
             
         except Exception as e:
@@ -1604,6 +1909,102 @@ class JoinerTransformation(BaseTransformation):
                 join_expr = join_expr & condition_expr
                 
         return left_df.join(right_df, join_expr, self.join_type)
+
+
+class SequenceTransformation(BaseTransformation):
+    """Sequence number generation"""
+    
+    def __init__(self, name: str, start_value: int = 1, increment_value: int = 1, **kwargs):
+        super().__init__(name, "Sequence")
+        self.start_value = start_value
+        self.increment_value = increment_value
+        
+    def transform(self, input_df: DataFrame, **kwargs) -> DataFrame:
+        """Generate sequence numbers"""
+        from pyspark.sql.functions import monotonically_increasing_id, row_number, lit
+        from pyspark.sql.window import Window
+        
+        if self.increment_value == 1:
+            # Use monotonic ID for performance
+            return input_df.withColumn("NEXTVAL", 
+                monotonically_increasing_id() + self.start_value)
+        else:
+            # Use row_number for custom increment
+            window_spec = Window.orderBy(lit(1))
+            return input_df.withColumn("NEXTVAL",
+                (row_number().over(window_spec) - 1) * self.increment_value + self.start_value)
+
+
+class SorterTransformation(BaseTransformation):
+    """Data sorting operations"""
+    
+    def __init__(self, name: str, sort_keys: list = None):
+        super().__init__(name, "Sorter")
+        self.sort_keys = sort_keys or []
+        
+    def transform(self, input_df: DataFrame, **kwargs) -> DataFrame:
+        """Sort data based on sort keys"""
+        from pyspark.sql.functions import col
+        
+        if not self.sort_keys:
+            return input_df
+            
+        sort_exprs = []
+        for key in self.sort_keys:
+            field_name = key['field_name']
+            direction = key.get('direction', 'ASC')
+            
+            if direction.upper() == 'ASC':
+                sort_exprs.append(col(field_name).asc())
+            else:
+                sort_exprs.append(col(field_name).desc())
+                
+        return input_df.orderBy(*sort_exprs)
+
+
+class RouterTransformation(BaseTransformation):
+    """Conditional data routing"""
+    
+    def __init__(self, name: str, output_groups: list = None):
+        super().__init__(name, "Router")
+        self.output_groups = output_groups or []
+        
+    def transform(self, input_df: DataFrame, **kwargs) -> dict:
+        """Route data to multiple outputs"""
+        results = {}
+        
+        for group in self.output_groups:
+            group_name = group['name']
+            condition = group['condition']
+            results[group_name] = input_df.filter(condition)
+            
+        # Default group gets remaining records
+        all_conditions = " OR ".join([f"({g['condition']})" for g in self.output_groups])
+        results['DEFAULT'] = input_df.filter(f"NOT ({all_conditions})")
+        
+        return results
+
+
+class UnionTransformation(BaseTransformation):
+    """Union operations for combining DataFrames"""
+    
+    def __init__(self, name: str, union_type: str = "UNION_ALL"):
+        super().__init__(name, "Union")
+        self.union_type = union_type
+        
+    def transform(self, *input_dataframes, **kwargs) -> DataFrame:
+        """Combine multiple DataFrames"""
+        if len(input_dataframes) < 2:
+            return input_dataframes[0] if input_dataframes else None
+            
+        result_df = input_dataframes[0]
+        for df in input_dataframes[1:]:
+            result_df = result_df.union(df)
+            
+        if self.union_type == "UNION_DISTINCT":
+            result_df = result_df.distinct()
+            
+        return result_df
 
 
 class JavaTransformation(BaseTransformation):

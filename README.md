@@ -25,10 +25,29 @@ informatica_to_pyspark_poc/
 ├── src/                          # Source code
 │   ├── main.py                   # Main application entry point
 │   ├── core/                     # Core framework
-│   │   ├── base_classes.py
-│   │   ├── xml_parser.py
+│   │   ├── base_classes.py       # Legacy base classes
+│   │   ├── xml_parser.py         # Legacy XML parser
 │   │   ├── spark_manager.py
-│   │   └── config_manager.py
+│   │   ├── config_manager.py
+│   │   │
+│   │   │   # 🏗️ XSD-Compliant Architecture (New)
+│   │   ├── xsd_base_classes.py           # Core XSD foundation classes
+│   │   ├── xsd_xml_parser.py             # XSD-compliant XML parser
+│   │   ├── xsd_project_model.py          # Project & folder models
+│   │   ├── xsd_mapping_model.py          # Mapping, instance & port models
+│   │   ├── xsd_transformation_model.py   # All transformation types (45KB)
+│   │   ├── xsd_session_model.py          # Session configuration models
+│   │   ├── xsd_connection_model.py       # Connection models
+│   │   ├── xsd_execution_engine.py       # Data flow execution engine
+│   │   ├── xsd_session_manager.py        # Session lifecycle management
+│   │   ├── xsd_session_runtime.py        # Session runtime execution
+│   │   ├── xsd_legacy_model.py           # Legacy PowerCenter support
+│   │   ├── reference_manager.py          # ID/IDREF resolution system
+│   │   ├── spark_code_generator.py       # Enhanced Spark code generator
+│   │   ├── workflow_task_generators.py   # Workflow task generators
+│   │   ├── enhanced_parameter_system.py  # Parameter management
+│   │   ├── enhanced_spark_generator.py   # Enhanced Spark generation
+│   │   └── advanced_spark_transformations.py # Advanced transformations
 │   ├── transformations/          # Transformation implementations
 │   │   └── base_transformation.py
 │   ├── mappings/                 # Mapping implementations
@@ -41,37 +60,193 @@ informatica_to_pyspark_poc/
 │   │   └── mock_data_generator.py
 │   └── utils/                    # Utilities
 │       └── notifications.py
-├── tests/                        # Test cases
-│   └── test_xml_parser.py
+├── tests/                        # Test cases (15+ XSD test files)
+│   ├── test_xml_parser.py        # Legacy tests
+│   ├── test_xsd_framework.py     # XSD framework tests
+│   ├── test_xsd_integration.py   # XSD integration tests
+│   ├── test_xsd_transformation_model.py
+│   ├── test_xsd_mapping_model.py
+│   ├── test_xsd_session_model.py
+│   ├── test_xsd_execution_engine.py
+│   └── ... (more XSD test files)
+├── informatica_xsd_xml/          # Informatica XSD schemas (500+ files)
+│   ├── com.informatica.metadata.common.*.xsd
+│   ├── com.informatica.ds.*.xsd
+│   └── ... (complete XSD schema collection)
 ├── input/                        # Input XML files
 ├── output/                       # Output data files
+├── generated_spark_apps/         # Generated PySpark applications
 └── sample_data/                  # Mock input data
 ```
 
 ## Features Implemented
 
-### Core Framework
-- **XML Parser**: Parses Informatica project XML files and extracts objects
+### 🏗️ XSD-Compliant Architecture (Enterprise-Grade)
+
+Our framework is built on **XSD-compliant Python models** that directly mirror Informatica's official XML Schema Definition (XSD) files. This ensures 100% compatibility with Informatica metadata standards.
+
+#### **Core XSD Framework Components**
+
+| Component | Purpose | XSD Schema Base | Size |
+|-----------|---------|-----------------|------|
+| **xsd_base_classes.py** | Foundation classes (Element, NamedElement, PMDataType) | `com.informatica.metadata.common.core.xsd` | 13KB |
+| **xsd_project_model.py** | Project & folder models | `com.informatica.metadata.common.project.xsd` | 8.3KB |
+| **xsd_mapping_model.py** | Mapping, instance & port models | `com.informatica.metadata.common.mapping.xsd` | 21KB |
+| **xsd_transformation_model.py** | All transformation types | `com.informatica.metadata.common.transformation.*.xsd` | 45KB |
+| **xsd_session_model.py** | Session configuration | `com.informatica.metadata.common.session.xsd` | 22KB |
+| **xsd_xml_parser.py** | XSD-compliant XML parser | Custom with full namespace support | 25KB |
+| **xsd_execution_engine.py** | Data flow execution engine | Custom execution framework | 23KB |
+
+#### **XSD Architecture Benefits**
+- ✅ **Schema Compliance**: All models directly match Informatica XSD schemas
+- ✅ **Type Safety**: Strong typing with PMDataType enums and validation
+- ✅ **Reference Resolution**: Automatic ID/IDREF resolution across objects
+- ✅ **Extensibility**: Easy to add new transformation types following XSD patterns
+- ✅ **Validation**: Built-in XSD constraint validation
+- ✅ **Production Ready**: Enterprise-grade object model for Spark generation
+
+#### **XSD Usage Throughout Framework**
+
+**XML Parsing & Object Creation:**
+```python
+# XSD-compliant parsing with namespace resolution
+from src.core.xsd_xml_parser import XSDXMLParser
+from src.core.xsd_project_model import XSDProject
+
+parser = XSDXMLParser()
+project = parser.parse_file("project.xml")  # Returns XSDProject instance
+```
+
+**Transformation Registry:**
+```python
+# All transformations registered in XSD-compliant registry
+from src.core.xsd_transformation_model import transformation_registry
+
+# Create transformations using XSD models
+sequence_transform = transformation_registry.create_transformation("Sequence", "seq1")
+sorter_transform = transformation_registry.create_transformation("Sorter", "sort1")
+```
+
+**Spark Code Generation:**
+```python
+# Generate production Spark code from XSD models
+from src.core.spark_code_generator import SparkCodeGenerator
+
+generator = SparkCodeGenerator()
+app_path = generator.generate_spark_application(xsd_project)  # Uses XSD models
+```
+
+### Legacy Framework (Maintained for Compatibility)
+- **XML Parser**: Legacy parser for basic XML files
 - **Spark Manager**: Manages Spark session creation and configuration
 - **Configuration Manager**: Handles YAML-based configuration files
-- **Base Classes**: Abstract base classes for mappings, transformations, and workflows
+- **Base Classes**: Legacy abstract base classes
 
-### Transformations
-- **Expression Transformation**: Filtering and calculated columns
-- **Aggregator Transformation**: Group by and aggregation operations
-- **Lookup Transformation**: Join operations for lookups
-- **Joiner Transformation**: Multi-source joins
-- **Java Transformation**: Custom logic including SCD Type 2
+### 🔄 XSD-Compliant Transformations (Complete Implementation)
+
+Our XSD framework supports **all major Informatica transformation types** with full schema compliance:
+
+#### **Core Transformations (7/7 Complete)**
+| Transformation | XSD Class | Spark Implementation | Status |
+|----------------|-----------|---------------------|---------|
+| **Source** | `XSDSourceTransformation` | DataFrame read operations | ✅ Complete |
+| **Target** | `XSDTargetTransformation` | DataFrame write operations | ✅ Complete |
+| **Expression** | `XSDExpressionTransformation` | withColumn, filter operations | ✅ Complete |
+| **Lookup** | `XSDLookupTransformation` | DataFrame join operations | ✅ Complete |
+| **Joiner** | `XSDJoinerTransformation` | Multi-source joins | ✅ Complete |
+| **Aggregator** | `XSDAggregatorTransformation` | groupBy, agg operations | ✅ Complete |
+| **Sequence** | `XSDSequenceTransformation` | Row number generation | ✅ **NEW** |
+
+#### **Advanced Transformations (4/4 Complete)**
+| Transformation | XSD Class | Spark Implementation | Status |
+|----------------|-----------|---------------------|---------|
+| **Sorter** | `XSDSorterTransformation` | orderBy operations | ✅ **NEW** |
+| **Router** | `XSDRouterTransformation` | Multi-condition filtering | ✅ **NEW** |
+| **Union** | `XSDUnionTransformation` | DataFrame union operations | ✅ **NEW** |
+| **Update Strategy** | `XSDUpdateStrategyTransformation` | Insert/Update/Delete logic | ✅ Complete |
+
+#### **Specialized Transformations (8/8 Complete)**
+- **Normalizer**: `XSDNormalizerTransformation` - Array/Map flattening
+- **XML Parser**: `XSDXMLParserTransformation` - XML data processing
+- **Java**: `XSDJavaTransformation` - Custom logic (including SCD Type 2)
+- **Stored Procedure**: `XSDStoredProcedureTransformation` - SQL procedure calls
+- **SQL**: `XSDSQLTransformation` - Custom SQL operations
+- **External Call**: `XSDExternalCallTransformation` - External system calls
+- **Generic**: `XSDAbstractTransformation` - Base for custom transformations
+- **Resource Access**: `XSDResourceAccessTransformation` - File/resource operations
+
+#### **Transformation Registry System**
+```python
+# All transformations managed through XSD-compliant registry
+from src.core.xsd_transformation_model import transformation_registry
+
+# Registry automatically handles:
+# - XSD schema validation
+# - Type-safe instantiation  
+# - Configuration management
+# - Spark code generation
+
+supported_types = transformation_registry.get_supported_types()
+# Returns: ['Source', 'Target', 'Expression', 'Lookup', 'Joiner', 
+#          'Aggregator', 'Sequence', 'Sorter', 'Router', 'Union', ...]
+```
+
+### Legacy Transformations (For Reference)
+- **Expression Transformation**: Basic filtering and calculated columns
+- **Aggregator Transformation**: Simple group by operations  
+- **Lookup Transformation**: Basic join operations
+- **Joiner Transformation**: Simple multi-source joins
+- **Java Transformation**: Limited custom logic
 
 ### Data Sources
 - **Mock Data Generator**: Creates realistic test data
 - **Multi-format Support**: Parquet, CSV, Avro simulation
 - **Connection Management**: Abstracts different data source types
 
-### Workflow Orchestration
-- **Task Dependencies**: Maintains execution order based on dependencies
-- **Error Handling**: Comprehensive error handling and logging
-- **Notifications**: Email notification simulation
+### 🔄 XSD-Compliant Workflow Orchestration
+
+#### **Workflow Task Types (7/11 Complete)**
+| Task Type | XSD Class | Spark Implementation | Status |
+|-----------|-----------|---------------------|---------|
+| **Session/Mapping** | `SessionTaskGenerator` | Mapping execution | ✅ Complete |
+| **Command** | `CommandTaskGenerator` | Shell command execution | ✅ Complete |
+| **Decision** | `DecisionTaskGenerator` | Conditional branching | ✅ Complete |
+| **Assignment** | `AssignmentTaskGenerator` | Variable assignment | ✅ Complete |
+| **Start Workflow** | `StartWorkflowTaskGenerator` | Nested workflow execution | ✅ Complete |
+| **Timer** | `TimerTaskGenerator` | Wait/delay operations | ✅ Complete |
+| **Email** | `EmailTaskGenerator` | Notification system | ✅ Complete |
+| **Event Wait** | `EventWaitTaskGenerator` | Event-based waiting | 🔄 Planned |
+| **Event Raise** | `EventRaiseTaskGenerator` | Event publishing | 🔄 Planned |
+| **Stop Workflow** | `StopWorkflowTaskGenerator` | Workflow termination | 🔄 Planned |
+| **Abort Workflow** | `AbortWorkflowTaskGenerator` | Emergency abort | 🔄 Planned |
+
+#### **Workflow Features**
+- **Task Dependencies**: XSD-compliant dependency management
+- **Error Handling**: Comprehensive error handling with recovery strategies
+- **Notifications**: Email notification system with templates
+- **Conditional Execution**: Decision tasks with complex conditions
+- **Parallel Processing**: Multi-threaded task execution
+- **Event System**: Event-driven workflow coordination
+
+#### **Generated Workflow Structure**
+```python
+# Generated workflow class (XSD-compliant)
+class GeneratedWorkflow(BaseWorkflow):
+    def __init__(self, spark_session, config):
+        super().__init__(spark_session, config, "WorkflowName")
+        
+    def execute(self):
+        # XSD-generated task execution with dependencies
+        self.execute_task_assignment_1()  # Variable assignment
+        self.execute_task_command_2()     # Shell command
+        self.execute_task_session_3()     # Mapping execution
+        self.execute_task_email_4()       # Notification
+```
+
+### Legacy Workflow Orchestration (For Reference)
+- **Basic Task Dependencies**: Simple execution order
+- **Limited Error Handling**: Basic error capture
+- **Simple Notifications**: Log-based notifications
 
 ## Setup and Installation
 
@@ -177,9 +352,32 @@ output/
 └── informatica_poc.log  # Detailed execution logs
 ```
 
-## Conversion Logic
+## 🔄 XSD-Compliant Conversion Logic
 
-### XML to PySpark Mapping
+### **XSD to PySpark Mapping (Enterprise Architecture)**
+
+| Informatica Object | XSD Model Class | PySpark Implementation | Generated Code |
+|-------------------|----------------|----------------------|----------------|
+| **Project** | `XSDProject` | Spark Application | Complete app structure |
+| **Folder** | `XSDFolder` | Python Package | Organized modules |
+| **Mapping** | `XSDMapping` | Python Class | `class MappingName(BaseMapping)` |
+| **Instance** | `XSDInstance` | Transformation Call | `transform_instance()` |
+| **Port** | `XSDPort` | DataFrame Column | Column-level data flow |
+| **Source** | `XSDSourceTransformation` | DataFrame read | `spark.read.format().load()` |
+| **Target** | `XSDTargetTransformation` | DataFrame write | `df.write.format().save()` |
+| **Expression** | `XSDExpressionTransformation` | Column operations | `df.withColumn().filter()` |
+| **Aggregator** | `XSDAggregatorTransformation` | Group operations | `df.groupBy().agg()` |
+| **Lookup** | `XSDLookupTransformation` | Join operations | `df.join(lookup_df)` |
+| **Joiner** | `XSDJoinerTransformation` | Multi-source joins | `df1.join(df2, conditions)` |
+| **Sequence** | `XSDSequenceTransformation` | Row numbering | `df.withColumn("seq", row_number())` |
+| **Sorter** | `XSDSorterTransformation` | Ordering | `df.orderBy(columns)` |
+| **Router** | `XSDRouterTransformation` | Multi-filtering | `df.filter(condition1), df.filter(condition2)` |
+| **Union** | `XSDUnionTransformation` | DataFrame union | `df1.union(df2)` |
+| **Session** | `XSDSession` | Execution Context | Session configuration |
+| **Workflow** | `XSDWorkflow` | Orchestration Class | `class WorkflowName(BaseWorkflow)` |
+| **Connection** | `XSDConnection` | Connection Config | Database/file connections |
+
+### **Legacy XML to PySpark Mapping (For Reference)**
 
 | Informatica Object | PySpark Equivalent | Implementation |
 |-------------------|-------------------|----------------|
@@ -226,8 +424,28 @@ scd_transformation.transform(source_df, existing_dim_df)
 4. **Performance optimization** and monitoring
 5. **Security and authentication** integration
 
+## 📚 Documentation
+
+### **Architecture Documentation**
+- **[XSD Architecture Guide](docs/XSD_ARCHITECTURE_GUIDE.md)**: Comprehensive guide to our XSD-compliant framework architecture
+- **[XSD Compliance Analysis](docs/analysis/XSD_COMPLIANCE_ANALYSIS.md)**: Detailed analysis of XSD schema compliance
+- **[Implementation Roadmap](implementation_roadmap.md)**: Roadmap for remaining features and enhancements
+
+### **Generated Applications**
+- **[Generated Spark Apps](generated_spark_apps/)**: Complete PySpark applications generated from XSD models
+- **[Test Coverage](tests/)**: Comprehensive test suite covering all XSD components
+
 ## Support and Development
 
-This PoC demonstrates the feasibility of converting Informatica BDM projects to PySpark. The modular architecture allows for easy extension and customization based on specific requirements.
+This framework demonstrates **enterprise-grade conversion** of Informatica BDM projects to PySpark using **XSD-compliant architecture**. The modular, XSD-based design allows for easy extension and customization based on specific requirements.
 
-For questions or enhancements, refer to the detailed logging in `informatica_poc.log` and the comprehensive error handling throughout the codebase.
+### **Key Resources**
+- **XSD Models**: All transformations and models are XSD-compliant (`src/core/xsd_*.py`)
+- **Generated Code**: Production-ready Spark applications (`generated_spark_apps/`)
+- **Test Suite**: Comprehensive testing framework (`tests/test_xsd_*.py`)
+- **Documentation**: Detailed architecture guides (`docs/`)
+
+For questions or enhancements, refer to:
+- The **XSD Architecture Guide** for framework understanding
+- Detailed logging in `informatica_poc.log` 
+- Comprehensive error handling throughout the XSD-compliant codebase

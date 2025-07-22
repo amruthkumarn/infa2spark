@@ -33,8 +33,11 @@ class InformaticaXMLParser:
     def _is_imx_root(self, root: ET.Element) -> bool:
         """Check if root element is IMX wrapper"""
         local_name = self._get_local_name(root.tag)
-        imx_namespace = "http://com.informatica.imx"
-        return local_name == "IMX" or imx_namespace in root.tag
+        imx_namespace = "http://www.informatica.com/imx"
+        
+        # Check for IMX Document or IMX root
+        return (local_name in ["IMX", "Document"] or 
+                imx_namespace in root.tag)
         
     def _get_local_name(self, tag: str) -> str:
         """Extract local name from namespaced tag"""
@@ -71,15 +74,14 @@ class InformaticaXMLParser:
             project_version = project_elem.get('version', '1.0')
             project = Project(project_name, project_version)
             
-            # Parse project description
-            desc_elem = project_elem.find('.//{*}description')
-            if desc_elem is not None:
-                project.description = desc_elem.text or ""
+            # Parse project description from annotations
+            for anno in project_elem.findall('.//{*}lGenericAnnotations/{*}Annotation'):
+                if anno.get('name') == 'Description':
+                    project.description = anno.get('value', '')
+                    break
                 
-            # Parse contents within project
-            contents_elem = project_elem.find('.//{*}contents')
-            if contents_elem is not None:
-                self._parse_imx_contents(contents_elem, project)
+            # Parse all children of the project element directly as contents
+            self._parse_imx_contents(project_elem, project)
         
         # Parse top-level IMX connections and parameters
         self._parse_imx_connections(imx_root, project)
@@ -89,19 +91,19 @@ class InformaticaXMLParser:
         return project
         
     def _parse_imx_contents(self, contents_elem: ET.Element, project: Project):
-        """Parse contents section of IMX project"""
+        """Parse contents section of IMX project, now more flexible."""
         for child in contents_elem:
             local_name = self._get_local_name(child.tag)
             
             if local_name == "Folder":
                 self._parse_imx_folder(child, project)
-            elif local_name in ["TLoaderMapping", "mapping"]:
+            elif local_name in ["TLoaderMapping", "mapping", "Mapping"]:
                 # Handle mappings that might be directly in contents
                 if "Mappings" not in project.folders:
                     project.folders["Mappings"] = []
                 mapping_info = self._extract_imx_mapping_info(child)
                 project.folders["Mappings"].append(mapping_info)
-            elif local_name in ["TWorkflow", "workflow"]:
+            elif local_name in ["TWorkflow", "workflow", "Workflow"]:
                 # Handle workflows that might be directly in contents
                 if "Workflows" not in project.folders:
                     project.folders["Workflows"] = []
@@ -109,28 +111,60 @@ class InformaticaXMLParser:
                 project.folders["Workflows"].append(workflow_info)
                 
     def _parse_imx_folder(self, folder_elem: ET.Element, project: Project):
-        """Parse folder within IMX structure"""
+        """Parse folder within IMX structure, supporting generic lObject tags."""
         folder_name = folder_elem.get('name', 'UnknownFolder')
+        self.logger.debug(f"Parsing folder: {folder_name}")
         
         if folder_name not in project.folders:
             project.folders[folder_name] = []
             
-        # Parse folder contents
+        # Standard contents parsing
         contents_elem = folder_elem.find('.//{*}contents')
         if contents_elem is not None:
-            for child in contents_elem:
-                local_name = self._get_local_name(child.tag)
+            self._parse_folder_contents(contents_elem, project, folder_name)
+
+        # Also check for lObject tags directly within the folder, which is a common pattern
+        self._parse_folder_contents(folder_elem, project, folder_name)
+
+    def _parse_folder_contents(self, parent_elem: ET.Element, project: Project, folder_name: str):
+        """Generic folder content parser for both <contents> and <lObject> patterns."""
+        self.logger.debug(f"Parsing contents of <{parent_elem.tag}> in folder '{folder_name}'")
+        for child in parent_elem:
+            local_name = self._get_local_name(child.tag)
+            self.logger.debug(f"Found child element: <{local_name}>")
+            
+            # Determine object type from xsi:type or local tag name
+            xsi_type_attr = '{http://www.w3.org/2001/XMLSchema-instance}type'
+            object_type = None
+            if xsi_type_attr in child.attrib:
+                # Handle types like "mapping:Mapping"
+                object_type = child.attrib[xsi_type_attr].split(':')[-1]
+                self.logger.debug(f"Detected xsi:type = {object_type}")
+            else:
+                object_type = local_name
+                self.logger.debug(f"Using local name as object type: {object_type}")
+
+            if object_type in ["TLoaderMapping", "Mapping"]:
+                self.logger.info(f"Found Mapping: {child.get('name', 'Unknown')}")
+                if "Mappings" not in project.folders:
+                    project.folders["Mappings"] = []
+                mapping_info = self._extract_imx_mapping_info(child)
+                project.folders["Mappings"].append(mapping_info)
+            elif object_type in ["TWorkflow", "Workflow"]:
+                self.logger.info(f"Found Workflow: {child.get('name', 'Unknown')}")
+                if "Workflows" not in project.folders:
+                    project.folders["Workflows"] = []
+                workflow_info = self._extract_imx_workflow_info(child)
+                project.folders["Workflows"].append(workflow_info)
+            elif object_type == "Application":
+                self.logger.info(f"Found Application: {child.get('name', 'Unknown')}")
+                if "Applications" not in project.folders:
+                    project.folders["Applications"] = []
+                app_info = self._extract_application_info(child)
+                project.folders["Applications"].append(app_info)
+            else:
+                self.logger.debug(f"Skipping unknown object type '{object_type}'")
                 
-                if folder_name == "Mappings" and local_name in ["TLoaderMapping", "mapping"]:
-                    mapping_info = self._extract_imx_mapping_info(child)
-                    project.folders[folder_name].append(mapping_info)
-                elif folder_name == "Workflows" and local_name in ["TWorkflow", "workflow"]:
-                    workflow_info = self._extract_imx_workflow_info(child)
-                    project.folders[folder_name].append(workflow_info)
-                elif folder_name == "Applications" and local_name in ["application"]:
-                    app_info = self._extract_application_info(child)
-                    project.folders[folder_name].append(app_info)
-                    
     def _extract_imx_mapping_info(self, mapping_elem: ET.Element) -> Dict:
         """Extract mapping information from IMX format"""
         mapping_info = {
@@ -145,22 +179,29 @@ class InformaticaXMLParser:
         if desc_elem is not None:
             mapping_info['description'] = desc_elem.text or ""
             
-        # Components
-        components_elem = mapping_elem.find('.//{*}components')
-        if components_elem is not None:
-            for component in components_elem:
-                component_info = {
-                    'name': component.get('name', ''),
-                    'type': component.get('type', ''),
-                    'component_type': self._get_local_name(component.tag)
-                }
-                
-                # Additional attributes
-                for attr in component.attrib:
-                    if attr not in ['name', 'type']:
-                        component_info[attr] = component.get(attr)
-                        
-                mapping_info['components'].append(component_info)
+        # Parameters (added for complex project)
+        params_elem = mapping_elem.find('.//{*}parameters')
+        if params_elem is not None:
+            mapping_info['parameters'] = {}
+            for param in params_elem:
+                param_name = param.get('name')
+                param_value = param.get('value')
+                if param_name:
+                    mapping_info['parameters'][param_name] = param_value
+
+        # Components (sources, transformations, targets)
+        # Handle both <transformations> and direct <components> tags
+        components_container = mapping_elem.find('.//{*}transformations')
+        if components_container is None:
+            components_container = mapping_elem
+
+        for transformation in components_container.findall('.//{*}AbstractTransformation'):
+            component_info = {
+                'name': transformation.get('name', ''),
+                'type': transformation.get('type', ''),
+                'component_type': transformation.get('type', 'transformation').lower() # Normalize to source, target, expression etc.
+            }
+            mapping_info['components'].append(component_info)
                 
         return mapping_info
         
@@ -179,32 +220,34 @@ class InformaticaXMLParser:
         if desc_elem is not None:
             workflow_info['description'] = desc_elem.text or ""
             
-        # Tasks
-        tasks_elem = workflow_elem.find('.//{*}tasks')
-        if tasks_elem is not None:
-            for task_elem in tasks_elem.findall('.//{*}task'):
+        # Tasks (handle both <tasks> and <taskinstances>)
+        tasks_container = workflow_elem.find('.//{*}tasks')
+        if tasks_container is None:
+            tasks_container = workflow_elem.find('.//{*}taskinstances')
+        
+        if tasks_container is not None:
+            for task_elem in tasks_container:
                 task_info = {
                     'name': task_elem.get('name', ''),
-                    'type': task_elem.get('type', ''),
-                    'mapping': task_elem.get('mapping', ''),
+                    'type': task_elem.get('type', self._get_local_name(task_elem.tag)),
+                    'mapping': '',
                     'properties': {}
                 }
-                
-                # Properties
-                props_elem = task_elem.find('.//{*}properties')
-                if props_elem is not None:
-                    for prop_elem in props_elem.findall('.//{*}property'):
-                        prop_name = prop_elem.get('name')
-                        prop_value = prop_elem.get('value')
-                        if prop_name:
-                            task_info['properties'][prop_name] = prop_value
-                            
+
+                # Extract mapping name if it's a mapping task
+                mapping_task_config = task_elem.find('.//{*}mappingTaskConfig')
+                if mapping_task_config is not None:
+                    task_info['mapping'] = mapping_task_config.get('mapping', '')
+
                 workflow_info['tasks'].append(task_info)
                 
-        # Links
-        links_elem = workflow_elem.find('.//{*}links')
-        if links_elem is not None:
-            for link_elem in links_elem.findall('.//{*}link'):
+        # Links (handle both <links> and <outgoingSequenceFlows>)
+        links_container = workflow_elem.find('.//{*}links')
+        if links_container is None:
+            links_container = workflow_elem.find('.//{*}outgoingSequenceFlows')
+
+        if links_container is not None:
+            for link_elem in links_container:
                 link_info = {
                     'from': link_elem.get('from', ''),
                     'to': link_elem.get('to', ''),
