@@ -1,0 +1,74 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+informatica_poc_env/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Large binary files and DLLs (Informatica XSD)
+informatica_xsd_xml/*.dll
+informatica_xsd_xml/*.res
+informatica_xsd_xml/*.map
+informatica_xsd_xml/*.seed.xml
+
+# Keep only essential XSD schema files
+!informatica_xsd_xml/*.xsd
+
+# Output directories
+output/
+generated_spark_apps/*/target/
+generated_spark_apps/*/logs/
+
+# Spark
+spark-warehouse/
+metastore_db/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Documentation builds
+docs/_build/ 
