@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.pcsf.servicesframework.service.serializer/1" xmlns:imx="http://com.informatica.imx" xmlns:serializer="http://com.informatica.pcsf.servicesframework.service.serializer/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.pcsf.servicesframework.service.serializer/1">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="CallbackHandlerId">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="handlerId" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="CallbackHandlerId" type="serializer:CallbackHandlerId"/>
+<xsd:complexType name="PipedStreamId">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="pipeId" type="xsd:int"/>
+<xsd:attribute name="pipeMode" type="serializer:PipedStreamMode"/>
+</xsd:complexType>
+<xsd:element name="PipedStreamId" type="serializer:PipedStreamId"/>
+<xsd:simpleType name="PipedStreamMode">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="READ_MODE"/>
+<xsd:enumeration value="WRITE_MODE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="RequestResiliencyObj">
+<xsd:annotation>
+<xsd:documentation> This class represents the RequestResiliency class defined in Service Framework
+ @author creddy
+
+  Version history
+  &lt;version&gt;	&lt;user name&gt;		&lt;date&gt;			&lt;change&gt;
+  1.1.0			creddy		11-July-2013		Introduced new model
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="replay" type="xsd:boolean"/>
+<xsd:attribute name="resiliencyLevel" type="serializer:ResiliencyLevelObj"/>
+</xsd:complexType>
+<xsd:element name="RequestResiliencyObj" type="serializer:RequestResiliencyObj"/>
+<xsd:simpleType name="ResiliencyLevelObj">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="NO_RESILIENCY"/>
+<xsd:enumeration value="NOTIFICATION_ONLY"/>
+<xsd:enumeration value="RECONNCTION_ONLY"/>
+<xsd:enumeration value="REPLAY_WITH_NO_PERSIST"/>
+<xsd:enumeration value="REPLAY_WITH_PERSIST"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ResiliencyObjMsg">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="connectionTimeout" type="xsd:int"/>
+<xsd:attribute name="heartbeatSleepPeriod" type="xsd:int"/>
+<xsd:attribute name="heartbeatTimeoutLimit" type="xsd:int"/>
+<xsd:attribute name="maxReplayAttemptsPerRequest" type="xsd:int"/>
+<xsd:attribute name="proxyReconnContextAvailable" type="xsd:boolean"/>
+<xsd:attribute name="reconnSession" type="xsd:boolean"/>
+<xsd:attribute name="reconnectionTimeoutLimit" type="xsd:int"/>
+<xsd:attribute name="resiliencyLevel" type="serializer:ResiliencyLevelObj"/>
+<xsd:attribute name="serviceRestarted" type="xsd:boolean"/>
+<xsd:attribute name="serviceUniqueInstanceId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sessionUid">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ResiliencyObjMsg" type="serializer:ResiliencyObjMsg"/>
+<xsd:complexType name="SerializerObjectContainer">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="exceptionMessage">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="objectTypeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serializedObject">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="stackTrace">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SerializerObjectContainer" type="serializer:SerializerObjectContainer"/>
+</xsd:schema>

@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.interfaces.logservice/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:imx="http://com.informatica.imx" xmlns:logservice="http://com.informatica.isp.interfaces.logservice/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.interfaces.logservice/2">
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="Cursor">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="eof" type="xsd:boolean"/>
+<xsd:attribute name="fileCursors" type="imx:idrefs"/>
+<xsd:attribute name="filterValues" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="Cursor" type="logservice:Cursor"/>
+<xsd:complexType name="FetchLogResults">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="cursor" type="imx:idref"/>
+<xsd:attribute name="logEvents" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="FetchLogResults" type="logservice:FetchLogResults"/>
+<xsd:complexType name="FetchMoreLogRequestParameter">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="backward" type="xsd:boolean"/>
+<xsd:attribute name="cursor" type="imx:idref"/>
+<xsd:attribute name="descending" type="xsd:boolean"/>
+<xsd:attribute name="maxRecordstoFetch" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="FetchMoreLogRequestParameter" type="logservice:FetchMoreLogRequestParameter"/>
+<xsd:complexType name="FileCursor">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="fileCursors" type="imx:idrefs"/>
+<xsd:attribute name="indexEntryFileName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="indexPath">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="maxOffset" type="xsd:long"/>
+<xsd:attribute name="minOffset" type="xsd:long"/>
+<xsd:attribute name="nextOffset" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="FileCursor" type="logservice:FileCursor"/>
+<xsd:complexType abstract="true" name="FilterValue">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="filterValues" type="imx:idrefs"/>
+<xsd:attribute name="negated" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:complexType name="GetLastErrorKey">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="clientNode">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="service">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="GetLastErrorKey" type="logservice:GetLastErrorKey"/>
+<xsd:complexType name="ISPLogBin">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="buffer">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dataSize" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="ISPLogBin" type="logservice:ISPLogBin"/>
+<xsd:complexType name="ListRegisteredLogRequestParameter">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="encryptedUserPassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="registeredRun" type="imx:idref"/>
+<xsd:attribute name="repositoryuser" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="ListRegisteredLogRequestParameter" type="logservice:ListRegisteredLogRequestParameter"/>
+<xsd:complexType name="LogEventRequestParameter">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="logCallContexts" type="imx:idref"/>
+<xsd:attribute name="logEvents" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="LogEventRequestParameter" type="logservice:LogEventRequestParameter"/>
+<xsd:complexType name="RegisteredLogRequestParameter">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="absoluteFileName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="node">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="numLogsToKeep" type="xsd:int"/>
+<xsd:attribute name="osUser">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="registeredRun" type="imx:idref"/>
+<xsd:attribute name="retainOldLogInfo" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="RegisteredLogRequestParameter" type="logservice:RegisteredLogRequestParameter"/>
+<xsd:complexType name="ContextFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:FilterValue">
+<xsd:attribute name="context">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="recursiveCheck" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ContextFilterValue" type="logservice:ContextFilterValue"/>
+<xsd:complexType name="ProcessFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:FilterValue">
+<xsd:attribute name="pid" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ProcessFilterValue" type="logservice:ProcessFilterValue"/>
+<xsd:complexType name="RegisteredLogFile">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="absoluteFileName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="execPath">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="node" type="imx:idref"/>
+<xsd:attribute name="osProfile">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="securityToken">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RegisteredLogFile" type="logservice:RegisteredLogFile"/>
+<xsd:complexType name="RegisteredRun">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="folder">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="integrationService">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="repositoryDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="repositoryService">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="runContext">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="runID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="runInstanceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sessionPath">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="workflow">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RegisteredRun" type="logservice:RegisteredRun"/>
+<xsd:complexType name="RunContextFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:FilterValue">
+<xsd:attribute name="recursiveCheck" type="xsd:boolean"/>
+<xsd:attribute name="runContext">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RunContextFilterValue" type="logservice:RunContextFilterValue"/>
+<xsd:complexType name="SeverityFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:FilterValue">
+<xsd:attribute name="severity" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SeverityFilterValue" type="logservice:SeverityFilterValue"/>
+<xsd:complexType name="StringFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:FilterValue">
+<xsd:attribute name="caseSensitive" type="xsd:boolean"/>
+<xsd:attribute name="regex" type="xsd:boolean"/>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StringFilterValue" type="logservice:StringFilterValue"/>
+<xsd:complexType name="TimestampFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:FilterValue">
+<xsd:attribute name="beginTimeStamp" type="xsd:long"/>
+<xsd:attribute name="endTimeStamp" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TimestampFilterValue" type="logservice:TimestampFilterValue"/>
+<xsd:complexType name="ClientNodeFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:StringFilterValue"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ClientNodeFilterValue" type="logservice:ClientNodeFilterValue"/>
+<xsd:complexType name="MessageCodeFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:StringFilterValue"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MessageCodeFilterValue" type="logservice:MessageCodeFilterValue"/>
+<xsd:complexType name="MessageFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:StringFilterValue"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MessageFilterValue" type="logservice:MessageFilterValue"/>
+<xsd:complexType name="ServiceFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:StringFilterValue"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ServiceFilterValue" type="logservice:ServiceFilterValue"/>
+<xsd:complexType name="ServiceTypeFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:StringFilterValue"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ServiceTypeFilterValue" type="logservice:ServiceTypeFilterValue"/>
+<xsd:complexType name="ThreadNameFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:StringFilterValue"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ThreadNameFilterValue" type="logservice:ThreadNameFilterValue"/>
+<xsd:complexType name="UserFilterValue">
+<xsd:complexContent>
+<xsd:extension base="logservice:StringFilterValue">
+<xsd:attribute name="user" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserFilterValue" type="logservice:UserFilterValue"/>
+</xsd:schema>

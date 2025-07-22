@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.ds.hazelcast/0" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:hazelcast="http://com.informatica.ds.hazelcast/0" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.ds.hazelcast/0">
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="DSHazelcastInstance">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="appName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="byteData">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="cacheID" type="xsd:long"/>
+<xsd:attribute name="expirationPeriod" type="xsd:long"/>
+<xsd:attribute name="featureName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="DSHazelcastInstance" type="hazelcast:DSHazelcastInstance"/>
+<xsd:complexType name="DSHazelcastKey">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="opGroups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="appName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="featureName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="hashCode" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="DSHazelcastKey" type="hazelcast:DSHazelcastKey"/>
+</xsd:schema>

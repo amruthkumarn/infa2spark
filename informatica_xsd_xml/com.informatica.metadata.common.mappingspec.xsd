@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.mappingspec/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:datarecord="http://com.informatica.metadata.canonical.datarecord/2" xmlns:imx="http://com.informatica.imx" xmlns:mappingspec="http://com.informatica.metadata.common.mappingspec/2" xmlns:targetholder="http://com.informatica.metadata.common.mappingspec.targetholder/1" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:udf="http://com.informatica.metadata.common.udf/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.mappingspec/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.canonical.datarecord/2" schemaLocation="com.informatica.metadata.canonical.datarecord.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.udf/2" schemaLocation="com.informatica.metadata.common.udf.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.mappingspec.targetholder/1" schemaLocation="com.informatica.metadata.common.mappingspec.targetholder.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="FilterCondition">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="enabled" type="xsd:boolean"/>
+<xsd:attribute name="expression">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="FilterCondition" type="mappingspec:FilterCondition"/>
+<xsd:complexType name="Join">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="joinConditions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="JoinCondition" type="mappingspec:JoinCondition"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="joinType" type="mappingspec:JoinType"/>
+<xsd:attribute name="leftSource" type="imx:idref"/>
+<xsd:attribute name="rightSource" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="Join" type="mappingspec:Join"/>
+<xsd:complexType name="JoinCondition">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="leftField" type="imx:idref"/>
+<xsd:attribute name="rightField" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="JoinCondition" type="mappingspec:JoinCondition"/>
+<xsd:simpleType name="JoinType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="innerJoin"/>
+<xsd:enumeration value="leftOuterJoin"/>
+<xsd:enumeration value="rightOuterJoin"/>
+<xsd:enumeration value="fullOuterJoin"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType abstract="true" name="Definition">
+<xsd:complexContent>
+<xsd:extension base="core:Element"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="MappingSpecCharacteristic">
+<xsd:complexContent>
+<xsd:extension base="datarecord:Characteristic">
+<xsd:annotation>
+<xsd:documentation> Mapping specifications created by analysts.
+ 
+ MODIFICATIONS
+ 2.3.0    nwong    12/15/2010    Added the targetHolder property.
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="targetHolder" type="targetholder:TargetHolder"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappingSpecCharacteristic" type="mappingspec:MappingSpecCharacteristic"/>
+<xsd:complexType abstract="true" name="Transform">
+<xsd:complexContent>
+<xsd:extension base="core:Element"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="ExpressionDefinition">
+<xsd:complexContent>
+<xsd:extension base="mappingspec:Definition">
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="expression">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="ruleName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExpressionDefinition" type="mappingspec:ExpressionDefinition"/>
+<xsd:complexType name="FieldDefinitionTransform">
+<xsd:complexContent>
+<xsd:extension base="mappingspec:Transform">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="definition" type="mappingspec:Definition"/>
+</xsd:choice>
+<xsd:attribute name="targetField" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FieldDefinitionTransform" type="mappingspec:FieldDefinitionTransform"/>
+<xsd:complexType name="MappingSpec">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="filters">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="FilterCondition" type="mappingspec:FilterCondition"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="joins">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Join" type="mappingspec:Join"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="sources">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Source" type="mappingspec:Source"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="target" type="mappingspec:Target"/>
+<xsd:element name="transforms">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Transform" type="mappingspec:Transform"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="udfdependencies">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="UDFRefCountDependency" type="udf:UDFRefCountDependency"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappingSpec" type="mappingspec:MappingSpec"/>
+<xsd:complexType name="PassthroughDefinition">
+<xsd:complexContent>
+<xsd:extension base="mappingspec:Definition">
+<xsd:attribute name="sourceField" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PassthroughDefinition" type="mappingspec:PassthroughDefinition"/>
+<xsd:complexType name="Source">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="sourceFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SourceField" type="mappingspec:SourceField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="dataSourceOperation" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Source" type="mappingspec:Source"/>
+<xsd:complexType name="Target">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="targetFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TargetField" type="mappingspec:TargetField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Target" type="mappingspec:Target"/>
+<xsd:complexType name="SourceField">
+<xsd:complexContent>
+<xsd:extension base="types:TypedElement">
+<xsd:attribute name="precision" type="xsd:int"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+<xsd:attribute name="source" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SourceField" type="mappingspec:SourceField"/>
+<xsd:complexType name="TargetField">
+<xsd:complexContent>
+<xsd:extension base="types:TypedElement">
+<xsd:attribute name="fieldDefinitionTransform" type="imx:idref"/>
+<xsd:attribute name="precision" type="xsd:int"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TargetField" type="mappingspec:TargetField"/>
+</xsd:schema>

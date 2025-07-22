@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.core/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.core/2">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThis package contains core abstractions that will be reused by almost all metamodel packages.\n  \n The Element class here is the root of all modeled classes.  Inheritting from a common base class makes it possible to define abstractions which apply polymorphically to the entire model.  Although this abstraction supports massively polymorphic associations, they are costly to support.  Modeling such relationships is therefore strongly discouraged.\n  \n Two of the subclasses of Element defined here as well:\n -- Some Elements have a name and inherit from NamedElement\n -- Some NamedElements are first class and inherit from FirstClass. First class objects can stand on their own and metadata services like persistence, versioning, locking etc. can be applied to them. \n  \n The final meta-class in this package allows a NamedElement to contain a collection of abstract description objects.  Modelers can find a concrete Description object, suitable for many cases, in com.informatica.metadata.common.desciption, or define their own concrete subclass for modeling the description abstraction.\n \n Change log: 23-Apr-2019: (yqiu) Added ElementReference as 2nd class counterpart of ObjectReference\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="Element">
+<xsd:annotation>
+<xsd:documentation> Any metadata object.  Every metadata object inherits from this class. This class has been provided so that relationships to generic metadata objects can be made.
+ 
+ NOTE: As of this publication, the only use case for referencing this most polymorphic of model classes has been deprecated.  The Element class has still been retained, but using it to define massively polymorphic associations is not encouraged.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="Annotation">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:annotation>
+<xsd:documentation> Abstract base class for annotating a named metadata element.  Modelers are intended to use concrete subclasses that implement the state required for their unique needs.
+ 
+ The common metamodel includes a set of concrete classes that capture commonly recurring needs.  The packages containing these classes are com.informatica.metadata.common.description and com.informatica.metadata.common.stereotype.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="ElementReference">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:annotation>
+<xsd:documentation> The ElementReference works the same way as ObjectReference, which is to be a reference object to another object. The exception is that this is declared as a 2nd class internal.
+ 
+ @author yqiu
+
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="NamedElement">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:annotation>
+<xsd:documentation> Any metadata object that has a name. All named elements can also have one or more descriptions.
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="annotations">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Annotation" type="core:Annotation"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="ObjectReference">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:annotation>
+<xsd:documentation> A first class object that's used to be a reference object to another object
+ The property to the object referenced cannot be declared here as the type of the property cannot be a type of a DEFERRED class kind.
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+</xsd:schema>

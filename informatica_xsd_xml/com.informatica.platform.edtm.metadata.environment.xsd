@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.platform.edtm.metadata.environment/2" xmlns:environment="http://com.informatica.platform.edtm.metadata.environment/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.platform.edtm.metadata.environment/2">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThe classes in this package encapsulate runtime behavior of a DTM that is independent of any particular Session or Mapping.\n\n Instances of this package are to be used transiently, derived from some other persistent model that encapsulates only the aspects of this model that are exposed to an end user.  All applications must be able to translate their user-exposes and persistent abstraction to an instance of this metamodel in order to provide a common invocation model for the embeddable DTM.\n\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="Environment">
+<xsd:annotation>
+<xsd:documentation> Global environment settings for running embedded DTMs
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="activeScheduling" type="xsd:boolean"/>
+<xsd:attribute name="dBQuotedIdFile">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dateDisplayFormat">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dtmShowBinaryData" type="xsd:boolean"/>
+<xsd:attribute name="dumpGMAInfo" type="xsd:boolean"/>
+<xsd:attribute name="enableGMA" type="xsd:boolean"/>
+<xsd:attribute name="maxSessionMemory">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="memoryAllocationStrategy" type="environment:MemoryAllocationStrategy"/>
+<xsd:attribute name="numSessions">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="reservedWordsFile">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="supportNanoSecInTime" type="xsd:boolean"/>
+<xsd:attribute name="taskPoolGrowthStrategy" type="environment:TaskPoolGrowthStrategy"/>
+<xsd:attribute name="threadPoolSize" type="xsd:int"/>
+<xsd:attribute name="totalDSMemory">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="useICUFallback" type="xsd:boolean"/>
+<xsd:attribute name="useToUpperInCaseInsensitiveComparison" type="xsd:boolean"/>
+<xsd:attribute name="validateDataCodepages" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="Environment" type="environment:Environment"/>
+<xsd:simpleType name="MemoryAllocationStrategy">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="lazy"/>
+<xsd:enumeration value="eager"/>
+<xsd:enumeration value="fair"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="TaskPoolGrowthStrategy">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="unconstrained"/>
+<xsd:enumeration value="none"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:schema>

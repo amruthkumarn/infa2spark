@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.platform.edtm.metadata.mapping.restart/2" xmlns:imx="http://com.informatica.imx" xmlns:mapping="http://com.informatica.metadata.common.mapping/2" xmlns:parameter="http://com.informatica.platform.edtm.metadata.mapping.parameter/2" xmlns:restart="http://com.informatica.platform.edtm.metadata.mapping.restart/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.platform.edtm.metadata.mapping.restart/2">
+<xsd:import namespace="http://com.informatica.metadata.common.mapping/2" schemaLocation="com.informatica.metadata.common.mapping.xsd"/>
+<xsd:import namespace="http://com.informatica.platform.edtm.metadata.mapping.parameter/2" schemaLocation="com.informatica.platform.edtm.metadata.mapping.parameter.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n The classes in this package encapsulate restart behavior of a DTM that is \n independent of any particular Session or Mapping.\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="RestartCharacteristic">
+<xsd:complexContent>
+<xsd:extension base="mapping:Characteristic">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="inputParamterList">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="InputParameter" type="parameter:InputParameter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RestartCharacteristic" type="restart:RestartCharacteristic"/>
+</xsd:schema>

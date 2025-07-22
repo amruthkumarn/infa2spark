@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.transformation.target/2" xmlns:imx="http://com.informatica.imx" xmlns:resourceaccess="http://com.informatica.metadata.common.transformation.resourceaccess/2" xmlns:target="http://com.informatica.metadata.common.transformation.target/2" xmlns:transformation="http://com.informatica.metadata.common.transformation/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.transformation.target/2">
+<xsd:import namespace="http://com.informatica.metadata.common.transformation.resourceaccess/2" schemaLocation="com.informatica.metadata.common.transformation.resourceaccess.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.transformation/3" schemaLocation="com.informatica.metadata.common.transformation.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:simpleType name="LoadScopeKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="row"/>
+<xsd:enumeration value="transaction"/>
+<xsd:enumeration value="all"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="TargetDataInterface">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="targetFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TargetTxField" type="target:TargetTxField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TargetDataInterface" type="target:TargetDataInterface"/>
+<xsd:complexType name="TargetTx">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessTx">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="distributeByCols" type="transformation:TransformationFieldList"/>
+<xsd:element name="sortByCols" type="transformation:SortFieldList"/>
+<xsd:element name="targetInterfaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TargetDataInterface" type="target:TargetDataInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="dynamicField" type="xsd:boolean"/>
+<xsd:attribute name="loadScope" type="target:LoadScopeKind"/>
+<xsd:attribute name="orderInsensitive" type="xsd:boolean"/>
+<xsd:attribute name="rejectOverflow" type="xsd:boolean"/>
+<xsd:attribute name="distributeByCols." type="imx:idref"/>
+<xsd:attribute name="sortByCols." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TargetTx" type="target:TargetTx"/>
+<xsd:complexType name="TargetTxField">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessTxField"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TargetTxField" type="target:TargetTxField"/>
+</xsd:schema>

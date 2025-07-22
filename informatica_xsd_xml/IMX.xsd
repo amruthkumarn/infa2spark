@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Liquid XML Studio 1.0.4.0 (http://www.liquid-technologies.com) -->
+<xs:schema xmlns="http://com.informatica.imx" xmlns:imx="http://com.informatica.imx" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://com.informatica.imx" version="2.0">
+    <xs:element name="IMX">
+        <xs:annotation>
+            <xs:documentation>This element will be the root of the xml document genreated by IMF's xml serializer. Note that though this element allows any content (and not just modeled content) to be present in xml, the deserializer will throw an error in case something other than modeled object is found during de-serialization.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded">
+                <xs:any processContents="strict"/>
+            </xs:sequence>
+            <xs:anyAttribute processContents="skip"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="annotations">
+        <xs:annotation>
+            <xs:documentation>Element which will contain the object level annotations attached on an object</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded">
+                <xs:any processContents="lax"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:attribute name="id" type="xs:string">
+     <xs:annotation>
+        <xs:documentation>This attribute will be referred in generated types and its value will be used to identify an object</xs:documentation>
+     </xs:annotation>
+    </xs:attribute>
+
+    <xs:attribute name="locator" type="xs:string">
+     <xs:annotation>
+      <xs:documentation>This attribute will be referred in proxy objects created for the generated types and its value will be used to specify the location of a proxy object, which is federated.</xs:documentation>
+     </xs:annotation>
+    </xs:attribute>
+
+    <xs:attribute name="iid" type="xs:long">
+     <xs:annotation>
+      <xs:documentation>This attribute will be referred to in generated types and its value will hold second class referable internal id.</xs:documentation>
+     </xs:annotation>
+    </xs:attribute>    
+
+    <xs:attribute name="idref" type="idref">
+    <xs:annotation>
+       <xs:documentation>This attribute will be referred by generated tyes and its value will be used to refer to the object having the id value equal to this value </xs:documentation>
+    </xs:annotation>
+    </xs:attribute>
+
+    <xs:simpleType name="idref">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="idrefs">
+         <xs:list itemType="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="char">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+
+    <xs:complexType name="IBlob">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute ref="imx:id"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:element name="IBlob" type="imx:IBlob"/>
+    <xs:complexType name="IBlobs">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="IBlob" type="imx:IBlob"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="IBlobs" type="imx:IBlobs"/>
+
+
+    <xs:complexType name="proxy">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element ref="imx:annotations"/>
+        </xs:choice>
+        <xs:attribute ref="imx:id"/>
+        <xs:attribute ref="imx:locator"/>
+        <xs:attribute name="type" type="xs:string"/>
+        <xs:attribute name="objectId" type="imx:idref"/>
+    </xs:complexType>
+    <xs:element name="proxy" type="imx:proxy"/>
+    <xs:complexType name="proxies">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="proxy" type="imx:proxy"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="proxies" type="imx:proxies"/>
+
+    <xs:element name="IGenericAnnotations">
+        <xs:annotation>
+            <xs:documentation>Element which will contain generic annotations attached on an object</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded">
+                <xs:any processContents="skip"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+  
+    <xs:complexType name="crc">
+        <xs:attribute name="value" type="xs:string"/>
+    </xs:complexType>
+    <xs:element name="crc" type="imx:crc"/>
+</xs:schema>

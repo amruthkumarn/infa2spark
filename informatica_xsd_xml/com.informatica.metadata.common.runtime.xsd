@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.runtime/2" xmlns:audit="http://com.informatica.metadata.common.audit/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:mapping="http://com.informatica.metadata.common.mapping/2" xmlns:runtime="http://com.informatica.metadata.common.runtime/2" xmlns:txhandlerconfig="http://com.informatica.metadata.common.txhandlerconfig/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.runtime/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.mapping/2" schemaLocation="com.informatica.metadata.common.mapping.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.txhandlerconfig/2" schemaLocation="com.informatica.metadata.common.txhandlerconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.audit/1" schemaLocation="com.informatica.metadata.common.audit.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> 2.2.0	elee	11/21/2011    Model changes for hadoop mapping enablement\n 1) Add new model class ExecutionEnvironment\n 2) Add new model class ExecutionEnvironmentType\n 3) Add new model class NativeExecutionEnvironment\n 4) Add a list of ExecutionEnvironment to RuntimeCharacteristic\n 5) Add string property selectedExecutionEnvironmentName to RuntimeCharacteristic\n \n 2.3.0	ssrivast  7/15/2013     Model changes for supporting execution environment version\n 1) Add string property version to ExecutionEnvironment\n \n 2.4.0    jmaurice  26 Aug 2013   Model changes for partitioning work.\n \n 2.5.0    yxiao  02/11/2014   Model changes for CADI (next generation DI).\n 1) Add new model class CADIExecutionEnvironment\n\n 2.6.0    harim  17 Sep 2014   Model changes for parameterizing version property \n 2.7.0    yxiao  04/10/2015	Add ExecutionParameter model so that all environments can use it.\n                              Add CADIExecutionEngine to replace CADIExecutionEnvironment. \n\n 2.8.0    jmaurice  28 april 2015   Exposing targetCommitInterval and stopOnErrors.\n 2.9.0    rghumare 5/29/2015    Renaming CADIEngineConfig to BaseCADIEngineConfig and making it abstract.\n 2.10.0   gboo Dec 10, 2015 Adding spark execution environment\n 2.11.0   jyeh 1/24/16 Add real-time mapping properties on RuntimeCharacteristic\n 2.13.0   vikakuma 05/07/19 Adding state store connection and user defined checkpoint directory in StreamingConfig model\n 2.14.0   pgouda 2020/07/28 Added the audit configurations to the runtime characteristics\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="BaseCADIEngineConfig">
+<xsd:annotation>
+<xsd:documentation> Configuration of CADI engine - mostly CADI infrastructure.  
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="executionParameters">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ExecutionParameter" type="runtime:ExecutionParameter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="maxPort" type="xsd:int"/>
+<xsd:attribute name="minPort" type="xsd:int"/>
+<xsd:attribute name="password">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="workingDirectory">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:complexType name="ExecutionParameter">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value." type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="ExecutionParameter" type="runtime:ExecutionParameter"/>
+<xsd:complexType name="NativePartitioningConfig">
+<xsd:annotation>
+<xsd:documentation> 
+ @author nroy
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="maxParallelism" type="xsd:int"/>
+<xsd:attribute name="maxParallelism." type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="NativePartitioningConfig" type="runtime:NativePartitioningConfig"/>
+<xsd:simpleType name="SparkDeployMode">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="CLIENT"/>
+<xsd:enumeration value="CLUSTER"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="SparkEngineConfig">
+<xsd:annotation>
+<xsd:documentation> Configuration properties common to all spark executions.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="confVars">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ExecutionParameter" type="runtime:ExecutionParameter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="deployMode" type="runtime:SparkDeployMode"/>
+<xsd:attribute name="eventLogDir">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="hdfsStagingDir">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="master">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SparkEngineConfig" type="runtime:SparkEngineConfig"/>
+<xsd:complexType name="StreamingConfig">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="batchInterval">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="cacheRefreshInterval">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="checkpointDirectory">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="connectionName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="stateStoreConnectInfo" type="imx:idref"/>
+<xsd:attribute name="batchInterval." type="imx:idref"/>
+<xsd:attribute name="cacheRefreshInterval." type="imx:idref"/>
+<xsd:attribute name="checkpointDirectory." type="imx:idref"/>
+<xsd:attribute name="connectionName." type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="StreamingConfig" type="runtime:StreamingConfig"/>
+<xsd:complexType abstract="true" name="ExecutionEnvironment">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:annotation>
+<xsd:documentation> This is the base class of execution environment.
+ It is used for configuring the execution engine for a mapping.
+ 
+ @author elee
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="version">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="version." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="CADIExecutionEngine">
+<xsd:complexContent>
+<xsd:extension base="runtime:ExecutionEnvironment">
+<xsd:annotation>
+<xsd:documentation> Cluster Aware DI (CADI) Execution Engine
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="maxPartition" type="xsd:int"/>
+<xsd:attribute name="maxPartition." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="CADIExecutionEnvironment">
+<xsd:complexContent>
+<xsd:extension base="runtime:ExecutionEnvironment">
+<xsd:annotation>
+<xsd:documentation> Cluster Aware DI (CADI) Execution Environment
+
+ MODIFICATIONS:
+ 2.5.0    yxiao  02/11/2014   Added the class for CADI execution
+ 2.7.0    yxiao  04/10/2015   This class has been deprecated. Use CADIExecutionEngine instead.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="maxParallelism" type="xsd:int"/>
+<xsd:attribute name="maxParallelism." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="ExecutionEnvironmentType">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> 
+ @author elee
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="executionEnvironmentClassName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExecutionEnvironmentType" type="runtime:ExecutionEnvironmentType"/>
+<xsd:complexType name="NativeExecutionEnvironment">
+<xsd:complexContent>
+<xsd:extension base="runtime:ExecutionEnvironment">
+<xsd:annotation>
+<xsd:documentation> 
+ @author elee
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="partitioningConfig" type="runtime:NativePartitioningConfig"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NativeExecutionEnvironment" type="runtime:NativeExecutionEnvironment"/>
+<xsd:complexType name="RuntimeCharacteristic">
+<xsd:complexContent>
+<xsd:extension base="mapping:Characteristic">
+<xsd:annotation>
+<xsd:documentation> MODIFICATIONS
+ 
+ 1.6.0 pgouda 2020/07/28 Added the audit configurations to the runtime characteristics
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="auditConfig" type="audit:AuditConfig"/>
+<xsd:element name="environments">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ExecutionEnvironment" type="runtime:ExecutionEnvironment"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="handlers">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TxHandlerConfig" type="txhandlerconfig:TxHandlerConfig"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="streamingConfig" type="runtime:StreamingConfig"/>
+</xsd:choice>
+<xsd:attribute name="maximumDataErrors" type="xsd:int"/>
+<xsd:attribute name="maximumRowsReadPerPartition" type="xsd:int"/>
+<xsd:attribute name="maximumRuntimeIntervalPerSource">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="selectedExecutionEnvironmentName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="stateStore">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="targetCommitInterval" type="xsd:int"/>
+<xsd:attribute name="maximumDataErrors." type="imx:idref"/>
+<xsd:attribute name="maximumRowsReadPerPartition." type="imx:idref"/>
+<xsd:attribute name="maximumRuntimeIntervalPerSource." type="imx:idref"/>
+<xsd:attribute name="selectedExecutionEnvironmentName." type="imx:idref"/>
+<xsd:attribute name="stateStore." type="imx:idref"/>
+<xsd:attribute name="targetCommitInterval." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RuntimeCharacteristic" type="runtime:RuntimeCharacteristic"/>
+<xsd:complexType abstract="true" name="SparkExecutionEngine">
+<xsd:complexContent>
+<xsd:extension base="runtime:ExecutionEnvironment">
+<xsd:annotation>
+<xsd:documentation> Spark Execution Engine
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+</xsd:schema>

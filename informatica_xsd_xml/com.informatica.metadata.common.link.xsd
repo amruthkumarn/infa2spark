@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.link/0" xmlns:imx="http://com.informatica.imx" xmlns:link="http://com.informatica.metadata.common.link/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.link/0">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> CHANGES&lt;/br&gt;\n  0.4.0 sraval    2014/02/07         Increased length of Attributes.value to 4000\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="Attributes">
+<xsd:annotation>
+<xsd:documentation> This represents a Link attribute. This is used to add baggage data to a link.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="key">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="Attributes" type="link:Attributes"/>
+<xsd:complexType name="EndPoint">
+<xsd:annotation>
+<xsd:documentation> An Endpoint is identified by clientIdentifier and entityIdentifier. A subclass
+ of Endpoint must also make sure that it designs its entityIdentifier and
+ clientIdentifier such that this uniqueness is kept intact.
+
+ CHANGES
+ 0.1.0    aparasha     03/26/2013             Introduced the model
+ 0.2.0    aparasha     02/29/2013             Changed endPointType to String
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="endPointType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="entityIdentifier">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="systemIdentifier">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="EndPoint" type="link:EndPoint"/>
+<xsd:complexType name="Link">
+<xsd:annotation>
+<xsd:documentation> Link is uniquely defined by a combination of a
+ LinkType, source endpoint (clientIdentifier and entityIdentifier) and
+ target endpoint (clientIdentifier and entityIdentifier). A subclass of Link
+ must also make sure that it designs its entityIdentifier and clientIdentifier
+ such that this uniqueness is kept intact.
+&lt;/br&gt;
+ CHANGES&lt;/br&gt;
+ 0.1.0    aparasha     03/26/2013             Introduced the model&lt;/br&gt;
+ 0.2.0	aparasha	 04/29/2013				Made linkType as string&lt;/br&gt;
+												Introduced Link Attributes for extension&lt;/br&gt;
+ 0.3.0	sraval		 08/21/2013				Added attributes for created and lastModified
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="linkAttributes" type="link:LinkAttributes"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="createdBy">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="creationTimeUTC" type="xsd:long"/>
+<xsd:attribute name="lastUpdatedBy">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="lastUpdatedTimeUTC" type="xsd:long"/>
+<xsd:attribute name="linkType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="source" type="imx:idref"/>
+<xsd:attribute name="target" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="Link" type="link:Link"/>
+<xsd:complexType name="LinkAttributes">
+<xsd:annotation>
+<xsd:documentation> This represents Link Attribute. This class can be extended to support additional fields.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="attributes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Attributes" type="link:Attributes"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="LinkAttributes" type="link:LinkAttributes"/>
+</xsd:schema>

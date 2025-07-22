@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.platform.ldtm.metadata/1" xmlns:imx="http://com.informatica.imx" xmlns:metadata="http://com.informatica.platform.ldtm.metadata/1" xmlns:monitoring="http://com.informatica.platform.edtm.metadata.monitoring/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.platform.ldtm.metadata/1">
+<xsd:import namespace="http://com.informatica.platform.edtm.metadata.monitoring/2" schemaLocation="com.informatica.platform.edtm.metadata.monitoring.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="ParameterStatisticMap">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="byteCount" type="xsd:long"/>
+<xsd:attribute name="parameterName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="rowCount" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="ParameterStatisticMap" type="metadata:ParameterStatisticMap"/>
+<xsd:complexType name="StatisticsModel">
+<xsd:annotation>
+<xsd:documentation> Runtime statistics information about the session.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="processStats">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="ProcessStatistics" type="monitoring:ProcessStatistics"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="vParameterStatistics">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="ParameterStatisticMap" type="metadata:ParameterStatisticMap"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="vTransformationPathMap">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="TransformationPathMap" type="metadata:TransformationPathMap"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="gmaSessionSatatistics" type="imx:idref"/>
+<xsd:attribute name="inputByteTotal" type="xsd:long"/>
+<xsd:attribute name="outputByteTotal" type="xsd:long"/>
+<xsd:attribute name="sessionExecutionInfo" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="StatisticsModel" type="metadata:StatisticsModel"/>
+<xsd:complexType name="TransformationPathMap">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="classType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="transformationExInfo" type="imx:idref"/>
+<xsd:attribute name="expansionPath">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="TransformationPathMap" type="metadata:TransformationPathMap"/>
+</xsd:schema>

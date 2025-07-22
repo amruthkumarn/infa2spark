@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.core.task/1" xmlns:binding="http://com.informatica.metadata.common.binding/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:task="http://com.informatica.metadata.common.core.task/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.core.task/1">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.binding/1" schemaLocation="com.informatica.metadata.common.binding.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType abstract="true" name="AbstractTaskExecutionContext">
+<xsd:annotation>
+<xsd:documentation> Marker class to be extended by Task writers to capture information
+ specific to particular execution environment.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="TaskConfig">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="asynchronous" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="TaskConfig" type="task:TaskConfig"/>
+<xsd:complexType abstract="true" name="AbstractTask">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="taskConfig" type="task:TaskConfig"/>
+<xsd:element name="taskInputs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TaskInput" type="binding:TaskInput"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="taskOutputs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TaskOutput" type="binding:TaskOutput"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="TaskInstance">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation>  MODIFICATIONS
+
+  1.1.0  mgupta  8/22/2013  Added new property 'executionContext'
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="executionContext" type="task:AbstractTaskExecutionContext"/>
+<xsd:element name="inputBindings">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="InputBinding" type="binding:InputBinding"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="outputBindings">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OutputBinding" type="binding:OutputBinding"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="task" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TaskInstance" type="task:TaskInstance"/>
+</xsd:schema>

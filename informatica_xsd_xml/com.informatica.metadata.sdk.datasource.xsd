@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.sdk.datasource/2" xmlns:datasource="http://com.informatica.metadata.common.datasource/2" xmlns:datasource1="http://com.informatica.metadata.sdk.datasource/2" xmlns:imx="http://com.informatica.imx" xmlns:source="http://com.informatica.metadata.sdk.txhandlerconfig.source/2" xmlns:sourcedataobject="http://com.informatica.metadata.sdk.sourcedataobject/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.sdk.datasource/2">
+<xsd:import namespace="http://com.informatica.metadata.sdk.sourcedataobject/2" schemaLocation="com.informatica.metadata.sdk.sourcedataobject.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.datasource/2" schemaLocation="com.informatica.metadata.common.datasource.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.sdk.txhandlerconfig.source/2" schemaLocation="com.informatica.metadata.sdk.txhandlerconfig.source.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType final="#all" name="SDKDataSource">
+<xsd:complexContent>
+<xsd:extension base="datasource:DataSource">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="sourceDataObjects">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SDKSourceDataObject" type="sourcedataobject:SDKSourceDataObject"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="defaultReaderConfig" type="source:SDKReaderConfig"/>
+</xsd:choice>
+<xsd:attribute name="createdBy">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sourceSystemType" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SDKDataSource" type="datasource1:SDKDataSource"/>
+</xsd:schema>

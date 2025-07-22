@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.partitionpoint/2" xmlns:imx="http://com.informatica.imx" xmlns:partitionpoint="http://com.informatica.metadata.common.partitionpoint/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.partitionpoint/2">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nAll partitioning strategies currently in existence need to expose the location of partition points to a user that configures a session.\n \n This package contains a common abstraction for partition points, so that both the dynamic and detailed strategies can reuse what they share in common when exposing partition points, while also retaining separate subclasses to account for their differences.\n \n The PartitionPoint class is not contained by the abstract base common.session.PartitionStrategy class to account for the possibility of future partitioning algorithms that will make decisions about where to place partition points without exposing the concept to end users.\n \n The contents of this package provide abstractions for selecting transformation instances from a mapping where new data pipelines begin and for describing how data is re-arranged at each of those partition points.\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="DataPartitioningStrategy">
+<xsd:annotation>
+<xsd:documentation> Deprecated
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="inputInterface" type="imx:idref"/>
+</xsd:complexType>
+<xsd:complexType name="GroupPartitioningScheme">
+<xsd:annotation>
+<xsd:documentation> Instances of this class describe how input or output data is partitioned on a transformation instance's group.
+ This is only used by transformations, not by data source.
+ Additional partitioning information about the associated group is captured in RuntimeGroupPartitioningInfo as annotation. 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="mergeScheme" type="partitionpoint:MergeKind"/>
+<xsd:element name="partitioningScheme" type="partitionpoint:PartitioningScheme"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="group" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="GroupPartitioningScheme" type="partitionpoint:GroupPartitioningScheme"/>
+<xsd:complexType name="KeyRangeField">
+<xsd:annotation>
+<xsd:documentation> Deprecated
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="partitionRanges">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="PartitionKeyRange" type="partitionpoint:PartitionKeyRange"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="rangedField" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="KeyRangeField" type="partitionpoint:KeyRangeField"/>
+<xsd:complexType name="KeyValueCollection">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="allowedValues">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="KeyValueCollection" type="partitionpoint:KeyValueCollection"/>
+<xsd:complexType abstract="true" name="MergeKind">
+<xsd:annotation>
+<xsd:documentation> This class defines the merge strategy on the input data coming from multiple data partitions.
+ This is needed when the ordering of input key needs to be retained.
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="PartitionKeyRange">
+<xsd:annotation>
+<xsd:documentation> Deprecated
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="endRange">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="partitionNumber" type="xsd:int"/>
+<xsd:attribute name="startRange">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="PartitionKeyRange" type="partitionpoint:PartitionKeyRange"/>
+<xsd:complexType abstract="true" name="PartitionPoint">
+<xsd:annotation>
+<xsd:documentation> A pipeline stage is a DTM concept for the subset of a mapping's widgets that fall between two partition points.  The transformation instance whose input groups accept data from other stages is called the head widget instance for the stage.  
+ 
+ A PartitionPoint is an abstraction for describing a pipeline stage.  It accomplished this by:
+ -- Refering to the transformation instance that initiates a pipeline stage.
+ -- Containing one DataPartitioningStrategy for each TransformationDataInterface (field group) that is used for input by the referenced transformation instance.
+ 
+ The specific subtype of DataPartitioningStrategy that is contained determines how input rows are re-arranged at that input group.  
+ 
+ Not every concrete DataPartitioningStrategy subclass is compatible with the input interfaces of each AbstractTransformation subtype.  Seed metadata will be required to express the compatible subset of valid DataPartitioningStrategy for each AbstractTransformation subtype, based on DTM capabilities and the semantics of what PartitionStrategy subtype contains a PartitionPoint.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="inputGroupPartition">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="GroupPartitioningScheme" type="partitionpoint:GroupPartitioningScheme"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="inputStrategies">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DataPartitioningStrategy" type="partitionpoint:DataPartitioningStrategy"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="resourcePartition" type="partitionpoint:PartitioningScheme"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="headWidget" type="imx:idref"/>
+</xsd:complexType>
+<xsd:complexType name="PartitioningKey">
+<xsd:annotation>
+<xsd:documentation> This class describes a key field used in key-based data partitioning schemes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="key" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="PartitioningKey" type="partitionpoint:PartitioningKey"/>
+<xsd:complexType name="PartitioningKeyRanges">
+<xsd:annotation>
+<xsd:documentation> This class represents a list of ranges for a partitioning key. 
+ The number of starting ranges and ending ranges must match the number of partitions. 
+ We use index based association to find the starting and ending range for the i-th partition.
+ 
+ If the starting value of the first range or the ending value of the last range is undefined, 
+ a certain literal should be chosen to represent the minimal value and the maximum value.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="partitioningKey" type="imx:idref"/>
+<xsd:attribute name="rangeType" type="partitionpoint:RangeTypeEnum"/>
+<xsd:attribute name="endRanges">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="startRanges">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="PartitioningKeyRanges" type="partitionpoint:PartitioningKeyRanges"/>
+<xsd:complexType name="PartitioningKeyValues">
+<xsd:annotation>
+<xsd:documentation> This class represents the allowed values for each partition for an associated partitioning key. 
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="allowedKeyValues">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="KeyValueCollection" type="partitionpoint:KeyValueCollection"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="partitioningKey" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="PartitioningKeyValues" type="partitionpoint:PartitioningKeyValues"/>
+<xsd:complexType abstract="true" name="PartitioningScheme">
+<xsd:annotation>
+<xsd:documentation> Instances of this class describe how the data is partitioned.
+ 
+ The specific subtype of PartitioningScheme describes a certain type of data partitioning strategy and maybe the detail of each partition.
+ It is associated with a transformation group or a data source.
+ 
+ Only the partitioning schemes that can be leveraged by the framework or adapter will be defined in this package.
+ For example, if a relational database supports composite partitioning scheme such as range-hash, then we could choose range partitioning scheme
+ to represent that. If a native partitioning scheme is unknown, we could choose ArbitraryPartitioning to represent it.
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:simpleType name="RangeTypeEnum">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="open"/>
+<xsd:enumeration value="closed"/>
+<xsd:enumeration value="leftOpen"/>
+<xsd:enumeration value="rightOpen"/>
+<xsd:enumeration value="greaterThan"/>
+<xsd:enumeration value="atLeast"/>
+<xsd:enumeration value="lessThan"/>
+<xsd:enumeration value="atMost"/>
+<xsd:enumeration value="all"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="SortKey">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="isAscending" type="xsd:boolean"/>
+<xsd:attribute name="key" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="SortKey" type="partitionpoint:SortKey"/>
+<xsd:complexType name="AllToFirstRoutingPartitioningScheme">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:PartitioningScheme">
+<xsd:annotation>
+<xsd:documentation> This subclass of PartitioningScheme describes given n partitions on the target, only the first
+ one is actively writing to the adapter
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="AllToFirstRoutingPartitioningScheme" type="partitionpoint:AllToFirstRoutingPartitioningScheme"/>
+<xsd:complexType name="ArbitraryPartitioning">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:PartitioningScheme">
+<xsd:annotation>
+<xsd:documentation> This subclass of PartitioningScheme describes that there is no data rules applied when partitioning the data.
+ It's subclass describes how data is partitioned based on non-data rules.
+ 
+
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ArbitraryPartitioning" type="partitionpoint:ArbitraryPartitioning"/>
+<xsd:complexType name="AutoHashKeyStrategy">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:DataPartitioningStrategy">
+<xsd:annotation>
+<xsd:documentation> Deprecated
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="AutoHashKeyStrategy" type="partitionpoint:AutoHashKeyStrategy"/>
+<xsd:complexType name="DefaultMerge">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:MergeKind"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DefaultMerge" type="partitionpoint:DefaultMerge"/>
+<xsd:complexType name="KeyBasedPartitioning">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:PartitioningScheme">
+<xsd:annotation>
+<xsd:documentation> This subclass of PartitioningScheme describes input re-arrangement by partitioning data based on some key field(s).
+ It's subclasses describe how the key field is used to partition the data.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="partitioningKeys">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="PartitioningKey" type="partitionpoint:PartitioningKey"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="KeyBasedPartitioning" type="partitionpoint:KeyBasedPartitioning"/>
+<xsd:complexType name="KeyRangeStrategy">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:DataPartitioningStrategy">
+<xsd:annotation>
+<xsd:documentation> Deprecated
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="keyRangeFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="KeyRangeField" type="partitionpoint:KeyRangeField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="KeyRangeStrategy" type="partitionpoint:KeyRangeStrategy"/>
+<xsd:complexType name="NativeStrategy">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:DataPartitioningStrategy">
+<xsd:annotation>
+<xsd:documentation> Deprecated
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NativeStrategy" type="partitionpoint:NativeStrategy"/>
+<xsd:complexType name="PassthroughPartitioning">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:PartitioningScheme">
+<xsd:annotation>
+<xsd:documentation> This subclass of PartitioningScheme describes no re-arrangement on the input data: rows from output partition 1 to input partition 1, from output partition 2 to input partition 2, and so on.
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PassthroughPartitioning" type="partitionpoint:PassthroughPartitioning"/>
+<xsd:complexType name="PassthroughStrategy">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:DataPartitioningStrategy">
+<xsd:annotation>
+<xsd:documentation> Deprecated
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PassthroughStrategy" type="partitionpoint:PassthroughStrategy"/>
+<xsd:complexType name="RoundRobinStrategy">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:DataPartitioningStrategy">
+<xsd:annotation>
+<xsd:documentation> Deprecated
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RoundRobinStrategy" type="partitionpoint:RoundRobinStrategy"/>
+<xsd:complexType name="SortedMerge">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:MergeKind">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="sortKeys">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SortKey" type="partitionpoint:SortKey"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="isCaseSensitive" type="xsd:boolean"/>
+<xsd:attribute name="isNullHighest" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SortedMerge" type="partitionpoint:SortedMerge"/>
+<xsd:complexType name="StreamConcatMerge">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:MergeKind"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StreamConcatMerge" type="partitionpoint:StreamConcatMerge"/>
+<xsd:complexType name="UserHashKeyStrategy">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:DataPartitioningStrategy">
+<xsd:annotation>
+<xsd:documentation> Deprecated
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="fields" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserHashKeyStrategy" type="partitionpoint:UserHashKeyStrategy"/>
+<xsd:complexType name="ExpressionPartitioning">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:KeyBasedPartitioning">
+<xsd:annotation>
+<xsd:documentation> This subclass of KeyBasedPartitioning describes input data re-arrangement by assigning each input row based on some expressions.
+ For example, some relational database allows function-based data partitioning.
+ 
+ 2.3.0        sachouch   09/10/2013      extended expression property's length
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="expressions">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExpressionPartitioning" type="partitionpoint:ExpressionPartitioning"/>
+<xsd:complexType abstract="true" name="HashPartitioning">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:KeyBasedPartitioning">
+<xsd:annotation>
+<xsd:documentation> This subclass of PartitioningScheme describes input data re-arrangement by assigning each input row based on the hash value
+ of the partitioning keys.
+ It's subclasses describe the type of hash function being used.
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="ListPartitioning">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:KeyBasedPartitioning">
+<xsd:annotation>
+<xsd:documentation> This subclass of KeyBasedPartitioning describes input data re-arrangement by assigning each row based on the valid values
+ defined on the partitioning keys in each partition.
+ If a value of the key doesn't match any of the allowed values, the row will be discarded.
+ 
+ This is usually used by data source. For example, hive's native partition is based on list partitioning where each native partition
+ contains all rows with the same partitioning key value. 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="valuesOfAllKeys">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="PartitioningKeyValues" type="partitionpoint:PartitioningKeyValues"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ListPartitioning" type="partitionpoint:ListPartitioning"/>
+<xsd:complexType name="RangePartitioning">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:KeyBasedPartitioning">
+<xsd:annotation>
+<xsd:documentation> This subclass of KeyBasedPartitioning describes input data re-arrangement by assigning each input row based on data range defined on each partition.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="rangesOfAllKeys">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="PartitioningKeyRanges" type="partitionpoint:PartitioningKeyRanges"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RangePartitioning" type="partitionpoint:RangePartitioning"/>
+<xsd:complexType name="RoundRobinPartitioning">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:ArbitraryPartitioning">
+<xsd:annotation>
+<xsd:documentation> This subclass of ArbitraryPartitioning describes input re-arrangement by ordering the partitions and assigning each input row to the next partition in sequence, wrapping back to the beginning when the last partition is reached.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RoundRobinPartitioning" type="partitionpoint:RoundRobinPartitioning"/>
+<xsd:complexType name="ExternalHashPartitioning">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:HashPartitioning">
+<xsd:annotation>
+<xsd:documentation> This subclass of HashPartitioning indicates that external (unknown) hash function is used when partitioning the data based on hash value
+ of the partitioning key(s).
+ This partitioning scheme is used for data source.
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExternalHashPartitioning" type="partitionpoint:ExternalHashPartitioning"/>
+<xsd:complexType name="NativeHashPartitioning">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:HashPartitioning">
+<xsd:annotation>
+<xsd:documentation> This subclass of HashPartitioning indicates that framework's hash function is used when partitioning the data based on hash value
+ of the partitioning key(s).
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NativeHashPartitioning" type="partitionpoint:NativeHashPartitioning"/>
+</xsd:schema>

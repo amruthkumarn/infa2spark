@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.basemodel.utils.metadata.genericextension.sample/1" xmlns:genericextension="http://com.informatica.basemodel.utils.metadata.genericextension/1" xmlns:imx="http://com.informatica.imx" xmlns:modelextension="http://com.informatica.metadata.common.modelextension/2" xmlns:sample="http://com.informatica.basemodel.utils.metadata.genericextension.sample/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.basemodel.utils.metadata.genericextension.sample/1">
+<xsd:import namespace="http://com.informatica.metadata.common.modelextension/2" schemaLocation="com.informatica.metadata.common.modelextension.xsd"/>
+<xsd:import namespace="http://com.informatica.basemodel.utils.metadata.genericextension/1" schemaLocation="com.informatica.basemodel.utils.metadata.genericextension.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> The model classes exposed by this package can be used to convert\n any Java object graph into a representation which is understood by IMF.\n\n The IMF representation of the Java object graph can leverage all the\n services available for IMF models in Mercury.\n\n\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="AggregateSampleBaseAdapter">
+<xsd:annotation>
+<xsd:documentation> Extension point of aggregating base adapter
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="baseAdpaters">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SampleBaseAdapter" type="sample:SampleBaseAdapter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="modelExtension" type="sample:BaseModelExtension"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="abc" type="xsd:int"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="AggregateSampleBaseAdapter" type="sample:AggregateSampleBaseAdapter"/>
+<xsd:simpleType name="ExtensionEnumValue">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="value1"/>
+<xsd:enumeration value="value2"/>
+<xsd:enumeration value="value3"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="SampleBaseAdapter">
+<xsd:annotation>
+<xsd:documentation> A sample base adapter
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="modelExtension" type="sample:BaseModelExtension"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="abc">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SampleBaseAdapter" type="sample:SampleBaseAdapter"/>
+<xsd:complexType name="SampleRootObject">
+<xsd:annotation>
+<xsd:documentation> A sample root object with reference to extended adapter
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="aggregateAdpeter" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="SampleRootObject" type="sample:SampleRootObject"/>
+<xsd:complexType name="BaseModelExtension">
+<xsd:complexContent>
+<xsd:extension base="modelextension:ModelExtension">
+<xsd:annotation>
+<xsd:documentation> sample of model extensions
+
+
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BaseModelExtension" type="sample:BaseModelExtension"/>
+<xsd:complexType name="ExtendedAggregateSampleAdapter">
+<xsd:complexContent>
+<xsd:extension base="sample:AggregateSampleBaseAdapter">
+<xsd:annotation>
+<xsd:documentation> Extension point of aggregating adapter
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="extendedAdpater">
+<xsd:complexType>
+<xsd:choice maxOccurs="1" minOccurs="0">
+<xsd:element name="ExtendedSampleAdapter" type="sample:ExtendedSampleAdapter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExtendedAggregateSampleAdapter" type="sample:ExtendedAggregateSampleAdapter"/>
+<xsd:complexType name="ExtendedSampleAdapter">
+<xsd:complexContent>
+<xsd:extension base="sample:SampleBaseAdapter">
+<xsd:annotation>
+<xsd:documentation> Extension point of base adapter
+
+
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExtendedSampleAdapter" type="sample:ExtendedSampleAdapter"/>
+<xsd:complexType name="ExtendedAggregatedModelExtension">
+<xsd:complexContent>
+<xsd:extension base="sample:BaseModelExtension">
+<xsd:annotation>
+<xsd:documentation> sample of model extensions
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="blobProperty">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="booleanProperty" type="xsd:boolean"/>
+<xsd:attribute name="byteProperty" type="xsd:byte"/>
+<xsd:attribute name="charProperty">
+<xsd:simpleType>
+<xsd:restriction base="imx:char">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dateProperty">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="doubleProperty" type="xsd:double"/>
+<xsd:attribute name="enumProperty" type="sample:ExtensionEnumValue"/>
+<xsd:attribute name="floatProperty" type="xsd:float"/>
+<xsd:attribute name="intProperty" type="xsd:int"/>
+<xsd:attribute name="longProperty" type="xsd:long"/>
+<xsd:attribute name="shortProperty" type="xsd:short"/>
+<xsd:attribute name="stringProperty">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExtendedAggregatedModelExtension" type="sample:ExtendedAggregatedModelExtension"/>
+<xsd:complexType name="ExtendedModelExtension">
+<xsd:complexContent>
+<xsd:extension base="sample:BaseModelExtension">
+<xsd:annotation>
+<xsd:documentation> sample of model extensions
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="blobProperty">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="booleanProperty" type="xsd:boolean"/>
+<xsd:attribute name="byteProperty" type="xsd:byte"/>
+<xsd:attribute name="charProperty">
+<xsd:simpleType>
+<xsd:restriction base="imx:char">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dateProperty">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="doubleProperty" type="xsd:double"/>
+<xsd:attribute name="enumProperty" type="sample:ExtensionEnumValue"/>
+<xsd:attribute name="floatProperty" type="xsd:float"/>
+<xsd:attribute name="intProperty" type="xsd:int"/>
+<xsd:attribute name="longProperty" type="xsd:long"/>
+<xsd:attribute name="shortProperty" type="xsd:short"/>
+<xsd:attribute name="stringProperty">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExtendedModelExtension" type="sample:ExtendedModelExtension"/>
+<xsd:complexType name="SerializedModelExtension">
+<xsd:complexContent>
+<xsd:extension base="sample:BaseModelExtension">
+<xsd:annotation>
+<xsd:documentation> Serialized sample model extension
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="genericContainer" type="genericextension:ExtensionContainer"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SerializedModelExtension" type="sample:SerializedModelExtension"/>
+</xsd:schema>

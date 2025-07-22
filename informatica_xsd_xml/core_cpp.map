@@ -1,0 +1,15 @@
+#
+# Copyright (c) 2007 Informatica Corporation.  This file contains material
+# proprietary to Informatica Corporation and may not be copied or distributed
+# in any form without the written permission of Informatica Corporation.
+#
+
+##########################################################################
+#   This file is generated. Do not modify
+#   
+#   This file contains list of packages contained in library and can be used
+#   in automatic package registration
+#   
+##########################################################################
+
+com.informatica.metadata.common.modelextension, com.informatica.metadata.common.core, com.informatica.metadata.common.aggregationtypes, com.informatica.metadata.common.annotation, com.informatica.metadata.common.types, com.informatica.metadata.common.binding.runtime, com.informatica.metadata.common.codepage, com.informatica.metadata.common.comment, com.informatica.metadata.common.component, com.informatica.metadata.common.config, com.informatica.metadata.common.config.dynamictype, com.informatica.metadata.common.constraint, com.informatica.metadata.common.adapter, com.informatica.metadata.common.property, com.informatica.metadata.common.dataobject, com.informatica.metadata.common.description, com.informatica.metadata.common.folder, com.informatica.metadata.common.genericannotation, com.informatica.metadata.common.link, com.informatica.metadata.common.link.nonpersistent, com.informatica.metadata.common.modeledtypes, com.informatica.metadata.common.scope, com.informatica.metadata.common.parameter, com.informatica.metadata.common.project, com.informatica.metadata.common.variable, com.informatica.metadata.common.rule, com.informatica.metadata.common.binding, com.informatica.metadata.common.sourcespec.sourceable, com.informatica.metadata.common.statistics, com.informatica.metadata.common.tbd.persistence, com.informatica.metadata.common.tbd, com.informatica.metadata.common.typesystem, com.informatica.metadata.common.parameter.runtime, com.informatica.metadata.common.typesystem.typelibrary, com.informatica.metadata.common.typesystem.directmaps, com.informatica.metadata.common.typesystem.storagesemantics, com.informatica.metadata.common.typelibrary.htype, com.informatica.metadata.common.value, com.informatica.metadata.common.core.task, com.informatica.metadata.common.xsd = core_cpp;

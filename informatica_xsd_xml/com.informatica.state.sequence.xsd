@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.state.sequence/1" xmlns:common="http://com.informatica.state.common/0" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:sequence="http://com.informatica.state.sequence/1" xmlns:sequence1="http://com.informatica.metadata.common.transformation.sequence/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.state.sequence/1">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.state.common/0" schemaLocation="com.informatica.state.common.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.transformation.sequence/1" schemaLocation="com.informatica.metadata.common.transformation.sequence.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> Copyright (c) 2013 Informatica Corporation. All rights reserved.\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="ParentInfo">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:attribute name="canonicalType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParentInfo" type="sequence:ParentInfo"/>
+<xsd:complexType name="SequenceState">
+<xsd:complexContent>
+<xsd:extension base="common:AbstractState">
+<xsd:annotation>
+<xsd:documentation> Contains the runtime state of the sequence generator transformation.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="currValue" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SequenceState" type="sequence:SequenceState"/>
+<xsd:complexType name="SequenceStateInfo">
+<xsd:complexContent>
+<xsd:extension base="common:AbstractState">
+<xsd:annotation>
+<xsd:documentation> This mode encapsulates all the meta data stored in state repository required for sequence generation logic. 
+ Additionally it captures some more runtime information.
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="parents">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ParentInfo" type="sequence:ParentInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="sequenceMetadata" type="sequence1:NativeSequenceObject"/>
+</xsd:choice>
+<xsd:attribute name="dName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SequenceStateInfo" type="sequence:SequenceStateInfo"/>
+</xsd:schema>

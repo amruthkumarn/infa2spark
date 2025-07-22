@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.partitionstrategy/2" xmlns:imx="http://com.informatica.imx" xmlns:mapping="http://com.informatica.metadata.common.mapping/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.partitionstrategy/2">
+<xsd:import namespace="http://com.informatica.metadata.common.mapping/2" schemaLocation="com.informatica.metadata.common.mapping.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="PartitionStrategy">
+<xsd:complexContent>
+<xsd:extension base="mapping:Characteristic">
+<xsd:annotation>
+<xsd:documentation> The base class for all selectable partitioning strategy types.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.platform.edtm.metadata.mapping.parameter.binding/1" xmlns:binding="http://com.informatica.metadata.common.binding/1" xmlns:binding1="http://com.informatica.platform.edtm.metadata.mapping.parameter.binding/1" xmlns:imx="http://com.informatica.imx" xmlns:mapping="http://com.informatica.metadata.common.mapping/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.platform.edtm.metadata.mapping.parameter.binding/1">
+<xsd:import namespace="http://com.informatica.metadata.common.mapping/2" schemaLocation="com.informatica.metadata.common.mapping.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.binding/1" schemaLocation="com.informatica.metadata.common.binding.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="ParameterBindingCharacteristic">
+<xsd:complexContent>
+<xsd:extension base="mapping:Characteristic">
+<xsd:annotation>
+<xsd:documentation> To add the parameter value binding to mapping at runtime as part of characteristics
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="inputBindings">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="InputBinding" type="binding:InputBinding"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParameterBindingCharacteristic" type="binding1:ParameterBindingCharacteristic"/>
+</xsd:schema>

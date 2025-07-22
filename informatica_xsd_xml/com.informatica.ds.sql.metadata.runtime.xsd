@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.ds.sql.metadata.runtime/0" xmlns:common="http://com.informatica.ds.common/0" xmlns:common1="http://com.informatica.ds.sql.metadata.common/0" xmlns:datarecord="http://com.informatica.metadata.canonical.datarecord/2" xmlns:imx="http://com.informatica.imx" xmlns:mapping="http://com.informatica.metadata.common.mapping/2" xmlns:runtime="http://com.informatica.ds.sql.metadata.runtime/0" xmlns:runtime1="http://com.informatica.ds.app.metadata.runtime/0" xmlns:typelibrary="http://com.informatica.metadata.common.typesystem.typelibrary/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.ds.sql.metadata.runtime/0">
+<xsd:import namespace="http://com.informatica.ds.sql.metadata.common/0" schemaLocation="com.informatica.ds.sql.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.ds.app.metadata.runtime/0" schemaLocation="com.informatica.ds.app.metadata.runtime.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.mapping/2" schemaLocation="com.informatica.metadata.common.mapping.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.canonical.datarecord/2" schemaLocation="com.informatica.metadata.canonical.datarecord.xsd"/>
+<xsd:import namespace="http://com.informatica.ds.common/0" schemaLocation="com.informatica.ds.common.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.typesystem.typelibrary/2" schemaLocation="com.informatica.metadata.common.typesystem.typelibrary.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:simpleType name="ConnectionState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="active"/>
+<xsd:enumeration value="aborted"/>
+<xsd:enumeration value="closed"/>
+<xsd:enumeration value="timeout"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ExecutionInfo">
+<xsd:annotation>
+<xsd:documentation> This is the model of the return value of Execute, that contains a requestId and a planInfo.
+ 
+ @author Jason Lo
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="reqId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="updatedPlanInfo" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="ExecutionInfo" type="runtime:ExecutionInfo"/>
+<xsd:complexType name="PlanInfo">
+<xsd:annotation>
+<xsd:documentation> This is the model of a DatabaseInfo which contains a list of virtual schema. This contains only
+ metadata of a SQLEP whereas the SQLEP models contains both metadata and runtime artifacts.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="inputMetadata" type="imx:idref"/>
+<xsd:attribute name="numberOfDefaultParams" type="xsd:int"/>
+<xsd:attribute name="outputMetadata" type="imx:idref"/>
+<xsd:attribute name="planId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="PlanInfo" type="runtime:PlanInfo"/>
+<xsd:complexType name="ConnectionStat">
+<xsd:complexContent>
+<xsd:extension base="runtime1:StatObject">
+<xsd:annotation>
+<xsd:documentation> The is the virtual DB connection statistic model.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="endTime" type="xsd:long"/>
+<xsd:attribute name="lastAccessedTime" type="xsd:long"/>
+<xsd:attribute name="logFilename">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="startTime" type="xsd:long"/>
+<xsd:attribute name="state" type="runtime:ConnectionState"/>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConnectionStat" type="runtime:ConnectionStat"/>
+<xsd:complexType name="StoredProcedureConfig">
+<xsd:complexContent>
+<xsd:extension base="runtime1:ConfigObject">
+<xsd:annotation>
+<xsd:documentation> Contains the config object for a stored procedure.
+ @author clay
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StoredProcedureConfig" type="runtime:StoredProcedureConfig"/>
+<xsd:complexType name="VirtualColumnConfig">
+<xsd:complexContent>
+<xsd:extension base="runtime1:ConfigObject">
+<xsd:annotation>
+<xsd:documentation> VirtualColumnConfig for VirtualColumnInfo.
+
+
+ @author jlo
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VirtualColumnConfig" type="runtime:VirtualColumnConfig"/>
+<xsd:complexType name="VirtualTableCacheInstanceStat">
+<xsd:complexContent>
+<xsd:extension base="runtime1:StatObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="doCacheInstStat" type="runtime1:DataObjectCacheInstanceStat"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VirtualTableCacheInstanceStat" type="runtime:VirtualTableCacheInstanceStat"/>
+<xsd:complexType name="VirtualTableConfig">
+<xsd:complexContent>
+<xsd:extension base="runtime1:ConfigObject">
+<xsd:annotation>
+<xsd:documentation> VirtualTableConfig for Virtual Table.
+
+
+ @author rto
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="tableInfo" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VirtualTableConfig" type="runtime:VirtualTableConfig"/>
+<xsd:complexType name="VirtualTableStat">
+<xsd:complexContent>
+<xsd:extension base="runtime1:StatObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="doStat" type="runtime1:DataObjectStat"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VirtualTableStat" type="runtime:VirtualTableStat"/>
+<xsd:complexType name="SQLFeatureConfig">
+<xsd:complexContent>
+<xsd:extension base="runtime1:FeatureConfig">
+<xsd:annotation>
+<xsd:documentation> This is the SQL end point configuration model.
+
+ @author Andy Lai
+ &lt;b&gt;MODIFICATIONS&lt;/b&gt;&lt;br&gt;
+ 0.4.1 6/15/2012 sho Added 'startupType'.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="vdbName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SQLFeatureConfig" type="runtime:SQLFeatureConfig"/>
+<xsd:complexType name="SQLFeatureStat">
+<xsd:complexContent>
+<xsd:extension base="runtime1:FeatureStat">
+<xsd:annotation>
+<xsd:documentation> The is the SQL endpoint statistic model.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="activeConnectionCount" type="xsd:long"/>
+<xsd:attribute name="connectionCount" type="xsd:long"/>
+<xsd:attribute name="databaseName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SQLFeatureStat" type="runtime:SQLFeatureStat"/>
+<xsd:complexType name="SQLRequestStat">
+<xsd:complexContent>
+<xsd:extension base="runtime1:RequestStat">
+<xsd:annotation>
+<xsd:documentation> The is the SQL request statistic model.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="sql">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SQLRequestStat" type="runtime:SQLRequestStat"/>
+<xsd:complexType name="StoredProcedure">
+<xsd:complexContent>
+<xsd:extension base="common:DSNamedElement">
+<xsd:annotation>
+<xsd:documentation> VirtualTableMap for Data Object Caching purpose.
+ - contains virtual table and canonical data object/maps
+
+ @author Raymond To
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="compiledMapping" type="mapping:Mapping"/>
+<xsd:element name="storedProcedureConfig" type="runtime:StoredProcedureConfig"/>
+</xsd:choice>
+<xsd:attribute name="mapping" type="imx:idref"/>
+<xsd:attribute name="storedProcedureInfo" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StoredProcedure" type="runtime:StoredProcedure"/>
+<xsd:complexType name="VirtualSchema">
+<xsd:complexContent>
+<xsd:extension base="common:DSNamedElement">
+<xsd:annotation>
+<xsd:documentation> This is the model of a virtual schema which contains a list of virtual tables, and a list of
+ stored procedures.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="storedProcedures">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="StoredProcedure" type="runtime:StoredProcedure"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="tables">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="VirtualTable" type="runtime:VirtualTable"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="schema" type="imx:idref"/>
+<xsd:attribute name="schemaInfo" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VirtualSchema" type="runtime:VirtualSchema"/>
+<xsd:complexType name="VirtualTable">
+<xsd:complexContent>
+<xsd:extension base="common:DSNamedElement">
+<xsd:annotation>
+<xsd:documentation> VirtualTableMap for Data Object Caching purpose.
+ - contains virtual table and canonical data object/maps
+
+ @author Raymond To
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="cdo" type="datarecord:CanonicalDataObject"/>
+<xsd:element name="columnConfigs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="VirtualColumnConfig" type="runtime:VirtualColumnConfig"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="dataObject" type="runtime1:DataObject"/>
+</xsd:choice>
+<xsd:attribute name="table" type="imx:idref"/>
+<xsd:attribute name="tableInfo" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VirtualTable" type="runtime:VirtualTable"/>
+<xsd:complexType name="SQLFeature">
+<xsd:complexContent>
+<xsd:extension base="runtime1:Feature">
+<xsd:annotation>
+<xsd:documentation> This is the runtime model of an SQL end point.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="cdoMappings">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Mapping" type="mapping:Mapping"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="generatedTypeLibrary" type="typelibrary:TypeLibrary"/>
+<xsd:element name="schemas">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="VirtualSchema" type="runtime:VirtualSchema"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="sqlConfig" type="runtime:SQLFeatureConfig"/>
+</xsd:choice>
+<xsd:attribute name="dbInfo" type="imx:idref"/>
+<xsd:attribute name="sqlModel" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SQLFeature" type="runtime:SQLFeature"/>
+<xsd:complexType name="SchemaInfo">
+<xsd:complexContent>
+<xsd:extension base="runtime1:ObjectInfo">
+<xsd:annotation>
+<xsd:documentation> This is the model of a virtual schema info which contains a list of virtual tables, and a list of
+ stored procedures characteristics. This contains only metadata of a SQLEP.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="storedProcedures">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="StoredProcedureInfo" type="runtime:StoredProcedureInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="tables">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="VirtualTableInfo" type="runtime:VirtualTableInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SchemaInfo" type="runtime:SchemaInfo"/>
+<xsd:complexType name="StoredProcedureInfo">
+<xsd:complexContent>
+<xsd:extension base="runtime1:ObjectInfo">
+<xsd:annotation>
+<xsd:documentation> Stored Procedure definition
+ - contains the signature of stored procedure
+
+ @author Raymond To
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="sqlInputParameters">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="StructuralFeature" type="typelibrary:StructuralFeature"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="sqlOutputParameters">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="StructuralFeature" type="typelibrary:StructuralFeature"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StoredProcedureInfo" type="runtime:StoredProcedureInfo"/>
+<xsd:complexType final="#all" name="VirtualColumnInfo">
+<xsd:complexContent>
+<xsd:extension base="runtime1:ObjectInfo">
+<xsd:annotation>
+<xsd:documentation>
+ @author jlo
+ 
+ TODO: write this
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="column" type="common1:Column"/>
+</xsd:choice>
+<xsd:attribute name="ordinalPosition" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VirtualColumnInfo" type="runtime:VirtualColumnInfo"/>
+<xsd:complexType name="VirtualTableInfo">
+<xsd:complexContent>
+<xsd:extension base="runtime1:ObjectInfo">
+<xsd:annotation>
+<xsd:documentation> VirtualTableMap for Data Object Caching purpose.
+ - contains virtual table and canonical data object/maps
+
+ @author Raymond To
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="columnInfos">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="VirtualColumnInfo" type="runtime:VirtualColumnInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="dataObjectInfo" type="runtime1:CanonicalDataObjectInfo"/>
+<xsd:element name="columns">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Column" type="common1:Column"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="foreignKeys">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ForeignKey" type="common1:ForeignKey"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="primaryKey" type="common1:PrimaryKey"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VirtualTableInfo" type="runtime:VirtualTableInfo"/>
+<xsd:complexType name="DatabaseInfo">
+<xsd:complexContent>
+<xsd:extension base="runtime1:FeatureInfo">
+<xsd:annotation>
+<xsd:documentation> This is the model of a DatabaseInfo which contains a list of virtual schema. This contains only
+ metadata of a SQLEP whereas the SQLEP models contains both metadata and runtime artifacts.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="schemas">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SchemaInfo" type="runtime:SchemaInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="epConfig" type="imx:idref"/>
+<xsd:attribute name="jdbcUrl">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="supportedNumericFunctions">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="supportedStringFunctions">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="supportedSystemFunctions">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="supportedTimeDateFunctions">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DatabaseInfo" type="runtime:DatabaseInfo"/>
+</xsd:schema>

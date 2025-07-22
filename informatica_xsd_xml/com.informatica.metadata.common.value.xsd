@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.value/1" xmlns:binding="http://com.informatica.metadata.common.binding/1" xmlns:imx="http://com.informatica.imx" xmlns:parameter="http://com.informatica.metadata.common.parameter/9" xmlns:value="http://com.informatica.metadata.common.value/1" xmlns:variable="http://com.informatica.metadata.common.variable/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.value/1">
+<xsd:import namespace="http://com.informatica.metadata.common.parameter/9" schemaLocation="com.informatica.metadata.common.parameter.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.variable/1" schemaLocation="com.informatica.metadata.common.variable.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.binding/1" schemaLocation="com.informatica.metadata.common.binding.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="RollupInputValue">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractValue">
+<xsd:attribute name="input" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RollupInputValue" type="value:RollupInputValue"/>
+<xsd:complexType name="RollupLiteralParameterValue">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractValue">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="value" type="parameter:ParameterValue"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RollupLiteralParameterValue" type="value:RollupLiteralParameterValue"/>
+<xsd:complexType name="RollupLiteralValue">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractValue">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="value" type="variable:VariableValue"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RollupLiteralValue" type="value:RollupLiteralValue"/>
+<xsd:complexType name="RollupParameterValue">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractValue">
+<xsd:attribute name="parameter" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RollupParameterValue" type="value:RollupParameterValue"/>
+<xsd:complexType name="RollupVariableValue">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractValue">
+<xsd:attribute name="variable" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RollupVariableValue" type="value:RollupVariableValue"/>
+<xsd:complexType name="RollUpLiteralTaskOutputValue">
+<xsd:complexContent>
+<xsd:extension base="binding:TaskOutput">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="value" type="variable:VariableValue"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RollUpLiteralTaskOutputValue" type="value:RollUpLiteralTaskOutputValue"/>
+</xsd:schema>

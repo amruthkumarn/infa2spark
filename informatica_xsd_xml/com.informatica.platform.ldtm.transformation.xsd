@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.platform.ldtm.transformation/2" xmlns:imx="http://com.informatica.imx" xmlns:transformation="http://com.informatica.sdk.metadata.transformation/1" xmlns:transformation1="http://com.informatica.platform.ldtm.transformation/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.platform.ldtm.transformation/2">
+<xsd:import namespace="http://com.informatica.sdk.metadata.transformation/1" schemaLocation="com.informatica.sdk.metadata.transformation.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="SerializedDataElementExtension">
+<xsd:complexContent>
+<xsd:extension base="transformation:DataElementExtension">
+<xsd:annotation>
+<xsd:documentation> Serialized data element model extension
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="genericContainer" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SerializedDataElementExtension" type="transformation1:SerializedDataElementExtension"/>
+<xsd:complexType name="SerializedTransformationExtension">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationExtension">
+<xsd:annotation>
+<xsd:documentation> Serialized transformation model extension
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="genericContainer" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SerializedTransformationExtension" type="transformation1:SerializedTransformationExtension"/>
+</xsd:schema>

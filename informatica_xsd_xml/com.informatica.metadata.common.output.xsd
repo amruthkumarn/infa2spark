@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.output/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:output="http://com.informatica.metadata.common.output/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.output/1">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> Output models.\n \n @author cthumuru\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="MappingOutputContainer">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="outputs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="PredefinedOutput" type="output:PredefinedOutput"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="MappingOutputContainer" type="output:MappingOutputContainer"/>
+<xsd:complexType abstract="true" name="OutputValue">
+<xsd:annotation>
+<xsd:documentation> OutputValue model.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="isNull" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:complexType name="DateTimeOutputValue">
+<xsd:complexContent>
+<xsd:extension base="output:OutputValue">
+<xsd:annotation>
+<xsd:documentation> DateTimeOutputValue.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DateTimeOutputValue" type="output:DateTimeOutputValue"/>
+<xsd:complexType name="DecimalOutputValue">
+<xsd:complexContent>
+<xsd:extension base="output:OutputValue">
+<xsd:annotation>
+<xsd:documentation> DecimalOutputValue.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DecimalOutputValue" type="output:DecimalOutputValue"/>
+<xsd:complexType name="DoubleOutputValue">
+<xsd:complexContent>
+<xsd:extension base="output:OutputValue">
+<xsd:annotation>
+<xsd:documentation> DoubleOutputValue.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral" type="xsd:double"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DoubleOutputValue" type="output:DoubleOutputValue"/>
+<xsd:complexType name="IntegerOutputValue">
+<xsd:complexContent>
+<xsd:extension base="output:OutputValue">
+<xsd:annotation>
+<xsd:documentation> IntegerOutputValue.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="IntegerOutputValue" type="output:IntegerOutputValue"/>
+<xsd:complexType name="LongOutputValue">
+<xsd:complexContent>
+<xsd:extension base="output:OutputValue">
+<xsd:annotation>
+<xsd:documentation> LongOutputValue.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LongOutputValue" type="output:LongOutputValue"/>
+<xsd:complexType abstract="true" name="Output">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> Output model.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="aggregationType" type="imx:idref"/>
+<xsd:attribute name="precision" type="xsd:int"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+<xsd:attribute name="type" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="OutputReference">
+<xsd:complexContent>
+<xsd:extension base="core:ElementReference">
+<xsd:annotation>
+<xsd:documentation> Representing a reference to an Output object
+ @author yqiu
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="output" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OutputReference" type="output:OutputReference"/>
+<xsd:complexType name="PredefinedOutput">
+<xsd:complexContent>
+<xsd:extension base="output:Output">
+<xsd:annotation>
+<xsd:documentation> PredefinedOutput.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PredefinedOutput" type="output:PredefinedOutput"/>
+<xsd:complexType name="UserDefinedOutput">
+<xsd:complexContent>
+<xsd:extension base="output:Output">
+<xsd:annotation>
+<xsd:documentation> UserDefinedOutput.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserDefinedOutput" type="output:UserDefinedOutput"/>
+</xsd:schema>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.ds.app.spec.metadata.common/0" xmlns:common="http://com.informatica.ds.app.attachment.metadata.common/0" xmlns:common1="http://com.informatica.ds.app.feature.metadata.common/0" xmlns:common2="http://com.informatica.ds.app.spec.metadata.common/0" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.ds.app.spec.metadata.common/0">
+<xsd:import namespace="http://com.informatica.ds.app.feature.metadata.common/0" schemaLocation="com.informatica.ds.app.feature.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.ds.app.attachment.metadata.common/0" schemaLocation="com.informatica.ds.app.attachment.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="ApplicationSpec">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="attachments">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Attachment" type="common:Attachment"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="incrementalFeatures">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Feature" type="common1:Feature"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="objects">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ObjectReference" type="core:ObjectReference"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="features">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Feature" type="common1:Feature"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="isIncremental" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationSpec" type="common2:ApplicationSpec"/>
+</xsd:schema>

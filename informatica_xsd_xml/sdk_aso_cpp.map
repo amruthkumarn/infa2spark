@@ -1,0 +1,15 @@
+#
+# Copyright (c) 2007 Informatica Corporation.  This file contains material
+# proprietary to Informatica Corporation and may not be copied or distributed
+# in any form without the written permission of Informatica Corporation.
+#
+
+##########################################################################
+#   This file is generated. Do not modify
+#   
+#   This file contains list of packages contained in library and can be used
+#   in automatic package registration
+#   
+##########################################################################
+
+com.informatica.adapter.sdkadapter.parameter.runtime, com.informatica.adapter.sdkadapter.partition.asoconfig, com.informatica.adapter.sdkadapter.projection, com.informatica.adapter.sdkadapter.projection.expressionoperation, com.informatica.adapter.sdkadapter.projection.filteroperation, com.informatica.adapter.sdkadapter.projection.joinoperation, com.informatica.adapter.sdkadapter.projection.projectionoperation, com.informatica.adapter.sdkadapter.projection.lookupoperation, com.informatica.adapter.sdkadapter.projection.mergeoperation, com.informatica.adapter.sdkadapter.projection.pivotoperation, com.informatica.adapter.sdkadapter.projection.expression, com.informatica.adapter.sdkadapter.projection.sequenceoperation, com.informatica.adapter.sdkadapter.projection.sortoperation, com.informatica.adapter.sdkadapter.asoextension, com.informatica.adapter.sdkadapter.capabilityattribute, com.informatica.adapter.sdkadapter.asoextension.task, com.informatica.adapter.sdkadapter.task, com.informatica.adapter.sdkadapter.asoconfig, com.informatica.adapter.sdkadapter.projection.sinkoperation, com.informatica.adapter.sdkadapter.aso, com.informatica.adapter.sdkadapter.projection.simpleexpression, com.informatica.adapter.sdkadapter.projection.platformrecord, com.informatica.adapter.sdkadapter.projection.aggregatoroperation, com.informatica.adapter.sdkadapter.aso.runtime, com.informatica.adapter.sdkadapter.projection.conversionoperation, com.informatica.adapter.sdkadapter.projection.sourceoperation, com.informatica.adapter.sdkadapter.projection.defaultoperation, com.informatica.adapter.sdkadapter.projection.dummyoperation, com.informatica.adapter.sdkadapter.projection.helper = sdk_aso_cpp;

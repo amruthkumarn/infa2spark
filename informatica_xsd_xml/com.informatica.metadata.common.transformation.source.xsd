@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.transformation.source/2" xmlns:imx="http://com.informatica.imx" xmlns:resourceaccess="http://com.informatica.metadata.common.transformation.resourceaccess/2" xmlns:source="http://com.informatica.metadata.common.transformation.source/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.transformation.source/2">
+<xsd:import namespace="http://com.informatica.metadata.common.transformation.resourceaccess/2" schemaLocation="com.informatica.metadata.common.transformation.resourceaccess.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="SourceDataInterface">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="sourceFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SourceTxField" type="source:SourceTxField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SourceDataInterface" type="source:SourceDataInterface"/>
+<xsd:complexType name="SourceTx">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessTx">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="sourceInterfaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SourceDataInterface" type="source:SourceDataInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SourceTx" type="source:SourceTx"/>
+<xsd:complexType name="SourceTxField">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessTxField"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SourceTxField" type="source:SourceTxField"/>
+</xsd:schema>

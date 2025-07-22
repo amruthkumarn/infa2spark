@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.ds.app.metadata.runtime/0" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:common1="http://com.informatica.ds.common/0" xmlns:common2="http://com.informatica.ds.app.attachment.metadata.common/0" xmlns:common3="http://com.informatica.ds.app.metadata.common/0" xmlns:imx="http://com.informatica.imx" xmlns:runtime="http://com.informatica.ds.app.metadata.runtime/0" xmlns:statistics="http://com.informatica.ds.statistics/0" xmlns:typelibrary="http://com.informatica.metadata.common.typesystem.typelibrary/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.ds.app.metadata.runtime/0">
+<xsd:import namespace="http://com.informatica.ds.common/0" schemaLocation="com.informatica.ds.common.xsd"/>
+<xsd:import namespace="http://com.informatica.ds.app.attachment.metadata.common/0" schemaLocation="com.informatica.ds.app.attachment.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.typesystem.typelibrary/2" schemaLocation="com.informatica.metadata.common.typesystem.typelibrary.xsd"/>
+<xsd:import namespace="http://com.informatica.ds.app.metadata.common/0" schemaLocation="com.informatica.ds.app.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.ds.statistics/0" schemaLocation="com.informatica.ds.statistics.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> Copyright (c) 2007 Informatica Corporation. All rights reserved.\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="ApplicationDataObjectSummary">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="count" type="xsd:int"/>
+<xsd:attribute name="objectInfo" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="ApplicationDataObjectSummary" type="runtime:ApplicationDataObjectSummary"/>
+<xsd:complexType name="ApplicationRegistryEntry">
+<xsd:annotation>
+<xsd:documentation> This is an entry in the application registry. It contains an application's
+ name and its path (project group name) in repository. &lt;p&gt;
+
+ &lt;b&gt;MODIFICATIONS&lt;/b&gt; &lt;br&gt;
+ 0.2.1 pchao 11/2/2011 Added 'features' &lt;br&gt;
+ 0.3.1 sho 12/6/2011 Added 'appState' &lt;br&gt;
+ 0.4.1 pchao 12/16/2011 Added 'lastUpdatedTime' &lt;br&gt;
+
+ @author Chris Lay
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="features">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="FeatureRegistryEntry" type="runtime:FeatureRegistryEntry"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="lastUpdatedTime" type="xsd:long"/>
+<xsd:attribute name="runtimeProjectName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="appState" type="statistics:ApplicationState"/>
+<xsd:attribute name="applicationPath">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="tenantId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ApplicationRegistryEntry" type="runtime:ApplicationRegistryEntry"/>
+<xsd:simpleType name="ApplicationState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="INIT"/>
+<xsd:enumeration value="RUNNING"/>
+<xsd:enumeration value="STOPPED"/>
+<xsd:enumeration value="FAILED"/>
+<xsd:enumeration value="REMOVED"/>
+<xsd:enumeration value="DISABLED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType abstract="true" name="ConfigObject">
+<xsd:annotation>
+<xsd:documentation> This is the base configuration object.
+ 
+ @author rto
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="optionGroups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:simpleType name="DataObjectCacheInstanceState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="RUNNING"/>
+<xsd:enumeration value="COMPLETED"/>
+<xsd:enumeration value="FAILED"/>
+<xsd:enumeration value="REMOVED"/>
+<xsd:enumeration value="QUEUED"/>
+<xsd:enumeration value="CANCELED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="DataObjectCacheState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="UNCACHED"/>
+<xsd:enumeration value="CACHED"/>
+<xsd:enumeration value="DISABLED"/>
+<xsd:enumeration value="SKIPPED"/>
+<xsd:enumeration value="USER_MANAGED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="DataObjectInfo">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="path">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="typeInfo" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="DataObjectInfo" type="runtime:DataObjectInfo"/>
+<xsd:complexType name="DataObjectTypeInfo">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="displayType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="internalType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="DataObjectTypeInfo" type="runtime:DataObjectTypeInfo"/>
+<xsd:complexType name="FeatureRegistryEntry">
+<xsd:annotation>
+<xsd:documentation> Lightweight information about an application feature, persisted in the appRegistry.&lt;p&gt;
+
+ &lt;b&gt;MODIFICATIONS&lt;/b&gt;&lt;br&gt;
+ 1.0.0 pchao 11/2/2011 Model added&lt;br&gt;
+ 1.0.1 sho 12/2/2011 Added 'featureState'
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="featureClassName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="uniqueName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="featureState" type="statistics:FeatureState"/>
+</xsd:complexType>
+<xsd:element name="FeatureRegistryEntry" type="runtime:FeatureRegistryEntry"/>
+<xsd:simpleType name="FeatureState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="INIT"/>
+<xsd:enumeration value="RUNNING"/>
+<xsd:enumeration value="STOPPED"/>
+<xsd:enumeration value="FAILED"/>
+<xsd:enumeration value="REMOVED"/>
+<xsd:enumeration value="DISABLED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="RequestState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="RUNNING"/>
+<xsd:enumeration value="COMPLETED"/>
+<xsd:enumeration value="FAILED"/>
+<xsd:enumeration value="ABORTED"/>
+<xsd:enumeration value="TIMEOUT"/>
+<xsd:enumeration value="CANCELED"/>
+<xsd:enumeration value="QUEUED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="ResultSetCacheInstanceState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="INIT"/>
+<xsd:enumeration value="POPULATING"/>
+<xsd:enumeration value="COMPLETED"/>
+<xsd:enumeration value="EXPIRED"/>
+<xsd:enumeration value="REMOVED"/>
+<xsd:enumeration value="FAILED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="StartupType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="ENABLED"/>
+<xsd:enumeration value="DISABLED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType abstract="true" name="StatObject">
+<xsd:annotation>
+<xsd:documentation> This is the base configuration object.
+ 
+ @author rto
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="objectId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="parentStatId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:complexType name="ApplicationConfig">
+<xsd:complexContent>
+<xsd:extension base="runtime:ConfigObject">
+<xsd:annotation>
+<xsd:documentation> This is the application configuration model.
+
+ &lt;b&gt;MODIFICATIONS&lt;/b&gt;&lt;br&gt;
+ 0.5.2 6/15/2012 sho Added 'startupType'.
+ @author Xuefu Zhang
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="applicationName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="startupType" type="runtime:StartupType"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationConfig" type="runtime:ApplicationConfig"/>
+<xsd:complexType name="ApplicationStat">
+<xsd:complexContent>
+<xsd:extension base="runtime:StatObject">
+<xsd:annotation>
+<xsd:documentation> This is the application statistic model.
+ 
+ @author Xuefu Zhang
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="applicationName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="message">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="state" type="runtime:ApplicationState"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationStat" type="runtime:ApplicationStat"/>
+<xsd:complexType name="DataObjectCacheInstanceStat">
+<xsd:complexContent>
+<xsd:extension base="runtime:StatObject">
+<xsd:annotation>
+<xsd:documentation> This is the data object cache instance statistics model.
+ 
+ @author mseetho
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="accessCount" type="xsd:long"/>
+<xsd:attribute name="activeAccessCount" type="xsd:long"/>
+<xsd:attribute name="firstErrMsg">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="logFilename">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="refreshEndTime" type="xsd:long"/>
+<xsd:attribute name="refreshStartTime" type="xsd:long"/>
+<xsd:attribute name="rowCount" type="xsd:long"/>
+<xsd:attribute name="state" type="runtime:DataObjectCacheInstanceState"/>
+<xsd:attribute name="storageName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataObjectCacheInstanceStat" type="runtime:DataObjectCacheInstanceStat"/>
+<xsd:complexType name="DataObjectCacheStat">
+<xsd:complexContent>
+<xsd:extension base="runtime:StatObject">
+<xsd:annotation>
+<xsd:documentation> This is the data object cache statistics model.
+ 
+ @author Xuefu Zhang
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="accessCount" type="xsd:long"/>
+<xsd:attribute name="activeAccessCount" type="xsd:long"/>
+<xsd:attribute name="lastCompletedCacheInstanceStat" type="imx:idref"/>
+<xsd:attribute name="numCacheInstances" type="xsd:long"/>
+<xsd:attribute name="state" type="runtime:DataObjectCacheState"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataObjectCacheStat" type="runtime:DataObjectCacheStat"/>
+<xsd:complexType name="DataObjectConfig">
+<xsd:complexContent>
+<xsd:extension base="runtime:ConfigObject">
+<xsd:annotation>
+<xsd:documentation> This is the data object config model.
+ 
+ @author Xuefu Zhang
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataObjectConfig" type="runtime:DataObjectConfig"/>
+<xsd:complexType name="DataObjectStat">
+<xsd:complexContent>
+<xsd:extension base="runtime:StatObject">
+<xsd:annotation>
+<xsd:documentation> This is the data object statistic model.
+ 
+ @author Xuefu Zhang
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="cacheStat" type="runtime:DataObjectCacheStat"/>
+</xsd:choice>
+<xsd:attribute name="accessCount" type="xsd:long"/>
+<xsd:attribute name="activeAccessCount" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataObjectStat" type="runtime:DataObjectStat"/>
+<xsd:complexType abstract="true" name="FeatureConfig">
+<xsd:complexContent>
+<xsd:extension base="runtime:ConfigObject">
+<xsd:annotation>
+<xsd:documentation> This is the end point configuration model.&lt;p&gt;
+
+ &lt;b&gt;MODIFICATIONS&lt;/b&gt;&lt;br&gt;
+ 0.4.2 11/2/2011 pchao Added 'uniqueName'.
+ 0.5.2 6/15/2012 sho Added 'startupType'.
+
+ @author Xuefu Zhang
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="uniqueName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="startupType" type="runtime:StartupType"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="FeatureStat">
+<xsd:complexContent>
+<xsd:extension base="runtime:StatObject">
+<xsd:annotation>
+<xsd:documentation> Modeled class representing the statistical information at the endpoint level.
+ 
+ @author Xuefu Zhang
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="activeRequestCount" type="xsd:long"/>
+<xsd:attribute name="failedRequestCount" type="xsd:long"/>
+<xsd:attribute name="message">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="requestCount" type="xsd:long"/>
+<xsd:attribute name="state" type="runtime:FeatureState"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="RequestStat">
+<xsd:complexContent>
+<xsd:extension base="runtime:StatObject">
+<xsd:annotation>
+<xsd:documentation> This is the base request statistics model.
+ 
+ @author Xuefu Zhang
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="endTime" type="xsd:long"/>
+<xsd:attribute name="errorCount" type="xsd:int"/>
+<xsd:attribute name="lastAccessedTime" type="xsd:long"/>
+<xsd:attribute name="logFilename">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="message">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="outputRowCount" type="xsd:long"/>
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="size" type="xsd:long"/>
+<xsd:attribute name="startTime" type="xsd:long"/>
+<xsd:attribute name="state" type="runtime:RequestState"/>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="Application">
+<xsd:complexContent>
+<xsd:extension base="common1:DSNamedElement">
+<xsd:annotation>
+<xsd:documentation> This is the runtime model of an application. TODO: Use IMF Aggregate for each
+ of this
+ 
+ @author Xuefu Zhang
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="applicationInfo" type="runtime:ApplicationInfo"/>
+<xsd:element name="attachments">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Attachment" type="common2:Attachment"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="config" type="runtime:ApplicationConfig"/>
+<xsd:element name="connectionObjects">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="IObject" type="xsd:anyType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="features">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Feature" type="runtime:Feature"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="projects">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ApplicationProject" type="runtime:ApplicationProject"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="model" type="imx:idref"/>
+<xsd:attribute name="connectionNames">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Application" type="runtime:Application"/>
+<xsd:complexType name="ApplicationProject">
+<xsd:complexContent>
+<xsd:extension base="common1:DSNamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="contents">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="IObject" type="xsd:anyType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="shared" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationProject" type="runtime:ApplicationProject"/>
+<xsd:complexType name="ApplicationRegistry">
+<xsd:complexContent>
+<xsd:extension base="common1:DSNamedElement">
+<xsd:annotation>
+<xsd:documentation> This is the model of an application registry, which maps from the deployed 
+ application name to its path (project group name) in repository. 
+ 
+ @author Chris Lay
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="entries">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ApplicationRegistryEntry" type="runtime:ApplicationRegistryEntry"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationRegistry" type="runtime:ApplicationRegistry"/>
+<xsd:complexType name="CanonicalDataModel">
+<xsd:complexContent>
+<xsd:extension base="common1:DSNamedElement">
+<xsd:annotation>
+<xsd:documentation> This is the model of a DatabaseInfo which contains a list of virtual schema. This contains only
+ metadata of a SQLEP whereas the SQLEP models contains both metadata and runtime artifacts.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="dataObjects">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DataObject" type="runtime:DataObject"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CanonicalDataModel" type="runtime:CanonicalDataModel"/>
+<xsd:complexType name="DataObject">
+<xsd:complexContent>
+<xsd:extension base="common1:DSNamedElement">
+<xsd:annotation>
+<xsd:documentation> This is the data object runtime model.
+ 
+ @author Xuefu Zhang
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="config" type="runtime:DataObjectConfig"/>
+</xsd:choice>
+<xsd:attribute name="cdo" type="imx:idref"/>
+<xsd:attribute name="dataObjectInfo" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataObject" type="runtime:DataObject"/>
+<xsd:complexType abstract="true" name="Feature">
+<xsd:complexContent>
+<xsd:extension base="common1:DSNamedElement">
+<xsd:annotation>
+<xsd:documentation> This is the runtime model of an Endpoint.
+ 
+ @author Xuefu Zhang
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="config" type="runtime:FeatureConfig"/>
+</xsd:choice>
+<xsd:attribute name="info" type="imx:idref"/>
+<xsd:attribute name="model" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="ObjectInfo">
+<xsd:complexContent>
+<xsd:extension base="common1:DSNamedElement">
+<xsd:annotation>
+<xsd:documentation> This is the model of a ObjectInfo.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="objectId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="statId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="PlaceHolderNamedElement">
+<xsd:complexContent>
+<xsd:extension base="common1:DSNamedElement">
+<xsd:annotation>
+<xsd:documentation> This is the model for wrapping the DataObjectInfo in a NamedElement  
+ @author ankpande
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dObjInfo" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PlaceHolderNamedElement" type="runtime:PlaceHolderNamedElement"/>
+<xsd:complexType name="Version">
+<xsd:complexContent>
+<xsd:extension base="common1:DSNamedElement">
+<xsd:annotation>
+<xsd:documentation> This is a model for the product version. 
+
+ @author Chris Lay
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="maintenanceVersion" type="xsd:int"/>
+<xsd:attribute name="majorVersion" type="xsd:int"/>
+<xsd:attribute name="minorVersion" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Version" type="runtime:Version"/>
+<xsd:complexType name="ApplicationInfo">
+<xsd:complexContent>
+<xsd:extension base="runtime:ObjectInfo">
+<xsd:annotation>
+<xsd:documentation> This is the model of a DatabaseInfo which contains a list of virtual schema. This contains only
+ metadata of a SQLEP whereas the SQLEP models contains both metadata and runtime artifacts.
+ &lt;p&gt;
+ &lt;b&gt;MODIFICATIONS&lt;/b&gt;
+ &lt;ul&gt;
+   &lt;li&gt;0.5.4 04/29/2013 kpark   added 'runtimeStatId'&lt;/li&gt;
+ &lt;/ul&gt;
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="features">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="FeatureInfo" type="runtime:FeatureInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="projects">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ProjectInfo" type="runtime:ProjectInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="attributes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Attribute" type="common3:Attribute"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="config" type="imx:idref"/>
+<xsd:attribute name="objectSummary" type="imx:idref"/>
+<xsd:attribute name="runtimeStatId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationInfo" type="runtime:ApplicationInfo"/>
+<xsd:complexType name="CanonicalDataModelInfo">
+<xsd:complexContent>
+<xsd:extension base="runtime:ObjectInfo">
+<xsd:annotation>
+<xsd:documentation> This is the model of a DatabaseInfo which contains a list of virtual schema. This contains only
+ metadata of a SQLEP whereas the SQLEP models contains both metadata and runtime artifacts.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="dataObjects">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="CanonicalDataObjectInfo" type="runtime:CanonicalDataObjectInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CanonicalDataModelInfo" type="runtime:CanonicalDataModelInfo"/>
+<xsd:complexType name="CanonicalDataObjectInfo">
+<xsd:complexContent>
+<xsd:extension base="runtime:ObjectInfo">
+<xsd:annotation>
+<xsd:documentation> This is the model of a DatabaseInfo which contains a list of virtual schema. This contains only
+ metadata of a SQLEP whereas the SQLEP models contains both metadata and runtime artifacts.
+ 
+ @author Andy Lai
+ 
+ @since 03/16/2012. ComplexType field added.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="dataObjectType" type="typelibrary:ComplexType"/>
+</xsd:choice>
+<xsd:attribute name="config" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CanonicalDataObjectInfo" type="runtime:CanonicalDataObjectInfo"/>
+<xsd:complexType abstract="true" name="FeatureInfo">
+<xsd:complexContent>
+<xsd:extension base="runtime:ObjectInfo">
+<xsd:annotation>
+<xsd:documentation> This is the model of a DatabaseInfo which contains a list of virtual schema. This contains only
+ metadata of a SQLEP whereas the SQLEP models contains both metadata and runtime artifacts.
+ &lt;p&gt;
+ &lt;b&gt;MODIFICATIONS&lt;/b&gt;
+ &lt;ul&gt;
+   &lt;li&gt;0.5.3 04/27/2013 kpark   added 'runtimeStatId'&lt;/li&gt;
+ &lt;/ul&gt;
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="config" type="imx:idref"/>
+<xsd:attribute name="runtimeStatId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="FolderInfo">
+<xsd:complexContent>
+<xsd:extension base="runtime:ObjectInfo">
+<xsd:annotation>
+<xsd:documentation> This is the model of a DatabaseInfo which contains a list of virtual schema. This contains only
+ metadata of a SQLEP whereas the SQLEP models contains both metadata and runtime artifacts.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="objectInfos">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ObjectInfo" type="runtime:ObjectInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FolderInfo" type="runtime:FolderInfo"/>
+<xsd:complexType name="ProjectInfo">
+<xsd:complexContent>
+<xsd:extension base="runtime:ObjectInfo">
+<xsd:annotation>
+<xsd:documentation> This is the model of a DatabaseInfo which contains a list of virtual schema. This contains only
+ metadata of a SQLEP whereas the SQLEP models contains both metadata and runtime artifacts.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="objectInfos">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ObjectInfo" type="runtime:ObjectInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="shared" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ProjectInfo" type="runtime:ProjectInfo"/>
+</xsd:schema>

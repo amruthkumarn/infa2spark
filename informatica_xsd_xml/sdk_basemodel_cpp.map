@@ -1,0 +1,15 @@
+#
+# Copyright (c) 2007 Informatica Corporation.  This file contains material
+# proprietary to Informatica Corporation and may not be copied or distributed
+# in any form without the written permission of Informatica Corporation.
+#
+
+##########################################################################
+#   This file is generated. Do not modify
+#   
+#   This file contains list of packages contained in library and can be used
+#   in automatic package registration
+#   
+##########################################################################
+
+com.informatica.metadata.infasdk.connectinfo.common.sdkmodelextension = sdk_basemodel_cpp;

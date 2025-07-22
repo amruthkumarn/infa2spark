@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.ds.sql.metadata.runtime.events/0" xmlns:events="http://com.informatica.ds.sql.metadata.runtime.events/0" xmlns:imx="http://com.informatica.imx" xmlns:statistics="http://com.informatica.ds.sql.statistics/0" xmlns:statistics1="http://com.informatica.ds.statistics/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.ds.sql.metadata.runtime.events/0">
+<xsd:import namespace="http://com.informatica.ds.statistics/0" schemaLocation="com.informatica.ds.statistics.xsd"/>
+<xsd:import namespace="http://com.informatica.ds.sql.statistics/0" schemaLocation="com.informatica.ds.sql.statistics.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType abstract="true" name="SQLServiceEvent">
+<xsd:annotation>
+<xsd:documentation> This is the base event object.
+ 
+ @author Andy
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="ConnectionEvent">
+<xsd:complexContent>
+<xsd:extension base="events:SQLServiceEvent">
+<xsd:annotation>
+<xsd:documentation> This is the base event object.
+ 
+ @author Andy
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="newState" type="statistics:ConnectionState"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConnectionEvent" type="events:ConnectionEvent"/>
+<xsd:complexType name="ExecutionEvent">
+<xsd:complexContent>
+<xsd:extension base="events:SQLServiceEvent">
+<xsd:annotation>
+<xsd:documentation> This is the base event object.
+ 
+ @author Andy
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="newState" type="statistics1:RequestState"/>
+<xsd:attribute name="requestId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExecutionEvent" type="events:ExecutionEvent"/>
+</xsd:schema>

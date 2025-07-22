@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.metadata.domainservice/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:domainconfigurationservice="http://com.informatica.isp.metadata.domainconfigurationservice/2" xmlns:domainservice="http://com.informatica.isp.metadata.domainservice/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.metadata.domainservice/2">
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.isp.metadata.domainconfigurationservice/2" schemaLocation="com.informatica.isp.metadata.domainconfigurationservice.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="DBConnectivity">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+
+ 2.11.0    sumittal    10/09/2013
+    Added the attributes isDBSSLEnabled and truststorePassword
+    Changed the property size of dbConnectionString from LengthTypeMax.GENERAL_URI to LengthTypeMax.UNBOUNDED
+ 2.13.0	creddy	3/21/2013	Added a new property 'dbTruststoreLocation'
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="dbConnectString">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dbEncryptedPassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dbHost">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dbName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dbPort" type="xsd:int"/>
+<xsd:attribute name="dbSchema">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dbTLSEnabled" type="xsd:boolean"/>
+<xsd:attribute name="dbTableSpace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dbTruststoreLocation">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dbType" type="domainservice:DBType"/>
+<xsd:attribute name="dbUsername">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="trustedConnection" type="xsd:boolean"/>
+<xsd:attribute name="truststorePassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="DBConnectivity" type="domainservice:DBConnectivity"/>
+<xsd:simpleType name="DBType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="DB2"/>
+<xsd:enumeration value="MSSQLSERVER"/>
+<xsd:enumeration value="ORACLE"/>
+<xsd:enumeration value="SYBASE"/>
+<xsd:enumeration value="MYSQL"/>
+<xsd:enumeration value="H2"/>
+<xsd:enumeration value="POSTGRESQL"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="EarlierInfaHomeConfig">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.17.0    vmehta		1/06/2017	  Added EalierInfaHomeConfig model
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="earlierInfaHome">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="earlierInfaHomeVersion">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="earlierJavaHome">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="EarlierInfaHomeConfig" type="domainservice:EarlierInfaHomeConfig"/>
+<xsd:complexType name="HttpsInfo">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="encryptedKeystorePass">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="httpsPort" type="xsd:int"/>
+<xsd:attribute name="keystoreFile">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="HttpsInfo" type="domainservice:HttpsInfo"/>
+<xsd:complexType name="NodeSamlConfig">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.18.0    vmehta		2/1/2017	  Added NodeSamlConfig model
+ 
+ 2.20.0    gsood      14/5/2020     Deprecated assertionSigningCertificateAlias property
+ 									  Added samlKeyStore and samlKeyStorePassword properties.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="assertionSigningCertificateAlias">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="samlEnabled" type="xsd:boolean"/>
+<xsd:attribute name="samlKeyStore">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="samlKeyStorePassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="samlTrustStore">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="samlTrustStorePassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="NodeSamlConfig" type="domainservice:NodeSamlConfig"/>
+<xsd:simpleType name="ProcessState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="ENABLED"/>
+<xsd:enumeration value="DISABLED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="SecurityConfig">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.8.0    nupaman		13/06/2013	  Added SecurityConfig model
+ 2.10.0    sumittal    06/09/2013    
+          Updated the keytabDirectory property name to secretKeysDirectory
+          Added the property isSensitive true for the fields keystorePassword and trustStorePassword
+ 2.12.0   skakkar 14/10/2013
+          Added a new property "siteKeyHashValue" . This property will store the hash value of 
+          site specific key.
+ 
+ 2.18.0 vmehta 2/1/2013 Added NodeSamlConfig model to SecurityConfig
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="nodeSamlConfig" type="domainservice:NodeSamlConfig"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="ciphers">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="kerberosEnabled" type="xsd:boolean"/>
+<xsd:attribute name="keystore">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="keystorePassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="nodeUserAccount">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="secretKeysDirectory">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceRealmName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="siteKeyHashValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="trustStore">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="trustStorePassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userRealmName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SecurityConfig" type="domainservice:SecurityConfig"/>
+<xsd:simpleType name="ServiceOperationMode">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="SAFE"/>
+<xsd:enumeration value="NORMAL"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ServiceProcessStartupState">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="domainNode">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="state" type="domainservice:ProcessState"/>
+</xsd:complexType>
+<xsd:element name="ServiceProcessStartupState" type="domainservice:ServiceProcessStartupState"/>
+<xsd:complexType name="ServiceStartupState">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="operationMode" type="domainservice:ServiceOperationMode"/>
+<xsd:attribute name="serviceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="state" type="domainservice:ServiceState"/>
+</xsd:complexType>
+<xsd:element name="ServiceStartupState" type="domainservice:ServiceStartupState"/>
+<xsd:simpleType name="ServiceState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="ENABLED"/>
+<xsd:enumeration value="INITIALIZED"/>
+<xsd:enumeration value="DISABLED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="LinkedDomainStorage">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="linkedDomains">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LinkedDomain" type="domainservice:LinkedDomain"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LinkedDomainStorage" type="domainservice:LinkedDomainStorage"/>
+<xsd:complexType abstract="true" name="NodeConfig">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.11.0    sumittal    10/09/2013    
+     Changed the property size of logServiceDir from LengthTypeMax.DEFAULT_PERSISTENCE to LengthTypeMax.UNBOUNDED
+     
+ 2.17.0 vmehta 1/6/2017 Adding EarlierInfaHomeConfig in NodeConfig
+ 
+ if any field is added here, please add it to the following method:
+ com.informatica.isp.domainservice.DomainServiceImpl.copyInfoFromNodeConfig(DomainServiceInternal, NodeConfig, NodeSamlConfig)
+ 2.21.0   muverma     20/01/2021    Adding release version in nodemeta.xml
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="address" type="common:NodeAddress"/>
+<xsd:element name="earlierInfaHomeConfig" type="domainservice:EarlierInfaHomeConfig"/>
+<xsd:element name="httpsInfo" type="domainservice:HttpsInfo"/>
+<xsd:element name="portals">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="NodeRef" type="common:NodeRef"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="predefinedResources">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NodeResource" type="domainconfigurationservice:NodeResource"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="resources">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NodeResource" type="domainconfigurationservice:NodeResource"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="securityConfig" type="domainservice:SecurityConfig"/>
+</xsd:choice>
+<xsd:attribute name="adminconsolePort" type="xsd:int"/>
+<xsd:attribute name="adminconsoleShutdownPort" type="xsd:int"/>
+<xsd:attribute name="domainName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="logServiceDir">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="nodeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="options" type="imx:idrefs"/>
+<xsd:attribute name="releaseVersion">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="resetHostPort" type="xsd:boolean"/>
+<xsd:attribute name="systemLogDir">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="tlsEnabled" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="ProcessRuntime">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="nodeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="pid" type="xsd:int"/>
+<xsd:attribute name="port" type="xsd:int"/>
+<xsd:attribute name="primary" type="xsd:boolean"/>
+<xsd:attribute name="serviceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceURL">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="state">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ProcessRuntime" type="domainservice:ProcessRuntime"/>
+<xsd:complexType name="ServiceRuntime">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="service" type="domainconfigurationservice:ServiceRef"/>
+</xsd:choice>
+<xsd:attribute name="state" type="domainservice:ServiceState"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ServiceRuntime" type="domainservice:ServiceRuntime"/>
+<xsd:complexType name="StoredStartupState">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="processStates">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ServiceProcessStartupState" type="domainservice:ServiceProcessStartupState"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="serviceStates">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ServiceStartupState" type="domainservice:ServiceStartupState"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StoredStartupState" type="domainservice:StoredStartupState"/>
+<xsd:complexType name="DomainServiceConfig">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.9.0 dchhatan 19/8/2013 For property description:
+ 							Changed the persistence size to LengthTypeMax.UNBOUNDED
+ 							Changed Length to LengthType.UNBOUNDED
+ 							To support unbounded length of description
+ 
+ 2.15.0 dchhatan 10/4/2015 Added new property {@code builtinServiceFolderName} for storing folder name of singleton services
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="domainOptions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="builtinServiceFolderName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="domainDescription">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DomainServiceConfig" type="domainservice:DomainServiceConfig"/>
+<xsd:complexType name="GatewayNodeConfig">
+<xsd:complexContent>
+<xsd:extension base="domainservice:NodeConfig">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.5.1 nupaman 28/12/2011 Added new property : 'configSettings'
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="configSettings">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="dbConnectivity" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="GatewayNodeConfig" type="domainservice:GatewayNodeConfig"/>
+<xsd:complexType name="WorkerNodeConfig">
+<xsd:complexContent>
+<xsd:extension base="domainservice:NodeConfig">
+<xsd:attribute name="encryptedPassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="username">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="WorkerNodeConfig" type="domainservice:WorkerNodeConfig"/>
+<xsd:complexType name="LinkedDomain">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:DomainObj">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="gateways">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NodeAddress" type="common:NodeAddress"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LinkedDomain" type="domainservice:LinkedDomain"/>
+</xsd:schema>

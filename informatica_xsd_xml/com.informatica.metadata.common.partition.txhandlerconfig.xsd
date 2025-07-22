@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.partition.txhandlerconfig/2" xmlns:imx="http://com.informatica.imx" xmlns:txhandlerconfig="http://com.informatica.metadata.common.partition.txhandlerconfig/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.partition.txhandlerconfig/2">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nAll partitioning strategies currently in existence need to expose partition-dependent properties and partitition-scope transformation property overrides.  Future partitioning strategies may not require these concerns, which have purposely been designed such that partition-independent session objects need not know of their existence.\n \n This package contains a base class for classes that define partition-dependent properties for a transformation handler, and a common abstraction for associating partition-dependent configuration objects with the partition-independent configuration they supplement.\n \n Both the dynamic and detailed strategies reuse the association class, but use distinct concrete subclasses to account for their differences.\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="TxHandlerConfigAssociation">
+<xsd:annotation>
+<xsd:documentation> This abstract class contains a collection of partition-dependent property sets (TxHandlerConfigPartition objects) and associates them with a referenced partition-independent property set (TxHandlerConfig object).
+ 
+ An association class is used instead of a direct reference from TxHandlerConfig so that know partition-independent metadata has information about any partition-dependent metadata.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="partitionConfigs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="TxHandlerConfigPartition" type="txhandlerconfig:TxHandlerConfigPartition"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="handlerConfig" type="imx:idref"/>
+<xsd:attribute name="instance" type="imx:idref"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="TxHandlerConfigPartition">
+<xsd:annotation>
+<xsd:documentation> This is an abstract base class which is extended to model partition-dependent properties that a session handler implementation defines and consumes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="partitionNumber" type="xsd:int"/>
+</xsd:complexType>
+</xsd:schema>

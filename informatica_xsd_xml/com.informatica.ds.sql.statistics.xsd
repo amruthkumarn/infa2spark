@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.ds.sql.statistics/0" xmlns:imx="http://com.informatica.imx" xmlns:statistics="http://com.informatica.ds.statistics/0" xmlns:statistics1="http://com.informatica.ds.sql.statistics/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.ds.sql.statistics/0">
+<xsd:import namespace="http://com.informatica.ds.statistics/0" schemaLocation="com.informatica.ds.statistics.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:simpleType name="ConnectionState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="active"/>
+<xsd:enumeration value="aborted"/>
+<xsd:enumeration value="closed"/>
+<xsd:enumeration value="timeout"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ConnectionStat">
+<xsd:complexContent>
+<xsd:extension base="statistics:DISStatObject">
+<xsd:annotation>
+<xsd:documentation> The is the virtual DB connection statistic model.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="databaseId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="databaseName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="endTime" type="xsd:long"/>
+<xsd:attribute name="ipAddress">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="lastAccessedTime" type="xsd:long"/>
+<xsd:attribute name="logFilename">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="startTime" type="xsd:long"/>
+<xsd:attribute name="state" type="statistics1:ConnectionState"/>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConnectionStat" type="statistics1:ConnectionStat"/>
+<xsd:complexType name="SQLFeatureStat">
+<xsd:complexContent>
+<xsd:extension base="statistics:FeatureStat">
+<xsd:annotation>
+<xsd:documentation> The is the SQL endpoint statistic model.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="databaseId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="databaseName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SQLFeatureStat" type="statistics1:SQLFeatureStat"/>
+<xsd:complexType name="SQLRequestStat">
+<xsd:complexContent>
+<xsd:extension base="statistics:RequestStat">
+<xsd:annotation>
+<xsd:documentation> The is the SQL request statistic model.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="databaseId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="databaseName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sql">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SQLRequestStat" type="statistics1:SQLRequestStat"/>
+<xsd:complexType name="VirtualTableCacheInstanceStat">
+<xsd:complexContent>
+<xsd:extension base="statistics:DataObjectCacheInstanceStat">
+<xsd:attribute name="tableId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="tableName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VirtualTableCacheInstanceStat" type="statistics1:VirtualTableCacheInstanceStat"/>
+<xsd:complexType name="VirtualTableStat">
+<xsd:complexContent>
+<xsd:extension base="statistics:DataObjectStat">
+<xsd:attribute name="tableId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="tableName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VirtualTableStat" type="statistics1:VirtualTableStat"/>
+</xsd:schema>

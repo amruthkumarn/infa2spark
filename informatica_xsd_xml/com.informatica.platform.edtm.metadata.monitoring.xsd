@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.platform.edtm.metadata.monitoring/2" xmlns:imx="http://com.informatica.imx" xmlns:monitoring="http://com.informatica.platform.edtm.metadata.monitoring/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.platform.edtm.metadata.monitoring/2">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="DTMProcessSnapshot">
+<xsd:annotation>
+<xsd:documentation> Monitoring information about a DTM Process.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="cpu" type="xsd:double"/>
+<xsd:attribute name="load" type="xsd:int"/>
+<xsd:attribute name="memoryInMegaBytes" type="xsd:int"/>
+<xsd:attribute name="memoryInPercentage" type="xsd:int"/>
+<xsd:attribute name="processID" type="xsd:int"/>
+<xsd:attribute name="processName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="DTMProcessSnapshot" type="monitoring:DTMProcessSnapshot"/>
+<xsd:simpleType name="ExecutionState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="Ready"/>
+<xsd:enumeration value="Initializing"/>
+<xsd:enumeration value="Running"/>
+<xsd:enumeration value="Succeeded"/>
+<xsd:enumeration value="Failed"/>
+<xsd:enumeration value="Stopped"/>
+<xsd:enumeration value="Aborted"/>
+<xsd:enumeration value="Deinitialized"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="FragmentExecutionInfo">
+<xsd:annotation>
+<xsd:documentation> Monitoring information for a fragment of the session. A fragment is the portion of the session that runs in a single process.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="cpuPercent" type="xsd:double"/>
+<xsd:attribute name="cpuTime" type="xsd:long"/>
+<xsd:attribute name="endTime">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="fragmentID" type="xsd:int"/>
+<xsd:attribute name="memoryUsage" type="xsd:long"/>
+<xsd:attribute name="nodeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="startTime">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="vTransformationExecutionInfo" type="imx:idrefs"/>
+<xsd:attribute name="wallClockTime" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="FragmentExecutionInfo" type="monitoring:FragmentExecutionInfo"/>
+<xsd:complexType name="GmaGlobalStatistics">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="currentMemoryUsage" type="xsd:long"/>
+<xsd:attribute name="userSpecifiedMaxDSMemory" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="GmaGlobalStatistics" type="monitoring:GmaGlobalStatistics"/>
+<xsd:complexType name="GmaSessionStatistics">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="currentMemoryUsage" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="GmaSessionStatistics" type="monitoring:GmaSessionStatistics"/>
+<xsd:complexType name="GmaStatisticsSerializationShell">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="gmaGlobalStatistics" type="monitoring:GmaGlobalStatistics"/>
+<xsd:element name="gmaSessionStatistics" type="monitoring:GmaSessionStatistics"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="GmaStatisticsSerializationShell" type="monitoring:GmaStatisticsSerializationShell"/>
+<xsd:complexType name="GroupExecutionInfo">
+<xsd:annotation>
+<xsd:documentation> Monitoring information for a group in a transformation.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="vGroupPerformanceCounter">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="GroupPerformanceCounter" type="monitoring:GroupPerformanceCounter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="bytesProcessed" type="xsd:long"/>
+<xsd:attribute name="endTime">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="errorBytes" type="xsd:long"/>
+<xsd:attribute name="errorRows" type="xsd:long"/>
+<xsd:attribute name="firstRowTime">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="lastErrorCode" type="xsd:int"/>
+<xsd:attribute name="lastErrorMessage">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="rowsProcessed" type="xsd:long"/>
+<xsd:attribute name="sourceTargetThroughput" type="xsd:long"/>
+<xsd:attribute name="startTime">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="throughput" type="xsd:double"/>
+<xsd:attribute name="throughputBytes" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="GroupExecutionInfo" type="monitoring:GroupExecutionInfo"/>
+<xsd:complexType abstract="true" name="GroupPerformanceCounter">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="OOPDTMExecutionState">
+<xsd:annotation>
+<xsd:documentation> Run State of an eDTM in Out Of Process
+ @author gmudunur
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="dtmID" type="xsd:long"/>
+<xsd:attribute name="executionState" type="monitoring:ExecutionState"/>
+</xsd:complexType>
+<xsd:element name="OOPDTMExecutionState" type="monitoring:OOPDTMExecutionState"/>
+<xsd:complexType name="ProcessStatistics">
+<xsd:annotation>
+<xsd:documentation> Monitoring information about the session execution.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="CPU" type="xsd:double"/>
+<xsd:attribute name="memory" type="xsd:int"/>
+<xsd:attribute name="memoryInMegaBytes" type="xsd:int"/>
+<xsd:attribute name="memoryInPercentage" type="xsd:int"/>
+<xsd:attribute name="nodeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="pid" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="ProcessStatistics" type="monitoring:ProcessStatistics"/>
+<xsd:complexType name="SessionExecutionInfo">
+<xsd:annotation>
+<xsd:documentation> Monitoring information about the session execution.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="vFragmentExecutionInfo">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="FragmentExecutionInfo" type="monitoring:FragmentExecutionInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="vTransformationExecutionInfo">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="TransformationExecutionInfo" type="monitoring:TransformationExecutionInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="endTime">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="executionState" type="monitoring:ExecutionState"/>
+<xsd:attribute name="firstErrorCatalogName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="firstErrorCode" type="xsd:int"/>
+<xsd:attribute name="firstErrorMessage">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="startTime">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="statTime">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SessionExecutionInfo" type="monitoring:SessionExecutionInfo"/>
+<xsd:complexType name="TransformationExecutionInfo">
+<xsd:annotation>
+<xsd:documentation> Run-time monitoring information for a partition of a transformation.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="vGroupExecutionInfo">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="GroupExecutionInfo" type="monitoring:GroupExecutionInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="vTransformationPerformanceCounter">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TransformationPerformanceCounter" type="monitoring:TransformationPerformanceCounter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="fragmentExecutionInfo" type="imx:idref"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="partitionIndex" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="TransformationExecutionInfo" type="monitoring:TransformationExecutionInfo"/>
+<xsd:complexType abstract="true" name="TransformationPerformanceCounter">
+<xsd:annotation>
+<xsd:documentation> Base class for any Performance Counter/(s) needed for the transformation. Can be derived by each individual transformation.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="GenericGroupPerformanceCounter">
+<xsd:complexContent>
+<xsd:extension base="monitoring:GroupPerformanceCounter">
+<xsd:annotation>
+<xsd:documentation> Typically a transformation will derive from GroupPerformanceCounter and return them to the dtm. However, as of a first cut version the dtm framework will create GeneralGroupPerformanceCounter. These are simply name-value pairs.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="GenericGroupPerformanceCounter" type="monitoring:GenericGroupPerformanceCounter"/>
+<xsd:complexType name="GenericTransformationPerformanceCounter">
+<xsd:complexContent>
+<xsd:extension base="monitoring:TransformationPerformanceCounter">
+<xsd:annotation>
+<xsd:documentation> This is a Perf Ctr that is just a name-value pair and hence the most general representation of a Perf Counter. Ideally, the dtm should have more specific perf counters. However, the dtm framework will only construct "GeneralTransformatioPerformanceCounter" as of a first cut implementation.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="GenericTransformationPerformanceCounter" type="monitoring:GenericTransformationPerformanceCounter"/>
+</xsd:schema>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.interfaces.alertservice/2" xmlns:alertservice="http://com.informatica.isp.interfaces.alertservice/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.interfaces.alertservice/2">
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:simpleType name="AlertType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="SERVICE"/>
+<xsd:enumeration value="DOMAIN"/>
+<xsd:enumeration value="NODE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="Alert">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:attribute name="alertMsg">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="alertType" type="alertservice:AlertType"/>
+<xsd:attribute name="time">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Alert" type="alertservice:Alert"/>
+</xsd:schema>

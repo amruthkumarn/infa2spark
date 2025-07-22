@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.optimizerconfig.cbo/1" xmlns:cbo="http://com.informatica.metadata.common.optimizer.cbo/1" xmlns:cbo1="http://com.informatica.metadata.common.optimizerconfig.cbo/1" xmlns:imx="http://com.informatica.imx" xmlns:optimizerconfig="http://com.informatica.metadata.common.optimizerconfig/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.optimizerconfig.cbo/1">
+<xsd:import namespace="http://com.informatica.metadata.common.optimizer.cbo/1" schemaLocation="com.informatica.metadata.common.optimizer.cbo.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.optimizerconfig/1" schemaLocation="com.informatica.metadata.common.optimizerconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="OptimizerCostCoefficientConfig">
+<xsd:complexContent>
+<xsd:extension base="optimizerconfig:OptimizerConfig">
+<xsd:annotation>
+<xsd:documentation> Global defaults to be used by the optimizer
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="costCoefficientConfigs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="CostCoefficientConfig" type="cbo:CostCoefficientConfig"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OptimizerCostCoefficientConfig" type="cbo1:OptimizerCostCoefficientConfig"/>
+</xsd:schema>

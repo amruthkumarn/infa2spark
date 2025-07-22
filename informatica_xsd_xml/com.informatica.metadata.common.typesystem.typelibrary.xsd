@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.typesystem.typelibrary/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:typelibrary="http://com.informatica.metadata.common.typesystem.typelibrary/2" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.typesystem.typelibrary/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> MODIFICATIONS\n 2.2.0   amanjrek   	03-Dec-2014   Added DynamicType, PredefinedDynamicType and DynamicTypeContainer models for Next Gen Mapping\n 2.3.0   yqiu			6-Mar-2015	Added a seeded PredefinedComplexType\n 2.4.0   amanjrek		19-Jan-2016	Added FieldSelector, FieldSelectorScope and ComplexTypeFieldSelectorScope models\n 2.5.0   omusteat     7-28-2019 Added ComplexTypeStructureInfo\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="EnumeratedValueQualifierValue">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="EnumeratedValueQualifierValue" type="typelibrary:EnumeratedValueQualifierValue"/>
+<xsd:complexType abstract="true" name="FieldSelectorScope">
+<xsd:annotation>
+<xsd:documentation> Defines the scope of a FieldSelector
+ @author amanjrek 
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="ValuePattern">
+<xsd:annotation>
+<xsd:documentation> Represents a pattern for a permitted value
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="pattern">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ValuePattern" type="typelibrary:ValuePattern"/>
+<xsd:complexType abstract="true" name="ValueQualifier">
+<xsd:annotation>
+<xsd:documentation> A simple type can contain qualifiers that constraints the valuespace of the simple type. The concrete qualifiers that can be applied depend on the base primitive type of the simple type. A value for the simple type is considered legal only of it satisfies all the qualifiers of that simple type.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="ComplexTypeFieldSelectorScope">
+<xsd:complexContent>
+<xsd:extension base="typelibrary:FieldSelectorScope">
+<xsd:annotation>
+<xsd:documentation> FieldSelectorScope within a certain ComplexType
+ @author amanjrek 
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="complexType" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ComplexTypeFieldSelectorScope" type="typelibrary:ComplexTypeFieldSelectorScope"/>
+<xsd:complexType name="EnumeratedValueQualifier">
+<xsd:complexContent>
+<xsd:extension base="typelibrary:ValueQualifier">
+<xsd:annotation>
+<xsd:documentation> Applies to data types based on any primitive type. Contains a list of  values that are permitted.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="enumeratedValues">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="EnumeratedValueQualifierValue" type="typelibrary:EnumeratedValueQualifierValue"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="EnumeratedValueQualifier" type="typelibrary:EnumeratedValueQualifier"/>
+<xsd:complexType name="MaxValueQualifier">
+<xsd:complexContent>
+<xsd:extension base="typelibrary:ValueQualifier">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="maxValue" type="types:Value"/>
+</xsd:choice>
+<xsd:attribute name="inclusive" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MaxValueQualifier" type="typelibrary:MaxValueQualifier"/>
+<xsd:complexType name="MinValueQualifier">
+<xsd:complexContent>
+<xsd:extension base="typelibrary:ValueQualifier">
+<xsd:annotation>
+<xsd:documentation> Can be applied to datatypes that have the following StorageSemantics: IntegerStorageSemantic (including its subtypes), MachineIntegerStorageSemantic, FloatStorageSemantic and GregorianTimeStorageSemantic. A SimpleType
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="minValue" type="types:Value"/>
+</xsd:choice>
+<xsd:attribute name="inclusive" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MinValueQualifier" type="typelibrary:MinValueQualifier"/>
+<xsd:complexType name="PatternsBasedValueQualifier">
+<xsd:complexContent>
+<xsd:extension base="typelibrary:ValueQualifier">
+<xsd:annotation>
+<xsd:documentation> Contains a list of patterns (regular expressions) that constraint permitted values. Applies to character based data types. A value is permitted as long as it satisfies any one of the patterns contained by the pattern qualifier.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="patterns">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ValuePattern" type="typelibrary:ValuePattern"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PatternsBasedValueQualifier" type="typelibrary:PatternsBasedValueQualifier"/>
+<xsd:complexType name="ComplexTypeStructureInfo">
+<xsd:complexContent>
+<xsd:extension base="core:Annotation">
+<xsd:annotation>
+<xsd:documentation> @author omusteat
+ 
+ 
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="structureInfo">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ComplexTypeStructureInfo" type="typelibrary:ComplexTypeStructureInfo"/>
+<xsd:complexType name="DynamicTypeContainer">
+<xsd:complexContent>
+<xsd:extension base="types:TypeContainer">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="dynamicTypes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="PredefinedDynamicType" type="typelibrary:PredefinedDynamicType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DynamicTypeContainer" type="typelibrary:DynamicTypeContainer"/>
+<xsd:complexType name="InfaComplexTypeContainer">
+<xsd:complexContent>
+<xsd:extension base="types:TypeContainer">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="complexTypes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="PredefinedComplexType" type="typelibrary:PredefinedComplexType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="InfaComplexTypeContainer" type="typelibrary:InfaComplexTypeContainer"/>
+<xsd:complexType name="StructuralFeature">
+<xsd:complexContent>
+<xsd:extension base="types:TypedElement">
+<xsd:annotation>
+<xsd:documentation> Each StructuralFeature contained by a ComplexType describes a named value position within some ComplexType.  StructuralFeatures are typed by a DerivedType or DataType.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="defaultValue" type="types:Value"/>
+<xsd:element name="fixedValue" type="types:Value"/>
+</xsd:choice>
+<xsd:attribute name="lower" type="xsd:int"/>
+<xsd:attribute name="nullable" type="xsd:boolean"/>
+<xsd:attribute name="precision" type="xsd:int"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+<xsd:attribute name="upper" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StructuralFeature" type="typelibrary:StructuralFeature"/>
+<xsd:complexType name="TypeLibrary">
+<xsd:complexContent>
+<xsd:extension base="types:TypeContainer">
+<xsd:annotation>
+<xsd:documentation> A TypeLibrary is a named container for DerivedTypes.  It is similar to a TypeSystem (see com.informatica.metadata.common.typesystem), but collects objects belonging to a different subclass of Type.
+ 
+ A TypeLibrary makes a reference to a TypeSystem.  Each SimpleType contained by the TypeLibrary must reference a DataType contained by that TypeSystem.  This ensures that all DerivedTypes are composed from DataTypes belonging to a single TypeSystem.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="userTypes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DerivedType" type="types:DerivedType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="importedLibraries" type="imx:idrefs"/>
+<xsd:attribute name="typeSystem" type="imx:idref"/>
+<xsd:attribute name="urn">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="urnPrefix">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TypeLibrary" type="typelibrary:TypeLibrary"/>
+<xsd:complexType name="ComplexType">
+<xsd:complexContent>
+<xsd:extension base="types:DerivedType">
+<xsd:annotation>
+<xsd:documentation> A ComplexType is a constructed type which is composed of a collection of values.  The type of those values can be ComplexTypes as well, making it possible to express hierarchical data types.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="features">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="StructuralFeature" type="typelibrary:StructuralFeature"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="superType" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ComplexType" type="typelibrary:ComplexType"/>
+<xsd:complexType abstract="true" name="DynamicType">
+<xsd:complexContent>
+<xsd:extension base="types:DerivedType">
+<xsd:annotation>
+<xsd:documentation> 
+  
+ A Dynamic Type is an abstraction to represent a Type whose structure is not known initially.
+ This should work in conjunction with an expansion handler, which is responsible for generating the information about the structure of the Type.
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="superType" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="FieldSelector">
+<xsd:complexContent>
+<xsd:extension base="typelibrary:StructuralFeature">
+<xsd:annotation>
+<xsd:documentation> Field selector construct to specify an ordered list of fields via descriptive rules.  Rules supported in 10.1: 'by TYPE', 'by PATTERN', 'by NAMELIST'.
+ Defined within the scope of a single DSO
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="selectionScope" type="typelibrary:FieldSelectorScope"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FieldSelector" type="typelibrary:FieldSelector"/>
+<xsd:complexType name="SimpleType">
+<xsd:complexContent>
+<xsd:extension base="types:DerivedType">
+<xsd:annotation>
+<xsd:documentation> A SimpleType is a constructed type that describes a value domain defined by the referenced DataType, but restricted to finite storage space through precision and scale attributes.
+ 
+ Information about how precision and scale are interpretted is either understood implicitly by an application from the DataType's name, or inferred in a model-driven way through the DataType's contained StorageSemantic (see com.informatica.metdata.common.typesystem.storagesemantics).
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="valueQualifier">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ValueQualifier" type="typelibrary:ValueQualifier"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="dataType" type="imx:idref"/>
+<xsd:attribute name="precision" type="xsd:int"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SimpleType" type="typelibrary:SimpleType"/>
+<xsd:complexType name="PredefinedComplexType">
+<xsd:complexContent>
+<xsd:extension base="typelibrary:ComplexType"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PredefinedComplexType" type="typelibrary:PredefinedComplexType"/>
+<xsd:complexType name="PredefinedDynamicType">
+<xsd:complexContent>
+<xsd:extension base="typelibrary:DynamicType"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PredefinedDynamicType" type="typelibrary:PredefinedDynamicType"/>
+</xsd:schema>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.sdk.medomain/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:medomain="http://com.informatica.metadata.sdk.medomain/2" xmlns:sdk="http://com.informatica.metadata.sdk/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.sdk.medomain/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.sdk/2" schemaLocation="com.informatica.metadata.sdk.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:simpleType name="MEDomainTargetType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="SOURCE"/>
+<xsd:enumeration value="TARGET"/>
+<xsd:enumeration value="MAPPING"/>
+<xsd:enumeration value="ALL"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="MetadataExtensionAttribute">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="attributeDefinition" type="imx:idref"/>
+<xsd:attribute name="meDomain" type="imx:idref"/>
+<xsd:attribute name="valueLiteral">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="MetadataExtensionAttribute" type="medomain:MetadataExtensionAttribute"/>
+<xsd:complexType name="MEDomainDefinition">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:attribute name="dbType" type="imx:idref"/>
+<xsd:attribute name="defaultValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="meDomainType" type="imx:idref"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="targetType" type="medomain:MEDomainTargetType"/>
+<xsd:attribute name="type" type="sdk:SDKAttrDataType"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MEDomainDefinition" type="medomain:MEDomainDefinition"/>
+<xsd:complexType name="MEDomain">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="domainDefinitions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="MEDomainDefinition" type="medomain:MEDomainDefinition"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="domainId" type="xsd:int"/>
+<xsd:attribute name="vendorId" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MEDomain" type="medomain:MEDomain"/>
+<xsd:complexType name="MetadataExtensionAnnotation">
+<xsd:complexContent>
+<xsd:extension base="core:Annotation">
+<xsd:annotation>
+<xsd:documentation> The base class for all metadata extensions for backwards compatibility of 8.5 Source and Target Metadata Extensions.
+ 
+ This class is not to be extended outside of the com.informatica.metadata.sdk.resourceentity package.  It has two subclasses within that package that are intended for plugin subclassing: SourceMEDomain and TargetMEDomain.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="attributes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="MetadataExtensionAttribute" type="medomain:MetadataExtensionAttribute"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MetadataExtensionAnnotation" type="medomain:MetadataExtensionAnnotation"/>
+</xsd:schema>

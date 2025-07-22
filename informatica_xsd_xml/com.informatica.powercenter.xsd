@@ -1,0 +1,1463 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.powercenter/1" xmlns:imx="http://com.informatica.imx" xmlns:powercenter="http://com.informatica.powercenter/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.powercenter/1">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:simpleType name="OPBCTypes">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="CTYPE_SHORT"/>
+<xsd:enumeration value="CTYPE_LONG"/>
+<xsd:enumeration value="CTYPE_CHAR"/>
+<xsd:enumeration value="CTYPE_FLOAT"/>
+<xsd:enumeration value="CTYPE_DOUBLE"/>
+<xsd:enumeration value="CTYPE_RAW"/>
+<xsd:enumeration value="CTYPE_TIME"/>
+<xsd:enumeration value="CTYPE_DECIMAL15_FIXED"/>
+<xsd:enumeration value="CTYPE_DECIMAL18_FIXED"/>
+<xsd:enumeration value="CTYPE_DECIMAL28_FIXED"/>
+<xsd:enumeration value="CTYPE_DECIMAL15"/>
+<xsd:enumeration value="CTYPE_DECIMAL18"/>
+<xsd:enumeration value="CTYPE_DECIMAL28"/>
+<xsd:enumeration value="CTYPE_UNICHAR"/>
+<xsd:enumeration value="CTYPE_DECIMAL38_FIXED"/>
+<xsd:enumeration value="CTYPE_DECIMAL38"/>
+<xsd:enumeration value="CTYPE_BIGINT"/>
+<xsd:enumeration value="CTYPE_RESERVED4"/>
+<xsd:enumeration value="CTYPE_RESERVED5"/>
+<xsd:enumeration value="CTYPE_CONSTANT_NULL"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="PMAttrDataType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="PM_ATTRDATATYPE_NONE"/>
+<xsd:enumeration value="PM_ATTRDATATYPE_NUMBER"/>
+<xsd:enumeration value="PM_ATTRDATATYPE_STRING"/>
+<xsd:enumeration value="PM_ATTRDATATYPE_DATE"/>
+<xsd:enumeration value="PM_ATTRDATATYPE_NUMBER64"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="PMAttrType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="PM_ATTRTYPE_DATABASES"/>
+<xsd:enumeration value="PM_ATTRTYPE_FILES"/>
+<xsd:enumeration value="PM_ATTRTYPE_EXPRESSIONS"/>
+<xsd:enumeration value="PM_ATTRTYPE_SQL"/>
+<xsd:enumeration value="PM_ATTRTYPE_PROPERTY"/>
+<xsd:enumeration value="PM_ATTRTYPE_BOOLEAN"/>
+<xsd:enumeration value="PM_ATTRTYPE_MULTIVALUED"/>
+<xsd:enumeration value="PM_ATTRTYPE_PASSWORD"/>
+<xsd:enumeration value="PM_ATTRTYPE_CUSTOM"/>
+<xsd:enumeration value="PM_ATTRTYPE_FILENAME"/>
+<xsd:enumeration value="PM_ATTRTYPE_EVENTLIST"/>
+<xsd:enumeration value="PM_ATTRTYPE_EMAIL"/>
+<xsd:enumeration value="PM_ATTRTYPE_DATETIME"/>
+<xsd:enumeration value="PM_ATTRTYPE_SORTORDER"/>
+<xsd:enumeration value="PM_ATTRTYPE_MEMORY"/>
+<xsd:enumeration value="PM_ATTRTYPE_XMLROOT"/>
+<xsd:enumeration value="PM_ATTRTYPE_CONTROLFILE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="PMDBNativeType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="OPB_NONE"/>
+<xsd:enumeration value="OPB_ORA_CHAR"/>
+<xsd:enumeration value="OPB_ORA_DATE"/>
+<xsd:enumeration value="OPB_ORA_LONG"/>
+<xsd:enumeration value="OPB_ORA_LONGRAW"/>
+<xsd:enumeration value="OPB_ORA_NUMBER"/>
+<xsd:enumeration value="OPB_ORA_NUMBERPS"/>
+<xsd:enumeration value="OPB_ORA_RAW"/>
+<xsd:enumeration value="OPB_ORA_VARCHAR"/>
+<xsd:enumeration value="OPB_ORA_VARCHAR2"/>
+<xsd:enumeration value="OPB_ORA_NCHAR"/>
+<xsd:enumeration value="OPB_ORA_NVARCHAR"/>
+<xsd:enumeration value="OPB_ORA_NVARCHAR2"/>
+<xsd:enumeration value="OPB_ORA_CLOB"/>
+<xsd:enumeration value="OPB_ORA_BLOB"/>
+<xsd:enumeration value="OPB_ORA_NCLOB"/>
+<xsd:enumeration value="OPB_ORA_XML"/>
+<xsd:enumeration value="OPB_ORA_TIMESTAMP"/>
+<xsd:enumeration value="OPB_ORA_NONE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="PMDataType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="SQL_DEFAULT"/>
+<xsd:enumeration value="SQL_CHAR"/>
+<xsd:enumeration value="SQL_NUMERIC"/>
+<xsd:enumeration value="SQL_DECIMAL"/>
+<xsd:enumeration value="SQL_INTEGER"/>
+<xsd:enumeration value="SQL_SMALLINT"/>
+<xsd:enumeration value="SQL_FLOAT"/>
+<xsd:enumeration value="SQL_REAL"/>
+<xsd:enumeration value="SQL_DOUBLE"/>
+<xsd:enumeration value="SQL_DATE"/>
+<xsd:enumeration value="SQL_TIME"/>
+<xsd:enumeration value="SQL_TIMESTAMP"/>
+<xsd:enumeration value="SQL_VARCHAR"/>
+<xsd:enumeration value="SQL_LONGVARCHAR"/>
+<xsd:enumeration value="SQL_BINARY"/>
+<xsd:enumeration value="SQL_VARBINARY"/>
+<xsd:enumeration value="SQL_LONGVARBINARY"/>
+<xsd:enumeration value="SQL_BIGINT"/>
+<xsd:enumeration value="SQL_TINYINT"/>
+<xsd:enumeration value="SQL_BIT"/>
+<xsd:enumeration value="SQL_WCHAR"/>
+<xsd:enumeration value="SQL_WVARCHAR"/>
+<xsd:enumeration value="SQL_WLONGVARCHAR"/>
+<xsd:enumeration value="SQL_MONEY"/>
+<xsd:enumeration value="SQL_NONE"/>
+<xsd:enumeration value="SQL_IDENTITY"/>
+<xsd:enumeration value="SQL_CLOB"/>
+<xsd:enumeration value="SQL_NCLOB"/>
+<xsd:enumeration value="SQL_BLOB"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="PMExpressionType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="PM_EXPRESSION_NONE"/>
+<xsd:enumeration value="PM_EXPRESSION_GENERAL"/>
+<xsd:enumeration value="PM_DATASRCQUAL_CLAUSE"/>
+<xsd:enumeration value="PM_UPG_SRCFILTER_CLAUSE"/>
+<xsd:enumeration value="PM_UPG_USERJOINS_CLAUSE"/>
+<xsd:enumeration value="PM_DATADRIVEN_CLAUSE"/>
+<xsd:enumeration value="PM_JOINORDERBY_CLAUSE"/>
+<xsd:enumeration value="PM_EQUIJOIN_CLAUSE"/>
+<xsd:enumeration value="PM_OUTERJOIN_CLAUSE"/>
+<xsd:enumeration value="PM_AGG_CLAUSE"/>
+<xsd:enumeration value="PM_GROUPBY_CLAUSE"/>
+<xsd:enumeration value="PM_LOOKUP_TABLE"/>
+<xsd:enumeration value="PM_LOOKUP_CONDITION"/>
+<xsd:enumeration value="PM_RANK_RANKPORT"/>
+<xsd:enumeration value="PM_RANK_RANKINDEX"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="PMObjectType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="PM_OBJECT_NONE"/>
+<xsd:enumeration value="PM_SOURCE_WIDGET"/>
+<xsd:enumeration value="PM_TARGET_WIDGET"/>
+<xsd:enumeration value="PM_DATASRCQUAL_WIDGET"/>
+<xsd:enumeration value="PM_DATADRIVEN_WIDGET"/>
+<xsd:enumeration value="PM_EXPR_WIDGET"/>
+<xsd:enumeration value="PM_SP_WIDGET"/>
+<xsd:enumeration value="PM_SEQ_WIDGET"/>
+<xsd:enumeration value="PM_EXTPROC_WIDGET"/>
+<xsd:enumeration value="PM_AGG_WIDGET"/>
+<xsd:enumeration value="PM_FILTER_WIDGET"/>
+<xsd:enumeration value="PM_LOOKUP_WIDGET"/>
+<xsd:enumeration value="PM_JOINER_WIDGET"/>
+<xsd:enumeration value="PM_PROCEDURE_WIDGET"/>
+<xsd:enumeration value="PM_NORMALIZER_WIDGET"/>
+<xsd:enumeration value="PM_ROUTER_WIDGET"/>
+<xsd:enumeration value="PM_MERGER_WIDGET"/>
+<xsd:enumeration value="PM_PIVOT_WIDGET"/>
+<xsd:enumeration value="PM_SESSION_OBJECT"/>
+<xsd:enumeration value="PM_BATCH_OBJECT"/>
+<xsd:enumeration value="PM_SHORTCUT_OBJECT"/>
+<xsd:enumeration value="PM_MAPPING_OBJECT"/>
+<xsd:enumeration value="PM_DBD_OBJECT"/>
+<xsd:enumeration value="PM_WIDGET_OBJECT"/>
+<xsd:enumeration value="PM_TARGET_OBJECT"/>
+<xsd:enumeration value="PM_SOURCE_OBJECT"/>
+<xsd:enumeration value="PM_RANK_WIDGET"/>
+<xsd:enumeration value="PM_SS_OBJECT"/>
+<xsd:enumeration value="PM_SCHEMA_OBJECT"/>
+<xsd:enumeration value="PM_FOLDER_OBJECT"/>
+<xsd:enumeration value="PM_CUBE_OBJECT"/>
+<xsd:enumeration value="PM_DIMENSION_OBJECT"/>
+<xsd:enumeration value="PPM_LEVEL_OBJECT"/>
+<xsd:enumeration value="PM_HIERARCHY_OBJECT"/>
+<xsd:enumeration value="PM_FACT_OBJECT"/>
+<xsd:enumeration value="PM_GENERAL_OBJECT"/>
+<xsd:enumeration value="PM_FTP_OBJECT"/>
+<xsd:enumeration value="PM_ORAEXTLOADER_OBJECT"/>
+<xsd:enumeration value="PM_INFEXTLOADER_OBJECT"/>
+<xsd:enumeration value="PM_SYBIQEXTLOADER_OBJECT"/>
+<xsd:enumeration value="PM_FILE_OBJECT"/>
+<xsd:enumeration value="PM_SERVER_OBJECT"/>
+<xsd:enumeration value="PM_DATABASE_OBJECT"/>
+<xsd:enumeration value="PM_REPOSITORY_OBJECT"/>
+<xsd:enumeration value="PM_MAPPLET_WIDGET"/>
+<xsd:enumeration value="PM_ERPDSQ_WIDGET"/>
+<xsd:enumeration value="PM_INPUT_WIDGET"/>
+<xsd:enumeration value="PM_OUTPUT_WIDGET"/>
+<xsd:enumeration value="PM_BCF_OBJECT"/>
+<xsd:enumeration value="PM_BCFBC_OBJECT"/>
+<xsd:enumeration value="PM_ACTIVE_EXTPROC_WIDGET"/>
+<xsd:enumeration value="PM_SAPSTRUCTURE_OBJECT"/>
+<xsd:enumeration value="PM_SAPFUNCTION_OBJECT"/>
+<xsd:enumeration value="PM_TERADATAEXTLOADER_OBJECT"/>
+<xsd:enumeration value="PM_SYBIQ12EXTLOADER_OBJECT"/>
+<xsd:enumeration value="PM_XMLDSQ_WIDGET"/>
+<xsd:enumeration value="PM_MQDSQ_WIDGET"/>
+<xsd:enumeration value="PM_MQCNX_OBJECT"/>
+<xsd:enumeration value="PM_COMMAND_TASK"/>
+<xsd:enumeration value="PM_DECISION_TASK"/>
+<xsd:enumeration value="PM_EVENTWAIT_TASK"/>
+<xsd:enumeration value="PM_EVENTRAISE_TASK"/>
+<xsd:enumeration value="PM_STARTWORKFLOW_TASK"/>
+<xsd:enumeration value="PM_ABORTWORKFLOW_TASK"/>
+<xsd:enumeration value="PM_STOPWORKFLOW_TASK"/>
+<xsd:enumeration value="PM_EMAIL_TASK"/>
+<xsd:enumeration value="PM_TIMER_TASK"/>
+<xsd:enumeration value="PM_ASSIGNMENT_TASK"/>
+<xsd:enumeration value="PM_SESSION_TASK"/>
+<xsd:enumeration value="PM_SCHEDULER_OBJECT"/>
+<xsd:enumeration value="PM_WORKLET_OBJECT"/>
+<xsd:enumeration value="PM_WORKFLOW_OBJECT"/>
+<xsd:enumeration value="PM_SESSCONFIG_OBJECT"/>
+<xsd:enumeration value="PM_CNX_RELATIONAL_OBJECT"/>
+<xsd:enumeration value="PM_CNX_APPS_OBJECT"/>
+<xsd:enumeration value="PM_CNX_FTP_OBJECT"/>
+<xsd:enumeration value="PM_CNX_LOADER_OBJECT"/>
+<xsd:enumeration value="PM_CNX_QUEUE_OBJECT"/>
+<xsd:enumeration value="PM_READER_OBJECT"/>
+<xsd:enumeration value="PM_WRITER_OBJECT"/>
+<xsd:enumeration value="PM_SORTER_WIDGET"/>
+<xsd:enumeration value="PM_VENDOR_OBJECT"/>
+<xsd:enumeration value="PM_TASK_OBJECT"/>
+<xsd:enumeration value="PM_CONNECTION_OBJECT"/>
+<xsd:enumeration value="PM_SDKDSQ_WIDGET"/>
+<xsd:enumeration value="PM_USER_OBJECT"/>
+<xsd:enumeration value="PM_GROUP_OBJECT"/>
+<xsd:enumeration value="PM_MMDDOMAIN_OBJECT"/>
+<xsd:enumeration value="PM_MMDEXTENSION_OBJECT"/>
+<xsd:enumeration value="PM_OBJECTTYPE_OBJECT"/>
+<xsd:enumeration value="PM_CONTROLWORKFLOW_TASK"/>
+<xsd:enumeration value="PM_TRANSCONTROL_WIDGET"/>
+<xsd:enumeration value="PM_QUERY_OBJECT"/>
+<xsd:enumeration value="PM_DEPLOYMENT_GROUP_OBJECT"/>
+<xsd:enumeration value="PM_LABEL_OBJECT"/>
+<xsd:enumeration value="PM_DEPLOYED_DEPGROUP_OBJECT"/>
+<xsd:enumeration value="PM_MGEP_WIDGET"/>
+<xsd:enumeration value="PM_SERVER_NETWORK_OBJECT"/>
+<xsd:enumeration value="PM_PROF_RULESET_OBJECT"/>
+<xsd:enumeration value="PM_TEMPLATE_EXTN_OBJECT"/>
+<xsd:enumeration value="PM_PROF_RESOURCE_OBJECT"/>
+<xsd:enumeration value="PM_WEB_SERVICES_HUB_OBJECT"/>
+<xsd:enumeration value="PM_LOOKUP_EXTN_OBJECT"/>
+<xsd:enumeration value="PM_SESSIONINST_OBJECT"/>
+<xsd:enumeration value="PM_MAX_WIDGET"/>
+<xsd:enumeration value="PM_MAX_OBJECT_TYPE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="PMPortType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="PM_FIELD_NONE"/>
+<xsd:enumeration value="PM_FIELD_INPUT"/>
+<xsd:enumeration value="PM_FIELD_OUTPUT"/>
+<xsd:enumeration value="PM_FIELD_BOTH"/>
+<xsd:enumeration value="PM_FIELD_RETURN_ONLY"/>
+<xsd:enumeration value="PM_FIELD_RETURN"/>
+<xsd:enumeration value="PM_FIELD_LOOKUP"/>
+<xsd:enumeration value="PM_PARAM_OUTPUT"/>
+<xsd:enumeration value="PM_WIDGET_LOCAL_VAR"/>
+<xsd:enumeration value="PM_FIELD_JOIN_SIZE"/>
+<xsd:enumeration value="PM_FIELD_GK"/>
+<xsd:enumeration value="PM_FIELD_GCID"/>
+<xsd:enumeration value="PM_FIELD_MQMSGID"/>
+<xsd:enumeration value="PM_FIELD_MQMSGDATA"/>
+<xsd:enumeration value="PM_FIELD_GENERATED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="PMSrcSubType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="PM_SRC_NONE"/>
+<xsd:enumeration value="PM_SRC_PSFT_RECORD"/>
+<xsd:enumeration value="PM_SRC_PSFT_PANEL"/>
+<xsd:enumeration value="PM_SRC_PSFT_TREE"/>
+<xsd:enumeration value="PM_SRC_PSFT_WINTER_TREE"/>
+<xsd:enumeration value="PM_SRC_SAP_TREE"/>
+<xsd:enumeration value="PM_SRC_SAP_TABLE_TRANSP"/>
+<xsd:enumeration value="PM_SRC_SAP_TABLE_CLUST"/>
+<xsd:enumeration value="PM_SRC_SAP_TABLE_POOL"/>
+<xsd:enumeration value="PM_SRC_PSFT_VERTICAL_TREE"/>
+<xsd:enumeration value="PM_SRC_SIEBEL_TABLE"/>
+<xsd:enumeration value="PM_SRC_SIEBEL_BUSCOMP"/>
+<xsd:enumeration value="PM_SRC_SAP_IDOC_TYPE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="TDSQDefines">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="DSQ_NONE"/>
+<xsd:enumeration value="SQL_STATEMENT"/>
+<xsd:enumeration value="USER_DEFINED_JOIN"/>
+<xsd:enumeration value="SOURCE_FILTER"/>
+<xsd:enumeration value="SORTED_PORTS"/>
+<xsd:enumeration value="TRACING_LEVEL"/>
+<xsd:enumeration value="SELECT_DISTINCT"/>
+<xsd:enumeration value="IS_PARTITIONABLE"/>
+<xsd:enumeration value="PRE_SQL"/>
+<xsd:enumeration value="POST_SQL"/>
+<xsd:enumeration value="DSQ_MAX_DEFINE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="TExprDefines">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="EXPR_NONE"/>
+<xsd:enumeration value="TRACING_LEVEL"/>
+<xsd:enumeration value="EXPR_MAX_DEFINE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="TExprMacro">
+<xsd:annotation>
+<xsd:documentation> This class represents the expression macro object.
+ All User Defined Functions are modeled as an expression macro object.
+
+ @author shkumar
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="argumentList">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TMacroArgument" type="powercenter:TMacroArgument"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="macroDesc">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="macroExpression">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="macroName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="macroPrototype">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="macroType" type="xsd:int"/>
+<xsd:attribute name="refMacroList" type="imx:idrefs"/>
+<xsd:attribute name="returnType" type="powercenter:OPBCTypes"/>
+</xsd:complexType>
+<xsd:element name="TExprMacro" type="powercenter:TExprMacro"/>
+<xsd:simpleType name="TFilterDefines">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="FILTER_NONE"/>
+<xsd:enumeration value="FILTER_CONDITION"/>
+<xsd:enumeration value="TRACING_LEVEL"/>
+<xsd:enumeration value="FILTER_MAX_DEFINE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="TGroupByDefines">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="GROUPBY_NONE"/>
+<xsd:enumeration value="CACHE_DIR"/>
+<xsd:enumeration value="TRACING_LEVEL"/>
+<xsd:enumeration value="SORTED_INPUT"/>
+<xsd:enumeration value="GROUPBY_DATA_CACHE_SIZE"/>
+<xsd:enumeration value="GROUPBY_INDEX_CACHE_SIZE"/>
+<xsd:enumeration value="TRANSFORMATION_SCOPE"/>
+<xsd:enumeration value="GROUPBY_MAX_DEFINE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="TJoinerDefines">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="JOINER_NONE"/>
+<xsd:enumeration value="CASE_SENSITIVE_STRING_COMPARISON"/>
+<xsd:enumeration value="CACHE_DIR"/>
+<xsd:enumeration value="JOIN_CONDITION"/>
+<xsd:enumeration value="JOIN_TYPE"/>
+<xsd:enumeration value="HIGH_OR_LOW"/>
+<xsd:enumeration value="DETAIL_HIGH_OR_LOW"/>
+<xsd:enumeration value="VALIDATE_MASTER_SORT"/>
+<xsd:enumeration value="VALIDATE_DETAIL_SORT"/>
+<xsd:enumeration value="TRACING_LEVEL"/>
+<xsd:enumeration value="JOINER_DATA_CACHE_SIZE"/>
+<xsd:enumeration value="JOINER_INDEX_CACHE_SIZE"/>
+<xsd:enumeration value="JOINER_ALGORITHM"/>
+<xsd:enumeration value="JOINER_INPUT_ORDER"/>
+<xsd:enumeration value="TRANSFORMATION_SCOPE"/>
+<xsd:enumeration value="JOINER_SORTED_INPUT"/>
+<xsd:enumeration value="JOINER_MAX_DEFINE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="TLookupDefines">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="LOOKUP_NONE"/>
+<xsd:enumeration value="SQL_OVERRIDE"/>
+<xsd:enumeration value="TABLE_NAME"/>
+<xsd:enumeration value="CACHING_ENABLED"/>
+<xsd:enumeration value="POLICY_ON_MULTIPLE_MATCH"/>
+<xsd:enumeration value="LOOKUP_CONDITION"/>
+<xsd:enumeration value="CONNECTION_NAME"/>
+<xsd:enumeration value="SOURCE_TYPE"/>
+<xsd:enumeration value="RECACHE_IF_STALE"/>
+<xsd:enumeration value="TRACING_LEVEL"/>
+<xsd:enumeration value="LOOKUP_CACHEDIR_NAME"/>
+<xsd:enumeration value="LOOKUP_CACHE_INIT"/>
+<xsd:enumeration value="LOOKUP_CACHE_PERSISTENT"/>
+<xsd:enumeration value="LOOKUP_DATA_CACHE_SIZE"/>
+<xsd:enumeration value="LOOKUP_INDEX_CACHE_SIZE"/>
+<xsd:enumeration value="DYNAMIC_LOOKUP_CACHE"/>
+<xsd:enumeration value="CACHE_FILENAME_PREFIX"/>
+<xsd:enumeration value="RECACHE_FROM_DATABASE"/>
+<xsd:enumeration value="INSERT_ELSE_UPDATE"/>
+<xsd:enumeration value="UPDATE_ELSE_INSERT"/>
+<xsd:enumeration value="FF_LOOKUP_DATETIME_FORMAT"/>
+<xsd:enumeration value="FF_LOOKUP_THOUSAND_SEP"/>
+<xsd:enumeration value="FF_LOOKUP_DECIMAL_SEP"/>
+<xsd:enumeration value="FF_LOOKUP_CASE_SENSITIVE_STRING_COMPARISON"/>
+<xsd:enumeration value="FF_LOOKUP_HIGH_OR_LOW"/>
+<xsd:enumeration value="FF_LOOKUP_SORTED_INPUT"/>
+<xsd:enumeration value="DYN_LOOKUP_OUTPUT_OLD_VALUE_ON_UPDATE"/>
+<xsd:enumeration value="LOOKUP_MAX_DEFINE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="TMacroArgument">
+<xsd:annotation>
+<xsd:documentation> This class represents an expression macro argument object.
+ An expression object would have a list of TMacroArgument objects representing the
+ arguments supplied to it.
+
+ @author shkumar
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="argName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dataType" type="powercenter:PMDataType"/>
+<xsd:attribute name="fieldOrder" type="xsd:int"/>
+<xsd:attribute name="length" type="xsd:int"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="TMacroArgument" type="powercenter:TMacroArgument"/>
+<xsd:complexType abstract="true" name="TObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ This class simply acts as a base class for Powercenter objects
+ @model abstract="true"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="TRepConnection">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="attrRoot" type="imx:idref"/>
+<xsd:attribute name="codePage">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="connectString">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="connectionName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="objectSubtype" type="xsd:int"/>
+<xsd:attribute name="objectType" type="xsd:int"/>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userPassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="TRepConnection" type="powercenter:TRepConnection"/>
+<xsd:simpleType name="TRepDBType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="DBTYP_VSAM"/>
+<xsd:enumeration value="DBTYP_IMS"/>
+<xsd:enumeration value="DBTYP_SYBASE"/>
+<xsd:enumeration value="DBTYP_ORACLE"/>
+<xsd:enumeration value="DBTYP_INFORMIX"/>
+<xsd:enumeration value="DBTYP_MSSQLSERVER"/>
+<xsd:enumeration value="DBTYP_DB2"/>
+<xsd:enumeration value="DBTYP_FLATFILE"/>
+<xsd:enumeration value="DBTYP_ODBC"/>
+<xsd:enumeration value="DBTYP_SAP"/>
+<xsd:enumeration value="DBTYP_PSFT"/>
+<xsd:enumeration value="DBTYP_SAPR3"/>
+<xsd:enumeration value="DBTYP_XML"/>
+<xsd:enumeration value="DBTYP_MQSERIES"/>
+<xsd:enumeration value="DBTYP_SIEBEL"/>
+<xsd:enumeration value="DBTYP_TERADATA"/>
+<xsd:enumeration value="DBTYP_MAX"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="TWidgetFieldAttr">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Attributes of WidgetFields. Remarkably, has the same
+ members and behaviour as TTableFieldAttr, but is not derived from
+ it.
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="Widget" type="imx:idref"/>
+<xsd:attribute name="attrId" type="xsd:int"/>
+<xsd:attribute name="charValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="field" type="imx:idref"/>
+<xsd:attribute name="intValue" type="xsd:int"/>
+<xsd:attribute name="overrideScope" type="xsd:int"/>
+<xsd:attribute name="widgetType" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="TWidgetFieldAttr" type="powercenter:TWidgetFieldAttr"/>
+<xsd:complexType name="TWidgetFieldAttrDef">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Contains the definitions (and default values) of widget field
+ attributes
+ @see TWidgetFieldAttr
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="TWidgetFieldAttrDef" type="powercenter:TWidgetFieldAttrDef"/>
+<xsd:complexType name="TWidgetFieldDep">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ This class records the fact that a particular output field of a widget
+ depends on (is computed from) in some way from the input field.
+ TRepWidget contains a vector of these objects.
+ @see TRepWidget#getWidgetFldDep()
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="inField" type="imx:idref"/>
+<xsd:attribute name="outField" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="TWidgetFieldDep" type="powercenter:TWidgetFieldDep"/>
+<xsd:complexType abstract="true" name="TRepositObject">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Base class for all repository objects.
+ @model abstract="true"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="status" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="TEvalObject">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepositObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ The eval object is a wrapper class to hold expressions that can be
+ evaluated to determine the output value of a set of output ports.
+ Originally, this was intended to hold any expression, including
+ table level expressions like a filter condition or the routing
+ condition for a router.
+ This never happened.
+ This class now holds the expression for a single output
+ port.
+ @see TRepWidget#getEvalList()
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="comments">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="expression">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="expressionType" type="powercenter:PMExpressionType"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="outField" type="imx:idref"/>
+<xsd:attribute name="outputFieldList" type="imx:idrefs"/>
+<xsd:attribute name="parent" type="imx:idref"/>
+<xsd:attribute name="widget" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TEvalObject" type="powercenter:TEvalObject"/>
+<xsd:complexType abstract="true" name="TExtensibleObject">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepositObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Base class for objects that support extensions. Includes TRepTable,
+ TLoaderMapping and TRepTask. Plugins are enabled using the MMD information
+ contained in the vector in this class.
+ @see TRepTable
+ @see TLoaderMapping
+ @model abstract="true"
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="TRepDBD">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepositObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+ This class represents the DBD for the source.  Every source has a DBD, no exceptions.  A DBD is the
+ topmost parent for an FD. (a source)  In the case of non-relational sources,
+ an FD's parent can be another FD and his parent can be another FD whose parent
+ is a DBD.  There is always a DBD at the top.  A DBD cannot be shared between
+ sources.  Only IMS allows multiple FD's per DBD.
+ Starting with version 4.0, IMS is no longer supported and all code which
+ handles this multiple-FD-per-DBD has been removed.  Therefore, there must
+ be exactly one FD for each DBD.  (one-to-one relationship)
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dbType" type="powercenter:TRepDBType"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="source" type="imx:idref"/>
+<xsd:attribute name="srcType" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TRepDBD" type="powercenter:TRepDBD"/>
+<xsd:complexType name="TRepMultivaluedAttr">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepositObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ For object attributes that may have multiple values (enumerated values)
+ the list of valid choices is a container of TRepMultivaluedAttr objects
+ @see TRepObjectAttr#getMultiValuedAttr()
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="attrIndex" type="xsd:int"/>
+<xsd:attribute name="displayName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TRepMultivaluedAttr" type="powercenter:TRepMultivaluedAttr"/>
+<xsd:complexType name="TRepObjectAttr">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepositObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ This is the definition of attributes for widget objects in the powercenter repository.
+ Defining an attribute for a widget will cause that attribute to automatically
+ show up in the Designer (and Server Manager?) since the designer's code is
+ very generic for attributes.  Some code (server) assumes each attribute exists.
+ The TRepositoryBase object has a container that is populated when a repository is created
+ and is never modified except when upgrading a repository.
+ Note also that this object also contains the value. So instances of widgets
+ also contain containers of this class but they also have the value defined.
+ @see TRepositoryBase#getObjectList()
+ @see TWidgetInstance#getAttrRoot()
+ @see TRepObjectType#getFirstAttr()
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="multiValuedAttr">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TRepMultivaluedAttr" type="powercenter:TRepMultivaluedAttr"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="attrDataType" type="powercenter:PMAttrDataType"/>
+<xsd:attribute name="attrId" type="xsd:int"/>
+<xsd:attribute name="attrType" type="powercenter:PMAttrType"/>
+<xsd:attribute name="attrValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="child" type="imx:idref"/>
+<xsd:attribute name="objectType" type="imx:idref"/>
+<xsd:attribute name="sibling" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TRepObjectAttr" type="powercenter:TRepObjectAttr"/>
+<xsd:complexType name="TRepObjectType">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepositObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Defines an object type. MMD related to Powercenter objects is defined
+ using this class. The types enumerated by this class are ALL the
+ first class objects known to Powercenter. Facilities such as object
+ locking and versioning will depend on the object types defined here
+ to provide their functionality.
+ TRepTable defines a subset of types, called widget types, based on
+ the set of object types defined here.
+ An object type also has a MMD driven set of attributes. Object
+ attributes are organised in a tree (by design, but used as a list),
+ with the root node being the
+ FirstAttr member of this class.
+ @see TRepTable#getWidgetType()
+ @see TRepObjectAttr
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="firstAttr" type="imx:idref"/>
+<xsd:attribute name="objectType" type="powercenter:PMObjectType"/>
+<xsd:attribute name="objectTypeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TRepObjectType" type="powercenter:TRepObjectType"/>
+<xsd:complexType abstract="true" name="TTableField">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepositObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Base class for all fields of all sources, targets and transformations.
+ Arguably, the most useful low level metadata in Powercenter. A TableField
+ defines the minimum unit of data in Powercenter. The enum DTFmtLevel is used
+ to cntrol the display of Datetime type columns.
+
+ enum eDTFmtLevel {
+  eDTF_PORT,
+  eDTF_TABLE,
+  eDTF_SESSION
+ };
+
+ @model abstract="true"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="businessName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="cdataType" type="powercenter:OPBCTypes"/>
+<xsd:attribute name="comments">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="dataType" type="powercenter:PMDataType"/>
+<xsd:attribute name="defaultValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="group" type="imx:idref"/>
+<xsd:attribute name="length" type="xsd:int"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="ndataType" type="powercenter:PMDBNativeType"/>
+<xsd:attribute name="nextField" type="imx:idref"/>
+<xsd:attribute name="nullType" type="xsd:int"/>
+<xsd:attribute name="outGroup" type="imx:idref"/>
+<xsd:attribute name="portType" type="xsd:int"/>
+<xsd:attribute name="property" type="xsd:int"/>
+<xsd:attribute name="propertyObject" type="imx:idref"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+<xsd:attribute name="table" type="imx:idref"/>
+<xsd:attribute name="tableFieldype" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="TTableFieldAttr">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepositObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ TTableFields can have attributes based on the type of TRepTable.
+ The attributes are stored in attribute, value pairs, hence the
+ list is extensible (and frequently misused).
+ Field level attributes were introduced for ERP sources.
+
+ Though the class has the infrastructure for overriding the
+ attribute values at mapping, session, widget instance level
+ none of the attributes have such override provision
+
+ @see TTableField
+ @model abstract="true"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="attrDataType" type="xsd:int"/>
+<xsd:attribute name="attrId" type="xsd:int"/>
+<xsd:attribute name="field" type="imx:idref"/>
+<xsd:attribute name="instance" type="imx:idref"/>
+<xsd:attribute name="mapping" type="imx:idref"/>
+<xsd:attribute name="object" type="imx:idref"/>
+<xsd:attribute name="objectType" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="TTableGroup">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepositObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Tables can consist of multiple groups of TTableFields, each
+ group acting as a tuple (or a row set in the server). Groups
+ are a useful way to enable a flat representation of hierarchical
+ data. They are also useful in transformations like routers and
+ unions.
+ The following enum is defined for attributes and is used to store
+ the attributes of a group as attribute,value pairs.
+   enum
+    {
+        PM_TABLEGRP_ATTRTYPE_NAME = 1,
+        PM_TABLEGRP_ATTRTYPE_DESC = 2,
+        PM_TABLEGRP_ATTRTYPE_EXPR = 3,
+        PM_TABLEGRP_ATTRTYPE_DEFAULT = 4,
+        PM_TABLEGRP_ATTRTYPE_GRPTYPE  = 5
+    };
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="groupDesc">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="groupName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="groupOrder" type="xsd:int"/>
+<xsd:attribute name="groupType" type="xsd:int"/>
+<xsd:attribute name="parent" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TTableGroup" type="powercenter:TTableGroup"/>
+<xsd:complexType name="TWidgetDependency">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepositObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ In a mapping, the TWidgetDependency contains the links between the nodes. The
+ links imply that data is passed from the output port of a widget instance to
+ the input port of a widget instance in the mapping. A valid link implies that
+ the source and target ports have the same datatype or a valid conversion
+ exists between the two datatypes. The mapping class guarantees that there is
+ no circular reference between widget dependency objects. That is, starting
+ from a widget instance, following the toField link to the next instance and
+ so on, one cannot return to an instance that has already been visited.
+
+ @see TLoaderMapping
+ @see TWidgetInstance#getDependencyList()
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="fromField" type="imx:idref"/>
+<xsd:attribute name="fromInstance" type="imx:idref"/>
+<xsd:attribute name="otherSide" type="imx:idref"/>
+<xsd:attribute name="parent" type="imx:idref"/>
+<xsd:attribute name="toField" type="imx:idref"/>
+<xsd:attribute name="toInstance" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TWidgetDependency" type="powercenter:TWidgetDependency"/>
+<xsd:complexType name="TWidgetInstance">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepositObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ An instance of a source, target or a transformation in a mapping Mapping
+ consist of collections of TWidgetInstances. The Widget instances hold a
+ reference to the TRepTable object. Ownership of the TRepTable object depends
+ on whether the transformation is reusable or not. A Widget instance only owns
+ a non reusable transformation (since reusable transformations, sources and
+ targets are all reusable). This class also defines the enum below for
+ controlling the display format of dates (Happens to be the same as in
+ TTableField)
+
+ enum eDTFmtLevel { eDTF_PORT, eDTF_TABLE, eDTF_SESSION };
+ @see TLoaderMapping
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="dependencyList">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TWidgetDependency" type="powercenter:TWidgetDependency"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="attrRoot" type="imx:idref"/>
+<xsd:attribute name="comments">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="mapping" type="imx:idref"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="widget" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TWidgetInstance" type="powercenter:TWidgetInstance"/>
+<xsd:complexType name="TDataSrcQualInstance">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TWidgetInstance">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Defines an instance of a data source qualifier transformation
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="sources" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TDataSrcQualInstance" type="powercenter:TDataSrcQualInstance"/>
+<xsd:complexType name="TJoinerInstance">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TWidgetInstance">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Defines an instance of a joiner transformation
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="leftJoiners" type="imx:idrefs"/>
+<xsd:attribute name="rightJoiner" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TJoinerInstance" type="powercenter:TJoinerInstance"/>
+<xsd:complexType name="TLoaderMapping">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TExtensibleObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ A mapping object. A mapping is a Directed Acyclic Graph with WidgetInstances
+ as the nodes and WidgetDependencies as the links between the nodes. The
+ WidgetDependencies(links) represent the flow of data from one
+ WidgetInstance(node) to another. A starting node for a valid path is always a
+ SourceInstance or an InputInstance and the ending node for a valid path is
+ always a TargetInstance or an OutputInstance. The WidgetInstances(node)
+ represent an instance of a transformation that occurs on the data. Mappings
+ are also graphs where the legal 'paths' from a source (node) to a target
+ (node) are restricted by the transformations that lie on the path. So, for
+ example, a joiner transformation requires that there be a path to the joiner
+ from two sources (no more or less). Adding new transformation types
+ inevitably results in the changing of the rules that validate the 'paths' in
+ the mapping.
+
+ The mapping could be a mapplet. In this case the starting node
+ is an InputInstance and the ending node is an OutputInstance. InputWidgets
+ and OutputWidgets are placeholders for the source and target. The actual
+ source and target path is resolved by the expandMapping function.
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="instanceList">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TWidgetInstance" type="powercenter:TWidgetInstance"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="mappletWidget" type="imx:idref"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="refWidget" type="imx:idref"/>
+<xsd:attribute name="widgetList" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TLoaderMapping" type="powercenter:TLoaderMapping"/>
+<xsd:complexType abstract="true" name="TRepTable">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TExtensibleObject">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Common base class for all sources, targets and transformations
+ A Table object
+ @model abstract="true"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="tableGroups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TTableGroup" type="powercenter:TTableGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="attrRoot" type="imx:idref"/>
+<xsd:attribute name="businessName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="field" type="imx:idref"/>
+<xsd:attribute name="isVisible" type="xsd:int"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="tableName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="tableType" type="xsd:int"/>
+<xsd:attribute name="widgetType" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="TSourceField">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TTableField">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Represents a source field. A source field is a hierarchical
+ structure. A TRepSource has a pointer to the first field.
+ Each TSourceField has a linked list of siblings and a linked
+ list of children.
+
+ This class also defines the following enum for use by the file
+ reader. The shift state is used to keep track of the current
+ 'shift state' for shift encoded codepages. In a byte stream
+ of shift encoded charater data, a stream [a][b][c] represents
+ the characters a, b and c respectively, whereas a stream
+ [shift_in][a][b][c][shift_out] represents a single multi byte
+ character. (There is no good reason for this enum to be in this
+ class)
+          enum
+         {
+             SHIFT_STATE_IN = 0,
+             SHIFT_STATE_OUT = 1
+         };
+ @see TSourceField#getChildField()
+ @see TSourceField#getSibling()
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="fldno" type="xsd:int"/>
+<xsd:attribute name="keyType" type="xsd:int"/>
+<xsd:attribute name="nextChild" type="imx:idref"/>
+<xsd:attribute name="parent" type="imx:idref"/>
+<xsd:attribute name="plength" type="xsd:int"/>
+<xsd:attribute name="sibling" type="imx:idref"/>
+<xsd:attribute name="srcFldAttrs" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TSourceField" type="powercenter:TSourceField"/>
+<xsd:complexType name="TSourceFieldAttr">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TTableFieldAttr">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Attributes of SourceFields. Defines behaviour specific only to
+ SourceFields.
+ Defines the following enums for source field specific attributes.
+    enum SAPIDOCVal
+    {
+        SAPIDOC_NONE        = 0,
+        SAPIDOC_CREATEDATE  = 1, //create date
+        SAPIDOC_CREATETIME  = 2, //create time
+        SAPIDOC_STATUS      = 3,     //status
+        SAPIDOC_SENDSYS     = 4,    //Sending system
+        SAPIDOC_DOCNUM      = 5,     //Doc number
+        SAPIDOC_DIRINOUT    = 6   //Direct/Inbound/outbound
+    };
+    enum
+    {
+        PM_FLD_ATTRTYPE_NONE = 0,
+        PM_FLD_ATTRTYPE_PHYSICAL_TBL_NAME = PM_SRC_FLD_ATTRTYPE_PHYSICAL_TBL_NAME,
+        PM_FLD_ATTRTYPE_PHYSICAL_FIELD_NAME = PM_SRC_FLD_ATTRTYPE_PHYSICAL_FIELD_NAME,
+        PM_FLD_ATTRTYPE_FORMAT            = PM_SRC_FLD_ATTRTYPE_FORMAT,
+        PM_FLD_ATTRTYPE_LEVEL             = PM_SRC_FLD_ATTRTYPE_LEVEL,  // can have values -3, -2, -1, 1, 2, 3 ...!!!
+        PM_FLD_ATTRTYPE_IS_LANG           = PM_SRC_FLD_ATTRTYPE_IS_LANG, // Added by Mukesh  - type  is BOOLEAN
+        // PM_FLD_ATTRTYPE_IS_KEY,
+        // PM_FLD_ATTRTYPE_IS_XLAT_LONG,
+        // PM_FLD_ATTRTYPE_IS_XLAT_SHORT
+        PM_FLD_ATTRTYPE_XML_MAP           = PM_SRC_FLD_ATTRTYPE_XML_MAP, // XMLMAP for this field. This is a delimited string
+        PM_FLD_ATTRTYPE_XML_ISELEMENT     = PM_SRC_FLD_ATTRTYPE_XML_ISELEMENT, // flag to indicate element or attribute
+        PM_FLD_ATTRTYPE_XML_PIVOTNUM      = PM_SRC_FLD_ATTRTYPE_XML_PIVOTNUM,  // pivot number for this field(for pivot field only)
+        PM_FLD_ATTRTYPE_XML_DATATYPE      = PM_SRC_FLD_ATTRTYPE_XML_DATATYPE,  // XML datatype
+        PM_FLD_ATTRTYPE_SAPIDOC_FLD_ATTR  = PM_SRC_FLD_ATTRTYPE_SAPIDOC_FLD_ATTR, //
+        PM_FLD_ATTRTYPE_SEBL_CALCVALEXP   = PM_SRC_FLD_ATTRTYPE_SEBL_CALCVALEXP,     //calculated value expression
+        PM_FLD_ATTRTYPE_SEBL_PHYSICAL_TBL_NAME = PM_SRC_FLD_ATTRTYPE_SEBL_PHYSICAL_TBL_NAME,     //Physical table name
+        PM_FLD_ATTRTYPE_SEBL_PHYSICAL_COL_NAME = PM_SRC_FLD_ATTRTYPE_SEBL_PHYSICAL_COL_NAME,     //physical col name
+        PM_FLD_ATTRTYPE_SEBL_MVLINK       = PM_SRC_FLD_ATTRTYPE_SEBL_MVLINK,       //MVL type
+        PM_FLD_ATTRTYPE_SEBL_JOIN_NAME    = PM_SRC_FLD_ATTRTYPE_SEBL_JOIN_NAME
+    };
+  * @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TSourceFieldAttr" type="powercenter:TSourceFieldAttr"/>
+<xsd:complexType name="TTargetFieldAttr">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TTableFieldAttr">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Attributes of TargetFields. Defines behaviour specific only to
+ TargetFields.
+ Also defines the following values that are allowed values for
+ the AttrId member inherited from the parent class.
+    enum
+    {
+        PM_FLD_ATTRTYPE_XML_MAP      = PM_TARG_FLD_ATTRTYPE_XML_MAP,  // XMLMAP for this field
+        PM_FLD_ATTRTYPE_XML_ISELEMENT= PM_TARG_FLD_ATTRTYPE_XML_ISELEMENT,  // flag to indicate element or attribute
+        PM_FLD_ATTRTYPE_XML_PIVOTNUM = PM_TARG_FLD_ATTRTYPE_XML_PIVOTNUM,    // pivot number for this field(for pivot field only)
+        PM_FLD_ATTRTYPE_XML_DATATYPE   = PM_TARG_FLD_ATTRTYPE_XML_DATATYPE  // XML datatype
+    };
+ @see TTableFieldAttr#getAttrId()
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TTargetFieldAttr" type="powercenter:TTargetFieldAttr"/>
+<xsd:complexType name="TWidgetField">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TTableField">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+ A TableField for Transformations. These are inherently relational
+ (like target fields).
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="fieldOrder" type="xsd:int"/>
+<xsd:attribute name="parent" type="imx:idref"/>
+<xsd:attribute name="sourceField" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TWidgetField" type="powercenter:TWidgetField"/>
+<xsd:complexType abstract="true" name="TRepSourceTarget">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepTable">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Contains attributes and operations that are common to sources and targets but
+ not to Transformations
+ @model abstract="true"
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="TRepWidget">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepTable">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ This class represents a transformation. A widget is the unit of a
+ single type of transformation. Typically, a transformation has one
+ or more tuples of input (input groups) and one or more tuples of
+ output (output groups).
+ Mappings consist of instances of TRepWidgets. If the Widget is
+ non-reusable, the mapping owns the TRepWidget, otherwise it does
+ not. In the context of the the Powercenter server, the mapping
+ always owns its entire contents (including the sources and
+ targets).
+ The class provides the following enums for use by other classes.
+ The following enum is used in functions that determine the list
+ of widgets that are inputs or outputs to this widget in a mapping
+    enum
+    {
+        PM_WIDGET_INPUT = 1,
+        PM_WIDGET_OUTPUT = 2,
+        PM_WIDGET_BOTH = (PM_WIDGET_INPUT | PM_WIDGET_OUTPUT)
+    };
+ @see TTableField
+ @see TWidgetInstance
+ @see TLoaderMapping
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="evalList">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TEvalObject" type="powercenter:TEvalObject"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="fieldList">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TWidgetField" type="powercenter:TWidgetField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="isReusable" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TRepWidget" type="powercenter:TRepWidget"/>
+<xsd:complexType name="TMappletWidget">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepWidget">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ A mapplet consists of a 'mapplet widget' which contains a special mapping
+ callet the 'mapplet mapping'. The input ports of the widget become input
+ widgets in the corresponding mapping; the output ports of the widget become
+ output widgets in the corresponding mapping. At execution time, the mapplet
+ is expanded in place, and the mapplet widget is replaced by the corresponding
+ mapping.
+
+ Mapplet widget property == mapping id of corresponding mapplet mapping
+
+ Mapplet widget groupid == instance of input/output widget in the
+ corresponding mapplet mapping
+
+ Mapplet widget field property == field id of the field in the corresponding
+ input/output widget in the mapplet mapping.
+
+ @see TInputWidget
+ @see TOutputWidget
+ @see TLoaderMapping
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="mapping" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TMappletWidget" type="powercenter:TMappletWidget"/>
+<xsd:complexType name="TRepSource">
+<xsd:complexContent>
+<xsd:extension base="powercenter:TRepSourceTarget">
+<xsd:annotation>
+<xsd:documentation> @author shkumar
+
+ Represents a source object. Source objects are designed to be
+ hierarchical. The root of all sources is a DBD which contains
+ the root source. Each source has a linked list of TRepSource
+ objects which are at the same 'level' as the source (siblings). Each source
+ also has a linked list of TRepSource objects that are children (or
+ source one 'level' below).
+
+ Every TRepSource also consists of TSourceFields which in turn are
+ also hierarchical.
+ @see TRepDBD
+ @see TRepSource#getSibling()
+ @see TRepSource#getChild()
+ @see TTableField
+ @see TSourceField
+ @see TRepSource#getFirstField()
+ @model abstract="false"
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dbd" type="imx:idref"/>
+<xsd:attribute name="firstField" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TRepSource" type="powercenter:TRepSource"/>
+</xsd:schema>

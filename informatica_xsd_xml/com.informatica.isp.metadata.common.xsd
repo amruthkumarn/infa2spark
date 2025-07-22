@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.metadata.common/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.metadata.common/2">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType abstract="true" name="ISPObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:simpleType name="OptionType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="ALL"/>
+<xsd:enumeration value="REQUIRED"/>
+<xsd:enumeration value="OPTIONAL"/>
+<xsd:enumeration value="DOCUMENTED"/>
+<xsd:enumeration value="UNDOCUMENTED"/>
+<xsd:enumeration value="CURRENT"/>
+<xsd:enumeration value="CUSTOM"/>
+<xsd:enumeration value="OBSOLETE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ISPBoolean">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="value" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ISPBoolean" type="common:ISPBoolean"/>
+<xsd:complexType name="ISPInteger">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="value" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ISPInteger" type="common:ISPInteger"/>
+<xsd:complexType name="ISPLong">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="value" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ISPLong" type="common:ISPLong"/>
+<xsd:complexType abstract="true" name="ISPNamedObject">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="ISPString">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="string">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ISPString" type="common:ISPString"/>
+<xsd:complexType name="NodeAddress">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="host">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="httpPort" type="xsd:int"/>
+<xsd:attribute name="port" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NodeAddress" type="common:NodeAddress"/>
+<xsd:complexType name="NodeRef">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="address" type="imx:idref"/>
+<xsd:attribute name="nodeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NodeRef" type="common:NodeRef"/>
+<xsd:complexType name="TimeOfDay">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="hourOfDay" type="xsd:int"/>
+<xsd:attribute name="minutes" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TimeOfDay" type="common:TimeOfDay"/>
+<xsd:complexType name="IdObj">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="IdObj" type="common:IdObj"/>
+<xsd:complexType name="Option">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.3.0 achauhan 04/9/2013 Added isSensitive option
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="defaultValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="isModified" type="xsd:boolean"/>
+<xsd:attribute name="isSensitive" type="xsd:boolean"/>
+<xsd:attribute name="type" type="common:OptionType"/>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Option" type="common:Option"/>
+<xsd:complexType name="OptionGroup">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="options">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Option" type="common:Option"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+<xsd:complexType name="GroupRef">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="GroupRef" type="common:GroupRef"/>
+<xsd:complexType name="SensitiveOption">
+<xsd:complexContent>
+<xsd:extension base="common:Option">
+<xsd:attribute name="sensitiveValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SensitiveOption" type="common:SensitiveOption"/>
+<xsd:complexType name="UserRef">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserRef" type="common:UserRef"/>
+</xsd:schema>

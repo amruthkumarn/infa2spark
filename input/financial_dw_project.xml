@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="FinancialDW_Project" version="3.1" 
+         xmlns="http://www.informatica.com/BDM/Project/10.2"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:imx="http://www.informatica.com/imx"
+         xsi:schemaLocation="http://www.informatica.com/BDM/Project/10.2 project.xsd">
+  
+  <description>Enterprise Financial Data Warehouse - Multi-source Integration with SCD</description>
+  
+  <folders>
+    <folder name="Mappings" type="MappingFolder">
+      
+      <!-- Customer Dimension with SCD Type 2 -->
+      <mapping name="Customer_Dimension_Load" id="MAP_CUST_DIM_001" imx:version="10.2">
+        <description>Load customer dimension with SCD Type 2 implementation</description>
+        <components>
+          <source name="CUSTOMER_SOURCE_ORACLE" type="Oracle" id="SRC_CUST_001">
+            <properties>
+              <property name="connection_name" value="ORACLE_CRM"/>
+              <property name="sql_query" value="SELECT customer_id, customer_name, address, city, state, country, phone, email, credit_rating, registration_date FROM crm.customers WHERE last_updated_date >= TRUNC(SYSDATE-1)"/>
+              <property name="sql_type" value="SQL_OVERRIDE"/>
+            </properties>
+          </source>
+          
+          <source name="EXISTING_CUSTOMER_DIM" type="HIVE" id="SRC_CUST_002">
+            <properties>
+              <property name="table_name" value="finance_dw.dim_customer"/>
+              <property name="filter" value="is_current = 'Y'"/>
+            </properties>
+          </source>
+          
+          <transformation name="STANDARDIZE_CUSTOMER" type="Expression" id="TXN_CUST_001">
+            <properties>
+              <property name="expressions">
+                <expression name="customer_name_std" value="INITCAP(TRIM(customer_name))"/>
+                <expression name="phone_formatted" value="REGEXP_REPLACE(phone, '[^0-9]', '')"/>
+                <expression name="email_lower" value="LOWER(TRIM(email))"/>
+                <expression name="full_address" value="address || ', ' || city || ', ' || state || ', ' || country"/>
+                <expression name="credit_score_bucket" value="CASE WHEN credit_rating >= 750 THEN 'Excellent' WHEN credit_rating >= 700 THEN 'Good' WHEN credit_rating >= 650 THEN 'Fair' ELSE 'Poor' END"/>
+              </property>
+              <property name="filters">
+                <filter name="valid_customers" value="customer_id IS NOT NULL AND customer_name IS NOT NULL AND email IS NOT NULL"/>
+              </property>
+            </properties>
+          </transformation>
+          
+          <transformation name="DETECT_CHANGES" type="Lookup" id="TXN_CUST_002">
+            <properties>
+              <property name="lookup_table" value="EXISTING_CUSTOMER_DIM"/>
+              <property name="join_conditions">
+                <condition value="STANDARDIZE_CUSTOMER.customer_id = EXISTING_CUSTOMER_DIM.customer_id"/>
+              </property>
+              <property name="join_type" value="LEFT_OUTER"/>
+              <property name="lookup_cache" value="PERSISTENT"/>
+            </properties>
+          </transformation>
+          
+          <transformation name="SCD_TYPE2_LOGIC" type="Java" id="TXN_CUST_003">
+            <properties>
+              <property name="java_class" value="com.informatica.transformations.SCDType2Handler"/>
+              <property name="logic_type" value="scd_type2"/>
+              <property name="comparison_fields" value="customer_name_std,full_address,phone_formatted,email_lower,credit_score_bucket"/>
+              <property name="surrogate_key_generation" value="SEQUENCE"/>
+              <property name="effective_date_column" value="effective_date"/>
+              <property name="end_date_column" value="end_date"/>
+              <property name="current_flag_column" value="is_current"/>
+              <property name="version_column" value="record_version"/>
+            </properties>
+          </transformation>
+          
+          <target name="DIM_CUSTOMER_OUTPUT" type="HIVE" id="TGT_CUST_001">
+            <properties>
+              <property name="table_name" value="finance_dw.dim_customer"/>
+              <property name="write_mode" value="MERGE"/>
+              <property name="partition_by" value="effective_date"/>
+              <property name="merge_key" value="customer_key"/>
+            </properties>
+          </target>
+        </components>
+      </mapping>
+      
+      <!-- Account Transactions Processing -->
+      <mapping name="Transaction_Fact_Load" id="MAP_TXN_FACT_001">
+        <description>Load transaction facts with multiple source integration</description>
+        <components>
+          <source name="ACCOUNT_TRANSACTIONS_DB2" type="DB2" id="SRC_TXN_001">
+            <properties>
+              <property name="connection_name" value="DB2_CORE_BANKING"/>
+              <property name="table_name" value="CORE_BANKING.ACCOUNT_TRANSACTIONS"/>
+              <property name="where_clause" value="TRANSACTION_DATE >= CURRENT_DATE - 1 DAYS"/>
+            </properties>
+          </source>
+          
+          <source name="ACCOUNT_MASTER" type="Oracle" id="SRC_ACC_001">
+            <properties>
+              <property name="connection_name" value="ORACLE_CRM"/>
+              <property name="table_name" value="CRM.ACCOUNT_MASTER"/>
+            </properties>
+          </source>
+          
+          <source name="PRODUCT_MASTER" type="HDFS" id="SRC_PROD_001">
+            <properties>
+              <property name="file_path" value="/data/master/products.parquet"/>
+              <property name="format" value="PARQUET"/>
+            </properties>
+          </source>
+          
+          <source name="CUSTOMER_DIM" type="HIVE" id="SRC_CUST_DIM_001">
+            <properties>
+              <property name="table_name" value="finance_dw.dim_customer"/>
+              <property name="filter" value="is_current = 'Y'"/>
+            </properties>
+          </source>
+          
+          <transformation name="JOIN_ACCOUNT_CUSTOMER" type="Joiner" id="TXN_JOIN_001">
+            <properties>
+              <property name="join_type" value="INNER"/>
+              <property name="master_source" value="ACCOUNT_TRANSACTIONS_DB2"/>
+              <property name="detail_source" value="ACCOUNT_MASTER"/>
+              <property name="join_conditions">
+                <condition value="ACCOUNT_TRANSACTIONS_DB2.account_id = ACCOUNT_MASTER.account_id"/>
+              </property>
+            </properties>
+          </transformation>
+          
+          <transformation name="ENRICH_WITH_CUSTOMER" type="Lookup" id="TXN_LOOKUP_001">
+            <properties>
+              <property name="lookup_table" value="CUSTOMER_DIM"/>
+              <property name="join_conditions">
+                <condition value="JOIN_ACCOUNT_CUSTOMER.customer_id = CUSTOMER_DIM.customer_id"/>
+              </property>
+              <property name="join_type" value="INNER"/>
+              <property name="lookup_cache" value="STATIC"/>
+            </properties>
+          </transformation>
+          
+          <transformation name="ENRICH_WITH_PRODUCT" type="Lookup" id="TXN_LOOKUP_002">
+            <properties>
+              <property name="lookup_table" value="PRODUCT_MASTER"/>
+              <property name="join_conditions">
+                <condition value="ENRICH_WITH_CUSTOMER.product_code = PRODUCT_MASTER.product_code"/>
+              </property>
+              <property name="join_type" value="LEFT_OUTER"/>
+            </properties>
+          </transformation>
+          
+          <transformation name="CALCULATE_METRICS" type="Expression" id="TXN_EXPR_001">
+            <properties>
+              <property name="expressions">
+                <expression name="transaction_month" value="DATE_FORMAT(transaction_date, 'yyyy-MM')"/>
+                <expression name="transaction_quarter" value="CONCAT('Q', QUARTER(transaction_date), '-', YEAR(transaction_date))"/>
+                <expression name="amount_usd" value="transaction_amount * exchange_rate"/>
+                <expression name="fee_percentage" value="ROUND((fees / transaction_amount) * 100, 2)"/>
+                <expression name="risk_category" value="CASE WHEN transaction_amount > 50000 THEN 'High' WHEN transaction_amount > 10000 THEN 'Medium' ELSE 'Low' END"/>
+                <expression name="is_international" value="CASE WHEN source_country != target_country THEN 'Y' ELSE 'N' END"/>
+                <expression name="business_day" value="CASE WHEN DAYOFWEEK(transaction_date) IN (1,7) THEN 'N' ELSE 'Y' END"/>
+              </property>
+            </properties>
+          </transformation>
+          
+          <target name="FACT_TRANSACTIONS" type="HIVE" id="TGT_TXN_001">
+            <properties>
+              <property name="table_name" value="finance_dw.fact_transactions"/>
+              <property name="write_mode" value="APPEND"/>
+              <property name="partition_by" value="transaction_month"/>
+              <property name="optimize_for" value="QUERY_PERFORMANCE"/>
+            </properties>
+          </target>
+        </components>
+      </mapping>
+      
+      <!-- Risk Analytics Aggregation -->
+      <mapping name="Risk_Analytics_Aggregation" id="MAP_RISK_AGG_001">
+        <description>Generate risk analytics and compliance reports</description>
+        <components>
+          <source name="FACT_TRANSACTIONS_SOURCE" type="HIVE" id="SRC_FACT_001">
+            <properties>
+              <property name="table_name" value="finance_dw.fact_transactions"/>
+              <property name="filter" value="transaction_date >= DATE_SUB(CURRENT_DATE, 30)"/>
+            </properties>
+          </source>
+          
+          <transformation name="RISK_AGGREGATION" type="Aggregator" id="TXN_AGG_001">
+            <properties>
+              <property name="group_by">
+                <column name="customer_key"/>
+                <column name="risk_category"/>
+                <column name="transaction_month"/>
+                <column name="product_type"/>
+              </property>
+              <property name="aggregations">
+                <aggregation name="total_transaction_amount" type="SUM" column="amount_usd"/>
+                <aggregation name="transaction_count" type="COUNT" column="transaction_id"/>
+                <aggregation name="avg_transaction_amount" type="AVG" column="amount_usd"/>
+                <aggregation name="max_single_transaction" type="MAX" column="amount_usd"/>
+                <aggregation name="total_fees" type="SUM" column="fees"/>
+                <aggregation name="international_txn_count" type="COUNT" column="transaction_id" filter="is_international = 'Y'"/>
+                <aggregation name="high_risk_txn_count" type="COUNT" column="transaction_id" filter="risk_category = 'High'"/>
+              </property>
+            </properties>
+          </transformation>
+          
+          <transformation name="COMPLIANCE_SCORING" type="Expression" id="TXN_COMPLIANCE_001">
+            <properties>
+              <property name="expressions">
+                <expression name="risk_score" value="(high_risk_txn_count * 10 + international_txn_count * 5) / transaction_count"/>
+                <expression name="compliance_flag" value="CASE WHEN total_transaction_amount > 500000 OR high_risk_txn_count > 10 THEN 'REVIEW_REQUIRED' ELSE 'COMPLIANT' END"/>
+                <expression name="velocity_score" value="transaction_count / 30.0"/>  <!-- Transactions per day -->
+                <expression name="concentration_risk" value="max_single_transaction / total_transaction_amount"/>
+              </property>
+            </properties>
+          </transformation>
+          
+          <target name="RISK_ANALYTICS_MART" type="HIVE" id="TGT_RISK_001">
+            <properties>
+              <property name="table_name" value="finance_dw.risk_analytics_mart"/>
+              <property name="write_mode" value="OVERWRITE"/>
+              <property name="partition_by" value="transaction_month"/>
+            </properties>
+          </target>
+        </components>
+      </mapping>
+      
+    </folder>
+    
+    <folder name="Workflows" type="WorkflowFolder">
+      <workflow name="Financial_DW_ETL_Process" id="WF_FINANCE_001">
+        <description>Complete Financial Data Warehouse ETL Process</description>
+        <tasks>
+          <task name="Load_Customer_Dimension" type="Mapping" mapping="Customer_Dimension_Load" id="TASK_CUST_001">
+            <properties>
+              <property name="timeout" value="7200"/>
+              <property name="retry_count" value="3"/>
+              <property name="success_criteria" value="$PMSuccessRows > 0"/>
+            </properties>
+          </task>
+          
+          <task name="Load_Transaction_Facts" type="Mapping" mapping="Transaction_Fact_Load" id="TASK_TXN_001">
+            <properties>
+              <property name="timeout" value="14400"/>
+              <property name="retry_count" value="2"/>
+              <property name="parallel_execution" value="true"/>
+              <property name="degree_of_parallelism" value="4"/>
+            </properties>
+          </task>
+          
+          <task name="Generate_Risk_Analytics" type="Mapping" mapping="Risk_Analytics_Aggregation" id="TASK_RISK_001">
+            <properties>
+              <property name="timeout" value="3600"/>
+              <property name="retry_count" value="2"/>
+            </properties>
+          </task>
+          
+          <task name="Data_Quality_Validation" type="Command" id="TASK_DQ_001">
+            <properties>
+              <property name="command" value="python /scripts/financial_dq_validation.py --date ${LOAD_DATE}"/>
+              <property name="success_criteria" value="EXIT_CODE = 0"/>
+            </properties>
+          </task>
+          
+          <task name="Generate_Compliance_Report" type="Command" id="TASK_REPORT_001">
+            <properties>
+              <property name="command" value="python /scripts/compliance_report_generator.py --month ${LOAD_MONTH}"/>
+              <property name="success_criteria" value="EXIT_CODE = 0"/>
+            </properties>
+          </task>
+          
+          <task name="Archive_Processed_Files" type="Command" id="TASK_ARCHIVE_001">
+            <properties>
+              <property name="command" value="hdfs dfs -mv /data/incoming/* /data/archive/${LOAD_DATE}/"/>
+            </properties>
+          </task>
+          
+          <task name="Send_ETL_Summary" type="Email" id="TASK_EMAIL_001">
+            <properties>
+              <property name="Recipient" value="finance-data-team@company.com,risk-team@company.com"/>
+              <property name="Subject" value="Financial DW ETL Summary - ${LOAD_DATE}"/>
+              <property name="Body" value="Financial DW ETL completed. Customer records: $PMSuccessRows_CUST, Transaction records: $PMSuccessRows_TXN"/>
+              <property name="attachment_path" value="/reports/compliance_summary_${LOAD_DATE}.pdf"/>
+            </properties>
+          </task>
+        </tasks>
+        
+        <links>
+          <link from="Load_Customer_Dimension" to="Load_Transaction_Facts" condition="SUCCESS"/>
+          <link from="Load_Transaction_Facts" to="Generate_Risk_Analytics" condition="SUCCESS"/>
+          <link from="Generate_Risk_Analytics" to="Data_Quality_Validation" condition="SUCCESS"/>
+          <link from="Data_Quality_Validation" to="Generate_Compliance_Report" condition="SUCCESS"/>
+          <link from="Generate_Compliance_Report" to="Archive_Processed_Files" condition="SUCCESS"/>
+          <link from="Archive_Processed_Files" to="Send_ETL_Summary" condition="SUCCESS"/>
+        </links>
+      </workflow>
+    </folder>
+  </folders>
+  
+  <!-- Advanced Connection Configurations -->
+  <connections>
+    <connection name="ORACLE_CRM" type="Oracle" id="CONN_ORA_001">
+      <properties>
+        <property name="host" value="oracle-crm-prod.finance.com"/>
+        <property name="port" value="1521"/>
+        <property name="service_name" value="CRMPROD"/>
+        <property name="username" value="${DB_USER_CRM}"/>
+        <property name="password" value="${DB_PASS_CRM}"/>
+        <property name="connection_pool_size" value="10"/>
+        <property name="fetch_size" value="50000"/>
+      </properties>
+    </connection>
+    
+    <connection name="DB2_CORE_BANKING" type="DB2" id="CONN_DB2_001">
+      <properties>
+        <property name="host" value="db2-banking-prod.finance.com"/>
+        <property name="port" value="50000"/>
+        <property name="database" value="BANKING_PROD"/>
+        <property name="username" value="${DB_USER_BANKING}"/>
+        <property name="password" value="${DB_PASS_BANKING}"/>
+        <property name="isolation_level" value="READ_COMMITTED"/>
+      </properties>
+    </connection>
+    
+    <connection name="HDFS_FINANCE" type="HDFS" id="CONN_HDFS_001">
+      <properties>
+        <property name="namenode_host" value="hdfs-nn-prod.finance.com"/>
+        <property name="namenode_port" value="8020"/>
+        <property name="kerberos_enabled" value="true"/>
+        <property name="kerberos_principal" value="finance_etl@FINANCE.COM"/>
+        <property name="kerberos_keytab" value="/security/keytabs/finance_etl.keytab"/>
+      </properties>
+    </connection>
+    
+    <connection name="HIVE_FINANCE_DW" type="HIVE" id="CONN_HIVE_001">
+      <properties>
+        <property name="hiveserver2_host" value="hive-hs2-prod.finance.com"/>
+        <property name="hiveserver2_port" value="10000"/>
+        <property name="database" value="finance_dw"/>
+        <property name="auth_mechanism" value="KERBEROS"/>
+        <property name="principal" value="hive/hive-hs2-prod.finance.com@FINANCE.COM"/>
+      </properties>
+    </connection>
+  </connections>
+  
+  <!-- Enterprise Parameters -->
+  <parameters>
+    <parameter name="LOAD_DATE" value="$$SystemDate" type="DateTime"/>
+    <parameter name="LOAD_MONTH" value="$$SystemDate" type="DateTime" format="yyyy-MM"/>
+    <parameter name="ENV" value="PRODUCTION" type="String"/>
+    <parameter name="BATCH_SIZE" value="100000" type="Integer"/>
+    <parameter name="ERROR_THRESHOLD" value="1" type="Integer"/>
+    <parameter name="PARALLEL_DEGREE" value="8" type="Integer"/>
+    <parameter name="RETENTION_DAYS" value="2555" type="Integer"/>  <!-- 7 years -->
+    <parameter name="COMPLIANCE_REGION" value="US" type="String"/>
+    <parameter name="RISK_THRESHOLD_HIGH" value="50000" type="Decimal"/>
+    <parameter name="RISK_THRESHOLD_MEDIUM" value="10000" type="Decimal"/>
+  </parameters>
+  
+</project> 

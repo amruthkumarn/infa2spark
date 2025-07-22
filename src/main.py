@@ -13,6 +13,7 @@ sys.path.insert(0, str(current_dir))
 from core.spark_manager import SparkManager
 from core.config_manager import ConfigManager
 from core.xml_parser import InformaticaXMLParser
+from core.spark_code_generator import SparkCodeGenerator  # Add this import
 from workflows.daily_etl_process import DailyETLProcess
 
 def setup_logging():
@@ -26,10 +27,43 @@ def setup_logging():
         ]
     )
 
+def generate_spark_app():
+    """Generate standalone Spark application from XML"""
+    setup_logging()
+    logger = logging.getLogger("SparkGenerator")
+    
+    try:
+        logger.info("Starting Spark application generation")
+        
+        # Initialize code generator
+        generator = SparkCodeGenerator("generated_spark_apps")
+        
+        # Generate application from sample XML
+        app_path = generator.generate_spark_application(
+            "input/sample_project.xml",
+            "MyBDMProject_SparkApp"
+        )
+        
+        logger.info(f"Spark application generated at: {app_path}")
+        return app_path
+        
+    except Exception as e:
+        logger.error(f"Error generating Spark application: {str(e)}")
+        raise
+
 def main():
     """Main application function"""
     setup_logging()
     logger = logging.getLogger("Main")
+    
+    # Check if user wants to generate Spark app
+    if len(sys.argv) > 1 and sys.argv[1] == "--generate-spark-app":
+        app_path = generate_spark_app()
+        logger.info(f"Generated Spark application available at: {app_path}")
+        logger.info("To run the generated app:")
+        logger.info(f"  cd {app_path}")
+        logger.info("  ./run.sh")
+        return
     
     try:
         logger.info("Starting Informatica to PySpark PoC")

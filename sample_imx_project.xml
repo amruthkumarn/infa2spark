@@ -2,7 +2,7 @@
 <IMX xmlns="http://com.informatica.imx"
      xmlns:project="http://com.informatica.metadata.common.project/2"
      xmlns:folder="http://com.informatica.metadata.common.folder/2"
-     xmlns:powercenter="http://com.informatica.powercenter/1">
+     xmlns:legacy="http://com.informatica.legacy/1">
 
     <!-- Project Structure -->
     <project:Project id="PROJECT_1" name="MyBDMProject" shared="false">
@@ -11,7 +11,7 @@
             <folder:Folder id="FOLDER_1" name="Mappings">
                 <contents>
                     <!-- Mapping 1 -->
-                    <powercenter:TLoaderMapping id="MAPPING_1" name="Sales_Staging">
+                    <legacy:TLoaderMapping id="MAPPING_1" name="Sales_Staging">
                         <description>Extracts and transforms sales data</description>
                         <components>
                             <source name="SALES_SOURCE" type="HDFS" format="PARQUET"/>
@@ -19,10 +19,10 @@
                             <transformation name="AGG_SALES" type="Aggregator"/>
                             <target name="STG_SALES" type="HIVE"/>
                         </components>
-                    </powercenter:TLoaderMapping>
+                    </legacy:TLoaderMapping>
                     
                     <!-- Mapping 2 -->
-                    <powercenter:TLoaderMapping id="MAPPING_2" name="Customer_Dim_Load">
+                    <legacy:TLoaderMapping id="MAPPING_2" name="Customer_Dim_Load">
                         <description>Customer dimension SCD Type 2 load</description>
                         <components>
                             <source name="CUSTOMER_SOURCE" type="DB2"/>
@@ -30,7 +30,7 @@
                             <transformation name="SCD_LOGIC" type="Java"/>
                             <target name="DIM_CUSTOMER" type="HIVE"/>
                         </components>
-                    </powercenter:TLoaderMapping>
+                    </legacy:TLoaderMapping>
                 </contents>
             </folder:Folder>
             

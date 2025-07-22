@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.mappingspec.targetholder.datasource/1" xmlns:datasource="http://com.informatica.metadata.common.mappingspec.targetholder.datasource/1" xmlns:imx="http://com.informatica.imx" xmlns:targetholder="http://com.informatica.metadata.common.mappingspec.targetholder/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.mappingspec.targetholder.datasource/1">
+<xsd:import namespace="http://com.informatica.metadata.common.mappingspec.targetholder/1" schemaLocation="com.informatica.metadata.common.mappingspec.targetholder.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="DataSourceTargetHolder">
+<xsd:complexContent>
+<xsd:extension base="targetholder:TargetHolder">
+<xsd:annotation>
+<xsd:documentation> Target holder for DataSource.
+ 
+ MODIFICATIONS
+ 1.0.0    nwong    12/15/2010    Introduced the model.
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataSource" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataSourceTargetHolder" type="datasource:DataSourceTargetHolder"/>
+</xsd:schema>

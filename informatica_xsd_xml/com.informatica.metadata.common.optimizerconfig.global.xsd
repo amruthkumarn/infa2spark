@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.optimizerconfig.global/1" xmlns:global="http://com.informatica.metadata.common.optimizerconfig.global/1" xmlns:imx="http://com.informatica.imx" xmlns:optimizerconfig="http://com.informatica.metadata.common.optimizerconfig/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.optimizerconfig.global/1">
+<xsd:import namespace="http://com.informatica.metadata.common.optimizerconfig/1" schemaLocation="com.informatica.metadata.common.optimizerconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="GlobalOptimizerConfig">
+<xsd:complexContent>
+<xsd:extension base="optimizerconfig:OptimizerConfig">
+<xsd:annotation>
+<xsd:documentation> Global defaults to be used by the optimizer
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="aggReductionFactor" type="xsd:double"/>
+<xsd:attribute name="detailThreshold" type="xsd:long"/>
+<xsd:attribute name="filterSelectivity" type="xsd:double"/>
+<xsd:attribute name="masterThreshold" type="xsd:long"/>
+<xsd:attribute name="pkFkRatio" type="xsd:double"/>
+<xsd:attribute name="sjPrepOutNum" type="xsd:int"/>
+<xsd:attribute name="sourceRowCount" type="xsd:long"/>
+<xsd:attribute name="updateStrategySelectivity" type="xsd:double"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="GlobalOptimizerConfig" type="global:GlobalOptimizerConfig"/>
+</xsd:schema>

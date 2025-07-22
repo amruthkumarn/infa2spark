@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.sourcespec.mapplet/2" xmlns:imx="http://com.informatica.imx" xmlns:mapplet="http://com.informatica.metadata.common.sourcespec.mapplet/2" xmlns:sourcespec="http://com.informatica.metadata.common.sourcespec/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.sourcespec.mapplet/2">
+<xsd:import namespace="http://com.informatica.metadata.common.sourcespec/2" schemaLocation="com.informatica.metadata.common.sourcespec.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="MappletRuleFieldBinding">
+<xsd:complexContent>
+<xsd:extension base="sourcespec:RuleFieldBinding">
+<xsd:attribute name="sourceOutputField" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletRuleFieldBinding" type="mapplet:MappletRuleFieldBinding"/>
+<xsd:complexType name="MappletSourceSpec">
+<xsd:complexContent>
+<xsd:extension base="sourcespec:SourceSpec">
+<xsd:attribute name="sourceMapplet" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletSourceSpec" type="mapplet:MappletSourceSpec"/>
+</xsd:schema>

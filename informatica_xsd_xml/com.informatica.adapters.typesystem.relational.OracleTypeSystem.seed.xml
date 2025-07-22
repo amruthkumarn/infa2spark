@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Informatica proprietary -->
+<imx:IMX xmlns:imx="http://com.informatica.imx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" serializationSpecVersion="14.0" crcEnabled="0" xmlns:core="http://com.informatica.metadata.common.core/2" versioncore="2.2.1" xmlns:types="http://com.informatica.metadata.common.types/2" versiontypes="2.4.0" xmlns:directmaps="http://com.informatica.metadata.common.typesystem.directmaps/2" versiondirectmaps="2.1.0" xmlns:description="http://com.informatica.metadata.common.description/2" versiondescription="2.1.0" xmlns:storagesemantics="http://com.informatica.metadata.common.typesystem.storagesemantics/2" versionstoragesemantics="2.1.0" xmlns:typesystem="http://com.informatica.metadata.common.typesystem/2" versiontypesystem="2.2.0" xsi:schemaLocation="http://com.informatica.imx IMX.xsd http://com.informatica.metadata.common.core/2 com.informatica.metadata.common.core.xsd http://com.informatica.metadata.common.types/2 com.informatica.metadata.common.types.xsd http://com.informatica.metadata.common.typesystem.directmaps/2 com.informatica.metadata.common.typesystem.directmaps.xsd http://com.informatica.metadata.common.description/2 com.informatica.metadata.common.description.xsd http://com.informatica.metadata.common.typesystem.storagesemantics/2 com.informatica.metadata.common.typesystem.storagesemantics.xsd http://com.informatica.metadata.common.typesystem/2 com.informatica.metadata.common.typesystem.xsd">
+<typesystem:TypeSystem imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem" name="oracle">
+<annotations>
+<Annotation imx:id="ID_1" xsi:type="description:Description" body="Oracle+Type+System"/>
+</annotations>
+<dataTypes>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fblob" xsi:type="typesystem:DataType" name="blob" displayName="blob">
+<annotations>
+<Annotation imx:id="ID_2" xsi:type="description:Description" body="The+Binary+Large+Object+is+a+field+that+holds+unstructured+binary+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="4000" editableLength="true" lengthUnit="bytes" maxLength="2147483647"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fchar" xsi:type="typesystem:DataType" name="char" displayName="char">
+<annotations>
+<Annotation imx:id="ID_4" xsi:type="description:Description" body="A+fixed-sized+field+of+characters"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="characters" maxLength="2000" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fclob" xsi:type="typesystem:DataType" name="clob" displayName="clob">
+<annotations>
+<Annotation imx:id="ID_6" xsi:type="description:Description" body="The+Character+Large+Object+is+a+field+that+holds+single+byte+character+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="4000" editableLength="true" lengthUnit="characters" maxLength="2147483647"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fdate" xsi:type="typesystem:DataType" name="date" displayName="date">
+<annotations>
+<Annotation imx:id="ID_8" xsi:type="description:Description" body="A+fixed-sized+7+bit+field+that+is+used+to+store+dates"/>
+</annotations>
+<semantic xsi:type="storagesemantics:GregorianTimeStorageSemantic" daySupported="true" hourSupported="true" minuteSupported="true" monthSupported="true" secondSupported="true" yearSupported="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Ffloat" xsi:type="typesystem:DataType" name="float" displayName="float">
+<annotations>
+<Annotation imx:id="ID_10" xsi:type="description:Description" body="Float%5B%28n%29%5D+datatype+is+stored+in+8+bytes+and+is+used+to+hold+positive+or+negative+floating-point+numbers"/>
+</annotations>
+<semantic xsi:type="storagesemantics:FloatStorageSemantic" defaultPrecision="15" exponentMax="308" exponentMin="-308" exponentRadix="decimal" maxPrecision="15" precisionRadix="decimal"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Flong" xsi:type="typesystem:DataType" name="long" displayName="long">
+<annotations>
+<Annotation imx:id="ID_12" xsi:type="description:Description" body="A+variable-sized+field+of+characters"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="4000" editableLength="true" lengthUnit="characters" maxLength="2147483647"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Flong+raw" xsi:type="typesystem:DataType" name="long+raw" displayName="long+raw">
+<annotations>
+<Annotation imx:id="ID_14" xsi:type="description:Description" body="A+variable-sized+field+of+raw+binary+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="4000" editableLength="true" lengthUnit="bytes" maxLength="2147483647"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fnchar" xsi:type="typesystem:DataType" name="nchar" displayName="nchar">
+<annotations>
+<Annotation imx:id="ID_16" xsi:type="description:Description" body="A+fixed-sized+field+of+characters%2C+where+the+character+set+is+determined+by+its+definition"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" editableLength="true" lengthUnit="characters" maxLength="2000" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fnclob" xsi:type="typesystem:DataType" name="nclob" displayName="nclob">
+<annotations>
+<Annotation imx:id="ID_18" xsi:type="description:Description" body="The+National+Character+Large+Object+is+a+field+that+holds+either+single+byte+of+multibyte+character+data+dependent+on+the+national+character+set"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="4000" editableLength="true" lengthUnit="characters" maxLength="2147483647"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fnumber" xsi:type="typesystem:DataType" name="number" displayName="number">
+<annotations>
+<Annotation imx:id="ID_20" xsi:type="description:Description" body="A+variable-sized+number"/>
+</annotations>
+<semantic xsi:type="storagesemantics:ScientificDecimalStorageSemantic" defaultPrecision="15" maxPrecision="15"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fnumber%28p%2Cs%29" xsi:type="typesystem:DataType" name="number%28p%2Cs%29" displayName="number%28p%2Cs%29">
+<annotations>
+<Annotation imx:id="ID_22" xsi:type="description:Description" body="A+variable-sized+number%2C+where+the+precision+is+between+1+and+38+and+scale+is+between+-38+and+38"/>
+</annotations>
+<semantic xsi:type="storagesemantics:ScientificDecimalStorageSemantic" defaultPrecision="10" editablePrecision="true" maxPrecision="38" editableScale="true" maxScale="38" minScale="-38"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fnvarchar2" xsi:type="typesystem:DataType" name="nvarchar2" displayName="nvarchar2">
+<annotations>
+<Annotation imx:id="ID_24" xsi:type="description:Description" body="A+variable-sized+field+of+characters%2C+where+the+character+set+is+determined+by+its+definition"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="characters" maxLength="4000" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fraw" xsi:type="typesystem:DataType" name="raw" displayName="raw">
+<annotations>
+<Annotation imx:id="ID_26" xsi:type="description:Description" body="A+variable-sized+field+of+raw+binary+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="bytes" maxLength="2000" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Ftimestamp" xsi:type="typesystem:DataType" name="timestamp" displayName="timestamp">
+<annotations>
+<Annotation imx:id="ID_28" xsi:type="description:Description" body="Stores+a+period+of+time+in+years%2C+months%2C+days%2C+hours%2C+minutes%2C+seconds+and+fractional+seconds"/>
+</annotations>
+<semantic xsi:type="storagesemantics:GregorianTimeStorageSemantic" daySupported="true" defaultScale="9" editableScale="true" hourSupported="true" maxScale="9" minuteSupported="true" monthSupported="true" secondSupported="true" yearSupported="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Ftimestamp+with+time+zone" xsi:type="typesystem:DataType" name="timestamp+with+time+zone" displayName="timestamp+with+time+zone">
+<annotations>
+<Annotation imx:id="ID_30" xsi:type="description:Description" body="Stores+a+period+of+time+in+years%2C+months%2C+days%2C+hours%2C+minutes%2C+seconds+and+fractional+seconds+along+with+timezone+information"/>
+</annotations>
+<semantic xsi:type="storagesemantics:GregorianTimeStorageSemantic" daySupported="true" defaultScale="9" editableScale="true" hourSupported="true" maxScale="9" minuteSupported="true" monthSupported="true" secondSupported="true" timezoneSupported="true" yearSupported="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Ftimestamp+with+local+time+zone" xsi:type="typesystem:DataType" name="timestamp+with+local+time+zone" displayName="timestamp+with+local+time+zone">
+<annotations>
+<Annotation imx:id="ID_32" xsi:type="description:Description" body="Stores+a+period+of+time+in+years%2C+months%2C+days%2C+hours%2C+minutes%2C+seconds+and+fractional+seconds"/>
+</annotations>
+<semantic xsi:type="storagesemantics:GregorianTimeStorageSemantic" daySupported="true" defaultScale="9" editableScale="true" hourSupported="true" maxScale="9" minuteSupported="true" monthSupported="true" secondSupported="true" yearSupported="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fvarchar" xsi:type="typesystem:DataType" name="varchar" displayName="varchar">
+<annotations>
+<Annotation imx:id="ID_34" xsi:type="description:Description" body="Variable-sized+field+of+characters"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="characters" maxLength="4000" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fvarchar2" xsi:type="typesystem:DataType" name="varchar2" displayName="varchar2">
+<annotations>
+<Annotation imx:id="ID_36" xsi:type="description:Description" body="Variable-sized+field+of+characters"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="characters" maxLength="4000" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fxmltype" xsi:type="typesystem:DataType" name="xmltype" displayName="xmltype">
+<annotations>
+<Annotation imx:id="ID_38" xsi:type="description:Description" body="Stores+XML+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="4000" editableLength="true" lengthUnit="characters" maxLength="2147483647"/>
+</DataType>
+</dataTypes>
+<ownedMaps>
+<TypeSystemMap imx:id="ID_40" xsi:type="directmaps:DirectTypeSystemMap" to="ID_41">
+<dataTypeMaps>
+<DataTypeMap imx:id="ID_42" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_43" localType="ID_44"/>
+<DataTypeMap imx:id="ID_45" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_46" localType="ID_47"/>
+<DataTypeMap imx:id="ID_48" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_49" localType="ID_50"/>
+<DataTypeMap imx:id="ID_51" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_52" localType="ID_53"/>
+<DataTypeMap imx:id="ID_54" xsi:type="directmaps:DataTypeMap" bestMapFromLocal="true" foreignType="ID_55" localType="ID_56"/>
+<DataTypeMap imx:id="ID_57" xsi:type="directmaps:DataTypeMap" bestMapFromLocal="true" foreignType="ID_49" localType="ID_58"/>
+<DataTypeMap imx:id="ID_59" xsi:type="directmaps:DataTypeMap" bestMapFromLocal="true" foreignType="ID_43" localType="ID_60"/>
+<DataTypeMap imx:id="ID_61" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_62" localType="ID_63"/>
+<DataTypeMap imx:id="ID_64" xsi:type="directmaps:DataTypeMap" bestMapFromLocal="true" foreignType="ID_65" localType="ID_66"/>
+<DataTypeMap imx:id="ID_67" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_55" localType="ID_68" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_69" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_70" localType="ID_68" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_71" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_72" localType="ID_68" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_73" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_74" localType="ID_68" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_75" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_76" localType="ID_77" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_78" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_79" localType="ID_77" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_80" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_81" localType="ID_77" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_82" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_83" localType="ID_77" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_84" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_85" localType="ID_77" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_86" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_87" localType="ID_77" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_88" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_89" localType="ID_90"/>
+<DataTypeMap imx:id="ID_91" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_65" localType="ID_90"/>
+<DataTypeMap imx:id="ID_92" xsi:type="directmaps:DataTypeMap" foreignType="ID_93" localType="ID_90"/>
+<DataTypeMap imx:id="ID_94" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_95" localType="ID_96"/>
+<DataTypeMap imx:id="ID_97" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_98" localType="ID_96"/>
+<DataTypeMap imx:id="ID_99" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_100" localType="ID_101"/>
+<DataTypeMap imx:id="ID_102" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_103" localType="ID_101"/>
+<DataTypeMap imx:id="ID_104" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_105" localType="ID_106"/>
+<DataTypeMap imx:id="ID_107" xsi:type="directmaps:DataTypeMap" bestMapFromLocal="true" foreignType="ID_103" localType="ID_108"/>
+<DataTypeMap imx:id="ID_109" xsi:type="directmaps:DataTypeMap" bestMapFromLocal="true" foreignType="ID_93" localType="ID_110"/>
+<DataTypeMap imx:id="ID_111" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_93" localType="ID_112"/>
+<DataTypeMap imx:id="ID_113" xsi:type="directmaps:DataTypeMap" bestMapFromLocal="true" foreignType="ID_49" localType="ID_114"/>
+</dataTypeMaps>
+</TypeSystemMap>
+</ownedMaps>
+</typesystem:TypeSystem>
+<imx:proxies>
+<proxy imx:id="ID_41" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem" type="typesystem:TypeSystem" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_43" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Flongvarbinary" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_44" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fblob" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_46" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_47" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_49" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Ftext" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_50" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fclob" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_52" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fdate" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_53" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fdate" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_55" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fdouble" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_56" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Ffloat" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_58" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Flong" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_60" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Flong+raw" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_62" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fnchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_63" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fnchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_65" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fntext" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_66" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fnclob" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_68" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fnumber" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_70" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fbit" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_72" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Ffloat" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_74" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Freal" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_76" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fdecimal" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_77" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fnumber%28p%2Cs%29" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_79" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Ftinyint" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_81" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fnumeric" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_83" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Finteger" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_85" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fsmallint" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_87" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fbigint" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_89" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fnvarchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_90" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fnvarchar2" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_93" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fvarchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_95" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fvarbinary" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_96" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fraw" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_98" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fbinary" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_100" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Ftime" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_101" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Ftimestamp" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_103" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Ftimestamp" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_105" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Ftimestamp+with+time+zone" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_106" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Ftimestamp+with+time+zone" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_108" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Ftimestamp+with+local+time+zone" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_110" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fvarchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_112" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fvarchar2" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_114" objectId="smd:com.informatica.adapters.typesystem.relational.OracleTypeSystem.typesystem%2Fxmltype" type="typesystem:DataType" xsi:type="imx:proxy"/>
+</imx:proxies>
+</imx:IMX>

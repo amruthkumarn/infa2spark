@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.output.binding/1" xmlns:binding="http://com.informatica.metadata.common.binding/1" xmlns:binding1="http://com.informatica.metadata.common.output.binding/1" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.output.binding/1">
+<xsd:import namespace="http://com.informatica.metadata.common.binding/1" schemaLocation="com.informatica.metadata.common.binding.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> Output binding models.\n \n @author cthumuru\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="RolledupOutputTarget">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractTarget">
+<xsd:annotation>
+<xsd:documentation> RolledupOutputTarget - rolled-up target that produces the output.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="output" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RolledupOutputTarget" type="binding1:RolledupOutputTarget"/>
+<xsd:complexType name="RollupOutputValue">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractValue">
+<xsd:attribute name="output" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RollupOutputValue" type="binding1:RollupOutputValue"/>
+<xsd:complexType name="OutputTaskOutput">
+<xsd:complexContent>
+<xsd:extension base="binding:TaskOutput">
+<xsd:annotation>
+<xsd:documentation> OutputTaskOutput - Output that produces the taks output.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="output" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OutputTaskOutput" type="binding1:OutputTaskOutput"/>
+</xsd:schema>

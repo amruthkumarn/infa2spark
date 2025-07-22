@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.property/1" xmlns:imx="http://com.informatica.imx" xmlns:property="http://com.informatica.metadata.common.property/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.property/1">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType abstract="true" name="BoxedReceiverObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="isReceiving" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:complexType name="BooleanBoxedReceiverObject">
+<xsd:complexContent>
+<xsd:extension base="property:BoxedReceiverObject">
+<xsd:attribute name="value" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BooleanBoxedReceiverObject" type="property:BooleanBoxedReceiverObject"/>
+<xsd:complexType name="EnumBoxedReceiverObject">
+<xsd:complexContent>
+<xsd:extension base="property:BoxedReceiverObject">
+<xsd:annotation>
+<xsd:documentation> This model Class is introduced to handle the enumerated values.
+  
+ @author rannaray
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="EnumBoxedReceiverObject" type="property:EnumBoxedReceiverObject"/>
+<xsd:complexType name="IntegerBoxedReceiverObject">
+<xsd:complexContent>
+<xsd:extension base="property:BoxedReceiverObject">
+<xsd:attribute name="value" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="IntegerBoxedReceiverObject" type="property:IntegerBoxedReceiverObject"/>
+<xsd:complexType name="StringBoxedReceiverObject">
+<xsd:complexContent>
+<xsd:extension base="property:BoxedReceiverObject">
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StringBoxedReceiverObject" type="property:StringBoxedReceiverObject"/>
+</xsd:schema>

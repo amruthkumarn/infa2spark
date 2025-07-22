@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.interfaces.containerservice/2" xmlns:containerservice="http://com.informatica.isp.interfaces.containerservice/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.interfaces.containerservice/2">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="ContainerInstanceInfo">
+<xsd:annotation>
+<xsd:documentation> Information for a container started by container service
+ This Class can be extended further by plugins 
+ @author abatra
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="containerID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="containerMgrPluginName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ContainerInstanceInfo" type="containerservice:ContainerInstanceInfo"/>
+<xsd:complexType name="ContainerLaunchParam">
+<xsd:annotation>
+<xsd:documentation> &lt;p&gt;This class holds parameters used for launching a container.&lt;/p&gt;
+
+ &lt;p&gt;Note: This class is designed for communication, not for persistence.&lt;/p&gt;
+
+ &lt;p&gt;&lt;b&gt;MODIFICATIONS&lt;/b&gt;
+   &lt;ul&gt;
+     &lt;li&gt;2.0.0 11/03/2014 surao    introduce the model&lt;/li&gt;
+     &lt;li&gt;2.1.0 04/14/2015 kpark    remove abstract and add a list of properties&lt;/li&gt;
+   &lt;/ul&gt;
+ &lt;/p&gt;
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="properties" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="ContainerLaunchParam" type="containerservice:ContainerLaunchParam"/>
+<xsd:complexType name="ContainerLaunchProperty">
+<xsd:annotation>
+<xsd:documentation> &lt;p&gt;This class holds a property name/value pair used for launching
+ the container.&lt;/p&gt;
+
+ &lt;p&gt;Note: This class is designed for communication, not for persistence.&lt;/p&gt;
+
+ &lt;p&gt;&lt;b&gt;MODIFICATIONS&lt;/b&gt;
+   &lt;ul&gt;
+     &lt;li&gt;2.1.0 04/14/2015 kpark    introduce the model&lt;/li&gt;
+   &lt;/ul&gt;
+ &lt;/p&gt;
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ContainerLaunchProperty" type="containerservice:ContainerLaunchProperty"/>
+<xsd:complexType name="ContainerLaunchRequest">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="allocationToken">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="containerMgrPluginName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="launchParams" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="ContainerLaunchRequest" type="containerservice:ContainerLaunchRequest"/>
+<xsd:complexType name="ContainerStatus">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="allocationToken">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="containerId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="containerMgrPluginName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="status" type="containerservice:Status"/>
+</xsd:complexType>
+<xsd:element name="ContainerStatus" type="containerservice:ContainerStatus"/>
+<xsd:complexType name="ContainerTerminateRequest">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="containerInstanceInfo" type="imx:idref"/>
+<xsd:attribute name="terminationMode" type="containerservice:ContainerTerminationMode"/>
+</xsd:complexType>
+<xsd:element name="ContainerTerminateRequest" type="containerservice:ContainerTerminateRequest"/>
+<xsd:simpleType name="ContainerTerminationMode">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="COMPLETE"/>
+<xsd:enumeration value="ABORT"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="CumulativeContainerResourceStatus">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="status">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ContainerResourceStatus" type="containerservice:ContainerResourceStatus"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="availableResources" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="CumulativeContainerResourceStatus" type="containerservice:CumulativeContainerResourceStatus"/>
+<xsd:complexType name="ResourceStatus">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="cpu" type="xsd:int"/>
+<xsd:attribute name="memory" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="ResourceStatus" type="containerservice:ResourceStatus"/>
+<xsd:simpleType name="Status">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="NOT_AVAILABLE"/>
+<xsd:enumeration value="STARTING"/>
+<xsd:enumeration value="STARTED"/>
+<xsd:enumeration value="COMPLETED"/>
+<xsd:enumeration value="ABORTING"/>
+<xsd:enumeration value="ABORTED"/>
+<xsd:enumeration value="UNKNOWN"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ContainerResourceStatus">
+<xsd:complexContent>
+<xsd:extension base="containerservice:ContainerStatus">
+<xsd:attribute name="resourceUsage" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ContainerResourceStatus" type="containerservice:ContainerResourceStatus"/>
+</xsd:schema>

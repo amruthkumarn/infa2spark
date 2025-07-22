@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.metadata.alertservice/2" xmlns:alertservice="http://com.informatica.isp.metadata.alertservice/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:domainconfigurationservice="http://com.informatica.isp.metadata.domainconfigurationservice/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.metadata.alertservice/2">
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.isp.metadata.domainconfigurationservice/2" schemaLocation="com.informatica.isp.metadata.domainconfigurationservice.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:simpleType name="AlertType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="SERVICE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="SMTPOptions">
+<xsd:annotation>
+<xsd:documentation>Model Change log
+ 	2.2.0 skakkar 8/19/2013 
+  Added a new property : 'password' (There is a property 'SMTPPassword' which is not marked as 'isSensitive' 
+ 						   hence we need to explicity encrypt and decrypt it. We want to leverage IMF encryption and decryption, 
+ 						   hence adding a new property 'password' and marking it as'isSensitive'.
+ 2.2.1 muverma 12/17/2020 
+  Added a new properties : tlsEnabled. This property is required to support tls enabled smtp server.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="SMTPHost">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="SMTPPassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="SMTPPort" type="xsd:int"/>
+<xsd:attribute name="SMTPSenderAddress">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="SMTPUsername">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="password">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="tlsEnabled" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="SMTPOptions" type="alertservice:SMTPOptions"/>
+<xsd:complexType name="Alert">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="time" type="alertservice:Alert"/>
+</xsd:choice>
+<xsd:attribute name="alertType" type="alertservice:AlertType"/>
+<xsd:attribute name="aletMsg">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Alert" type="alertservice:Alert"/>
+<xsd:complexType name="AlertService">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:Service">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="smtpOptions" type="alertservice:SMTPOptions"/>
+<xsd:element name="userRefs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="UserRef" type="common:UserRef"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="AlertService" type="alertservice:AlertService"/>
+</xsd:schema>

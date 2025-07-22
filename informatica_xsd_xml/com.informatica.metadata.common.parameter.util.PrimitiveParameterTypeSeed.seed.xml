@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Informatica proprietary -->
+<imx:IMX xmlns:imx="http://com.informatica.imx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" serializationSpecVersion="14.0" crcEnabled="0" xmlns:parameter="http://com.informatica.metadata.common.parameter/9" versionparameter="9.11.1" xsi:schemaLocation="http://com.informatica.imx IMX.xsd http://com.informatica.metadata.common.parameter/9 com.informatica.metadata.common.parameter.xsd">
+<parameter:ParameterType imx:id="smd:com.informatica.metadata.common.parameter.util.PrimitiveParameterTypeSeed.String" name="String" representableBy="com.informatica.metadata.common.parameter.StringParameterValue"/>
+<parameter:ParameterType imx:id="smd:com.informatica.metadata.common.parameter.util.PrimitiveParameterTypeSeed.Long" name="Long" representableBy="com.informatica.metadata.common.parameter.LongParameterValue"/>
+<parameter:ParameterType imx:id="smd:com.informatica.metadata.common.parameter.util.PrimitiveParameterTypeSeed.Boolean" name="Boolean" representableBy="com.informatica.metadata.common.parameter.BooleanParameterValue"/>
+<parameter:ParameterType imx:id="smd:com.informatica.metadata.common.parameter.util.PrimitiveParameterTypeSeed.Double" name="Double" representableBy="com.informatica.metadata.common.parameter.DoubleParameterValue"/>
+</imx:IMX>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.udf/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:udf="http://com.informatica.metadata.common.udf/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.udf/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="UDFRefCountDependency">
+<xsd:annotation>
+<xsd:documentation> Reusable class for representing a reference-count guarded dependency on a user defined functions.  
+ 
+ Objects that may depend on a subset of all UDFs by virtue of expressions distributed through this object graph
+ 
+ There is no reason that a modeler has to use this class to represent dependencies--it is provided as an optional subunit.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="dependentFunction" type="imx:idref"/>
+<xsd:attribute name="referenceCount" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="UDFRefCountDependency" type="udf:UDFRefCountDependency"/>
+<xsd:complexType name="UserDefinedFunction">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="inputs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Parameter" type="udf:Parameter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="output" type="udf:Parameter"/>
+</xsd:choice>
+<xsd:attribute name="callable" type="xsd:boolean"/>
+<xsd:attribute name="dependentFunctions" type="imx:idrefs"/>
+<xsd:attribute name="expression">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserDefinedFunction" type="udf:UserDefinedFunction"/>
+<xsd:complexType name="Parameter">
+<xsd:complexContent>
+<xsd:extension base="types:TypedElement">
+<xsd:attribute name="precision" type="xsd:int"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Parameter" type="udf:Parameter"/>
+</xsd:schema>

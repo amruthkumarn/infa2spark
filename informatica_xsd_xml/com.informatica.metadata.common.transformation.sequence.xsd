@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.transformation.sequence/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:sequence="http://com.informatica.metadata.common.transformation.sequence/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.transformation.sequence/1">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType abstract="true" name="AbstractSequenceObject">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> Abstract base class for all sequence generator objects.
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="NativeSequenceObject">
+<xsd:complexContent>
+<xsd:extension base="sequence:AbstractSequenceObject">
+<xsd:annotation>
+<xsd:documentation> Sequence generator object encapsulates all the information required for a sequence transformation to be reused. Sequence generator
+ transformation uses this information for transformation metadata.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="cycle" type="xsd:boolean"/>
+<xsd:attribute name="endValue" type="xsd:long"/>
+<xsd:attribute name="incrementValue" type="xsd:int"/>
+<xsd:attribute name="startValue" type="xsd:long"/>
+<xsd:attribute name="stateIdentifier">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NativeSequenceObject" type="sequence:NativeSequenceObject"/>
+</xsd:schema>

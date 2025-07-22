@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.metadata.domainconfigurationservice/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:domainconfigurationservice="http://com.informatica.isp.metadata.domainconfigurationservice/2" xmlns:imx="http://com.informatica.imx" xmlns:usermanagement="http://com.informatica.isp.metadata.usermanagement/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.metadata.domainconfigurationservice/2">
+<xsd:import namespace="http://com.informatica.isp.metadata.usermanagement/2" schemaLocation="com.informatica.isp.metadata.usermanagement.xsd"/>
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> Note : Update target package version in\n com.informatica.isp.infasetup.impl.upgrader.ApplicationServiceUpgradeCallback\n upgrade callback handler if you change package version here.\n\n Change logs: \n Added EarlierVersionDomainObjRefs in version 2.8.1 from 2.8.0\n Added WebAppSAMLConfig model class, added List of WebAppSAMLConfig field in\n WebAppProcess model in version 2.8.2\n Added samlSignedAssertionConfig, samlAuthnContext, samlRequestSigningConfig, samlResponseSigningConfig, \n encryptAssertionConfig and advanceOption in WebAppSAMLConfig in version 2.8.3\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="Command">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="command">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="commandTimeout" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="Command" type="domainconfigurationservice:Command"/>
+<xsd:complexType name="ComputeNodeConfiguration">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="options">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="nodeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ComputeNodeConfiguration" type="domainconfigurationservice:ComputeNodeConfiguration"/>
+<xsd:simpleType name="DomainObjType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="FOLDER"/>
+<xsd:enumeration value="DOMAIN_NODE"/>
+<xsd:enumeration value="SERVICE"/>
+<xsd:enumeration value="GRID"/>
+<xsd:enumeration value="LICENSE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="DomainObjectLocate">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="folderObjects">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DomainObjectLocate" type="domainconfigurationservice:DomainObjectLocate"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="objName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="objType" type="domainconfigurationservice:DomainObjType"/>
+<xsd:attribute name="permission" type="xsd:boolean"/>
+<xsd:attribute name="serviceType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="DomainObjectLocate" type="domainconfigurationservice:DomainObjectLocate"/>
+<xsd:simpleType name="ResourceType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="CONNECTION"/>
+<xsd:enumeration value="CUSTOM"/>
+<xsd:enumeration value="FILE_DIRECTORY"/>
+<xsd:enumeration value="INSTALLED"/>
+<xsd:enumeration value="PRE_DEFINED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="RoleType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="SERVICE"/>
+<xsd:enumeration value="COMPUTE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="RoleTypeContainer">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="roleType" type="domainconfigurationservice:RoleType"/>
+</xsd:complexType>
+<xsd:element name="RoleTypeContainer" type="domainconfigurationservice:RoleTypeContainer"/>
+<xsd:complexType name="NodeCapability">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="resources">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ResourceString" type="domainconfigurationservice:ResourceString"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="type">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NodeCapability" type="domainconfigurationservice:NodeCapability"/>
+<xsd:complexType name="Process">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="envVariables">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Option" type="common:Option"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="internalProcessOptions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="postStartCommand" type="domainconfigurationservice:Command"/>
+<xsd:element name="preStartCommand" type="domainconfigurationservice:Command"/>
+<xsd:element name="processOptions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="jvmOptions">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="node">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="primaryProcess" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Process" type="domainconfigurationservice:Process"/>
+<xsd:complexType name="ServiceRef">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="options">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="domainName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceRefType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ServiceRef" type="domainconfigurationservice:ServiceRef"/>
+<xsd:complexType name="WebAppSAMLConfig">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation> This model represents SAML configuration of a Web App.
+ @author vmehta
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="advanceOptions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="samlAuthnContext" type="usermanagement:SAMLAuthnContext"/>
+<xsd:element name="samlEncryptedAssertionConfig" type="usermanagement:SAMLEncryptedAssertionConfig"/>
+<xsd:element name="samlRequestSigningConfig" type="usermanagement:SAMLRequestSigningConfig"/>
+<xsd:element name="samlSignedAssertionConfig" type="usermanagement:SAMLSignedAssertionConfig"/>
+<xsd:element name="samlSignedResponseConfig" type="usermanagement:SAMLSignedResponseConfig"/>
+</xsd:choice>
+<xsd:attribute name="assertionSigningCertificateAlias">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="clockSkewTolerance" type="xsd:int"/>
+<xsd:attribute name="idpUrl">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceProviderId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="webAppId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="WebAppSAMLConfig" type="domainconfigurationservice:WebAppSAMLConfig"/>
+<xsd:complexType name="CppProcess">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:Process"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CppProcess" type="domainconfigurationservice:CppProcess"/>
+<xsd:complexType abstract="true" name="DomainObj">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.6.0 dchhatan 19/8/2013 For property description:
+ 							Changed the persistence size to LengthTypeMax.UNBOUNDED
+ 							Changed Length to LengthType.UNBOUNDED
+ 							To support unbounded length of description 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="EarlierVersionDomainObjRefs">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:annotation>
+<xsd:documentation> EarlierVersionDomainObjRefs maintains a list of domain object identities. The
+ domain objects were restored from an earlier version of product release such
+ as 9.6.1 to the current version of product release. The identities of those
+ objects are put into this container through an explicit infasetup command
+ after upgrade operation is performed. An identity of a domain object remain
+ in this container until all the runtime behavior associated object has been
+ migrated to the current version of product release. The identity is removed
+ from this container upon explicit request.
+ 
+ If the container exists and the list is empty, it means that all domain
+ objects have been migrated. If the container itself does not exist, it means
+ restore procedure did not explicitly request to mark the domain objects for
+ migration.
+ 
+ @author pdas
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="objIds">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="EarlierVersionDomainObjRefs" type="domainconfigurationservice:EarlierVersionDomainObjRefs"/>
+<xsd:complexType name="ExecutableProcess">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:Process">
+<xsd:attribute name="base64Encode" type="xsd:boolean"/>
+<xsd:attribute name="commandArguments">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="commandName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExecutableProcess" type="domainconfigurationservice:ExecutableProcess"/>
+<xsd:complexType name="JSFProcess">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:Process"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="JSFProcess" type="domainconfigurationservice:JSFProcess"/>
+<xsd:complexType name="NodeResource">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:attribute name="available" type="xsd:boolean"/>
+<xsd:attribute name="type">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NodeResource" type="domainconfigurationservice:NodeResource"/>
+<xsd:complexType name="ResourceString">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:attribute name="available" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ResourceString" type="domainconfigurationservice:ResourceString"/>
+<xsd:complexType name="WebAppProcess">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:Process">
+<xsd:annotation>
+<xsd:documentation> MODIFICATIONS
+ 
+ 2.4.0       mpoon   08/30/2012      Added new properties 'truststoreFile' and 'truststorePassword'
+ 2.8.2 vmehta 17 April 2019 Added WebAppSAMLConfig list
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="webAppSamlConfigs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="WebAppSAMLConfig" type="domainconfigurationservice:WebAppSAMLConfig"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="algorithm">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="httpPort" type="xsd:int"/>
+<xsd:attribute name="httpsPort" type="xsd:int"/>
+<xsd:attribute name="keystoreFile">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="keystorePassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="maxQueue" type="xsd:int"/>
+<xsd:attribute name="maxRequests" type="xsd:int"/>
+<xsd:attribute name="shutdownPort" type="xsd:int"/>
+<xsd:attribute name="sslProtocol">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="truststoreFile">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="truststorePassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="WebAppProcess" type="domainconfigurationservice:WebAppProcess"/>
+<xsd:complexType name="Folder">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:DomainObj"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Folder" type="domainconfigurationservice:Folder"/>
+<xsd:complexType name="Grid">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:DomainObj">
+<xsd:attribute name="nodes">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Grid" type="domainconfigurationservice:Grid"/>
+<xsd:complexType name="InstalledNodeResource">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:NodeResource">
+<xsd:attribute name="vendorId" type="xsd:int"/>
+<xsd:attribute name="vendorName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="version">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="InstalledNodeResource" type="domainconfigurationservice:InstalledNodeResource"/>
+<xsd:complexType name="Node">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:DomainObj">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="nodeOptions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Node" type="domainconfigurationservice:Node"/>
+<xsd:complexType name="ResourceStringWithValue">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:ResourceString">
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ResourceStringWithValue" type="domainconfigurationservice:ResourceStringWithValue"/>
+<xsd:complexType name="Service">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:DomainObj"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Service" type="domainconfigurationservice:Service"/>
+<xsd:complexType name="ApplicationService">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:Service">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+
+ 2.8.0 abatra 4/21/2015 Added new contained property 'computeNodeConfigurations' and 'serviceOptions'
+ 						
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="computeNodeConfigurations">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ComputeNodeConfiguration" type="domainconfigurationservice:ComputeNodeConfiguration"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="defaultComputeNodeOptions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="internalServiceOptions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="serviceOptions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="serviceProcesses">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Process" type="domainconfigurationservice:Process"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="serviceRefs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ServiceRef" type="domainconfigurationservice:ServiceRef"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="gridName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="licenseName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceVersion">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationService" type="domainconfigurationservice:ApplicationService"/>
+<xsd:complexType name="CoreService">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:Service"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CoreService" type="domainconfigurationservice:CoreService"/>
+<xsd:complexType name="DomainNode">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:Node">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="address" type="common:NodeAddress"/>
+<xsd:element name="capabilities">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NodeCapability" type="domainconfigurationservice:NodeCapability"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="options">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="predefineResources">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NodeResource" type="domainconfigurationservice:NodeResource"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="resource">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NodeResource" type="domainconfigurationservice:NodeResource"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="roles">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="RoleTypeContainer" type="domainconfigurationservice:RoleTypeContainer"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="user" type="common:UserRef"/>
+</xsd:choice>
+<xsd:attribute name="associated" type="xsd:boolean"/>
+<xsd:attribute name="portal" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DomainNode" type="domainconfigurationservice:DomainNode"/>
+<xsd:complexType name="RemoteNode">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:Node"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RemoteNode" type="domainconfigurationservice:RemoteNode"/>
+</xsd:schema>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.transformation.writedataobject/2" xmlns:imx="http://com.informatica.imx" xmlns:transformation="http://com.informatica.metadata.common.transformation/3" xmlns:writedataobject="http://com.informatica.metadata.common.transformation.writedataobject/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.transformation.writedataobject/2">
+<xsd:import namespace="http://com.informatica.metadata.common.transformation/3" schemaLocation="com.informatica.metadata.common.transformation.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="WriteInterface">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="writeField">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="WriteField" type="writedataobject:WriteField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="WriteInterface" type="writedataobject:WriteInterface"/>
+<xsd:complexType name="WriteTx">
+<xsd:complexContent>
+<xsd:extension base="transformation:AbstractTransformation">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="writeInterface">
+<xsd:complexType>
+<xsd:choice maxOccurs="1" minOccurs="1">
+<xsd:element name="WriteInterface" type="writedataobject:WriteInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="dataObject" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="WriteTx" type="writedataobject:WriteTx"/>
+<xsd:complexType name="WriteField">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="WriteField" type="writedataobject:WriteField"/>
+</xsd:schema>

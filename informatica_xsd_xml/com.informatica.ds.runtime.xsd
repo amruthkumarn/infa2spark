@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.ds.runtime/0" xmlns:imx="http://com.informatica.imx" xmlns:runtime="http://com.informatica.ds.runtime/0" xmlns:session="http://com.informatica.metadata.common.session/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.ds.runtime/0">
+<xsd:import namespace="http://com.informatica.metadata.common.session/2" schemaLocation="com.informatica.metadata.common.session.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> This package is meant for runtime models only, and it should not be\n registered with MRS.\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="Argument">
+<xsd:annotation>
+<xsd:documentation> Markup model that can be used to pass any IMF model as a method argument.
+ Consumer need to extend from this model.
+ 
+ NOTE: This model is a *runtime model only*.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="CallbackMessage">
+<xsd:annotation>
+<xsd:documentation> This model is a base container used by DSCallbackHandler.
+ 
+ @author Andy Lai
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="ReturnValue">
+<xsd:annotation>
+<xsd:documentation> Markup model that can be used to pass any IMF model as a return value of a function. 
+ Consumer need to extend from this model.
+ 
+ NOTE: This model is a *runtime model only*.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="BDMUtilReturnValue">
+<xsd:complexContent>
+<xsd:extension base="runtime:ReturnValue">
+<xsd:annotation>
+<xsd:documentation> @author diyu
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="exitValue" type="xsd:int"/>
+<xsd:attribute name="payLoad">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BDMUtilReturnValue" type="runtime:BDMUtilReturnValue"/>
+<xsd:complexType name="CallbackLog">
+<xsd:complexContent>
+<xsd:extension base="runtime:CallbackMessage">
+<xsd:annotation>
+<xsd:documentation> This model is a container used by DSCallbackHandler for log level.
+ This is followed by an InfaMessage. 
+ @author Andy Lai
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="date" type="xsd:long"/>
+<xsd:attribute name="level">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="msg">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CallbackLog" type="runtime:CallbackLog"/>
+<xsd:complexType name="CallbackProgress">
+<xsd:complexContent>
+<xsd:extension base="runtime:CallbackMessage">
+<xsd:annotation>
+<xsd:documentation> This model is a container used by DSCallbackHandler for progress status.
+ 
+ @author Andy Lai
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="progress" type="xsd:double"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CallbackProgress" type="runtime:CallbackProgress"/>
+<xsd:complexType name="DISSession">
+<xsd:complexContent>
+<xsd:extension base="session:Session">
+<xsd:annotation>
+<xsd:documentation> This model extends from the base DTM session and include additional execution support provided by
+ DIS.
+
+ @author Andy Lai
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="applicationName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="canBeLoadBalanced" type="xsd:boolean"/>
+<xsd:attribute name="generatePerformanceStats" type="xsd:boolean"/>
+<xsd:attribute name="quotaBound" type="xsd:boolean"/>
+<xsd:attribute name="requestType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="resolveDOCache" type="xsd:boolean"/>
+<xsd:attribute name="sessionLockId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DISSession" type="runtime:DISSession"/>
+</xsd:schema>

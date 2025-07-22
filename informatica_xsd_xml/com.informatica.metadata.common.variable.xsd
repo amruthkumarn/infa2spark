@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.variable/1" xmlns:imx="http://com.informatica.imx" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:variable="http://com.informatica.metadata.common.variable/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.variable/1">
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="VariableContainer">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="variables">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="PredefinedVariable" type="variable:PredefinedVariable"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="VariableContainer" type="variable:VariableContainer"/>
+<xsd:complexType abstract="true" name="VariableValue">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="BooleanVariableValue">
+<xsd:complexContent>
+<xsd:extension base="variable:VariableValue">
+<xsd:attribute name="boolValue" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BooleanVariableValue" type="variable:BooleanVariableValue"/>
+<xsd:complexType name="DateVariableValue">
+<xsd:complexContent>
+<xsd:extension base="variable:VariableValue">
+<xsd:attribute name="dateValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DateVariableValue" type="variable:DateVariableValue"/>
+<xsd:complexType name="IntegerVariableValue">
+<xsd:complexContent>
+<xsd:extension base="variable:VariableValue">
+<xsd:attribute name="intValue" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="IntegerVariableValue" type="variable:IntegerVariableValue"/>
+<xsd:complexType name="StringVariableValue">
+<xsd:complexContent>
+<xsd:extension base="variable:VariableValue">
+<xsd:attribute name="stringValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StringVariableValue" type="variable:StringVariableValue"/>
+<xsd:complexType abstract="true" name="Variable">
+<xsd:complexContent>
+<xsd:extension base="types:TypedElement"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="PredefinedVariable">
+<xsd:complexContent>
+<xsd:extension base="variable:Variable"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PredefinedVariable" type="variable:PredefinedVariable"/>
+<xsd:complexType name="UserVariable">
+<xsd:complexContent>
+<xsd:extension base="variable:Variable">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="initialValue" type="variable:VariableValue"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserVariable" type="variable:UserVariable"/>
+</xsd:schema>

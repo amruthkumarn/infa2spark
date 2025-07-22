@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.mapping.lineage/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:lineage="http://com.informatica.metadata.common.mapping.lineage/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.mapping.lineage/1">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="PortLineage">
+<xsd:annotation>
+<xsd:documentation> PortLineage model to capture the port lineage information where a physical link is not present.  
+ (e.g: expression transformation)
+ 
+ A PortLineage is created when there is a port dependency between any TransformationFields or StructuralFeatures.  
+ When a TransformationField is typed by a ComplexType, any PortLineage may contain child NestedPortLineages, making it possible to express dependency involving the StructuralFeatures nested with the ComplexType.
+ 
+ @author mho
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="children">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NestedPortLineage" type="lineage:NestedPortLineage"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="fromPorts" type="imx:idrefs"/>
+<xsd:attribute name="toPorts" type="imx:idrefs"/>
+<xsd:attribute name="typedElement" type="imx:idref"/>
+</xsd:complexType>
+<xsd:complexType name="NestedPortLineage">
+<xsd:complexContent>
+<xsd:extension base="lineage:PortLineage">
+<xsd:annotation>
+<xsd:documentation> A NestedPortLineage is a PortLineage that represents an occurrence of a StructuralField 
+ within the ComplexType hierarchy of a TransformationField that either:
+ -- has a direct dependency relationship with other PortLineages or that is (PortLineage.fromPorts or PortLineage.toPorts is populated)
+ -- Of a complex type with descendent StructuralFeatures that participate in port dependency relationship
+ 
+ A NestedPortLineage contains NestedPortLineages only if the type of its StructuralFeature is also a ComplexType.  
+ Any NestedPortLineage children represent the StructuralFeatures of the parent NestedPortLineage's StructuralFeature's ComplexType.
+ 
+ NestedPortLineages are only contained by TransformationFieldPortLineages, never directly by InstanceLineages.
+ 
+ @author mho
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="parent" type="imx:idref"/>
+<xsd:attribute name="structuralFeature" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NestedPortLineage" type="lineage:NestedPortLineage"/>
+<xsd:complexType name="TransformationFieldPortLineage">
+<xsd:complexContent>
+<xsd:extension base="lineage:PortLineage">
+<xsd:annotation>
+<xsd:documentation> A TransformationFieldPortLineage is a PortLineage that represents an occurence of a TransformationField that either:
+ -- has a direct dependency relationship with other PortLineages or that is (PortLineage.fromPorts or PortLineage.toPorts is populated)
+ -- Of a complex type with descendent StructuralFeatures that have port dependency relationship with other fields or structural features.
+ 
+ A TransformationField contains NestedPortLineages only if its type is a ComplexType.  Any NestedPortLineages that are children of a TransformationFieldPortLineage represent the StructuralFeatures of its ComplexType.
+ 
+ TransformationFieldPortLineages are only contained by InstanceLineages.
+ 
+ @author mho
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="instance" type="imx:idref"/>
+<xsd:attribute name="transformationField" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TransformationFieldPortLineage" type="lineage:TransformationFieldPortLineage"/>
+<xsd:complexType name="InstanceLineage">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> A model that captures port dependency in an Instance
+ 
+ @author mho
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ports">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TransformationFieldPortLineage" type="lineage:TransformationFieldPortLineage"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="instance" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="InstanceLineage" type="lineage:InstanceLineage"/>
+<xsd:complexType name="MappingLineage">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="instances">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="InstanceLineage" type="lineage:InstanceLineage"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="mapping" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappingLineage" type="lineage:MappingLineage"/>
+</xsd:schema>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.typesystem.storagesemantics/2" xmlns:imx="http://com.informatica.imx" xmlns:storagesemantics="http://com.informatica.metadata.common.typesystem.storagesemantics/2" xmlns:typesystem="http://com.informatica.metadata.common.typesystem/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.typesystem.storagesemantics/2">
+<xsd:import namespace="http://com.informatica.metadata.common.typesystem/2" schemaLocation="com.informatica.metadata.common.typesystem.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThe classes in this package externds on the ability of com.informatica.metadata.common.typesystem.DataType to abstract a named value domain.  A DataType may optionally contain an instance of a com.informatica.metadata.common.typesystem.StorageSemantic to express how precision and scale properties can be used to restrict a value domain.  This package defines all the concrete extensions of the abstract StorageSemantic class.\n \n A DataType need not contain a StorageSemantic, so this package is not required to handle DataType abstractions if implicit knowledge about how a precision and scale are used to describe the size constraints when a DataType is used.\n \n When using this modeling feature, the specific concrete class that a DataType contains defines the rules for interpretting precision and scale values that qualify a reference to the parent DataType.  A summary of the semantics described by each StorageSemantic subclass can be found in Table 01.\n \n StorageSemantics also play a role in recognizing valid DataType conversions.  The DataTypeMapping object defined in com.informatica.metadata.common.typesystem.directmaps gives information about when two DataType domains are compatible, but does not consider storage size constraints.  If a DataTypeMapping states that two DataTypes have conversion semantics, then the DataTypes have comparable StorageSemantics.  The rules for comparing precision and scale provided for different StorageSemantics are given in Table 02.\n \n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:simpleType name="LengthUnitKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="bits"/>
+<xsd:enumeration value="bytes"/>
+<xsd:enumeration value="characters"/>
+<xsd:enumeration value="blocks"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="RadixKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="binary"/>
+<xsd:enumeration value="decimal"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="AnyStorageSemantic">
+<xsd:complexContent>
+<xsd:extension base="typesystem:StorageSemantic">
+<xsd:annotation>
+<xsd:documentation> Describes a value whose actual type is unknown.  Although the value's actual type is not known, it can be presumed to be a valid qualified type from the set of all types in scope.  Qualified means that if the value's actual type requires precision and scale qualfiiers, these values exist and are within the data type's permitted range.
+ 
+ Neither precision nor scale has any meaning when a TypedElement uses a DataType with an instance of this StorageSemantic subclass.
+ 
+ The scope of the Type objects that may be considered for a TypedElement using a DataType with this storage semantic depends on the contex of that TypedElement.  For example, when used within a DataHandler's containment hierarchy, a qualified instance of any DataType contained by the DataHandler's referenced TypeSystem or any DerivedType contained by one of the DataHandler's imported TypeLibraries may occur.  When used in the scope of a Mapping, DataTypes from the Platform TypeSystem and those from an imported or privately contained TypeLibrary may occur.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="AnyStorageSemantic" type="storagesemantics:AnyStorageSemantic"/>
+<xsd:complexType name="FloatStorageSemantic">
+<xsd:complexContent>
+<xsd:extension base="typesystem:StorageSemantic">
+<xsd:annotation>
+<xsd:documentation> Describes an approximate real number value where precision measures the stored number of digits.  Defines the maximum and default precision.  Defines whether the default precision may be edited when this data type is qualified.  Defines the radix of precision and radix of exponent which are either 2 (binary) or 10 (decimal).  Defines the minimum and maximum exponent values.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="defaultPrecision" type="xsd:int"/>
+<xsd:attribute name="editablePrecision" type="xsd:boolean"/>
+<xsd:attribute name="exponentMax" type="xsd:int"/>
+<xsd:attribute name="exponentMin" type="xsd:int"/>
+<xsd:attribute name="exponentRadix" type="storagesemantics:RadixKind"/>
+<xsd:attribute name="maxPrecision" type="xsd:int"/>
+<xsd:attribute name="precisionRadix" type="storagesemantics:RadixKind"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FloatStorageSemantic" type="storagesemantics:FloatStorageSemantic"/>
+<xsd:complexType name="GregorianTimeStorageSemantic">
+<xsd:complexContent>
+<xsd:extension base="typesystem:StorageSemantic">
+<xsd:annotation>
+<xsd:documentation> Describes a date/time value from the Gregorian Calendar.  Defines which of years, months, days, hours, minutes, and seconds are stored.  If seconds are stored, then scale represents the number of decimal places to which fractional seconds are stored and maximum and default scales are defined.  Defines whether the default scale may be edited when this data type is qualified.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="daySupported" type="xsd:boolean"/>
+<xsd:attribute name="defaultScale" type="xsd:int"/>
+<xsd:attribute name="editableScale" type="xsd:boolean"/>
+<xsd:attribute name="hourSupported" type="xsd:boolean"/>
+<xsd:attribute name="maxScale" type="xsd:int"/>
+<xsd:attribute name="minuteSupported" type="xsd:boolean"/>
+<xsd:attribute name="monthSupported" type="xsd:boolean"/>
+<xsd:attribute name="secondSupported" type="xsd:boolean"/>
+<xsd:attribute name="timezoneSupported" type="xsd:boolean"/>
+<xsd:attribute name="yearSupported" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="GregorianTimeStorageSemantic" type="storagesemantics:GregorianTimeStorageSemantic"/>
+<xsd:complexType name="IntegerStorageSemantic">
+<xsd:complexContent>
+<xsd:extension base="typesystem:StorageSemantic">
+<xsd:annotation>
+<xsd:documentation> Describes an exact whole number where precision measured the total number of decimal digits.  Defines the maximum and default precision.  Defines whether the default precision may be edited when the containing DataType is qualified.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="defaultPrecision" type="xsd:int"/>
+<xsd:attribute name="editablePrecision" type="xsd:boolean"/>
+<xsd:attribute name="maxPrecision" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="IntegerStorageSemantic" type="storagesemantics:IntegerStorageSemantic"/>
+<xsd:complexType name="LengthStorageSemantic">
+<xsd:complexContent>
+<xsd:extension base="typesystem:StorageSemantic">
+<xsd:annotation>
+<xsd:documentation> Describes a fixed length or variable string of bits, bytes, characters, or blocks.  Defines which of those units a string is measured in.  Defines the maximum and default number of those units allowed.  Defines whether the default length may be edited when the containing DataType is qualified.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="defaultLength" type="xsd:int"/>
+<xsd:attribute name="editableLength" type="xsd:boolean"/>
+<xsd:attribute name="lengthUnit" type="storagesemantics:LengthUnitKind"/>
+<xsd:attribute name="maxLength" type="xsd:int"/>
+<xsd:attribute name="variableAllocation" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LengthStorageSemantic" type="storagesemantics:LengthStorageSemantic"/>
+<xsd:complexType name="MachineIntegerStorageSemantic">
+<xsd:complexContent>
+<xsd:extension base="typesystem:StorageSemantic">
+<xsd:annotation>
+<xsd:documentation> Describes an exact whole number where precision measures the number of 8 binary digit bytes allocated to store the integer.  Defines the maximum default precision.  Defines whether precision may be edited when this data type is qualified.  Defines whether values are signed or non-negative.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="defaultBytes" type="xsd:int"/>
+<xsd:attribute name="editableBytes" type="xsd:boolean"/>
+<xsd:attribute name="maxBytes" type="xsd:int"/>
+<xsd:attribute name="signed" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MachineIntegerStorageSemantic" type="storagesemantics:MachineIntegerStorageSemantic"/>
+<xsd:complexType name="DecimalStorageSemantic">
+<xsd:complexContent>
+<xsd:extension base="storagesemantics:IntegerStorageSemantic">
+<xsd:annotation>
+<xsd:documentation> Describes an exact real number value, where precision measures the total number of digits and scale the number of digits to the right of the decimal point.  Precision must always be greater than or equal to scale.  Default scale is 0.  Defines the maximum and default precision.  Defines the whether the default precision and scale may be edited when this data type is qualified.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="editableScale" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DecimalStorageSemantic" type="storagesemantics:DecimalStorageSemantic"/>
+<xsd:complexType name="ScientificDecimalStorageSemantic">
+<xsd:complexContent>
+<xsd:extension base="storagesemantics:DecimalStorageSemantic">
+<xsd:annotation>
+<xsd:documentation> Describes an exact real number value where precision measures the stored number of decimal digits and scale the number of decimal places to the left or right of the decimal point.  Defines the maximum and default precision and scale.  Defines the minimum scale (which may be negative).  Defines whether the default precision and scale may be edited when this data type is qualified.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="defaultScale" type="xsd:int"/>
+<xsd:attribute name="maxScale" type="xsd:int"/>
+<xsd:attribute name="minScale" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ScientificDecimalStorageSemantic" type="storagesemantics:ScientificDecimalStorageSemantic"/>
+</xsd:schema>

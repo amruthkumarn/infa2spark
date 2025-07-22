@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.sdk.txhandlerconfig.source/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:dsoconfig="http://com.informatica.metadata.common.dsoconfig/2" xmlns:imx="http://com.informatica.imx" xmlns:sdk="http://com.informatica.metadata.sdk/2" xmlns:source="http://com.informatica.metadata.sdk.txhandlerconfig.source/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.sdk.txhandlerconfig.source/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.dsoconfig/2" schemaLocation="com.informatica.metadata.common.dsoconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.sdk/2" schemaLocation="com.informatica.metadata.sdk.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="Library">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="className">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="moduleName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="operatingSystem" type="source:OSSupportKind"/>
+</xsd:complexType>
+<xsd:element name="Library" type="source:Library"/>
+<xsd:simpleType name="OSSupportKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="NT"/>
+<xsd:enumeration value="LINUX_"/>
+<xsd:enumeration value="SOLARIS"/>
+<xsd:enumeration value="AIX_"/>
+<xsd:enumeration value="HPUX"/>
+<xsd:enumeration value="DEC"/>
+<xsd:enumeration value="JAVA"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="SDKReaderAttr">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:attribute name="attrDef" type="imx:idref"/>
+<xsd:attribute name="readerConfig" type="imx:idref"/>
+<xsd:attribute name="valueLiteral">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SDKReaderAttr" type="source:SDKReaderAttr"/>
+<xsd:complexType name="SDKReaderAttrDef">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="readerExtension" type="imx:idref"/>
+<xsd:attribute name="type" type="sdk:SDKAttrDataType"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SDKReaderAttrDef" type="source:SDKReaderAttrDef"/>
+<xsd:complexType name="SDKReaderConfig">
+<xsd:complexContent>
+<xsd:extension base="dsoconfig:DSORuntimeConfig">
+<xsd:annotation>
+<xsd:documentation> Holds connection selections and session extension attributes for 8.5 SDK reader plugins and identifies what data adapter should be invoked at runtime.
+ 
+ The data adapter selection is made by storing a reference to a seeded DataAdapter object.  This seeded reference is used by the DTM to locate an implementation library at runtime.
+ 
+ Connections are selected as a reference to 0..n ConnectInfo objects.
+ 
+ Session Extension attributes are stored under a GenericAnnotation with a source of "com.informatica.platform.sdk.extensionattrs.reader"
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="attrs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SDKReaderAttr" type="source:SDKReaderAttr"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="connectInfo" type="imx:idref"/>
+<xsd:attribute name="connectionName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="readerType" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SDKReaderConfig" type="source:SDKReaderConfig"/>
+<xsd:complexType name="SDKReaderExtensionType">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="attrDefs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SDKReaderAttrDef" type="source:SDKReaderAttrDef"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="libraries">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Library" type="source:Library"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SDKReaderExtensionType" type="source:SDKReaderExtensionType"/>
+</xsd:schema>

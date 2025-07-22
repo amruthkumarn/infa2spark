@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.partition.clusterconfig/1" xmlns:clusterconfig="http://com.informatica.metadata.common.partition.clusterconfig/1" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.partition.clusterconfig/1">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> \n This package contains the cluster configuration needed by data partition configurations.\n This is not a persistent model.\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="ClusterConfig">
+<xsd:annotation>
+<xsd:documentation> 
+ The cluster configuration is used by dtm's data partition optimizer for dynamic partitioning.
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="nodeConfigs" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="ClusterConfig" type="clusterconfig:ClusterConfig"/>
+<xsd:complexType name="NodeConfig">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="cacheDirs">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="logDirs">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="maxMappingParallelism" type="xsd:int"/>
+<xsd:attribute name="targetDirs">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="tempDirs">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="NodeConfig" type="clusterconfig:NodeConfig"/>
+</xsd:schema>

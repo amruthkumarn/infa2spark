@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.canonical.datarecord/2" xmlns:constraint="http://com.informatica.metadata.common.constraint/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:dataobject="http://com.informatica.metadata.common.dataobject/2" xmlns:datarecord="http://com.informatica.metadata.canonical.datarecord/2" xmlns:imx="http://com.informatica.imx" xmlns:mapping="http://com.informatica.metadata.common.mapping/2" xmlns:typelibrary="http://com.informatica.metadata.common.typesystem.typelibrary/2" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.canonical.datarecord/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.mapping/2" schemaLocation="com.informatica.metadata.common.mapping.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.typesystem.typelibrary/2" schemaLocation="com.informatica.metadata.common.typesystem.typelibrary.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.dataobject/2" schemaLocation="com.informatica.metadata.common.dataobject.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.constraint/1" schemaLocation="com.informatica.metadata.common.constraint.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nA canonical model  is a model of application data representing the business perspective  of that data.  Canonical models are expressed using ER modeling semantics.\n \n In the data service platform, a canonical model will be created early on in the data integration development lifecycle and remain an integral development artifact.  Data architects will create a canonical data model underlying a data service and then map it to the logical model of various source systems.\n \n In the canonical model, sets of data are represented by the concept called data object and the structure of the data is represented by the attributes designed for an entity.  Data objects may be related by the concepts of keys and references.\n \n Canonical models with large numbers of data objects are organized in subject areas.  Each data object belongs to one and only one subject area.\n \n 2.4.0   elee    9/24/2014     Mappings property in CanonicalDataModel is deprecated. Consumers should use the mappings property in CanonicalDataObject model class.\n\n 2.5.0   elee    2/2/2015      Add annotation com.informatica.imf.annotations.constraints.model.AggregateInSeparateScope to the entities property of CanonicalDataModel\n\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="Characteristic">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="DataObjectAttribute">
+<xsd:annotation>
+<xsd:documentation> DataObjectAttributes each modify a top-level StructuralFeature contained by the ComplexType that defines the structure of their parent DataObject.  
+ This class's modifiers describe the mappability (see Data Object Maps) of a referenced top-level structural feature.  If the strucutral feature has a complex type, then these modifiers also apply to any nested structural features beneath the referenced feature.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="element" type="imx:idref"/>
+<xsd:attribute name="feature" type="imx:idref"/>
+<xsd:attribute name="queriable" type="xsd:boolean"/>
+<xsd:attribute name="writeAccess" type="datarecord:EntityAttributeWriteAccessKind"/>
+</xsd:complexType>
+<xsd:element name="DataObjectAttribute" type="datarecord:DataObjectAttribute"/>
+<xsd:simpleType name="EntityAttributeWriteAccessKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="readOnly"/>
+<xsd:enumeration value="insertOnly"/>
+<xsd:enumeration value="insertUpdate"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="EntityWriteAccessKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="readOnly"/>
+<xsd:enumeration value="insertOnly"/>
+<xsd:enumeration value="updateOnly"/>
+<xsd:enumeration value="insertDelete"/>
+<xsd:enumeration value="insertUpdate"/>
+<xsd:enumeration value="fullWrite"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="FeaturePath">
+<xsd:annotation>
+<xsd:documentation> Each FeaturePath in this collection contributes one value reached by following an ordered path through a complex type's single-valued structural features.  A mandatory and single-valued structural feature sets upper=1.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="features" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="FeaturePath" type="datarecord:FeaturePath"/>
+<xsd:complexType name="CanonicalDataModel">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="entities">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="CanonicalDataObject" type="datarecord:CanonicalDataObject"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="mappings">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Mapping" type="mapping:Mapping"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="privateLibrary" type="typelibrary:TypeLibrary"/>
+</xsd:choice>
+<xsd:attribute name="importedLibraries" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CanonicalDataModel" type="datarecord:CanonicalDataModel"/>
+<xsd:complexType name="DataObjectKey">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> A DataObjectKey defines how a DataObject's StructuralFeatures can be used to identify a unique instance.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="featurePath">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="FeaturePath" type="datarecord:FeaturePath"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataObjectKey" type="datarecord:DataObjectKey"/>
+<xsd:complexType name="DataObjectReference">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> A DataObjectReference describes how a DataObject's StructuralFeatures can be used to uniquely reference a second DataObject instance.
+ 
+ DataObjectReferences are always unary in nature.  To reference a collection of objects, an ER modeler uses a DataObject instance for each unique n-way association.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="featurePath">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="FeaturePath" type="datarecord:FeaturePath"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="referencedKey" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataObjectReference" type="datarecord:DataObjectReference"/>
+<xsd:complexType name="CanonicalDataObject">
+<xsd:complexContent>
+<xsd:extension base="dataobject:DataObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="mappings">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Mapping" type="mapping:Mapping"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="characteristics">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Characteristic" type="datarecord:Characteristic"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="dataObject" type="datarecord:DataObjectElement"/>
+<xsd:element name="sourceConstraints">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SourceConstraint" type="constraint:SourceConstraint"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="readMappings" type="imx:idrefs"/>
+<xsd:attribute name="writeMappings" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CanonicalDataObject" type="datarecord:CanonicalDataObject"/>
+<xsd:complexType name="DataObjectElement">
+<xsd:complexContent>
+<xsd:extension base="types:TypedElement">
+<xsd:annotation>
+<xsd:documentation> A DataObjectElement represents a type of business entity that may be used to create a canonical view of data exchanged in an integration flow.  CanonicalEntities and Data Object Maps (TBD at present) will provide abstractions to support this use.
+ 
+ The data values that make up a DataObjectElement are defined by the StructuralFeatures of its ComplexType.
+ 
+ DataObjectElements contain a DataObjectAttribute for each top-level StructuralFeature contained by their ComplexType.  This object carries modifiers that determine the mappability (see Data Object Maps) of each top-level attribute and any nested structural features beneath it.
+ 
+ DataObjectElement contains DataObjectKeys and DataObjectReferences to describe their means of being referenced and their references to other objects, respectively.
+ 
+ TODO: DataObjects contain MutexCategories and CategoryMemberships to describe their specialization and generalization relationships, respectively.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="attributes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DataObjectAttribute" type="datarecord:DataObjectAttribute"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="dataObjectType" type="typelibrary:ComplexType"/>
+<xsd:element name="keys">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DataObjectKey" type="datarecord:DataObjectKey"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="references">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DataObjectReference" type="datarecord:DataObjectReference"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="primaryKey" type="imx:idref"/>
+<xsd:attribute name="writeAccess" type="datarecord:EntityWriteAccessKind"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataObjectElement" type="datarecord:DataObjectElement"/>
+</xsd:schema>

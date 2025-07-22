@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Informatica proprietary -->
+<imx:IMX xmlns:imx="http://com.informatica.imx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" serializationSpecVersion="14.0" crcEnabled="0" xmlns:core="http://com.informatica.metadata.common.core/2" versioncore="2.2.1" xmlns:component="http://com.informatica.metadata.common.component/2" versioncomponent="2.1.0" xsi:schemaLocation="http://com.informatica.imx IMX.xsd http://com.informatica.metadata.common.core/2 com.informatica.metadata.common.core.xsd http://com.informatica.metadata.common.component/2 com.informatica.metadata.common.component.xsd">
+<component:Component imx:id="smd:com.informatica.metadata.platform.component.function.ExpressionComponent.component" name="Expression">
+<interfaces>
+<ComponentInterface imx:id="smd:com.informatica.metadata.platform.component.function.ExpressionComponent.component%2FFunctionValidate" xsi:type="component:ComponentInterface" name="FunctionValidate" component="ID_1"/>
+<ComponentInterface imx:id="smd:com.informatica.metadata.platform.component.function.ExpressionComponent.component%2FFunctionRuntime" xsi:type="component:ComponentInterface" name="FunctionRuntime" component="ID_1"/>
+</interfaces>
+</component:Component>
+<imx:proxies>
+<proxy imx:id="ID_1" objectId="smd:com.informatica.metadata.platform.component.function.ExpressionComponent.component" type="component:Component" xsi:type="imx:proxy"/>
+</imx:proxies>
+</imx:IMX>

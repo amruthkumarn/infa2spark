@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.interfaces.licensing/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:imx="http://com.informatica.imx" xmlns:licensing="http://com.informatica.isp.interfaces.licensing/2" xmlns:licensing1="http://com.informatica.isp.metadata.licensing/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.interfaces.licensing/2">
+<xsd:import namespace="http://com.informatica.isp.metadata.licensing/2" schemaLocation="com.informatica.isp.metadata.licensing.xsd"/>
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="CALPrivilegeStatsParam">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="usageCount" type="xsd:int"/>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="CALPrivilegeStatsParam" type="licensing:CALPrivilegeStatsParam"/>
+<xsd:complexType name="CALUsageParam">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="ipAddress">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sessionId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="CALUsageParam" type="licensing:CALUsageParam"/>
+<xsd:complexType name="ConnectivityUsageReport">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="sources" type="imx:idrefs"/>
+<xsd:attribute name="targets" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="ConnectivityUsageReport" type="licensing:ConnectivityUsageReport"/>
+<xsd:complexType name="DefaultLicenseFeatures">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="diLite" type="xsd:boolean"/>
+<xsd:attribute name="free" type="xsd:boolean"/>
+<xsd:attribute name="licenseFeatures" type="imx:idref"/>
+<xsd:attribute name="maxDomainUsers" type="xsd:int"/>
+<xsd:attribute name="maxVibeDataUsagePerDay" type="xsd:int"/>
+<xsd:attribute name="vibeDataStreamFreeEdition" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="DefaultLicenseFeatures" type="licensing:DefaultLicenseFeatures"/>
+<xsd:complexType name="LicenseParameter">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="active" type="xsd:boolean"/>
+<xsd:attribute name="expiryTime" type="xsd:long"/>
+<xsd:attribute name="issueTime" type="xsd:long"/>
+<xsd:attribute name="licenseId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="units" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="LicenseParameter" type="licensing:LicenseParameter"/>
+<xsd:simpleType name="LoptMsgModel">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="OPT_DATA_CLEANSING"/>
+<xsd:enumeration value="OPT_DATA_FEDERATION"/>
+<xsd:enumeration value="OPT_DATA_PROFILING"/>
+<xsd:enumeration value="OPT_DATA_ANALYZER"/>
+<xsd:enumeration value="OPT_GEO_SPATIAL_DATA"/>
+<xsd:enumeration value="OPT_DATA_VALIDATION"/>
+<xsd:enumeration value="OPT_HIGH_AVAILABILITY"/>
+<xsd:enumeration value="OPT_METADATA_MANAGER"/>
+<xsd:enumeration value="OPT_PUSH_DOWN_OPTIMIZATION"/>
+<xsd:enumeration value="OPT_PARTITIONING"/>
+<xsd:enumeration value="OPT_SERVER_GRID"/>
+<xsd:enumeration value="OPT_SESSION_ON_GRID"/>
+<xsd:enumeration value="OPT_TEAM_BASED_DEVELOPMENT"/>
+<xsd:enumeration value="OPT_TEST_TOOL"/>
+<xsd:enumeration value="OPT_UNSTRUCTURED_DATA"/>
+<xsd:enumeration value="OPT_MAPPING_GENERATION"/>
+<xsd:enumeration value="OPT_REAL_TIME"/>
+<xsd:enumeration value="OPT_PROCESS_IMPERSONATION"/>
+<xsd:enumeration value="OPT_OSPROFILES_DIS"/>
+<xsd:enumeration value="OPT_BDM_STREAMING_STANDARD"/>
+<xsd:enumeration value="OPT_BDM_STREAMING_ADVANCED"/>
+<xsd:enumeration value="OPT_PDM_FOR_XML"/>
+<xsd:enumeration value="OPT_SUBSET_FOR_XML"/>
+<xsd:enumeration value="OPT_TDM_FOR_XML"/>
+<xsd:enumeration value="OPT_TDG_FOR_XML"/>
+<xsd:enumeration value="OPT_DATA_VISUALIZATION"/>
+<xsd:enumeration value="OPT_TEST_DATA_PORTAL"/>
+<xsd:enumeration value="OPT_DYNAMIC_MAPPING"/>
+<xsd:enumeration value="OPT_SCRDCARD_DSHBRD"/>
+<xsd:enumeration value="OPT_DATAMASKING_NOSQL"/>
+<xsd:enumeration value="OPT_DATAMASKING_UNSTRUCTURED"/>
+<xsd:enumeration value="OPT_RESTFUL_WEB_SERVICE"/>
+<xsd:enumeration value="OPT_SQL_TO_MAPPING"/>
+<xsd:enumeration value="OPT_DATA_ARCHIVE_SAP"/>
+<xsd:enumeration value="OPT_ARCHIVE_SALESFORCE"/>
+<xsd:enumeration value="OPT_TASK_ORCHESTRATION"/>
+<xsd:enumeration value="OPT_EIC"/>
+<xsd:enumeration value="OPT_IIS_AWS_FIREHOSE"/>
+<xsd:enumeration value="OPT_IIS_MAPR_STREAMS"/>
+<xsd:enumeration value="OPT_MASS_INGESTION"/>
+<xsd:enumeration value="OPT_AIRS"/>
+<xsd:enumeration value="OPT_CATALOG_GRAPH_CLUSTER"/>
+<xsd:enumeration value="OPT_INFA_CLUSTER_SVC"/>
+<xsd:enumeration value="Excel"/>
+<xsd:enumeration value="Pdf"/>
+<xsd:enumeration value="Word"/>
+<xsd:enumeration value="Afp"/>
+<xsd:enumeration value="Ppt"/>
+<xsd:enumeration value="HL7"/>
+<xsd:enumeration value="BAI"/>
+<xsd:enumeration value="EDI"/>
+<xsd:enumeration value="SWIFT"/>
+<xsd:enumeration value="EDF"/>
+<xsd:enumeration value="HIPAA"/>
+<xsd:enumeration value="ACCORD"/>
+<xsd:enumeration value="FIX"/>
+<xsd:enumeration value="TeleKurs"/>
+<xsd:enumeration value="NACHA"/>
+<xsd:enumeration value="OPT_DATA_MASKING"/>
+<xsd:enumeration value="IATA"/>
+<xsd:enumeration value="CRE"/>
+<xsd:enumeration value="OPT_DATA_OBJECTS"/>
+<xsd:enumeration value="OPT_SQL_DATA_SERVICE"/>
+<xsd:enumeration value="OPT_DQ_TRANSFORMATIONS"/>
+<xsd:enumeration value="OPT_THICK_CLIENT_PROFILING"/>
+<xsd:enumeration value="OPT_THIN_CLIENT_PROFILING"/>
+<xsd:enumeration value="OPT_AT_SERVICE"/>
+<xsd:enumeration value="OPT_MRS_SERVICE"/>
+<xsd:enumeration value="OPT_CORE_DATA_SERVICE"/>
+<xsd:enumeration value="OPT_DQ_DATA_SERVICE"/>
+<xsd:enumeration value="OPT_PROFILING_SERVICE"/>
+<xsd:enumeration value="OPT_MM_PROFILING"/>
+<xsd:enumeration value="OPT_ADVANCED_PROFILING"/>
+<xsd:enumeration value="OPT_SCORECARD"/>
+<xsd:enumeration value="OPT_MAPPING_DATA_SERVICE"/>
+<xsd:enumeration value="OPT_SATS_DATA_ENCRYPTION"/>
+<xsd:enumeration value="OPT_SATS_RISK_ANALYTICS"/>
+<xsd:enumeration value="OPT_SATS_SUBJECT_REGISTRY"/>
+<xsd:enumeration value="OPT_EDC_UCF_SCANNER"/>
+<xsd:enumeration value="OPT_SATS_DYNAMIC_MASKING"/>
+<xsd:enumeration value="OPT_PLAT_ENCRYPTION"/>
+<xsd:enumeration value="OPT_HADOOP_ENCRYPTION"/>
+<xsd:enumeration value="OPT_DEI_CONS_BASED_LIC"/>
+<xsd:enumeration value="DTCC"/>
+<xsd:enumeration value="NCPDP"/>
+<xsd:enumeration value="ACCELERATOR_DWA"/>
+<xsd:enumeration value="OPT_WS_DATA_SERVICE"/>
+<xsd:enumeration value="OPT_WS_ADAPTER"/>
+<xsd:enumeration value="MAPPING_SPEC_SERVICE"/>
+<xsd:enumeration value="SEPA"/>
+<xsd:enumeration value="FpML"/>
+<xsd:enumeration value="ACCELERATOR_ORACLE"/>
+<xsd:enumeration value="OPT_CORE_DI_TRANS_DTM"/>
+<xsd:enumeration value="BBG"/>
+<xsd:enumeration value="TR"/>
+<xsd:enumeration value="OPT_ENTERPRISE_DISCOVERY"/>
+<xsd:enumeration value="OPT_DATADOMAIN_DISCOVERY"/>
+<xsd:enumeration value="DIS_CORE_GRID"/>
+<xsd:enumeration value="DIS_CORE_WORKFLOW"/>
+<xsd:enumeration value="DQ_HT"/>
+<xsd:enumeration value="DQ_IDD"/>
+<xsd:enumeration value="DT_HMAP"/>
+<xsd:enumeration value="DT_INJ_EXT"/>
+<xsd:enumeration value="ILM_DATA_ARCHIVE_STD_EDITION"/>
+<xsd:enumeration value="ILM_DATA_ARCHIVE_ENT_EDITION"/>
+<xsd:enumeration value="ILM_DATA_SUBSET"/>
+<xsd:enumeration value="ILM_PERSISTENT_DATA_MASKING"/>
+<xsd:enumeration value="ILM_DYNAMIC_DATA_MASKING"/>
+<xsd:enumeration value="ILM_DATA_WAREHOUSE_ADVISOR"/>
+<xsd:enumeration value="ILM_DORMANT_DATA_ANALYSER"/>
+<xsd:enumeration value="ILM_DATA_VISUALIZATION"/>
+<xsd:enumeration value="ILM_SMART_PARTITIONING"/>
+<xsd:enumeration value="ILM_FILE_ARCHIVE_SERVICE"/>
+<xsd:enumeration value="ILM_FAS_ODBC_DRIVER"/>
+<xsd:enumeration value="ILM_ORCHESTRATION"/>
+<xsd:enumeration value="ILM_FEDERATION"/>
+<xsd:enumeration value="ILM_DISCOVERY"/>
+<xsd:enumeration value="ILM_ACC_ARCHIVE_OEBS"/>
+<xsd:enumeration value="ILM_ACC_ARCHIVE_PEOPLESOFT"/>
+<xsd:enumeration value="ILM_ACC_ARCHIVE_SIEBEL"/>
+<xsd:enumeration value="ILM_ACC_ARCHIVE_JDE"/>
+<xsd:enumeration value="ILM_ACC_ARCHIVE_AMDOCS"/>
+<xsd:enumeration value="ILM_ACC_ARCHIVE_SAP"/>
+<xsd:enumeration value="ILM_ACC_SUBSET_OEBS"/>
+<xsd:enumeration value="ILM_ACC_SUBSET_PEOPLESOFT"/>
+<xsd:enumeration value="ILM_ACC_SUBSET_SIEBEL"/>
+<xsd:enumeration value="ILM_ACC_SUBSET_JDE"/>
+<xsd:enumeration value="ILM_ACC_SUBSET_AMDOCS"/>
+<xsd:enumeration value="ILM_ACC_SUBSET_SAP"/>
+<xsd:enumeration value="ILM_ACC_PDM_OEBS"/>
+<xsd:enumeration value="ILM_ACC_PDM_PEOPLESOFT"/>
+<xsd:enumeration value="ILM_ACC_PDM_SIEBEL"/>
+<xsd:enumeration value="ILM_ACC_PDM_JDE"/>
+<xsd:enumeration value="ILM_ACC_PDM_AMDOCS"/>
+<xsd:enumeration value="ILM_ACC_PDM_SAP"/>
+<xsd:enumeration value="ILM_ACC_DDM_OEBS"/>
+<xsd:enumeration value="ILM_ACC_DDM_PEOPLESOFT"/>
+<xsd:enumeration value="ILM_ACC_DDM_SIEBEL"/>
+<xsd:enumeration value="ILM_ACC_DDM_JDE"/>
+<xsd:enumeration value="ILM_ACC_DDM_AMDOCS"/>
+<xsd:enumeration value="ILM_ACC_DDM_SAP"/>
+<xsd:enumeration value="ILM_ACC_HEALTHCARE_RETIREMENT"/>
+<xsd:enumeration value="ILM_ACC_OEBS_RETIREMENT"/>
+<xsd:enumeration value="ILM_ACC_JDE_RETIREMENT"/>
+<xsd:enumeration value="ILM_ACC_PSFT_RETIREMENT"/>
+<xsd:enumeration value="ILM_ARCHIVE_BRIDGE_CENTERA"/>
+<xsd:enumeration value="ILM_ARCHIVE_BRIDGE_HCP"/>
+<xsd:enumeration value="ILM_ARCHIVE_BRIDGE_SYMANTEC"/>
+<xsd:enumeration value="ILM_ARCHIVE_BRIDGE_ATMOS"/>
+<xsd:enumeration value="ILM_ARCHIVE_BRIDGE_XDB"/>
+<xsd:enumeration value="ILM_ARCHIVE_BRIDGE_COMMVAULT"/>
+<xsd:enumeration value="ILM_ARCHIVE_BRIDGE_OPENTEXT"/>
+<xsd:enumeration value="ILM_ARCHIVE_BRIDGE_HDFS"/>
+<xsd:enumeration value="ILM_LICENSE_BIT_1"/>
+<xsd:enumeration value="ILM_LICENSE_BIT_2"/>
+<xsd:enumeration value="ILM_LICENSE_BIT_3"/>
+<xsd:enumeration value="ILM_LICENSE_BIT_4"/>
+<xsd:enumeration value="ILM_LICENSE_BIT_5"/>
+<xsd:enumeration value="OPT_MAPPING_SPEC_PROFILING"/>
+<xsd:enumeration value="OPT_MAPPING_SPEC_EXPORT"/>
+<xsd:enumeration value="IDC"/>
+<xsd:enumeration value="AL3"/>
+<xsd:enumeration value="OPT_DATA_ARCHIVE"/>
+<xsd:enumeration value="OPT_DATA_SUBSET"/>
+<xsd:enumeration value="OPT_DATA_PRIVACY"/>
+<xsd:enumeration value="OPT_ARCHIVE_BRIDGE"/>
+<xsd:enumeration value="ACCELERATOR_PEOPLESOFT"/>
+<xsd:enumeration value="ACCELERATOR_SIEBEL"/>
+<xsd:enumeration value="ACCELERATOR_DELTEK"/>
+<xsd:enumeration value="ACCELERATOR_CUSTOM_APPS"/>
+<xsd:enumeration value="OPT_DYNAMIC_DATA_MASKING"/>
+<xsd:enumeration value="OPT_PARTITION_ARCHIVE"/>
+<xsd:enumeration value="OPT_FILE_ARCHIVE_SERVICE"/>
+<xsd:enumeration value="OPT_FILE_ARCHIVE_SERVICE_ODBC"/>
+<xsd:enumeration value="OPT_NEARLINE_FOR_SAP_BW"/>
+<xsd:enumeration value="EXEC_HADOOP"/>
+<xsd:enumeration value="DT_HADOOP"/>
+<xsd:enumeration value="IDV_BASIC"/>
+<xsd:enumeration value="IDV_ENTERPRISE"/>
+<xsd:enumeration value="ILM_ACC_ARCHIVE_PSFT_HRMS"/>
+<xsd:enumeration value="ILM_ACC_ARCHIVE_PSFT_FSCM"/>
+<xsd:enumeration value="ILM_ACC_ARCHIVE_PSFT_CRM"/>
+<xsd:enumeration value="ILM_ACC_ARCHIVE_AMDOCS_CRM"/>
+<xsd:enumeration value="ILM_ACC_ARCHIVE_AMDOCS_BILL"/>
+<xsd:enumeration value="MDM"/>
+<xsd:enumeration value="IDQ_NLP"/>
+<xsd:enumeration value="WORKFLOW_RECOVERY"/>
+<xsd:enumeration value="WORKFLOW_AUTO_RECOVERY"/>
+<xsd:enumeration value="HIX"/>
+<xsd:enumeration value="DT_MRS_UNLIMITED"/>
+<xsd:enumeration value="DT_MRS_LIMIT_5DP"/>
+<xsd:enumeration value="OPT_MRS_HA_FAILOVER"/>
+<xsd:enumeration value="OPT_DIS_HA_FAILOVER"/>
+<xsd:enumeration value="OPT_ILM_TEST_DATA_GENERATION"/>
+<xsd:enumeration value="OPT_ILM_TEST_DATA_WAREHOUSE"/>
+<xsd:enumeration value="OPT_ILM_TEST_TOOL_INTEGRATION"/>
+<xsd:enumeration value="OPT_ILM_DATA_RISK_ANALZYER"/>
+<xsd:enumeration value="OPT_DISCOVERY_AND_SEARCH"/>
+<xsd:enumeration value="OPT_RESILIENCY_CORE_PLATFORM"/>
+<xsd:enumeration value="B2B_ISD"/>
+<xsd:enumeration value="OPT_DATAMASKING_FOR_BIGDATA"/>
+<xsd:enumeration value="OPT_DATAGENERATION"/>
+<xsd:enumeration value="OPT_PDM_FOR_HADOOP"/>
+<xsd:enumeration value="OPT_TDM_FOR_HADOOP"/>
+<xsd:enumeration value="OPT_SUBSET_FOR_HADOOP"/>
+<xsd:enumeration value="OPT_TDG_FOR_HADOOP"/>
+<xsd:enumeration value="IDQ_UNIVERSAL_ID"/>
+<xsd:enumeration value="IDQ_RULE_BUILDER"/>
+<xsd:enumeration value="DT_MRS_LIMIT_15DP"/>
+<xsd:enumeration value="OPT_PARTITION_CORE_PLATFORM"/>
+<xsd:enumeration value="OPT_BUSINESS_GLOSSARY"/>
+<xsd:enumeration value="GDSN"/>
+<xsd:enumeration value="GDSN_VERTICALCONTENT"/>
+<xsd:enumeration value="CONNECT_DB2"/>
+<xsd:enumeration value="CONNECT_INFORMIX"/>
+<xsd:enumeration value="CONNECT_MICROSOFT_SQL_SERVER"/>
+<xsd:enumeration value="CONNECT_ODBC"/>
+<xsd:enumeration value="CONNECT_ORACLE"/>
+<xsd:enumeration value="CONNECT_SYBASE"/>
+<xsd:enumeration value="CONNECT_TERADATA"/>
+<xsd:enumeration value="POWER_DB2_OLAP"/>
+<xsd:enumeration value="POWER_EMAIL"/>
+<xsd:enumeration value="POWER_EMAIL_RT"/>
+<xsd:enumeration value="POWER_HYPERION_ESSBASE"/>
+<xsd:enumeration value="POWER_IBM_LOTUS_NOTES"/>
+<xsd:enumeration value="POWER_IBM_MQ_SERIES_RT"/>
+<xsd:enumeration value="POWER_JD_EDWARDS_ONEWORLD"/>
+<xsd:enumeration value="POWER_JD_EDWARDS_WORLD"/>
+<xsd:enumeration value="POWER_JDBC"/>
+<xsd:enumeration value="POWER_JMS_RT"/>
+<xsd:enumeration value="POWER_LDAP"/>
+<xsd:enumeration value="POWER_MICROSOFT_MQ_RT"/>
+<xsd:enumeration value="POWER_NETEZZA"/>
+<xsd:enumeration value="POWER_ORACLE_EBUS_SUITE"/>
+<xsd:enumeration value="POWER_ORACLE_OLAP"/>
+<xsd:enumeration value="POWER_PEOPLESOFT"/>
+<xsd:enumeration value="POWER_POWER_EXCHANGE_RT"/>
+<xsd:enumeration value="POWER_SALESFORCE"/>
+<xsd:enumeration value="POWER_SAP_NETWEAVER_BW"/>
+<xsd:enumeration value="POWER_SAP_NETWEAVER_BW_RT"/>
+<xsd:enumeration value="POWER_SAP_NETWEAVER_MYSAP"/>
+<xsd:enumeration value="POWER_SAP_NETWEAVER_MYSAP_RT"/>
+<xsd:enumeration value="POWER_SAS"/>
+<xsd:enumeration value="POWER_SIEBEL"/>
+<xsd:enumeration value="POWER_TIBCO_RT"/>
+<xsd:enumeration value="POWER_WEB_METHODS_RT"/>
+<xsd:enumeration value="POWER_WEB_SERVICES_RT"/>
+<xsd:enumeration value="POWER_WEB_SERVICES_PROVIDER"/>
+<xsd:enumeration value="POWER_WEB_SERVICES_PROVIDER_RT"/>
+<xsd:enumeration value="POWERCHANNEL"/>
+<xsd:enumeration value="POWER_HPNEOVIEW_DB"/>
+<xsd:enumeration value="POWER_RIGHTNOW"/>
+<xsd:enumeration value="POWER_TERADATA_DUALLOAD"/>
+<xsd:enumeration value="POWER_MSD_CRM"/>
+<xsd:enumeration value="POWER_HDFS"/>
+<xsd:enumeration value="POWER_NETSUITE"/>
+<xsd:enumeration value="POWER_OCOD"/>
+<xsd:enumeration value="POWER_FACEBOOK"/>
+<xsd:enumeration value="POWER_LINKEDIN"/>
+<xsd:enumeration value="POWER_TWITTER"/>
+<xsd:enumeration value="POWER_UM"/>
+<xsd:enumeration value="POWER_KAPOW"/>
+<xsd:enumeration value="POWER_GREENPLUM"/>
+<xsd:enumeration value="PWX_HIVE_PC"/>
+<xsd:enumeration value="PWX_HIVE_MER"/>
+<xsd:enumeration value="PWX_DATASIFT"/>
+<xsd:enumeration value="PWX_SALESFORCE_ANALYTICS"/>
+<xsd:enumeration value="PWX_ODATA"/>
+<xsd:enumeration value="POWER_HBASE"/>
+<xsd:enumeration value="PWX_JDBC"/>
+<xsd:enumeration value="POWER_MONGODB"/>
+<xsd:enumeration value="POWER_CASSANDRA"/>
+<xsd:enumeration value="POWER_REDSHIFT"/>
+<xsd:enumeration value="POWER_WORKDAY"/>
+<xsd:enumeration value="POWER_ILM_DATA_VAULT"/>
+<xsd:enumeration value="PWX_TABLEAU"/>
+<xsd:enumeration value="PWX_VERTICA"/>
+<xsd:enumeration value="PWX_AMAZON_S3"/>
+<xsd:enumeration value="PWX_DYNAMODB"/>
+<xsd:enumeration value="PWX_AZUREDW"/>
+<xsd:enumeration value="PWX_AZURE_BLOB"/>
+<xsd:enumeration value="PWX_AZURE_DATA_LAKE"/>
+<xsd:enumeration value="PWX_AZURE_DOCUMENTDB"/>
+<xsd:enumeration value="PWX_AZURE_TABLE_STORAGE"/>
+<xsd:enumeration value="PWX_AZURE_POWERBI"/>
+<xsd:enumeration value="PWX_AZURE_EVENT_HUB"/>
+<xsd:enumeration value="PWX_FOR_SQOOP"/>
+<xsd:enumeration value="PWX_AMAZON_AURORA"/>
+<xsd:enumeration value="PWX_ICS_CAAS"/>
+<xsd:enumeration value="PWX_MapRDB"/>
+<xsd:enumeration value="PWX_ADLS"/>
+<xsd:enumeration value="PWX_SNOWFLAKE"/>
+<xsd:enumeration value="PWX_CORE_PC_HIVE_ODBC"/>
+<xsd:enumeration value="PWX_GOOGLE_CLOUD_SPANNER"/>
+<xsd:enumeration value="PWX_FOR_GOOGLE_ANALYTICS"/>
+<xsd:enumeration value="PWX_GOOGLE_CLD_STORAGE"/>
+<xsd:enumeration value="PWX_FOR_GOOGLE_BIG_QUERY"/>
+<xsd:enumeration value="POWER_AZURE_SQLDB"/>
+<xsd:enumeration value="POWER_DASH_DB"/>
+<xsd:enumeration value="POWER_POSTGRES"/>
+<xsd:enumeration value="POWER_AURORA_MYSQL"/>
+<xsd:enumeration value="POWER_AURORA_POSTGRES"/>
+<xsd:enumeration value="POWER_AMAZON_ATHENA"/>
+<xsd:enumeration value="POWER_AMAZON_REDSHIFT_SPECT"/>
+<xsd:enumeration value="POWER_COUCHBASE_DB"/>
+<xsd:enumeration value="POWER_TERADATA_QUERY_GRID"/>
+<xsd:enumeration value="POWER_KUDU"/>
+<xsd:enumeration value="POWER_IMPALA"/>
+<xsd:enumeration value="POWER_MS_DYNAMICS_365_SALES"/>
+<xsd:enumeration value="POWER_SFDC_PARDOT"/>
+<xsd:enumeration value="POWER_COMMERCE_CLOUD"/>
+<xsd:enumeration value="POWER_SFDC_EVENTING"/>
+<xsd:enumeration value="POWER_SFDC_SOCIAL_STUDIO"/>
+<xsd:enumeration value="POWER_ELOQUA"/>
+<xsd:enumeration value="POWER_TALEO"/>
+<xsd:enumeration value="POWER_POWER_BI"/>
+<xsd:enumeration value="POWER_GOOGLE_PUB_SUB"/>
+<xsd:enumeration value="POWER_BIG_MACHINE"/>
+<xsd:enumeration value="POWER_MS_GREAT_PLAINS"/>
+<xsd:enumeration value="POWER_MS_SHAREPOINT"/>
+<xsd:enumeration value="POWER_MS_DYNAMICS_NAV"/>
+<xsd:enumeration value="POWER_SAP_SUCCESFACTORS"/>
+<xsd:enumeration value="POWER_SUGAR_CRM"/>
+<xsd:enumeration value="POWER_ZENDESK"/>
+<xsd:enumeration value="POWER_SAP_C4C"/>
+<xsd:enumeration value="POWER_MARKETO"/>
+<xsd:enumeration value="POWER_DROPBOX"/>
+<xsd:enumeration value="POWER_BOX"/>
+<xsd:enumeration value="POWER_COSMOS_DB_SQL_API"/>
+<xsd:enumeration value="PWX_QLIK"/>
+<xsd:enumeration value="POWER_KAFKA"/>
+<xsd:enumeration value="POWER_HANA"/>
+<xsd:enumeration value="IIS_AZURE_EVENTHUB_CONN"/>
+<xsd:enumeration value="IIS_AZURE_DATALAKE_CONN"/>
+<xsd:enumeration value="IIS_REL_DB_CONN"/>
+<xsd:enumeration value="IIS_CONFLUENT_KAFKA_CONN"/>
+<xsd:enumeration value="EDC_ADVANCED_SCANNERS"/>
+<xsd:enumeration value="PWX_ADLSGen2"/>
+<xsd:enumeration value="PWX_DB2WAREHOUSE"/>
+<xsd:enumeration value="PWX_DATABRICKS_DELTALAKE"/>
+<xsd:enumeration value="PWX_BLOCKCHAIN"/>
+<xsd:enumeration value="PWX_JDBC_V2"/>
+<xsd:enumeration value="PWX_MAINFRAME"/>
+<xsd:enumeration value="OPT_RULE_POINT"/>
+<xsd:enumeration value="MX_BUSINESS_OBJECTS_DESIGNER"/>
+<xsd:enumeration value="MX_CA_ALLFUSION_GEN"/>
+<xsd:enumeration value="MX_COGNOS_IMPROMPTU"/>
+<xsd:enumeration value="MX_COGNOS_REPORT_NET"/>
+<xsd:enumeration value="MX_CWM_XMI"/>
+<xsd:enumeration value="MX_ERSTUDIO"/>
+<xsd:enumeration value="MX_ERWIN"/>
+<xsd:enumeration value="MX_DB2_CUBE_VIEWS"/>
+<xsd:enumeration value="MX_DB2_ON_MAINFRAME"/>
+<xsd:enumeration value="MX_DB2_UDB"/>
+<xsd:enumeration value="MX_HYPERION_ESS_INT_SERVICES"/>
+<xsd:enumeration value="MX_IBM_RATIONAL_ROSE"/>
+<xsd:enumeration value="MX_INFORMIX"/>
+<xsd:enumeration value="MX_MICROSOFT_VISIO"/>
+<xsd:enumeration value="MX_MICROSTRATEGY"/>
+<xsd:enumeration value="MX_ORACLE"/>
+<xsd:enumeration value="MX_ORACLE_DESIGNER"/>
+<xsd:enumeration value="MX_ORACLE_WAREHOUSE_BUILDER"/>
+<xsd:enumeration value="MX_POPKIN_SYSTEM_ARCHITECT"/>
+<xsd:enumeration value="MX_SAP_R3"/>
+<xsd:enumeration value="MX_SELECT_SE"/>
+<xsd:enumeration value="MX_SILVERRUN_RDM"/>
+<xsd:enumeration value="MX_SQL_SERVER"/>
+<xsd:enumeration value="MX_SYBASE_ASE"/>
+<xsd:enumeration value="MX_SYBASE_POWER_DESIGNER"/>
+<xsd:enumeration value="MX_TERADATA"/>
+<xsd:enumeration value="MX_NETEZZA"/>
+<xsd:enumeration value="MX_MSSQL_SSAS"/>
+<xsd:enumeration value="MX_ORACLE_BI_ENTERPRISE"/>
+<xsd:enumeration value="MX_JDBC"/>
+<xsd:enumeration value="MX_SAP_BW"/>
+<xsd:enumeration value="MX_INFORMATICA_PLATFORM"/>
+<xsd:enumeration value="MX_CLOUDERA_NAVIGATOR"/>
+<xsd:enumeration value="MX_SSIS"/>
+<xsd:enumeration value="MX_SASBI"/>
+<xsd:enumeration value="MX_TABLEAU"/>
+<xsd:enumeration value="MX_UNIVERSAL_MITI"/>
+<xsd:enumeration value="SCAN_SNOWFLAKE_SP"/>
+<xsd:enumeration value="SCAN_POSTGRESQL_SP"/>
+<xsd:enumeration value="SCAN_GREENPLUM_SP"/>
+<xsd:enumeration value="SCAN_REDSHIFT_SP"/>
+<xsd:enumeration value="SCAN_SAPHANADB_SP"/>
+<xsd:enumeration value="SCAN_MYSQL_SP"/>
+<xsd:enumeration value="SCAN_SYBASE_SP"/>
+<xsd:enumeration value="SCAN_HIVEQL"/>
+<xsd:enumeration value="SCAN_BODS"/>
+<xsd:enumeration value="SCAN_TALEND_DI"/>
+<xsd:enumeration value="SCAN_AZURE_DATA_FACTORY"/>
+<xsd:enumeration value="SCAN_DATABRICKS_NOTEBOOKS"/>
+<xsd:enumeration value="SCAN_POWERCENTER_V2"/>
+<xsd:enumeration value="SCAN_POWERBI_V2"/>
+<xsd:enumeration value="SCAN_SNOWFLAKE_V2"/>
+<xsd:enumeration value="SCAN_AZURESQLDB"/>
+<xsd:enumeration value="SCAN_AZURESQLDW"/>
+<xsd:enumeration value="SCAN_CUST_METADATA_LOADER"/>
+<xsd:enumeration value="SCAN_DATASTAGE"/>
+<xsd:enumeration value="SCAN_ODI"/>
+<xsd:enumeration value="SCAN_SSIS"/>
+<xsd:enumeration value="SCAN_SAP_BW"/>
+<xsd:enumeration value="SCAN_SAP_BW4HANA"/>
+<xsd:enumeration value="SCAN_ORA_SP"/>
+<xsd:enumeration value="SCAN_MSSQL_SP"/>
+<xsd:enumeration value="SCAN_DB2_SP"/>
+<xsd:enumeration value="SCAN_TERADATA_SP"/>
+<xsd:enumeration value="SCAN_NETEZZA_SP"/>
+<xsd:enumeration value="SCAN_COBOL"/>
+<xsd:enumeration value="SCAN_JCL"/>
+<xsd:enumeration value="SCAN_SAS"/>
+<xsd:enumeration value="SCAN_SAP_ECC_S4HANA"/>
+<xsd:enumeration value="SCAN_SSRS"/>
+<xsd:enumeration value="SCAN_SSAS"/>
+<xsd:enumeration value="SCAN_IICS_CDI_V2"/>
+<xsd:enumeration value="SCAN_SALESFORCE_V2"/>
+<xsd:enumeration value="FLAG_ENFORCE_CPUS"/>
+<xsd:enumeration value="FLAG_ENFORCE_NAMED_MM_USERS"/>
+<xsd:enumeration value="FLAG_ENFORCE_CONCUR_MM_USERS"/>
+<xsd:enumeration value="DEPLOYMENT_DEVELOPMENT"/>
+<xsd:enumeration value="DEPLOYMENT_PRODUCTION"/>
+<xsd:enumeration value="DISTRIBUTOR_GENERIC"/>
+<xsd:enumeration value="DISTRIBUTOR_INFA"/>
+<xsd:enumeration value="DISTRIBUTOR_I2"/>
+<xsd:enumeration value="DISTRIBUTOR_IDN"/>
+<xsd:enumeration value="DISTRIBUTOR_SIEBEL"/>
+<xsd:enumeration value="EDITION_STANDARD"/>
+<xsd:enumeration value="EDITION_ADVANCED"/>
+<xsd:enumeration value="EDITION_REALTIME"/>
+<xsd:enumeration value="EDITION_DV"/>
+<xsd:enumeration value="EDITION_BD"/>
+<xsd:enumeration value="EDITION_DILITE"/>
+<xsd:enumeration value="EDITION_PCPREMIUM"/>
+<xsd:enumeration value="EDITION_DQSTANDARD"/>
+<xsd:enumeration value="EDITION_DQBIGDATA"/>
+<xsd:enumeration value="EDITION_DQADVANCED"/>
+<xsd:enumeration value="EDITION_DQGOVERNANCE"/>
+<xsd:enumeration value="EDITION_VIBE"/>
+<xsd:enumeration value="EDITION_SECURE_AT_SOURCE"/>
+<xsd:enumeration value="EDITION_BIGDATA_ENTERPRISE"/>
+<xsd:enumeration value="EDITION_BIGDATA_PREMIUM"/>
+<xsd:enumeration value="EDITION_BIGDATA_ADVANCED"/>
+<xsd:enumeration value="EDITION_IDL_STANDARD"/>
+<xsd:enumeration value="EDITION_EIC_STANDARD"/>
+<xsd:enumeration value="EDITION_EIC_PROMO"/>
+<xsd:enumeration value="EDITION_SATS_DATA_PRIVACY"/>
+<xsd:enumeration value="EDITION_SATS_DATA_PROTECT"/>
+<xsd:enumeration value="EDITION_FULL_SATS"/>
+<xsd:enumeration value="LICENSE_KEY_ORIGINAL"/>
+<xsd:enumeration value="LICENSE_KEY_INCREMENTAL"/>
+<xsd:enumeration value="OS_ALL"/>
+<xsd:enumeration value="OS_AIX32"/>
+<xsd:enumeration value="OS_AIX64"/>
+<xsd:enumeration value="OS_HPUX32"/>
+<xsd:enumeration value="OS_HPUXIPF64"/>
+<xsd:enumeration value="OS_LINUX32"/>
+<xsd:enumeration value="OS_LINUX64"/>
+<xsd:enumeration value="OS_SOLARIS32"/>
+<xsd:enumeration value="OS_SOLARIS64"/>
+<xsd:enumeration value="OS_WINDOWS32"/>
+<xsd:enumeration value="OS_WINDOWS64"/>
+<xsd:enumeration value="OS_HPUXPARISC64"/>
+<xsd:enumeration value="OS_ZOS"/>
+<xsd:enumeration value="VALIDITY_BETA"/>
+<xsd:enumeration value="VALIDITY_CUSTOM"/>
+<xsd:enumeration value="VALIDITY_IDN"/>
+<xsd:enumeration value="VALIDITY_NON_EXPIRY"/>
+<xsd:enumeration value="VALIDITY_POC"/>
+<xsd:enumeration value="REL_MAINFRAME_DB_COUNT"/>
+<xsd:enumeration value="REL_DIST_DB_COUNT"/>
+<xsd:enumeration value="RULEPOINT_VOLUME"/>
+<xsd:enumeration value="OPT_DL_SERVICE"/>
+<xsd:enumeration value="OPT_MRS_TEAM_BASED_DEV"/>
+<xsd:enumeration value="SATS_HADOOP_COUNT"/>
+<xsd:enumeration value="SATS_CLOUD_COUNT"/>
+<xsd:enumeration value="SATS_FILE_SERVERS_COUNT"/>
+<xsd:enumeration value="EIC_MDATA_SRC_COUNT"/>
+<xsd:enumeration value="FLAG_IDL_USERS"/>
+<xsd:enumeration value="DEI_DATABRICKS_NODES"/>
+<xsd:enumeration value="DEI_DATABRICKS_HOURS"/>
+<xsd:enumeration value="DEI_NODE_INSTANCE_TYPE"/>
+<xsd:enumeration value="OPT_ADVANCED_ANALYTICS"/>
+<xsd:enumeration value="OPT_CATALOG_SERVICE"/>
+<xsd:enumeration value="DS_DATA_ENCRYPTION"/>
+<xsd:enumeration value="TDM_SELF_SERVICE_PORTAL"/>
+<xsd:enumeration value="DS_DATA_ENCRYPTION_HADOOP"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="LoptMsgModelWrapper">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="licenceOption" type="licensing:LoptMsgModel"/>
+</xsd:complexType>
+<xsd:element name="LoptMsgModelWrapper" type="licensing:LoptMsgModelWrapper"/>
+<xsd:complexType name="ConnectivityUsageParam">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="serviceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sources" type="imx:idrefs"/>
+<xsd:attribute name="targets" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConnectivityUsageParam" type="licensing:ConnectivityUsageParam"/>
+<xsd:complexType name="ConnectivityUsageParamItem">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="connectivityUsageParam" type="imx:idrefs"/>
+<xsd:attribute name="databaseType" type="licensing1:DatabaseType"/>
+<xsd:attribute name="numberOfUses" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConnectivityUsageParamItem" type="licensing:ConnectivityUsageParamItem"/>
+<xsd:complexType name="LicenseLocate">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="license" type="imx:idref"/>
+<xsd:attribute name="parentPath">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LicenseLocate" type="licensing:LicenseLocate"/>
+<xsd:complexType name="UsageSummaryReportParameter">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="deployment">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="edition">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="from" type="xsd:long"/>
+<xsd:attribute name="licenseName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="to" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UsageSummaryReportParameter" type="licensing:UsageSummaryReportParameter"/>
+<xsd:complexType name="LicenseInfos">
+<xsd:complexContent>
+<xsd:extension base="licensing1:LicenseFeatures">
+<xsd:annotation>
+<xsd:documentation> Going forward we will use this model to send any License related information to clients
+ @author nupaman
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="miscellaneousInfo">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LicenseParameter" type="licensing:LicenseParameter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LicenseInfos" type="licensing:LicenseInfos"/>
+</xsd:schema>

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.transformation/3" xmlns:adapter="http://com.informatica.metadata.common.adapter/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:datahandler="http://com.informatica.metadata.common.datahandler/2" xmlns:imx="http://com.informatica.imx" xmlns:output="http://com.informatica.metadata.common.output/1" xmlns:parameter="http://com.informatica.metadata.common.parameter/9" xmlns:transformation="http://com.informatica.metadata.common.transformation/3" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:udf="http://com.informatica.metadata.common.udf/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.transformation/3">
+<xsd:import namespace="http://com.informatica.metadata.common.output/1" schemaLocation="com.informatica.metadata.common.output.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.adapter/2" schemaLocation="com.informatica.metadata.common.adapter.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.udf/2" schemaLocation="com.informatica.metadata.common.udf.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.parameter/9" schemaLocation="com.informatica.metadata.common.parameter.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.datahandler/2" schemaLocation="com.informatica.metadata.common.datahandler.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n 2.6.0	rsindhu		8/21/2013    Added Expression and Parameterizable \n 										annotation to expression in DerivableField\n\n 2.7.0    jmaurice    4 Sept 2013  Added another enum value (processPartitionable) \n                                      to PartitioningKind \n\n 2.8.0   amanjrek    3-Dec-2014   Added TransformationFieldRef and GeneratedFieldRef models for Next Gen Mapping\n \n 2.9.0   yqiu			6-Mar-2015	Added Field Selector to the AbstractTransformation model\n\n 3.0.0   rsindhu     20-Mar-2015  Moved OutputExpression in this package\n \n 3.1.0   risndhu     20-Mar-2015  Added list of predefined outputs in TransformationConfiguration\n \n 3.2.0   risndhu     09-June-2015  Making list of predefined outputs contained in TransformationConfiguration\n \n 3.3.0   kgupta      01-Sep-2016  Added GeneratedFieldStructuralFieldRef, SortField &amp; SortFieldList models\n \n 3.4.0   vcr         11-Jun-2018  Making expression property in DerivableField substitutable (parameterizable)\n \n 3.5.0   vcr         30-Jul-2018  Making expression property in OutputExpression substitutable (parameterizable)\n\n 3.6.0   jjose       07-Oct-2019 Modify variableFnTypeUsable property in AbstractTransformation as non-final\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="FieldSelectorScope">
+<xsd:annotation>
+<xsd:documentation> Defines the scope of a FieldSelector
+ @author David Qiu  yqiu@informatica.com 
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:simpleType name="LanguageKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="java"/>
+<xsd:enumeration value="c"/>
+<xsd:enumeration value="cpp"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="OrderingKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="neverSame"/>
+<xsd:enumeration value="inputDependent"/>
+<xsd:enumeration value="alwaysSame"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="OutputExpression">
+<xsd:annotation>
+<xsd:documentation> Model to set mapping output value through an expression using transformation fields(input or variable) or through a transformation input/variable field.
+ Semantically either expression or field property will be set to contribute to an output at an instance level.
+ @author kdhuria
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="expression">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="field" type="imx:idref"/>
+<xsd:attribute name="output" type="imx:idref"/>
+<xsd:attribute name="expression." type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="OutputExpression" type="transformation:OutputExpression"/>
+<xsd:complexType name="OutputStat">
+<xsd:annotation>
+<xsd:documentation> Metadata that indicates what particular stat value will be coming out of a transformation 
+ via the LDTM's statistics mechanism
+ 
+ @author jchow
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="OutputStat" type="transformation:OutputStat"/>
+<xsd:simpleType name="PartitioningKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="notPartitionable"/>
+<xsd:enumeration value="locallyPartitionable"/>
+<xsd:enumeration value="gridPartitionable"/>
+<xsd:enumeration value="processPartitionable"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="SeededOutputStatsContainer">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="stats">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OutputStat" type="transformation:OutputStat"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="SeededOutputStatsContainer" type="transformation:SeededOutputStatsContainer"/>
+<xsd:complexType name="SortField">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="fieldRef" type="transformation:TransformationFieldRef"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="ascending" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="SortField" type="transformation:SortField"/>
+<xsd:complexType name="SortFieldList">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="fieldRefs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SortField" type="transformation:SortField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="SortFieldList" type="transformation:SortFieldList"/>
+<xsd:simpleType name="TracingLevelKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="terse"/>
+<xsd:enumeration value="normal"/>
+<xsd:enumeration value="verboseData"/>
+<xsd:enumeration value="verboseInit"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="TransformationConfiguration">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="implementedBy">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Library" type="adapter:Library"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="preDefinedOutputs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="PredefinedOutput" type="output:PredefinedOutput"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="active" type="xsd:boolean"/>
+<xsd:attribute name="className">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="functionName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="generateTransaction" type="xsd:boolean"/>
+<xsd:attribute name="inputBlockingMandatory" type="xsd:boolean"/>
+<xsd:attribute name="language" type="transformation:LanguageKind"/>
+<xsd:attribute name="logicalTransformationHandlerClassName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="moduleName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="outputDeterministic" type="xsd:boolean"/>
+<xsd:attribute name="outputOrdering" type="transformation:OrderingKind"/>
+<xsd:attribute name="partitioningType" type="transformation:PartitioningKind"/>
+<xsd:attribute name="pluginId" type="xsd:int"/>
+<xsd:attribute name="pluginName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="resetImplemented" type="xsd:boolean"/>
+<xsd:attribute name="runtimeLocation">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="scope" type="transformation:TransformationScope"/>
+<xsd:attribute name="threadPerPartition" type="xsd:boolean"/>
+<xsd:attribute name="transactionGenerated" type="xsd:boolean"/>
+<xsd:attribute name="updateStrategyImplemented" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="TransformationConfiguration" type="transformation:TransformationConfiguration"/>
+<xsd:complexType name="TransformationFieldList">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="fields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TransformationFieldRef" type="transformation:TransformationFieldRef"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="TransformationFieldList" type="transformation:TransformationFieldList"/>
+<xsd:simpleType name="TransformationScope">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="row"/>
+<xsd:enumeration value="transaction"/>
+<xsd:enumeration value="allInput"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="StructuralFeatureInfo">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:annotation>
+<xsd:documentation> @author vmoskovi
+ This class contains the information for a specific instance of a structural feature
+ The instance of the structural feature is indicated by a list of structural feature representing
+ the full path to the structural features (in order to support nested structural features).
+ 
+ Currently this class only includes only the default value for that instance.
+ 
+ NOTE: This is a temporary model class to support default values for transformations with field
+ of complex types (LookupTx, MappletInputTx, MappletOutputTx). This will likely change when 
+ we change the type system or when we support HDP.
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="defaultValue" type="types:Value"/>
+</xsd:choice>
+<xsd:attribute name="featurePath" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StructuralFeatureInfo" type="transformation:StructuralFeatureInfo"/>
+<xsd:complexType name="TransformationDataElementFieldSelectorScope">
+<xsd:complexContent>
+<xsd:extension base="transformation:FieldSelectorScope">
+<xsd:annotation>
+<xsd:documentation> FieldSelectorScope within a certain ComplexType
+ @author David Qiu  yqiu@informatica.com 
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="txField" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TransformationDataElementFieldSelectorScope" type="transformation:TransformationDataElementFieldSelectorScope"/>
+<xsd:complexType name="TransformationDataInterfaceFieldSelectorScope">
+<xsd:complexContent>
+<xsd:extension base="transformation:FieldSelectorScope">
+<xsd:annotation>
+<xsd:documentation> FieldSelectorScope within a certain TransformationDataInterface
+ @author David Qiu  yqiu@informatica.com 
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="txDataInterface" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TransformationDataInterfaceFieldSelectorScope" type="transformation:TransformationDataInterfaceFieldSelectorScope"/>
+<xsd:complexType name="TransformationFieldRef">
+<xsd:complexContent>
+<xsd:extension base="datahandler:DataElementRef">
+<xsd:attribute name="transformationField" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TransformationFieldRef" type="transformation:TransformationFieldRef"/>
+<xsd:complexType name="GeneratedFieldRef">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationFieldRef">
+<xsd:attribute name="fieldName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="GeneratedFieldRef" type="transformation:GeneratedFieldRef"/>
+<xsd:complexType name="TransformationFieldStructuralFeatureRef">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationFieldRef">
+<xsd:attribute name="feature" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TransformationFieldStructuralFeatureRef" type="transformation:TransformationFieldStructuralFeatureRef"/>
+<xsd:complexType abstract="true" name="AbstractTransformation">
+<xsd:complexContent>
+<xsd:extension base="datahandler:DataHandler">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="fieldSelectors">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="FieldSelector" type="transformation:FieldSelector"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="txInterfaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TransformationDataInterface" type="transformation:TransformationDataInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="udfDependencies">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="UDFRefCountDependency" type="udf:UDFRefCountDependency"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="userDefinedParameters">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="UserDefinedParameter" type="parameter:UserDefinedParameter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="active" type="xsd:boolean"/>
+<xsd:attribute name="aggregateFnTypeUsable" type="xsd:boolean"/>
+<xsd:attribute name="tracing" type="transformation:TracingLevelKind"/>
+<xsd:attribute name="transformationConfiguration" type="imx:idref"/>
+<xsd:attribute name="variableFnTypeUsable" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="TransformationDataInterface">
+<xsd:complexContent>
+<xsd:extension base="datahandler:DataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="txFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TransformationField" type="transformation:TransformationField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="input" type="xsd:boolean"/>
+<xsd:attribute name="output" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="TransformationField">
+<xsd:complexContent>
+<xsd:extension base="datahandler:DataElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="structuralFeatureInfos">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="StructuralFeatureInfo" type="transformation:StructuralFeatureInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="input" type="xsd:boolean"/>
+<xsd:attribute name="output" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="DerivableField">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField">
+<xsd:attribute name="expression">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="variable" type="xsd:boolean"/>
+<xsd:attribute name="expression." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DerivableField" type="transformation:DerivableField"/>
+<xsd:complexType name="FieldSelector">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField">
+<xsd:annotation>
+<xsd:documentation> Field selector constructs to specify an ordered list of ports via descriptive rules.  Rules supported in 10.0: 'by TYPE', 'by PATTERN', 'by NAMELIST'.
+ Defined within the scope of a single transformation.
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="selectionScope" type="transformation:FieldSelectorScope"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FieldSelector" type="transformation:FieldSelector"/>
+</xsd:schema>

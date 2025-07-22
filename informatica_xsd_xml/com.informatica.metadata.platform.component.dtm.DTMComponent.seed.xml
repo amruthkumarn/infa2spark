@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Informatica proprietary -->
+<imx:IMX xmlns:imx="http://com.informatica.imx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" serializationSpecVersion="14.0" crcEnabled="0" xmlns:core="http://com.informatica.metadata.common.core/2" versioncore="2.2.1" xmlns:component="http://com.informatica.metadata.common.component/2" versioncomponent="2.1.0" xmlns:adapter="http://com.informatica.metadata.common.adapter/2" versionadapter="2.2.0" xsi:schemaLocation="http://com.informatica.imx IMX.xsd http://com.informatica.metadata.common.core/2 com.informatica.metadata.common.core.xsd http://com.informatica.metadata.common.component/2 com.informatica.metadata.common.component.xsd http://com.informatica.metadata.common.adapter/2 com.informatica.metadata.common.adapter.xsd">
+<component:Component imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.component" name="DTM">
+<interfaces>
+<ComponentInterface imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.component%2FRead" xsi:type="component:ComponentInterface" name="Read" component="ID_1"/>
+<ComponentInterface imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.component%2FWrite" xsi:type="component:ComponentInterface" name="Write" component="ID_1"/>
+<ComponentInterface imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.component%2FFunctionValidate" xsi:type="component:ComponentInterface" name="FunctionValidate" component="ID_1"/>
+<ComponentInterface imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.component%2FFunctionRuntime" xsi:type="component:ComponentInterface" name="FunctionRuntime" component="ID_1"/>
+<ComponentInterface imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.component%2FTransformationValidate" xsi:type="component:ComponentInterface" name="TransformationValidate" component="ID_1"/>
+<ComponentInterface imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.component%2FTransformationUpgrade" xsi:type="component:ComponentInterface" name="TransformationUpgrade" component="ID_1"/>
+</interfaces>
+</component:Component>
+<adapter:DataAdapter imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.sdkReaderAdapter" name="sdkReaderAdapter" dsoType="com.informatica.metadata.sdk.sourcedataobject.SDKSourceDataObject" implementedCapabilities="ID_2" runtimeConfigClass="com.informatica.metadata.sdk.txhandlerconfig.source.SDKReaderConfig" version="1.0.0">
+<implementedBy>
+<Library imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.sdkReaderAdapter%2Flib1" xsi:type="adapter:Library" implementedCapabilities="ID_2" moduleName="mockrdr.dll"/>
+<Library imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.sdkReaderAdapter%2Flib2" xsi:type="adapter:Library" implementedCapabilities="ID_2" moduleName="libmockrdr.so" operatingSystem="LINUX_"/>
+<Library imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.sdkReaderAdapter%2Flib3" xsi:type="adapter:Library" implementedCapabilities="ID_2" moduleName="libmockrdr.a" operatingSystem="AIX_"/>
+<Library imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.sdkReaderAdapter%2Flib4" xsi:type="adapter:Library" implementedCapabilities="ID_2" moduleName="libmockrdr.so" operatingSystem="SOLARIS"/>
+<Library imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.sdkReaderAdapter%2Flib5" xsi:type="adapter:Library" implementedCapabilities="ID_2" moduleName="libmockrdr.sl" operatingSystem="HPUX"/>
+<Library imx:id="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.sdkReaderAdapter%2Flib6" xsi:type="adapter:Library" className="com.informatica.powercenter.sdk.samples.dtm.mock.MockReader_Plugin" implementedCapabilities="ID_2" operatingSystem="JAVA"/>
+</implementedBy>
+</adapter:DataAdapter>
+<imx:proxies>
+<proxy imx:id="ID_1" objectId="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.component" type="component:Component" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_2" objectId="smd:com.informatica.metadata.platform.component.dtm.DTMComponent.component%2FRead" type="component:ComponentInterface" xsi:type="imx:proxy"/>
+</imx:proxies>
+</imx:IMX>

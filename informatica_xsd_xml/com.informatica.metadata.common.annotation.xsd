@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.annotation/2" xmlns:annotation="http://com.informatica.metadata.common.annotation/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.annotation/2">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> 2.3.0	rsindhu		8/21/2013    Added Expression annotation\n 2.4.0	kdhuria		3/18/2015    Updated Parameterizable Annotation to have handler information\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="CppSerializeAsGeneric">
+<xsd:annotation>
+<xsd:documentation>Marks an annotated IMF model class to indicate:
+
+  1) It's a model extension that was generated using the XML-based utility that allows 3rd
+     parties to generate custom IMF model extensions
+     
+  2) There are no C++ IMF classes available so it requires translation into a generic, 
+     self-describing format before being serialised to the eDTM   
+ </xsd:documentation>
+</xsd:annotation>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute name="containerProperty">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="extensionPoint">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serializedExtensionClass">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="CppSerializeAsGeneric" type="annotation:CppSerializeAsGeneric"/>
+<xsd:complexType name="CppSerializeAsSuperClass">
+<xsd:annotation>
+<xsd:documentation>Marks an annotated IMF model class to indicate:
+
+  1) It's an empty (no properties) marker class used to classify a generic base 
+     class into a specific role (such as the DataObject for a specific adapter).
+     
+  2) There is no C++ IMF class available so it must be converted to its superclass 
+     before being serialised to the eDTM (these marker classes are generated off-site
+     by 3rd party developers using SDK tooling).  
+ </xsd:documentation>
+</xsd:annotation>
+<xsd:attribute ref="imx:id"/>
+</xsd:complexType>
+<xsd:element name="CppSerializeAsSuperClass" type="annotation:CppSerializeAsSuperClass"/>
+<xsd:complexType name="Expression">
+<xsd:annotation>
+<xsd:documentation> This annotation is applied to String type IProperty to specify the IProperty is an expression.
+ &lt;p&gt;
+
+ &lt;p&gt;
+ For example the following annotation declares its intent to mark the
+ property as expression
+
+ &lt;pre&gt;&lt;blockquote&gt;
+     &lt;literal&gt;@&lt;/literal&gt;Expression
+     java.lang.Sting expression;
+ &lt;/blockquote&gt;&lt;/pre&gt;
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute ref="imx:id"/>
+</xsd:complexType>
+<xsd:element name="Expression" type="annotation:Expression"/>
+<xsd:complexType name="GenericClass">
+<xsd:annotation>
+<xsd:documentation>Marks an annotated IMF model class to indicate:
+
+  1) It's a generic model which is converted from a extended class.
+
+
+ </xsd:documentation>
+</xsd:annotation>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute name="containerProperty">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="GenericClass" type="annotation:GenericClass"/>
+<xsd:complexType name="InvalidCharacters">
+<xsd:annotation>
+<xsd:documentation> User defined annotation to indicate all the invalid characters
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute name="characters">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="InvalidCharacters" type="annotation:InvalidCharacters"/>
+<xsd:complexType name="NameReference">
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute name="receivingPropertyName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="type">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="NameReference" type="annotation:NameReference"/>
+<xsd:complexType name="Parameterizable">
+<xsd:annotation>
+<xsd:documentation> This annotation is applied to String type IProperty to specify the IProperty can be parameterized.
+ &lt;p&gt;
+
+ &lt;p&gt;
+ For example the following annotation declares its intent to mark the 
+ property as parameterizable.
+
+ &lt;pre&gt;&lt;blockquote&gt;
+     &lt;literal&gt;@&lt;/literal&gt;Parameterizable
+     java.lang.String parameterizableProperty;
+ &lt;/blockquote&gt;&lt;/pre&gt;
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute name="handlerClassName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="Parameterizable" type="annotation:Parameterizable"/>
+<xsd:complexType name="ReservedKeywords">
+<xsd:annotation>
+<xsd:documentation> User defined annotation to indicate all the reserved keywords
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute name="keywords">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ReservedKeywords" type="annotation:ReservedKeywords"/>
+<xsd:complexType name="SerializeAsGenericClass">
+<xsd:annotation>
+<xsd:documentation>Marks an annotated IMF model class to indicate:
+
+  1) It's a model extension that was generated by custom plugins like adapters
+
+  2) There are no C++ IMF classes available so it requires translation into a generic class,
+     which extends from the same base class as the custom IMF class
+ </xsd:documentation>
+</xsd:annotation>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute name="genericClass">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SerializeAsGenericClass" type="annotation:SerializeAsGenericClass"/>
+</xsd:schema>

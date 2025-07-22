@@ -1,0 +1,15 @@
+#
+# Copyright (c) 2007 Informatica Corporation.  This file contains material
+# proprietary to Informatica Corporation and may not be copied or distributed
+# in any form without the written permission of Informatica Corporation.
+#
+
+##########################################################################
+#   This file is generated. Do not modify
+#   
+#   This file contains list of packages contained in library and can be used
+#   in automatic package registration
+#   
+##########################################################################
+
+com.informatica.isp.metadata.common, com.informatica.isp.interfaces.common, com.informatica.isp.interfaces.containerservice, com.informatica.isp.interfaces.containerservice.internal, com.informatica.isp.metadata.usermanagement, com.informatica.isp.metadata.domainconfigurationservice, com.informatica.isp.metadata.licensing, com.informatica.isp.metadata.logservice, com.informatica.isp.interfaces.monitoring, com.informatica.isp.interfaces.usermanagement, com.informatica.isp.metadata.alertservice, com.informatica.isp.metadata.cloudservice, com.informatica.isp.interfaces.alertservice, com.informatica.isp.interfaces.domainconfigurationservice, com.informatica.isp.metadata.domainservice, com.informatica.isp.interfaces.licensing, com.informatica.isp.interfaces.logservice, com.informatica.isp.metadata.monitoringservice, com.informatica.isp.runtime.common.broadcast, com.informatica.isp.interfaces.domainservice, com.informatica.isp.interfaces.usermanagement.sso = coremodels_cpp;

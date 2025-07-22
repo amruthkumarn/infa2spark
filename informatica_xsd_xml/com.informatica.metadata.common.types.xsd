@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.types/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.types/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nA frequently recurring pattern in metamodel development is the existing of two modeled classes, where instances of one class (the Type) serve as classifiers for instances of the other class (the TypedElement).  The purpose of this core abstraction is to provide extensible abstract classes which encapsulate the following abstractions:\n \n -- An abstract base class for classes that model classifiers: the Type abstraction\n -- An abstract base class for classes that model elements that define themselves by referencing a modeled classifier: the TypedElement abstraction\n -- Ab abstract base class for containers of Types: the TypeContainer abstraction\n \n  2.4.0 ahadzika 7/02/2017    added new Date type subclass\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="TypeConfig">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="Value">
+<xsd:annotation>
+<xsd:documentation> Represents a value that a typed element can take. Instances of this class must be used to represent default values, minimum values, maximum values, permited values and such.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="BooleanValue">
+<xsd:complexContent>
+<xsd:extension base="types:Value">
+<xsd:annotation>
+<xsd:documentation> Represents the boolean form of a value
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BooleanValue" type="types:BooleanValue"/>
+<xsd:complexType name="DateValue">
+<xsd:complexContent>
+<xsd:extension base="types:Value">
+<xsd:attribute name="dateValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DateValue" type="types:DateValue"/>
+<xsd:complexType name="GenericTypeConfig">
+<xsd:complexContent>
+<xsd:extension base="types:TypeConfig">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="typeAttrs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NameValuePair" type="types:NameValuePair"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="GenericTypeConfig" type="types:GenericTypeConfig"/>
+<xsd:complexType name="IntegerValue">
+<xsd:complexContent>
+<xsd:extension base="types:Value">
+<xsd:annotation>
+<xsd:documentation> Represents the integer form of a value
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="IntegerValue" type="types:IntegerValue"/>
+<xsd:complexType name="LongValue">
+<xsd:complexContent>
+<xsd:extension base="types:Value">
+<xsd:annotation>
+<xsd:documentation> Represents the long form of a value
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LongValue" type="types:LongValue"/>
+<xsd:complexType name="NameValuePair">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="value" type="types:Value"/>
+</xsd:choice>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NameValuePair" type="types:NameValuePair"/>
+<xsd:complexType name="ShortStringValue">
+<xsd:complexContent>
+<xsd:extension base="types:Value">
+<xsd:annotation>
+<xsd:documentation> Represents the string form of a value. This replicates the StringValue class but to hold smaller string lengths : 128 characters
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ShortStringValue" type="types:ShortStringValue"/>
+<xsd:complexType name="StringValue">
+<xsd:complexContent>
+<xsd:extension base="types:Value">
+<xsd:annotation>
+<xsd:documentation> Represents the string form of a value
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StringValue" type="types:StringValue"/>
+<xsd:complexType abstract="true" name="Type">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> A Type is a classifier that may be the target type of a TypedElement.  A TypedElement that references a Type implcitly imports some of its definition from the referenced Type.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="TypeContainer">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> TypeContainers are named containers for a collection of related Types.  TypeContainers are first class, so can exist without being contained by another object.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="types">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Type" type="types:Type"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="TypedElement">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> A TypedElement is any named element that is defined by its association with some Type.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="anonymousType" type="types:DerivedType"/>
+<xsd:element name="typeConfig" type="types:TypeConfig"/>
+</xsd:choice>
+<xsd:attribute name="type" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="DerivedType">
+<xsd:complexContent>
+<xsd:extension base="types:Type">
+<xsd:annotation>
+<xsd:documentation> A DerivedType is a hierarchical Type that has been constructed using Type abstractions from a "native" TypeContainer.
+ 
+ Two subclasses of DerivedType exist in the com.informatica.metadata.common.typesystem.typelibrary package.
+ -- The SimpleType subclass add precision and scale qualifiers to express a finite storage space.
+ -- ComplexType subclass is composed of typed StructuralFeatures, making it possible to express hierarchical data types.
+ 
+ TypedElements may contain the type that they use if that type is not re-usable.  A DerivedType used in this way is contained by TypedElement.anonymousType and is also referenced by TypedElement.type.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="baseType" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+</xsd:schema>

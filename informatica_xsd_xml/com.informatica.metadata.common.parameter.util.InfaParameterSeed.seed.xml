@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Informatica proprietary -->
+<imx:IMX xmlns:imx="http://com.informatica.imx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" serializationSpecVersion="14.0" crcEnabled="0" xmlns:modeledtypes="http://com.informatica.metadata.common.modeledtypes/1" versionmodeledtypes="1.0.0" xmlns:core="http://com.informatica.metadata.common.core/2" versioncore="2.2.1" xmlns:parameter="http://com.informatica.metadata.common.parameter/9" versionparameter="9.11.1" xmlns:description="http://com.informatica.metadata.common.description/2" versiondescription="2.1.0" xmlns:typesystem="http://com.informatica.metadata.common.typesystem/2" versiontypesystem="2.2.0" xsi:schemaLocation="http://com.informatica.imx IMX.xsd http://com.informatica.metadata.common.modeledtypes/1 com.informatica.metadata.common.modeledtypes.xsd http://com.informatica.metadata.common.core/2 com.informatica.metadata.common.core.xsd http://com.informatica.metadata.common.parameter/9 com.informatica.metadata.common.parameter.xsd http://com.informatica.metadata.common.description/2 com.informatica.metadata.common.description.xsd http://com.informatica.metadata.common.typesystem/2 com.informatica.metadata.common.typesystem.xsd">
+<parameter:ParameterContainer imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.seedContainer">
+<parameters>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.RunId" xsi:type="parameter:PredefinedParameter" name="RunId" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_2" xsi:type="description:Description" body="RunId"/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.CacheDir" xsi:type="parameter:PredefinedParameter" name="CacheDir" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_3" xsi:type="description:Description" body="Default+directory+for+index+and+data+cache+files."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.TempDir" xsi:type="parameter:PredefinedParameter" name="TempDir" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_4" xsi:type="description:Description" body="Default+directory+for+temporary+files."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.SourceDir" xsi:type="parameter:PredefinedParameter" name="SourceDir" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_5" xsi:type="description:Description" body="Default+directory+for+source+files."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.TargetDir" xsi:type="parameter:PredefinedParameter" name="TargetDir" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_6" xsi:type="description:Description" body="Default+directory+for+target+files."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.RejectDir" xsi:type="parameter:PredefinedParameter" name="RejectDir" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_7" xsi:type="description:Description" body="Default+directory+for+reject+files."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.LogDir" xsi:type="parameter:PredefinedParameter" name="LogDir" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_8" xsi:type="description:Description" body="Default+directory+for+mapping+task+log+files."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.StateStore" xsi:type="parameter:PredefinedParameter" name="StateStore" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_9" xsi:type="description:Description" body="Default+directory+for+state+store."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.ApplicationName" xsi:type="parameter:PredefinedParameter" name="ApplicationName" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_10" xsi:type="description:Description" body="Name+of+the+application."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.ServiceName" xsi:type="parameter:PredefinedParameter" name="ServiceName" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_11" xsi:type="description:Description" body="The+Data+Integration+Service+name."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.MappingName" xsi:type="parameter:PredefinedParameter" name="MappingName" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_12" xsi:type="description:Description" body="Name+of+the+mapping+that+is+running."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.UserName" xsi:type="parameter:PredefinedParameter" name="UserName" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_13" xsi:type="description:Description" body="Name+of+the+user+that+is+running+the+mapping."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.MappingRunStartTime" xsi:type="parameter:PredefinedParameter" name="MappingRunStartTime" precision="29" typeinfo="ID_14">
+<annotations>
+<Annotation imx:id="ID_15" xsi:type="description:Description" body="The+start+time+of+the+mapping+that+is+running."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.ExecutionEnvironment" xsi:type="parameter:PredefinedParameter" name="ExecutionEnvironment" precision="1024" typeinfo="ID_1">
+<annotations>
+<Annotation imx:id="ID_16" xsi:type="description:Description" body="Hadoop+or+Native+environment."/>
+</annotations>
+</PredefinedParameter>
+<PredefinedParameter imx:id="smd:com.informatica.metadata.common.parameter.util.InfaParameterSeed.AutoDeployConnection" xsi:type="parameter:PredefinedParameter" name="AutoDeployConnection" typeinfo="ID_17">
+<annotations>
+<Annotation imx:id="ID_18" xsi:type="description:Description" body="Auto+Deploy+connection+for+mapping."/>
+</annotations>
+</PredefinedParameter>
+</parameters>
+</parameter:ParameterContainer>
+<imx:proxies>
+<proxy imx:id="ID_1" objectId="smd:com.informatica.metadata.seed.platform.Platform.typesystem%2Fstring" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_14" objectId="smd:com.informatica.metadata.seed.platform.Platform.typesystem%2Fdate%2Ftime" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_17" objectId="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes%2FConnection" type="modeledtypes:ModeledType" xsi:type="imx:proxy"/>
+</imx:proxies>
+</imx:IMX>

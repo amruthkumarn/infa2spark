@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.state.common/0" xmlns:common="http://com.informatica.state.common/0" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.state.common/0">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> Copyright (c) 2013 Informatica Corporation. All rights reserved.\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="AbstractState">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> AbstractState model.
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="CounterState">
+<xsd:complexContent>
+<xsd:extension base="common:AbstractState">
+<xsd:annotation>
+<xsd:documentation> This is the base State object.
+
+ MODIFICATIONS
+ 0.2.0 sho 1/16/2013 Introduced the model
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CounterState" type="common:CounterState"/>
+</xsd:schema>

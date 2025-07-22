@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.folder/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:folder="http://com.informatica.metadata.common.folder/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.folder/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="Folder">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> A folder is a container of first class objects and it is a first class object itself. Note that a folder can contain first class objects, but first class objects need not be contained in a folder.
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="contents">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="IObject" type="xsd:anyType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Folder" type="folder:Folder"/>
+<xsd:complexType name="FolderReference">
+<xsd:complexContent>
+<xsd:extension base="core:ObjectReference">
+<xsd:annotation>
+<xsd:documentation> Any metadata object that has a name. All named elements can also have one or more descriptions.
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="folder" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FolderReference" type="folder:FolderReference"/>
+</xsd:schema>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.txhandlerconfig/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.txhandlerconfig/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType abstract="true" name="TxHandlerConfig">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:annotation>
+<xsd:documentation> This class carries the configuration metadata that handles a particular
+ transformation at runtime. Only partition-independent properties belong in
+ subclasses of this class.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="txInstance" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+</xsd:schema>

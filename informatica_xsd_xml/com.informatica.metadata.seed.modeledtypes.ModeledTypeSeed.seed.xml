@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Informatica proprietary -->
+<imx:IMX xmlns:imx="http://com.informatica.imx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" serializationSpecVersion="14.0" crcEnabled="0" xmlns:modeledtypes="http://com.informatica.metadata.common.modeledtypes/1" versionmodeledtypes="1.0.0" xmlns:core="http://com.informatica.metadata.common.core/2" versioncore="2.2.1" xmlns:types="http://com.informatica.metadata.common.types/2" versiontypes="2.4.0" xmlns:description="http://com.informatica.metadata.common.description/2" versiondescription="2.1.0" xsi:schemaLocation="http://com.informatica.imx IMX.xsd http://com.informatica.metadata.common.modeledtypes/1 com.informatica.metadata.common.modeledtypes.xsd http://com.informatica.metadata.common.core/2 com.informatica.metadata.common.core.xsd http://com.informatica.metadata.common.types/2 com.informatica.metadata.common.types.xsd http://com.informatica.metadata.common.description/2 com.informatica.metadata.common.description.xsd">
+<modeledtypes:ModeledTypeContainer imx:id="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes" name="ModeledType">
+<annotations>
+<Annotation imx:id="ID_1" xsi:type="description:Description" body="Modeled+Type+Container"/>
+</annotations>
+<modeledTypes>
+<ModeledType imx:id="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes%2FString" xsi:type="modeledtypes:ModeledType" name="String">
+<annotations>
+<Annotation imx:id="ID_2" xsi:type="description:Description" body="String+Type"/>
+</annotations>
+</ModeledType>
+<ModeledType imx:id="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes%2FLong" xsi:type="modeledtypes:ModeledType" name="Long">
+<annotations>
+<Annotation imx:id="ID_3" xsi:type="description:Description" body="Long+Type"/>
+</annotations>
+</ModeledType>
+<ModeledType imx:id="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes%2FBoolean" xsi:type="modeledtypes:ModeledType" name="Boolean">
+<annotations>
+<Annotation imx:id="ID_4" xsi:type="description:Description" body="Boolean+Type"/>
+</annotations>
+</ModeledType>
+<ModeledType imx:id="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes%2FDouble" xsi:type="modeledtypes:ModeledType" name="Double">
+<annotations>
+<Annotation imx:id="ID_5" xsi:type="description:Description" body="Double+Type"/>
+</annotations>
+</ModeledType>
+<ModeledType imx:id="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes%2FConnection" xsi:type="modeledtypes:ModeledType" name="Connection">
+<annotations>
+<Annotation imx:id="ID_6" xsi:type="description:Description" body="Connection+Type"/>
+</annotations>
+</ModeledType>
+<ModeledType imx:id="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes%2FPort" xsi:type="modeledtypes:ModeledType" name="Port">
+<annotations>
+<Annotation imx:id="ID_7" xsi:type="description:Description" body="Port+Type"/>
+</annotations>
+</ModeledType>
+<ModeledType imx:id="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes%2FResource" xsi:type="modeledtypes:ModeledType" name="Resource">
+<annotations>
+<Annotation imx:id="ID_8" xsi:type="description:Description" body="Resource+Type"/>
+</annotations>
+</ModeledType>
+<ModeledType imx:id="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes%2FExpression" xsi:type="modeledtypes:ModeledType" name="Expression">
+<annotations>
+<Annotation imx:id="ID_9" xsi:type="description:Description" body="Expression+Type"/>
+</annotations>
+</ModeledType>
+<ModeledType imx:id="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes%2FTimeDuration" xsi:type="modeledtypes:ModeledType" name="TimeDuration">
+<annotations>
+<Annotation imx:id="ID_10" xsi:type="description:Description" body="Time+Duration+Type"/>
+</annotations>
+</ModeledType>
+<ModeledType imx:id="smd:com.informatica.metadata.seed.modeledtypes.ModeledTypeSeed.modeledtypes%2FJSON" xsi:type="modeledtypes:ModeledType" name="JSON">
+<annotations>
+<Annotation imx:id="ID_11" xsi:type="description:Description" body="JSON+Type"/>
+</annotations>
+</ModeledType>
+</modeledTypes>
+</modeledtypes:ModeledTypeContainer>
+</imx:IMX>

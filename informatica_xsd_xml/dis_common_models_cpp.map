@@ -1,0 +1,15 @@
+#
+# Copyright (c) 2007 Informatica Corporation.  This file contains material
+# proprietary to Informatica Corporation and may not be copied or distributed
+# in any form without the written permission of Informatica Corporation.
+#
+
+##########################################################################
+#   This file is generated. Do not modify
+#   
+#   This file contains list of packages contained in library and can be used
+#   in automatic package registration
+#   
+##########################################################################
+
+com.informatica.ds.app.metadata.runtime.annotations, com.informatica.ds.app.metadata.runtime.criteria, com.informatica.ds.common, com.informatica.ds.hazelcast, com.informatica.ds.scheduled, com.informatica.ds.tag, com.informatica.ds.app.feature.metadata.common, com.informatica.ds.app.attachment.metadata.common, com.informatica.dis.mcnlookupservice, com.informatica.ds.app.spec.metadata.common, com.informatica.ds.statistics, com.informatica.ds.app.metadata.common, com.informatica.ds.app.metadata.runtime, com.informatica.ds.runtime, com.informatica.ds.grid = dis_common_models_cpp;

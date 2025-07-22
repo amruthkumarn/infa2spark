@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.typesystem.directmaps/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:directmaps="http://com.informatica.metadata.common.typesystem.directmaps/2" xmlns:imx="http://com.informatica.imx" xmlns:typesystem="http://com.informatica.metadata.common.typesystem/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.typesystem.directmaps/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.typesystem/2" schemaLocation="com.informatica.metadata.common.typesystem.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThis package provides abstractions that enable data-driven algorithms for the following type of operations:\n \n -- Comparing DataTypes from foreign TypeSystems for value conversion semantics.\n -- Selecting the best equivalent for a DataType from a different TypeSystem\n \n Developers that want to perform these activities will require that their TypeSystem abstractions contain a collection DirectTypeSystemMap objects.\n \n A DirectTypeSystemMap object references a different TypeSystem.  It also contains DataTypeMaps to associate its parent TypeSystem's DataTypes with those contained by the referenced TypeSystem.\n \n For any pair of TypeSystems, if neither TypeSystem contains a DirectTypeSystemMap referencing the other, then none of the activities described in the first paragraph can be performed between DataTypes of the two TypeSystems. \n \n The DataTypeMap objects contained by a DirectTypeSystemMap associate pairs of DataType.  Properties of this class tell whether a conversion is inherently lossy and help to identify the best pairing when multiple DataType pairings exist for one of the DataTypes.\n \n DataTypeMap objects express compatibility between two value domains independent from size considerations.  Applications with the additional requirement of considering size capacity constraints will need to use a utility that compares the precision and scale values associated with the use of each DataType involved in the comparison.  The rules this utility will use to compare precision and scale will depend on the type of StorageSemantic each DataType contains.  These rules are described in Figure 2 of com.informatica.metdata.common.typeystem.storagesemantics.\n \n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="DataTypeMap">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:annotation>
+<xsd:documentation> A DataTypeMap is contained by a DirectTypeSystemMap that is in turn contained by some TypeSystem.  Each DataTypeMap instance relates a DataType of the parent TypeSystem and another DataType owned by the second TypeSystem which the DirectTypeSystemMap references. This relationship expresses some degree of equivalency between values from the two DataTypes.
+ 
+ A DataTypeMap is lossy in a given direction if it describes a valid type conversion with the constraint that some information may be lost when executing the type conversion.  Such information loss is an inherent property of the conversion (not to be confused with data loss due to conversion to a reduced precision and scale).  Mapping of floating point values to integer values is an example of lossy conversion.
+ 
+ When multiple DataTypeMaps exist from a given source DataType, only one of these is designated the best DataTypeMap.  When the platform needs to select a target DataType belong to a different TypeSystem, given any DataType, the target of the best DataTypeMap is selected.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="bestMapFromForeign" type="xsd:boolean"/>
+<xsd:attribute name="bestMapFromLocal" type="xsd:boolean"/>
+<xsd:attribute name="foreignType" type="imx:idref"/>
+<xsd:attribute name="localType" type="imx:idref"/>
+<xsd:attribute name="lossyToForeign" type="xsd:boolean"/>
+<xsd:attribute name="lossyToLocal" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataTypeMap" type="directmaps:DataTypeMap"/>
+<xsd:complexType name="DirectTypeSystemMap">
+<xsd:complexContent>
+<xsd:extension base="typesystem:TypeSystemMap">
+<xsd:annotation>
+<xsd:documentation> A DirectTypeSystemMap is a relationship between the parent TypeSystem and a referenced TypeSystem.  The parent TypeSystem defines mapping semantics between some of its own DataType objects and some of those contained by the referenced TypeSystem.  To define mapping semantics means that values represented by one DataType can be converted to values for the other DataType.
+ 
+ In order to have model-driven knowledge that DataTypes with two different parent TypeSystems have mapping semantics, at least one of the parent TypeSystem objects must contain a DirectTypeSystemMap to the other.
+ 
+ For any pair of different TypeSystems, each may own DataTypeMappings to its DataTypes as well as from its DataTypes.  When both source and destination TypeSystems define an applicable DataTypeMapping, those contained by the source type system are used to perform type mapping.  Equivalency of mappings which are duplicated by both source and destination TypeSystems is neither enforced nor required.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="dataTypeMaps">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DataTypeMap" type="directmaps:DataTypeMap"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DirectTypeSystemMap" type="directmaps:DirectTypeSystemMap"/>
+</xsd:schema>

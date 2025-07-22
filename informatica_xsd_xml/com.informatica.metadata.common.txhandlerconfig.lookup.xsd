@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.txhandlerconfig.lookup/2" xmlns:imx="http://com.informatica.imx" xmlns:lookup="http://com.informatica.metadata.common.txhandlerconfig.lookup/2" xmlns:resourceaccess="http://com.informatica.metadata.common.txhandlerconfig.resourceaccess/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.txhandlerconfig.lookup/2">
+<xsd:import namespace="http://com.informatica.metadata.common.txhandlerconfig.resourceaccess/2" schemaLocation="com.informatica.metadata.common.txhandlerconfig.resourceaccess.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThis package contains the session-side TxHandlerConfig subclass used to capture physical execution properties for a LookupTx instance.\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:simpleType name="PrebuildCacheKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="automatic"/>
+<xsd:enumeration value="allow"/>
+<xsd:enumeration value="disallow"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType final="#all" name="LookupHandlerConfig">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessTxHandlerConfig">
+<xsd:annotation>
+<xsd:documentation> LookupHandlerConfig defines the set of all physical metadata required to account for a LookupTx instance in a Mapping.
+ 
+ LookupTx's physical session metadata include deployment-time properties that affect the performance of a Lookup transformation, but not its functional result, such as the amount of memory to allocate for data and index cache buffer pages.  These appear as modeled properties of the LookupHandlerConfig class.
+ 
+ LookupTx's also include some properties that apply only in the context of certain selected DataResource types or use of a connected master input group.  Most of these properties are refactored to a specific subclass of the composite class, LookupSourceHandler.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="cacheDirectory">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="cacheFileNamePrefix">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="cachePreBuilt" type="lookup:PrebuildCacheKind"/>
+<xsd:attribute name="cached" type="xsd:boolean"/>
+<xsd:attribute name="dataCacheSize" type="xsd:long"/>
+<xsd:attribute name="indexCacheSize" type="xsd:long"/>
+<xsd:attribute name="recacheFromLkpSource" type="xsd:boolean"/>
+<xsd:attribute name="cacheDirectory." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LookupHandlerConfig" type="lookup:LookupHandlerConfig"/>
+</xsd:schema>

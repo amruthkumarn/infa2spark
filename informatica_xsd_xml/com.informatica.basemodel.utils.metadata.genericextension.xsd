@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.basemodel.utils.metadata.genericextension/1" xmlns:genericextension="http://com.informatica.basemodel.utils.metadata.genericextension/1" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.basemodel.utils.metadata.genericextension/1">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> The model classes exposed by this package can be used to convert\n any Java object graph into a representation which is understood by IMF.\n\n The IMF representation of the Java object graph can leverage all the\n services available for IMF models in Mercury.\n\n\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="ExtensionAttribute">
+<xsd:annotation>
+<xsd:documentation> Class representing a generic attribute.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="propertyValue" type="genericextension:ValueType"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="propertyName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ExtensionAttribute" type="genericextension:ExtensionAttribute"/>
+<xsd:complexType name="ExtensionContainer">
+<xsd:annotation>
+<xsd:documentation> Class that represents the root of the generic object graph.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="attributes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ExtensionAttribute" type="genericextension:ExtensionAttribute"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="extensionClass">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="markerClass">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="version">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ExtensionContainer" type="genericextension:ExtensionContainer"/>
+<xsd:complexType abstract="true" name="ValueType">
+<xsd:annotation>
+<xsd:documentation> Represents a value.
+ A value can be a single valued or multi valued java primitive or complex object
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="CollectionValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:ValueType">
+<xsd:annotation>
+<xsd:documentation> Class representing a collection of any Java object or primitive.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="values">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="ValueType" type="genericextension:ValueType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CollectionValue" type="genericextension:CollectionValue"/>
+<xsd:complexType name="ComplexValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:ValueType">
+<xsd:annotation>
+<xsd:documentation> Represents a complex object in the generic object graph, except for the root.
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="attributes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="ExtensionAttribute" type="genericextension:ExtensionAttribute"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ComplexValue" type="genericextension:ComplexValue"/>
+<xsd:complexType name="ParameterValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:ValueType">
+<xsd:attribute name="dataValue" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParameterValue" type="genericextension:ParameterValue"/>
+<xsd:complexType abstract="true" name="PrimitiveValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:ValueType">
+<xsd:annotation>
+<xsd:documentation> Base class for all primitive types defined in this package.
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="BlobValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing a blob
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BlobValue" type="genericextension:BlobValue"/>
+<xsd:complexType name="BooleanValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing a boolean
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BooleanValue" type="genericextension:BooleanValue"/>
+<xsd:complexType name="ByteValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing a byte
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue" type="xsd:byte"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ByteValue" type="genericextension:ByteValue"/>
+<xsd:complexType name="CharValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing a character
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue">
+<xsd:simpleType>
+<xsd:restriction base="imx:char">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CharValue" type="genericextension:CharValue"/>
+<xsd:complexType name="DateValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing a date
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DateValue" type="genericextension:DateValue"/>
+<xsd:complexType name="DoubleValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing a double
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue" type="xsd:double"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DoubleValue" type="genericextension:DoubleValue"/>
+<xsd:complexType name="FloatValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing a float
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue" type="xsd:float"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FloatValue" type="genericextension:FloatValue"/>
+<xsd:complexType name="IntValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing an integer
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="IntValue" type="genericextension:IntValue"/>
+<xsd:complexType name="LongValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing a long
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LongValue" type="genericextension:LongValue"/>
+<xsd:complexType name="SensitiveStringValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing a string
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SensitiveStringValue" type="genericextension:SensitiveStringValue"/>
+<xsd:complexType name="ShortValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing a short
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue" type="xsd:short"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ShortValue" type="genericextension:ShortValue"/>
+<xsd:complexType name="StringValue">
+<xsd:complexContent>
+<xsd:extension base="genericextension:PrimitiveValue">
+<xsd:annotation>
+<xsd:documentation> Class representing a string
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StringValue" type="genericextension:StringValue"/>
+</xsd:schema>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.sourcespec/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:mapping="http://com.informatica.metadata.common.mapping/2" xmlns:sourcespec="http://com.informatica.metadata.common.sourcespec/2" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.sourcespec/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.mapping/2" schemaLocation="com.informatica.metadata.common.mapping.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="RuleFieldBinding">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="binding" type="imx:idref"/>
+<xsd:attribute name="ruleInputField" type="imx:idref"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="SourceSpec">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="derivedFieldSets">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DerivedFieldSet" type="sourcespec:DerivedFieldSet"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="outOfBoxRules">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Mapping" type="mapping:Mapping"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="DerivedFieldSet">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:attribute name="spec" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DerivedFieldSet" type="sourcespec:DerivedFieldSet"/>
+<xsd:complexType name="RuleOutput">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:attribute name="binding" type="imx:idref"/>
+<xsd:attribute name="ruleOutputField" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RuleOutput" type="sourcespec:RuleOutput"/>
+<xsd:complexType name="BoundExpression">
+<xsd:complexContent>
+<xsd:extension base="types:TypedElement">
+<xsd:annotation>
+<xsd:documentation> 2.1.0        sachouch   09/10/2013      This modification is a NOOP. All transformation based expressions 
+                                         have been increased to deal with larger expressions (1Million characters).
+                                         Manually hardcoded the old value (of 4000 characters) so that the Profiling
+                                         and AT teams do not get affected by this change.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="expression">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="expressionSet" type="imx:idref"/>
+<xsd:attribute name="precision" type="xsd:long"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BoundExpression" type="sourcespec:BoundExpression"/>
+<xsd:complexType name="ExpressionSet">
+<xsd:complexContent>
+<xsd:extension base="sourcespec:DerivedFieldSet">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="expressions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="BoundExpression" type="sourcespec:BoundExpression"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExpressionSet" type="sourcespec:ExpressionSet"/>
+<xsd:complexType name="RuleBinding">
+<xsd:complexContent>
+<xsd:extension base="sourcespec:DerivedFieldSet">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ruleFieldBindings">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="RuleFieldBinding" type="sourcespec:RuleFieldBinding"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ruleOutputs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="RuleOutput" type="sourcespec:RuleOutput"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="ruleMapplet" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RuleBinding" type="sourcespec:RuleBinding"/>
+</xsd:schema>

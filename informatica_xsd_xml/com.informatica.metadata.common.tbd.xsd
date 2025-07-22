@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.tbd/1" xmlns:imx="http://com.informatica.imx" xmlns:persistence="http://com.informatica.metadata.common.tbd.persistence/1" xmlns:tbd="http://com.informatica.metadata.common.tbd/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.tbd/1">
+<xsd:import namespace="http://com.informatica.metadata.common.tbd.persistence/1" schemaLocation="com.informatica.metadata.common.tbd.persistence.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> Copyright (c) 2007 Informatica Corporation. All rights reserved.\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="HistorySummary">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="mrsRevision">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="operationType" type="persistence:ChangeListOperationType"/>
+<xsd:attribute name="path">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="principal" type="imx:idref"/>
+<xsd:attribute name="submittedTime" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="HistorySummary" type="tbd:HistorySummary"/>
+<xsd:complexType name="LockedObjectSummary">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="identifier" type="tbd:ObjectIdentifier"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="lockedTime" type="xsd:long"/>
+<xsd:attribute name="lockedUser">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="LockedObjectSummary" type="tbd:LockedObjectSummary"/>
+<xsd:complexType name="ObjectHistory">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="historySummary">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="HistorySummary" type="tbd:HistorySummary"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="identifier" type="tbd:ObjectIdentifier"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="ObjectHistory" type="tbd:ObjectHistory"/>
+<xsd:complexType name="ObjectIdentifier">
+<xsd:annotation>
+<xsd:documentation> ObjectDetail helps uniquely identify MRS object.
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="children">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ObjectIdentifier" type="tbd:ObjectIdentifier"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="identity">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="objectId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="objectVersion" type="xsd:int"/>
+<xsd:attribute name="type">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ObjectIdentifier" type="tbd:ObjectIdentifier"/>
+<xsd:simpleType name="ObjectResponseStatusType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="SUCCESS_OBJECT_LOCKED"/>
+<xsd:enumeration value="SUCCESS_OBJECT_UNLOCKED"/>
+<xsd:enumeration value="SUCCESS_OBJECT_REVERTED"/>
+<xsd:enumeration value="SUCCESS_USER_ALREADY_OWNS_LOCK"/>
+<xsd:enumeration value="FAILURE_ANOTHER_USER_ALREADY_OWNS_LOCK"/>
+<xsd:enumeration value="FAILURE_OBJECT_DOES_NOT_EXIST"/>
+<xsd:enumeration value="FAILURE_CHILD_OBJECT_DOES_NOT_EXIST"/>
+<xsd:enumeration value="FAILURE_OBJECT_IS_STALE"/>
+<xsd:enumeration value="FAILURE_CHILD_OBJECT_IS_STALE"/>
+<xsd:enumeration value="FAILURE_OBJECT_HAS_NO_WRITE_PERMISSION"/>
+<xsd:enumeration value="FAILURE_OBJECT_IS_NOT_ROOT_OBJECT"/>
+<xsd:enumeration value="FAILURE_OBJECT_NOT_LOCKED"/>
+<xsd:enumeration value="FAILURE_OBJECT_IS_NOT_VALID"/>
+<xsd:enumeration value="FAILURE_CHILD_OBJECT_IS_NOT_VALID"/>
+<xsd:enumeration value="FAILURE_REVERT_FAILED_PROJECT_DOES_NOT_EXIST"/>
+<xsd:enumeration value="FAILURE_REVERT_FAILED_PARENT_DOES_NOT_EXIST"/>
+<xsd:enumeration value="FAILURE_UNKNOWN"/>
+<xsd:enumeration value="FAILURE_CANNOT_CONNECT_TO_VCS"/>
+<xsd:enumeration value="FAILURE_USER_DOES_NOT_EXIST"/>
+<xsd:enumeration value="UNPROCESSED_VALID_OBJECT"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="QueryFilterParams">
+<xsd:annotation>
+<xsd:documentation> Response status of objects requested for lock/release or checkout/check-in.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="objectName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="objectType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="objectUserPath">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="operationType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userNameSpace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="QueryFilterParams" type="tbd:QueryFilterParams"/>
+<xsd:complexType name="Response">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="checkedOutStatusObjects">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ResponseStatusObject" type="tbd:ResponseStatusObject"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="changeList" type="imx:idref"/>
+<xsd:attribute name="responseMessage">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="responseStatus" type="tbd:ResponseStatus"/>
+</xsd:complexType>
+<xsd:element name="Response" type="tbd:Response"/>
+<xsd:simpleType name="ResponseStatus">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="SUCCESS"/>
+<xsd:enumeration value="FAILURE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ResponseStatusObject">
+<xsd:annotation>
+<xsd:documentation> Response status of object requested for lock/release or checkout/check-in.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="errorMessage">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="objectIdentifier" type="imx:idref"/>
+<xsd:attribute name="status" type="tbd:ObjectResponseStatusType"/>
+<xsd:attribute name="success" type="xsd:boolean"/>
+<xsd:attribute name="propertyKeys">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="propertyValues">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ResponseStatusObject" type="tbd:ResponseStatusObject"/>
+<xsd:simpleType name="ResponseStatusPropertyKeys">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="LOCKED_USER"/>
+<xsd:enumeration value="LOCKED_TIME"/>
+<xsd:enumeration value="PROJECT_NAME"/>
+<xsd:enumeration value="OBJECT_PATH"/>
+<xsd:enumeration value="OBJECT_NAME"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="NamespaceAwareObjectIdentifier">
+<xsd:complexContent>
+<xsd:extension base="tbd:ObjectIdentifier">
+<xsd:attribute name="namespace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="path">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userPath">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NamespaceAwareObjectIdentifier" type="tbd:NamespaceAwareObjectIdentifier"/>
+</xsd:schema>

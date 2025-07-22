@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.xsd/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsd1="http://com.informatica.metadata.common.xsd/2" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.xsd/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> MODIFICATIONS\n \n 2.3.0 elee 07/31/2012 Added new properties to NamespaceContent\n                       Added new class SchemaAttributeGroup\n                       Added new class SchemaModelGroup\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="AbstractNamespaceContent">
+<xsd:annotation>
+<xsd:documentation> NamespaceContent represents all container for all global elements, attributes, and types
+ under a particular target namespace.    It also contains one or more XSDContents objects
+ which refer to the physical xml schema text that came from one or more .xsd files (or &lt;schema&gt;
+ sections in wsdl.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="types">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SchemaType" type="xsd1:SchemaType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="namespace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:complexType name="NamespaceRef">
+<xsd:annotation>
+<xsd:documentation> A way to reference namespace content externally.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="namespaceContent" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="NamespaceRef" type="xsd1:NamespaceRef"/>
+<xsd:complexType name="XSDContent">
+<xsd:annotation>
+<xsd:documentation> XSDContent represents the contents of an xsd file
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="contents">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="imports" type="imx:idrefs"/>
+<xsd:attribute name="includes" type="imx:idrefs"/>
+<xsd:attribute name="schemaLocation">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="XSDContent" type="xsd1:XSDContent"/>
+<xsd:simpleType name="XSDTypeFlavor">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="RESTRICTION"/>
+<xsd:enumeration value="UNION"/>
+<xsd:enumeration value="LIST"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="NamespaceContent">
+<xsd:complexContent>
+<xsd:extension base="xsd1:AbstractNamespaceContent">
+<xsd:annotation>
+<xsd:documentation> NamespaceContent represents all container for all global elements,
+ attributes, and types under a particular target namespace. It also contains
+ one or more XSDContents objects which refer to the physical xml schema text
+ that came from one or more .xsd files (or &lt;schema&gt; sections in wsdl.
+ 
+ MODIFICATIONS
+ 
+ 2.3.0 elee 07/31/2012 Added new contained property 'attributeGroups' and 'modelGroups'
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="attributeGroups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SchemaAttributeGroup" type="xsd1:SchemaAttributeGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="attributes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SchemaAttribute" type="xsd1:SchemaAttribute"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="elements">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SchemaElement" type="xsd1:SchemaElement"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="modelGroups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SchemaModelGroup" type="xsd1:SchemaModelGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="xsdContents">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="XSDContent" type="xsd1:XSDContent"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="prefix">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NamespaceContent" type="xsd1:NamespaceContent"/>
+<xsd:complexType name="SeededNamespaceContent">
+<xsd:complexContent>
+<xsd:extension base="xsd1:AbstractNamespaceContent">
+<xsd:annotation>
+<xsd:documentation> NamespaceContent represents all container for all global elements, attributes, and types
+ under a particular target namespace.    It also contains one or more XSDContents objects
+ which refer to the physical xml schema text that came from one or more .xsd files (or &lt;schema&gt;
+ sections in wsdl.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="seededTypes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SeededSchemaSimpleType" type="xsd1:SeededSchemaSimpleType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SeededNamespaceContent" type="xsd1:SeededNamespaceContent"/>
+<xsd:complexType abstract="true" name="AbstractSchema">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> A Schema is a representation of an xsd Schema modelled in IMF
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="abstractContents">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="AbstractNamespaceContent" type="xsd1:AbstractNamespaceContent"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="AbstractSchemaItem">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> AbstractSchemaItem represents either an element or a type
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="Schema">
+<xsd:complexContent>
+<xsd:extension base="xsd1:AbstractSchema">
+<xsd:annotation>
+<xsd:documentation> A Schema is a representation of an xsd Schema modelled in IMF
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="namespaceContents">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NamespaceContent" type="xsd1:NamespaceContent"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="namespaceRefs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NamespaceRef" type="xsd1:NamespaceRef"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="allTopLevelContents" type="imx:idrefs"/>
+<xsd:attribute name="fileLocation">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="importedSchemas" type="imx:idrefs"/>
+<xsd:attribute name="mainContent" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Schema" type="xsd1:Schema"/>
+<xsd:complexType name="SchemaAttribute">
+<xsd:complexContent>
+<xsd:extension base="xsd1:AbstractSchemaItem">
+<xsd:annotation>
+<xsd:documentation> Global Schema Attribute
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SchemaAttribute" type="xsd1:SchemaAttribute"/>
+<xsd:complexType name="SchemaAttributeGroup">
+<xsd:complexContent>
+<xsd:extension base="xsd1:AbstractSchemaItem">
+<xsd:annotation>
+<xsd:documentation> Attribute Group
+ 
+ @author elee
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SchemaAttributeGroup" type="xsd1:SchemaAttributeGroup"/>
+<xsd:complexType name="SchemaElement">
+<xsd:complexContent>
+<xsd:extension base="xsd1:AbstractSchemaItem">
+<xsd:annotation>
+<xsd:documentation> Global element in the schema
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SchemaElement" type="xsd1:SchemaElement"/>
+<xsd:complexType name="SchemaModelGroup">
+<xsd:complexContent>
+<xsd:extension base="xsd1:AbstractSchemaItem">
+<xsd:annotation>
+<xsd:documentation> Model Group
+ 
+ @author elee
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SchemaModelGroup" type="xsd1:SchemaModelGroup"/>
+<xsd:complexType abstract="true" name="SchemaType">
+<xsd:complexContent>
+<xsd:extension base="xsd1:AbstractSchemaItem">
+<xsd:annotation>
+<xsd:documentation> Global Schema Type
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="SeededSchema">
+<xsd:complexContent>
+<xsd:extension base="xsd1:AbstractSchema">
+<xsd:annotation>
+<xsd:documentation> A Schema is a representation of an xsd Schema modelled in IMF
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="namespaceContents">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SeededNamespaceContent" type="xsd1:SeededNamespaceContent"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SeededSchema" type="xsd1:SeededSchema"/>
+<xsd:complexType abstract="true" name="AbstractSchemaSimpleType">
+<xsd:complexContent>
+<xsd:extension base="xsd1:SchemaType">
+<xsd:attribute name="typeFlavor" type="xsd1:XSDTypeFlavor"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="SchemaComplexType">
+<xsd:complexContent>
+<xsd:extension base="xsd1:SchemaType">
+<xsd:annotation>
+<xsd:documentation> Global Schema complex Type
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SchemaComplexType" type="xsd1:SchemaComplexType"/>
+<xsd:complexType name="SchemaSimpleType">
+<xsd:complexContent>
+<xsd:extension base="xsd1:AbstractSchemaSimpleType">
+<xsd:annotation>
+<xsd:documentation> Global Schema simple Type
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="rootSimpleType" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SchemaSimpleType" type="xsd1:SchemaSimpleType"/>
+<xsd:complexType name="SeededSchemaSimpleType">
+<xsd:complexContent>
+<xsd:extension base="xsd1:AbstractSchemaSimpleType">
+<xsd:annotation>
+<xsd:documentation> Global Schema simple Type
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="baseType" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SeededSchemaSimpleType" type="xsd1:SeededSchemaSimpleType"/>
+</xsd:schema>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.repository.models.permission/1" xmlns:imx="http://com.informatica.imx" xmlns:permission="http://com.informatica.repository.models.permission/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.repository.models.permission/1">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> MODIFICATIONS\n 1.1.0	clay	08/30/2011		Added a new List&lt;ACEAnnotation&gt; property 'annotations'\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="ACE">
+<xsd:annotation>
+<xsd:documentation> The ACE (Access Control Entry) represents the permissions granted to a recipient
+ on an object (including project).
+
+ Every object persisted in PRS or project created in PRS is associated with a list
+ of ACEs (also known as ACL).  In every ACL, there's at most one ACE for each recipient.
+
+ MODIFICATIONS
+ 1.0.0	---		---				Introduced the model
+ 1.1.0	clay	08/30/2011		Added a new List&lt;ACEAnnotation&gt; property 'annotations'
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="allowedPermissions">
+<xsd:simpleType>
+<xsd:list itemType="permission:Permission"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="annotations" type="imx:idrefs"/>
+<xsd:attribute name="deniedPermissions">
+<xsd:simpleType>
+<xsd:list itemType="permission:Permission"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="recipient" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="ACE" type="permission:ACE"/>
+<xsd:complexType name="ACEAnnotation">
+<xsd:annotation>
+<xsd:documentation> The ACE annotation represents an annotation assigned to a recipient
+ on an object.
+
+
+ MODIFICATIONS
+ 1.0.0	clay		08/30/2011		Introduced the model
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="key">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="namespace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ACEAnnotation" type="permission:ACEAnnotation"/>
+<xsd:simpleType name="Permission">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="READ"/>
+<xsd:enumeration value="WRITE"/>
+<xsd:enumeration value="GRANT"/>
+<xsd:enumeration value="EXECUTE"/>
+<xsd:enumeration value="SQL_SELECT"/>
+<xsd:enumeration value="SQL_INSERT"/>
+<xsd:enumeration value="SQL_UPDATE"/>
+<xsd:enumeration value="SQL_DELETE"/>
+<xsd:enumeration value="SQL_RLS_SELECT"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="PermissionList">
+<xsd:annotation>
+<xsd:documentation> Represents a list of permissions for the purpose of transferring across the
+ wire using IMF binary serialization as Enumeration is not supported as
+ an independent entity..
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="permissions">
+<xsd:simpleType>
+<xsd:list itemType="permission:Permission"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="PermissionList" type="permission:PermissionList"/>
+<xsd:complexType name="Recipient">
+<xsd:annotation>
+<xsd:documentation> The recipient represents a subject that can be granted with permissions to
+ persisted objects and PRS projects.  The enumeration (@link RecipientType}
+ lists the types of recipient.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="type" type="permission:RecipientType"/>
+</xsd:complexType>
+<xsd:element name="Recipient" type="permission:Recipient"/>
+<xsd:simpleType name="RecipientType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="USER"/>
+<xsd:enumeration value="GROUP"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:schema>

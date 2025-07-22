@@ -1,0 +1,15 @@
+#
+# Copyright (c) 2007 Informatica Corporation.  This file contains material
+# proprietary to Informatica Corporation and may not be copied or distributed
+# in any form without the written permission of Informatica Corporation.
+#
+
+##########################################################################
+#   This file is generated. Do not modify
+#   
+#   This file contains list of packages contained in library and can be used
+#   in automatic package registration
+#   
+##########################################################################
+
+com.informatica.platform.edtm.metadata.dtmplugins, com.informatica.platform.edtm.metadata.environment, com.informatica.sdk.dtm, com.informatica.platform.edtm.metadata.mapping.output, com.informatica.platform.edtm.metadata.mapping.parameter, com.informatica.platform.edtm.metadata.mapping.parameter.binding, com.informatica.platform.edtm.metadata.mapping.restart, com.informatica.platform.edtm.metadata.monitoring, com.informatica.platform.edtm.metadata.runtimeschema, com.informatica.platform.edtm.metadata.executioncontext.sessionlog = cppmodels;

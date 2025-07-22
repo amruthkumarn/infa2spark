@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.interfaces.usermanagement/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:imx="http://com.informatica.imx" xmlns:permission="http://com.informatica.repository.models.permission/1" xmlns:usermanagement="http://com.informatica.isp.interfaces.usermanagement/2" xmlns:usermanagement1="http://com.informatica.isp.metadata.usermanagement/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.interfaces.usermanagement/2">
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.repository.models.permission/1" schemaLocation="com.informatica.repository.models.permission.xsd"/>
+<xsd:import namespace="http://com.informatica.isp.metadata.usermanagement/2" schemaLocation="com.informatica.isp.metadata.usermanagement.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="AvailableService">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="serviceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="AvailableService" type="usermanagement:AvailableService"/>
+<xsd:complexType name="FetchACEResult">
+<xsd:annotation>
+<xsd:documentation> @author glal
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="aceList" type="imx:idrefs"/>
+<xsd:attribute name="maxResults" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="FetchACEResult" type="usermanagement:FetchACEResult"/>
+<xsd:complexType name="FetchOSProfileResult">
+<xsd:annotation>
+<xsd:documentation> @author glal
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="directlyAssigned" type="xsd:boolean"/>
+<xsd:attribute name="inheritedList" type="imx:idrefs"/>
+<xsd:attribute name="osProfile" type="imx:idref"/>
+<xsd:attribute name="osProfileName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="rolesList">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userIdentity" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="FetchOSProfileResult" type="usermanagement:FetchOSProfileResult"/>
+<xsd:complexType name="GroupToMigrateRef">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="groupId" type="xsd:int"/>
+<xsd:attribute name="groupName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="GroupToMigrateRef" type="usermanagement:GroupToMigrateRef"/>
+<xsd:complexType name="ISPLoginContext">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="customProperties" type="imx:idrefs"/>
+<xsd:attribute name="loginAppName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="loginAppVersion">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="loginSourceHost">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ISPLoginContext" type="usermanagement:ISPLoginContext"/>
+<xsd:complexType name="KeyValuePair">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="key">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="KeyValuePair" type="usermanagement:KeyValuePair"/>
+<xsd:complexType name="LDAPTypeWrapper">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="ldapType" type="usermanagement1:LDAPType"/>
+</xsd:complexType>
+<xsd:element name="LDAPTypeWrapper" type="usermanagement:LDAPTypeWrapper"/>
+<xsd:complexType name="NameSearchResult">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="groupsWithNonStartMatch" type="imx:idrefs"/>
+<xsd:attribute name="groupsWithStartMatch" type="imx:idrefs"/>
+<xsd:attribute name="synchronizingSecurityDomains">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="usersWithNonStartMatch" type="imx:idrefs"/>
+<xsd:attribute name="usersWithStartMatch" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="NameSearchResult" type="usermanagement:NameSearchResult"/>
+<xsd:complexType name="NamespaceStatus">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="errorMsg">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="status">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="NamespaceStatus" type="usermanagement:NamespaceStatus"/>
+<xsd:complexType name="OSProfileFilter">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="returnFullObject" type="xsd:boolean"/>
+<xsd:attribute name="returnInheritedProfiles" type="xsd:boolean"/>
+<xsd:attribute name="userIdentity" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="OSProfileFilter" type="usermanagement:OSProfileFilter"/>
+<xsd:complexType name="PreviewSecurityDomainResult">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="groups" type="imx:idrefs"/>
+<xsd:attribute name="users" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="PreviewSecurityDomainResult" type="usermanagement:PreviewSecurityDomainResult"/>
+<xsd:complexType name="PrivilegeInheritance">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="parentGroups" type="imx:idrefs"/>
+<xsd:attribute name="roles">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="PrivilegeInheritance" type="usermanagement:PrivilegeInheritance"/>
+<xsd:complexType name="PrivilegeToolTip">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="idKey">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="PrivilegeToolTip" type="usermanagement:PrivilegeToolTip"/>
+<xsd:complexType name="RecipientTypeWrapper">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="recipientType" type="permission:RecipientType"/>
+</xsd:complexType>
+<xsd:element name="RecipientTypeWrapper" type="usermanagement:RecipientTypeWrapper"/>
+<xsd:complexType name="RenameUsersResult">
+<xsd:annotation>
+<xsd:documentation> This model holds list for old names and new names for users that have been renamed during import
+ @author glal
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="newNameList">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="oldNameList">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="RenameUsersResult" type="usermanagement:RenameUsersResult"/>
+<xsd:simpleType name="SearchType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="USER"/>
+<xsd:enumeration value="GROUP"/>
+<xsd:enumeration value="ROLE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="SearchTypeWrapper">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="searchType" type="usermanagement:SearchType"/>
+</xsd:complexType>
+<xsd:element name="SearchTypeWrapper" type="usermanagement:SearchTypeWrapper"/>
+<xsd:complexType name="SecuritydomainStatus">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="errMsg">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="status">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SecuritydomainStatus" type="usermanagement:SecuritydomainStatus"/>
+<xsd:complexType name="ServiceTypePrivileges">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="privileges" type="imx:idrefs"/>
+<xsd:attribute name="serviceType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ServiceTypePrivileges" type="usermanagement:ServiceTypePrivileges"/>
+<xsd:complexType name="UMAccessControlEntity">
+<xsd:annotation>
+<xsd:documentation> @author glal
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="ace" type="imx:idref"/>
+<xsd:attribute name="fullName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="UMAccessControlEntity" type="usermanagement:UMAccessControlEntity"/>
+<xsd:complexType name="UMElementsWithRole">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="gropuElements" type="imx:idrefs"/>
+<xsd:attribute name="userElements" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="UMElementsWithRole" type="usermanagement:UMElementsWithRole"/>
+<xsd:simpleType name="UMFilterType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="USERNAME"/>
+<xsd:enumeration value="GROUPNAME"/>
+<xsd:enumeration value="SECURITYDOMAIN"/>
+<xsd:enumeration value="FULLNAME"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="UMFilterTypeWrapper">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="filterType" type="usermanagement:UMFilterType"/>
+</xsd:complexType>
+<xsd:element name="UMFilterTypeWrapper" type="usermanagement:UMFilterTypeWrapper"/>
+<xsd:complexType name="UMFilterValue">
+<xsd:annotation>
+<xsd:documentation> @author glal
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="caseSensitive" type="xsd:boolean"/>
+<xsd:attribute name="filterType" type="usermanagement:UMFilterType"/>
+<xsd:attribute name="regex" type="xsd:boolean"/>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="UMFilterValue" type="usermanagement:UMFilterValue"/>
+<xsd:complexType name="UMGroupConflict">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="parentGroupNode" type="imx:idrefs"/>
+<xsd:attribute name="toMigrateRef" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="UMGroupConflict" type="usermanagement:UMGroupConflict"/>
+<xsd:complexType name="UMInstancePrivilege">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="instanceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="privilegeFromParentGroups" type="imx:idrefs"/>
+<xsd:attribute name="privilegeFromRoles" type="imx:idrefs"/>
+<xsd:attribute name="privileges" type="imx:idrefs"/>
+<xsd:attribute name="providerId" type="imx:idref"/>
+<xsd:attribute name="roles">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="UMInstancePrivilege" type="usermanagement:UMInstancePrivilege"/>
+<xsd:complexType name="UMPrivilegeType">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="instancePrivileges" type="imx:idrefs"/>
+<xsd:attribute name="privilegeType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="UMPrivilegeType" type="usermanagement:UMPrivilegeType"/>
+<xsd:complexType name="UMSearchResult">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="groups" type="imx:idrefs"/>
+<xsd:attribute name="hasMore" type="xsd:boolean"/>
+<xsd:attribute name="roles" type="imx:idrefs"/>
+<xsd:attribute name="users" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="UMSearchResult" type="usermanagement:UMSearchResult"/>
+<xsd:complexType name="UMUserConflict">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="parentGroupNode" type="imx:idrefs"/>
+<xsd:attribute name="toMigrateRef" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="UMUserConflict" type="usermanagement:UMUserConflict"/>
+<xsd:complexType name="UMUserSummary">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="enabled" type="xsd:boolean"/>
+<xsd:attribute name="fullName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="UMUserSummary" type="usermanagement:UMUserSummary"/>
+<xsd:complexType name="UserToMigrateRef">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userId" type="xsd:int"/>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="UserToMigrateRef" type="usermanagement:UserToMigrateRef"/>
+<xsd:complexType name="UserUnlockErrorInfo">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="errorMessage">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="namespace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="username">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="UserUnlockErrorInfo" type="usermanagement:UserUnlockErrorInfo"/>
+<xsd:complexType name="ProviderIdObject">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ProviderIdObject" type="usermanagement:ProviderIdObject"/>
+<xsd:complexType name="UnionedPrivilegeOnInstance">
+<xsd:complexContent>
+<xsd:extension base="usermanagement:UMInstancePrivilege">
+<xsd:attribute name="admin" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UnionedPrivilegeOnInstance" type="usermanagement:UnionedPrivilegeOnInstance"/>
+<xsd:complexType name="UpdateSecurityDomainEvent">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="impactedGroups" type="imx:idrefs"/>
+<xsd:attribute name="impactedUsers" type="imx:idrefs"/>
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UpdateSecurityDomainEvent" type="usermanagement:UpdateSecurityDomainEvent"/>
+<xsd:complexType name="UpdateUserPasswordEvent">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.1.3 achauhan 28/10/2013 Added isSensitive option
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="encryptedPassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UpdateUserPasswordEvent" type="usermanagement:UpdateUserPasswordEvent"/>
+<xsd:complexType name="UserAndGroupExport">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="groups" type="imx:idrefs"/>
+<xsd:attribute name="users" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserAndGroupExport" type="usermanagement:UserAndGroupExport"/>
+<xsd:complexType name="ProviderIntId">
+<xsd:complexContent>
+<xsd:extension base="usermanagement:ProviderIdObject">
+<xsd:attribute name="intId" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ProviderIntId" type="usermanagement:ProviderIntId"/>
+<xsd:complexType name="ProviderLongId">
+<xsd:complexContent>
+<xsd:extension base="usermanagement:ProviderIdObject">
+<xsd:attribute name="longId" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ProviderLongId" type="usermanagement:ProviderLongId"/>
+<xsd:complexType name="UserAndGroupImportConflicts">
+<xsd:complexContent>
+<xsd:extension base="usermanagement:UserAndGroupExport"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserAndGroupImportConflicts" type="usermanagement:UserAndGroupImportConflicts"/>
+<xsd:complexType name="UMElementWithRole">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj">
+<xsd:attribute name="instanceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="instanceType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UMElementWithRole" type="usermanagement:UMElementWithRole"/>
+<xsd:complexType name="UMGroupNode">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj">
+<xsd:attribute name="parentNodes" type="imx:idrefs"/>
+<xsd:attribute name="providerId" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UMGroupNode" type="usermanagement:UMGroupNode"/>
+<xsd:complexType name="UMPrivilegeCollection">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj">
+<xsd:attribute name="privilegeTypes" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UMPrivilegeCollection" type="usermanagement:UMPrivilegeCollection"/>
+</xsd:schema>

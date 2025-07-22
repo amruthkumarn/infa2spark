@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.scope/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:scope="http://com.informatica.metadata.common.scope/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.scope/1">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType abstract="true" name="ScopeDescriptor">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> Abstract base model for all scope descriptors.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="AggregatorScopeDescriptor">
+<xsd:complexContent>
+<xsd:extension base="scope:ScopeDescriptor">
+<xsd:annotation>
+<xsd:documentation> Abstract base model for all aggregator scope descriptors.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="scopeDescriptors">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ScopeDescriptor" type="scope:ScopeDescriptor"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="ObjectScopeDescriptor">
+<xsd:complexContent>
+<xsd:extension base="scope:ScopeDescriptor">
+<xsd:annotation>
+<xsd:documentation> Abstract base model for all object scope descriptors.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="NestedScopeDescriptor">
+<xsd:complexContent>
+<xsd:extension base="scope:AggregatorScopeDescriptor">
+<xsd:annotation>
+<xsd:documentation> NestedScopeDescriptor is used to describe the scope of aggregators, that aggregate another aggregator scope descriptors and object scope descriptors. [Ex: FOLDER]
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="nestedScopeDescriptors">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NestedScopeDescriptor" type="scope:NestedScopeDescriptor"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="objectScopeDescriptors">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ObjectScopeDescriptor" type="scope:ObjectScopeDescriptor"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="aggregatorType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NestedScopeDescriptor" type="scope:NestedScopeDescriptor"/>
+<xsd:complexType name="ProjectScopeDescriptor">
+<xsd:complexContent>
+<xsd:extension base="scope:AggregatorScopeDescriptor">
+<xsd:annotation>
+<xsd:documentation> Project scope descriptor is a special aggregator that describes an objects at
+ project scope.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="nestedScopeDescriptors">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NestedScopeDescriptor" type="scope:NestedScopeDescriptor"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="objectScopeDescriptors">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ObjectScopeDescriptor" type="scope:ObjectScopeDescriptor"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ProjectScopeDescriptor" type="scope:ProjectScopeDescriptor"/>
+</xsd:schema>

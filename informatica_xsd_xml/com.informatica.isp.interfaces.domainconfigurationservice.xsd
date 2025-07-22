@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.interfaces.domainconfigurationservice/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:domainconfigurationservice="http://com.informatica.isp.metadata.domainconfigurationservice/2" xmlns:domainconfigurationservice1="http://com.informatica.isp.interfaces.domainconfigurationservice/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.interfaces.domainconfigurationservice/2">
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.isp.metadata.domainconfigurationservice/2" schemaLocation="com.informatica.isp.metadata.domainconfigurationservice.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="DomainObjInfo">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="objName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="objType" type="domainconfigurationservice:DomainObjType"/>
+</xsd:complexType>
+<xsd:element name="DomainObjInfo" type="domainconfigurationservice1:DomainObjInfo"/>
+<xsd:complexType name="DomainObjTypeWrapper">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="domainObjType" type="domainconfigurationservice:DomainObjType"/>
+</xsd:complexType>
+<xsd:element name="DomainObjTypeWrapper" type="domainconfigurationservice1:DomainObjTypeWrapper"/>
+<xsd:simpleType name="RoleUpdate">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="SERVICE_ROLE_ENABLED"/>
+<xsd:enumeration value="SERVICE_ROLE_DISABLED"/>
+<xsd:enumeration value="COMPUTE_ROLE_ENABLED"/>
+<xsd:enumeration value="COMPUTE_ROLE_DISABLED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="RoleUpdateWrapper">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="roleUpdate" type="domainconfigurationservice1:RoleUpdate"/>
+</xsd:complexType>
+<xsd:element name="RoleUpdateWrapper" type="domainconfigurationservice1:RoleUpdateWrapper"/>
+<xsd:complexType name="NodeRoleUpdates">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:attribute name="disableContainerServiceMode">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="nodeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="roleUpdates" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NodeRoleUpdates" type="domainconfigurationservice1:NodeRoleUpdates"/>
+</xsd:schema>

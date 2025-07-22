@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.mapping.mapplet/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:mapping="http://com.informatica.metadata.common.mapping/2" xmlns:mapplet="http://com.informatica.metadata.common.mapping.mapplet/2" xmlns:transformation="http://com.informatica.metadata.common.transformation/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.mapping.mapplet/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.mapping/2" schemaLocation="com.informatica.metadata.common.mapping.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.transformation/3" schemaLocation="com.informatica.metadata.common.transformation.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="MappletCharacteristic">
+<xsd:complexContent>
+<xsd:extension base="mapping:Characteristic">
+<xsd:annotation>
+<xsd:documentation> An mapplet is a snippet of a mapping which is only functional within a regular mapping. A mapplet can have input, ouputs, or both. 
+ 
+ Well-formed (e.g. not corrupt) Mapplets may contain exactly one non-reusable MappletInputTx and one non-reusable MappletOutputTx.  
+ 
+ A mapplet might choose to have runtime characteristics. MappletCharacteristic is a marker characteristic marking a mapping model to have mapplet behavior
+ 
+ The mapplet cardinality will determine the passive and active characteristics of the various groups. There can be a entry from a input group to a input group or output group
+ or output group to another output group. If a mapplet gets invalid, the output group entries are arrived by walking back the mapping graph(might not be to a input group)
+ This information is used to determine when a mapplet is used in another mapping if two input groups should receive input from the same tx or not. 
+ In the case if two input groups are active, they cannot get input from the same tx. If they are passive, they should get it from the same tx(or deadzone)
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="interfaceCardinalities">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="MappletInterfaceCardinality" type="mapplet:MappletInterfaceCardinality"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletCharacteristic" type="mapplet:MappletCharacteristic"/>
+<xsd:complexType name="MappletInterfaceCardinality">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> TxInterface cardinality maintains a cardinality between groups within the same transformation or across transformations.
+ Reference - Instead of maintaining one to one relationship in a tuple, all groups are maintained against one cardinality instance.
+ Cardinalities is transitive. I1 - 12 and I2 - I3 implies I1 - I3. So avoid this, it is best to maintain I1, I2, I3 in one cardinality instance.
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="dataInterfaces" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletInterfaceCardinality" type="mapplet:MappletInterfaceCardinality"/>
+<xsd:complexType name="MappletInputInterface">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="inputFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="MappletInputField" type="mapplet:MappletInputField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletInputInterface" type="mapplet:MappletInputInterface"/>
+<xsd:complexType name="MappletInputTx">
+<xsd:complexContent>
+<xsd:extension base="transformation:AbstractTransformation">
+<xsd:annotation>
+<xsd:documentation> A pseudo-transformation that represents the Input to a mapplet
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="inputInterfaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="MappletInputInterface" type="mapplet:MappletInputInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="interfaceCardinalities">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="MappletInterfaceCardinality" type="mapplet:MappletInterfaceCardinality"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletInputTx" type="mapplet:MappletInputTx"/>
+<xsd:complexType name="MappletInterface">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="mappletFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="MappletField" type="mapplet:MappletField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="mappletInterface" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletInterface" type="mapplet:MappletInterface"/>
+<xsd:complexType name="MappletOutputInterface">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="outputFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="MappletOutputField" type="mapplet:MappletOutputField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletOutputInterface" type="mapplet:MappletOutputInterface"/>
+<xsd:complexType name="MappletOutputTx">
+<xsd:complexContent>
+<xsd:extension base="transformation:AbstractTransformation">
+<xsd:annotation>
+<xsd:documentation> A pseudo-transformation that represents the Output from a data flow.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="outputInterfaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="MappletOutputInterface" type="mapplet:MappletOutputInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletOutputTx" type="mapplet:MappletOutputTx"/>
+<xsd:complexType name="MappletTx">
+<xsd:complexContent>
+<xsd:extension base="transformation:AbstractTransformation">
+<xsd:annotation>
+<xsd:documentation> A transformation that uses a certain mapplet within another mapping(mapping/operation) etc. A mapplet tx is neither passive or active and derives it behavior from the
+ implementation of the underlying mapplet.
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="interfaceCardinalities">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="MappletInterfaceCardinality" type="mapplet:MappletInterfaceCardinality"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="mappletInterfaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="MappletInterface" type="mapplet:MappletInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="mapplet" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletTx" type="mapplet:MappletTx"/>
+<xsd:complexType name="MappletField">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField">
+<xsd:attribute name="mappletField" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletField" type="mapplet:MappletField"/>
+<xsd:complexType name="MappletInputField">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletInputField" type="mapplet:MappletInputField"/>
+<xsd:complexType name="MappletOutputField">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MappletOutputField" type="mapplet:MappletOutputField"/>
+</xsd:schema>

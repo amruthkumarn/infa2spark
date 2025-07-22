@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.optimizerconfig.transformation/1" xmlns:imx="http://com.informatica.imx" xmlns:optimizerconfig="http://com.informatica.metadata.common.optimizerconfig/1" xmlns:transformation="http://com.informatica.metadata.common.optimizerconfig.transformation/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.optimizerconfig.transformation/1">
+<xsd:import namespace="http://com.informatica.metadata.common.optimizerconfig/1" schemaLocation="com.informatica.metadata.common.optimizerconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="Key">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="fieldNames">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="Key" type="transformation:Key"/>
+<xsd:complexType name="SortKey">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="fields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SortedField" type="transformation:SortedField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="caseSensitive" type="xsd:boolean"/>
+<xsd:attribute name="distinct" type="xsd:boolean"/>
+<xsd:attribute name="nullHighest" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="SortKey" type="transformation:SortKey"/>
+<xsd:complexType name="SortedField">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="ascending" type="xsd:boolean"/>
+<xsd:attribute name="fieldName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SortedField" type="transformation:SortedField"/>
+<xsd:complexType name="DistinctnessKey">
+<xsd:complexContent>
+<xsd:extension base="transformation:Key">
+<xsd:annotation>
+<xsd:documentation> A measure of the distinctness or "density" of a given key; that is, for the
+ given set of fields, how many are unique and how many are duplicates? The
+ information can be stored in two ways:
+ &lt;ul&gt;
+ &lt;li&gt;A percentage of distinct values. For example, if every key value has an
+ average of 5 duplicates in the dataset, then the key is 20% distinct.
+ &lt;li&gt;The number of distinct values. For example, if a company has 7
+ departments, it is known that the department key has 7 distinct values.
+ &lt;/ul&gt;
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="numDistinctValues" type="xsd:long"/>
+<xsd:attribute name="percentDistinct" type="xsd:double"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DistinctnessKey" type="transformation:DistinctnessKey"/>
+<xsd:complexType name="ReferenceKey">
+<xsd:complexContent>
+<xsd:extension base="transformation:Key">
+<xsd:attribute name="reference" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ReferenceKey" type="transformation:ReferenceKey"/>
+<xsd:complexType name="TxOptimizerConfig">
+<xsd:complexContent>
+<xsd:extension base="optimizerconfig:OptimizerConfig">
+<xsd:annotation>
+<xsd:documentation> Inherent properties of the data 
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="distinctnessKeys">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DistinctnessKey" type="transformation:DistinctnessKey"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="foreignKeys">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ReferenceKey" type="transformation:ReferenceKey"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="indexKeys">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Key" type="transformation:Key"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="uniqueKeys">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Key" type="transformation:Key"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="dataInterfaceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="nonNullKey" type="imx:idref"/>
+<xsd:attribute name="primaryKey" type="imx:idref"/>
+<xsd:attribute name="sortKey" type="imx:idref"/>
+<xsd:attribute name="tx" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TxOptimizerConfig" type="transformation:TxOptimizerConfig"/>
+</xsd:schema>

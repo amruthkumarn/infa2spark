@@ -13,7 +13,7 @@ def sample_imx_content():
 <IMX xmlns="http://com.informatica.imx"
      xmlns:project="http://com.informatica.metadata.common.project/2"
      xmlns:folder="http://com.informatica.metadata.common.folder/2"
-     xmlns:powercenter="http://com.informatica.powercenter/1">
+     xmlns:legacy="http://com.informatica.legacy/1">
 
     <!-- Project Structure -->
     <project:Project id="PROJECT_1" name="TestIMXProject" shared="false">
@@ -21,7 +21,7 @@ def sample_imx_content():
         <contents>
             <folder:Folder id="FOLDER_1" name="Mappings">
                 <contents>
-                    <powercenter:TLoaderMapping id="MAPPING_1" name="Test_Mapping">
+                    <legacy:TLoaderMapping id="MAPPING_1" name="Test_Mapping">
                         <description>Test mapping</description>
                         <components>
                             <source name="TEST_SOURCE" type="HDFS" format="PARQUET"/>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.datahandler/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:datahandler="http://com.informatica.metadata.common.datahandler/2" xmlns:imx="http://com.informatica.imx" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.datahandler/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType abstract="true" name="DataElementRef">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="dataElement" type="imx:idref"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="DataHandler">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> A data handler is a metadata object that presents some data manipulation entity in a data integration task. It could be data store entity which denotes a data source or sink. It could also be a data transformation entity that accepts some data and emits the transformed results. A data handler is a first class object.
+ 
+ A data handler can have one or more data interfaces. These interfaces serve as sources and sinks of data in the composition of the data flow within a data integration task.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="dataInterfaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DataInterface" type="datahandler:DataInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="importedLibraries" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="DataInterface">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> A data interface is an interface for data in a data handler. A data handler has one or more data interfaces.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="dataElements">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DataElement" type="datahandler:DataElement"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="DataElement">
+<xsd:complexContent>
+<xsd:extension base="types:TypedElement">
+<xsd:annotation>
+<xsd:documentation> Data elements compose the structure of a data interface. Data elements are typed elements. If the associated types are scalar types then the data interface composed is a flat interface. When the assocaited types are structured types then the interface is complex hierarchical interface
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="defaultValue" type="types:Value"/>
+</xsd:choice>
+<xsd:attribute name="lower" type="xsd:int"/>
+<xsd:attribute name="precision" type="xsd:int"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+<xsd:attribute name="upper" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+</xsd:schema>

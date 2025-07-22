@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.transformation.resourceaccess/2" xmlns:datasourceoperation="http://com.informatica.metadata.common.datasourceoperation/2" xmlns:imx="http://com.informatica.imx" xmlns:resourceaccess="http://com.informatica.metadata.common.transformation.resourceaccess/2" xmlns:transformation="http://com.informatica.metadata.common.transformation/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.transformation.resourceaccess/2">
+<xsd:import namespace="http://com.informatica.metadata.common.datasourceoperation/2" schemaLocation="com.informatica.metadata.common.datasourceoperation.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.transformation/3" schemaLocation="com.informatica.metadata.common.transformation.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> Change log: 12-Mar-2015: (anagaraj) Added a new property dsoName in ResourceAccessTx to parameterize the dso property.  \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="ResourceAccessDataInterface">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationDataInterface">
+<xsd:annotation>
+<xsd:documentation> Data interface of a native transformation. A native transformation can have many data interfaces. These data interfaces can be flat or hierarchical. Currently the product only supports flat data interfaces
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="resourceAccessTxFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ResourceAccessTxField" type="resourceaccess:ResourceAccessTxField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="ResourceAccessTx">
+<xsd:complexContent>
+<xsd:extension base="transformation:AbstractTransformation">
+<xsd:annotation>
+<xsd:documentation> NativeTx represents any native transformation. A native transformation is one that involves a reader/writer to read/write data from a persistent store. A native transformation refers to data records from the data store that are involved in the data read/write.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="anonymousDso" type="datasourceoperation:DataSourceOperation"/>
+<xsd:element name="resourceAccessInterfaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ResourceAccessDataInterface" type="resourceaccess:ResourceAccessDataInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="dso" type="imx:idref"/>
+<xsd:attribute name="dsoName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="refreshSchemaAtRuntime" type="xsd:boolean"/>
+<xsd:attribute name="dsoName." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="ResourceAccessTxField">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField">
+<xsd:annotation>
+<xsd:documentation> This class represents the fields of the data interface of a native transformation. Each native field corresponds to a native type in addition to the type property it acquires from its inheritance from Field. A native field also references the zero or more record fields that contribute to the data values that can be read/written by the native transformation using that field. The cardinality of this property is zero for cases where a native field corresponds to a system variable or a function call in the native system. The native type should normally be equal to the type of the referenced record field is there is only one record field referenced. However, use of native funtions on the record field could return a diffferent type e.g. use of to_char on a date field in Oracle.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+</xsd:schema>

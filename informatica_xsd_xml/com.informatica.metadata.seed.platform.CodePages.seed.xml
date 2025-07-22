@@ -1,0 +1,1292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Informatica proprietary -->
+<imx:IMX xmlns:imx="http://com.informatica.imx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" serializationSpecVersion="14.0" crcEnabled="0" xmlns:core="http://com.informatica.metadata.common.core/2" versioncore="2.2.1" xmlns:description="http://com.informatica.metadata.common.description/2" versiondescription="2.1.0" xmlns:codepage="http://com.informatica.metadata.common.codepage/2" versioncodepage="2.1.0" xsi:schemaLocation="http://com.informatica.imx IMX.xsd http://com.informatica.metadata.common.core/2 com.informatica.metadata.common.core.xsd http://com.informatica.metadata.common.description/2 com.informatica.metadata.common.description.xsd http://com.informatica.metadata.common.codepage/2 com.informatica.metadata.common.codepage.xsd">
+<codepage:CodePageSystem imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem" name="CodePages">
+<annotations>
+<Annotation imx:id="ID_1" xsi:type="description:Description" body="Platform+code+page+system"/>
+</annotations>
+<codePages>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F1" xsi:type="codepage:CodePage" name="US-ASCII" asciiBased="true" codePageId="1" compatibleToCodePageIds="4 5 6 7 8 9 10 11 12 13 18 106 200 201 874 930 935 936 937 939 949 950 1047 1200 1201 1202 1361 2024 2028 2030 2035 2038 2040 2044 2250 2251 2252 2253 2254 2255 2256 2257 2258 9200 10000 10001 10002 10003 10004 10005 10006" isoName="US-ASCII" pmI18nAliases="US-ASCII" pmI18nName="US-ASCII" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_2" xsi:type="description:Description" body="7-bit+ASCII"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F4" xsi:type="codepage:CodePage" name="Latin1" asciiBased="true" codePageId="4" compatibleFromCodePageIds="2252 2028 1047" compatibleToCodePageIds="106 1047 2028 2252 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-1" pmI18nAliases="ISO-8859-1" pmI18nName="ISO-8859-1" sortIds="0 2 3 4 5 6" validForService="true">
+<annotations>
+<Annotation imx:id="ID_3" xsi:type="description:Description" body="ISO+8859-1+Western+European"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F5" xsi:type="codepage:CodePage" name="ISO-8859-2" asciiBased="true" codePageId="5" compatibleFromCodePageIds="2250" compatibleToCodePageIds="106 1200 1201 1202 2250 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-2" pmI18nAliases="ibm-912_P100-1995" pmI18nName="ibm-912_P100-1995" sortIds="0 7 8 10 13 14 15" validForService="true">
+<annotations>
+<Annotation imx:id="ID_4" xsi:type="description:Description" body="ISO+8859-2+Eastern+European"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F6" xsi:type="codepage:CodePage" name="ISO-8859-3" asciiBased="true" codePageId="6" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-3" pmI18nAliases="ibm-913_P100-2000" pmI18nName="ibm-913_P100-2000" sortIds="0 17" validForService="true">
+<annotations>
+<Annotation imx:id="ID_5" xsi:type="description:Description" body="ISO+8859-3+Southeast+European"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F7" xsi:type="codepage:CodePage" name="ISO-8859-4" asciiBased="true" codePageId="7" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-4" pmI18nAliases="ibm-914_P100-1995" pmI18nName="ibm-914_P100-1995" sortIds="0 9 11 12" validForService="true">
+<annotations>
+<Annotation imx:id="ID_6" xsi:type="description:Description" body="ISO+8859-4+Baltic"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F8" xsi:type="codepage:CodePage" name="ISO-8859-5" asciiBased="true" codePageId="8" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-5" pmI18nAliases="ibm-915_P100-1995" pmI18nName="ibm-915_P100-1995" sortIds="0 18" validForService="true">
+<annotations>
+<Annotation imx:id="ID_7" xsi:type="description:Description" body="ISO+8859-5+Cyrillic"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9" xsi:type="codepage:CodePage" name="ISO-8859-6" asciiBased="true" codePageId="9" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-6" pmI18nAliases="ibm-1089_P100-1995" pmI18nName="ibm-1089_P100-1995" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_8" xsi:type="description:Description" body="ISO+8859-6+Arabic"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10" xsi:type="codepage:CodePage" name="ISO-8859-7" asciiBased="true" codePageId="10" compatibleFromCodePageIds="2253" compatibleToCodePageIds="106 1200 1201 1202 2253 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-7" pmI18nAliases="ibm-813_P100-1995" pmI18nName="ibm-813_P100-1995" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_9" xsi:type="description:Description" body="ISO+8859-7+Greek"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F11" xsi:type="codepage:CodePage" name="ISO-8859-8" asciiBased="true" codePageId="11" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-8" pmI18nAliases="ibm-916_P100-1995" pmI18nName="ibm-916_P100-1995" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_10" xsi:type="description:Description" body="ISO+8859-8+Hebrew"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F12" xsi:type="codepage:CodePage" name="ISO-8859-9" asciiBased="true" codePageId="12" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-9" pmI18nAliases="ibm-920_P100-1995" pmI18nName="ibm-920_P100-1995" sortIds="0 2 3 4 5 6 17" validForService="true">
+<annotations>
+<Annotation imx:id="ID_11" xsi:type="description:Description" body="ISO+8859-9+Latin+5+%28Turkish%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F13" xsi:type="codepage:CodePage" name="ISO-8859-10" asciiBased="true" codePageId="13" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-10" pmI18nAliases="iso-8859_10-1998" pmI18nName="iso-8859_10-1998" sortIds="0 9 11 12" validForService="true">
+<annotations>
+<Annotation imx:id="ID_12" xsi:type="description:Description" body="ISO+8859-10+Latin+6+%28Nordic%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F18" xsi:type="codepage:CodePage" name="JapanEUC" asciiBased="true" codePageId="18" compatibleFromCodePageIds="2024 930 939" compatibleToCodePageIds="106 930 939 1200 1201 1202 2024 10000 10001 10002 10003 10004 10005 10006" isoName="EUC-JP" pmI18nAliases="ibm-954_P101-2000" pmI18nName="ibm-954_P101-2000" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_13" xsi:type="description:Description" body="Japanese+Extended+UNIX+Code+%28incl.+JIS+X+0212%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F106" xsi:type="codepage:CodePage" name="UTF-8" asciiBased="true" codePageId="106" compatibleFromCodePageIds="1 4 5 6 7 8 9 10 11 12 13 18 200 201 833 834 874 930 933 935 936 937 939 949 950 1047 1200 1201 1202 1361 1392 2024 2028 2030 2035 2038 2040 2044 2250 2251 2252 2253 2254 2255 2256 2257 2258 9000 9001 9002 9003 9004 9005 9006 9007 9008 9009 9010 9011 9200 10000 10001 10002 10003 10004 10005 10006 10007 10008 10009 10010 10011 10012 10013 10014 10015 10016 10017 10018 10019 10020 10021 10022 10023 10024 10025 10026 10027 10028 10029 10030 10031 10032 10033 10034 10035 10036 10037 10038 10039 10040 10041 10042 10043 10044 10045 10046 10047 10048 10049 10050 10051 10052 10053 10054 10055 10056 10057 10058 10059 10060 10061 10062 10063 10064 10065 10066 10067 10068 10069 10070 10071 10072 10073 10074 10075 10076 10077 10078 10079 10080 10081 10082 10083 10084 10085 10086 10087 10088 10089 10090 10091 10092 10093 10094 10095 10096 10097 10098 10099 10100 10101 10102 10103 10104 10105 10106 10107 10108 10109 10110 10111 10112 10113 10114 10115 10116 10117 10118 10119 10120 10121 10122 10123 10124 10125 10126 10127 10128 10129 10130 10131 10132 10133 10134 10135 10136 10137 10138 10139 10140 10141 10142 10143 10144 10145 10146 10147 10148 10149 10150 10151 10152 10153 10154 10155 10156 10157 10158 10159 10160 10161 10162 10163 10164 10165 10166 10167 10168 10169 10170 10171 10172 10173 10174 10175 10176 10177 10178 10179 10180" compatibleToCodePageIds="1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="UTF-8" pmI18nAliases="UTF-8" pmI18nName="UTF-8" sortIds="0 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19" validForService="true">
+<annotations>
+<Annotation imx:id="ID_14" xsi:type="description:Description" body="UTF-8+encoding+of+Unicode"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F201" xsi:type="codepage:CodePage" name="ISO-8859-15" asciiBased="true" codePageId="201" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-15" pmI18nAliases="ibm-923_P100-1998" pmI18nName="ibm-923_P100-1998" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_15" xsi:type="description:Description" body="ISO+8859-15+Latin+9+%28Western+European%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F833" xsi:type="codepage:CodePage" name="IBM833" codePageId="833" compatibleFromCodePageIds="1 949 1361" compatibleToCodePageIds="106 949 1200 1201 1202 1361 10000 10001 10002 10003 10004 10005 10006" isoName="IBM833" pmI18nAliases="ibm-833_P100-1995" pmI18nName="ibm-833_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_16" xsi:type="description:Description" body="IBM+EBCDIC+Korean+CP833"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F834" xsi:type="codepage:CodePage" name="IBM834" codePageId="834" compatibleFromCodePageIds="1 949 1361" compatibleToCodePageIds="106 949 1200 1201 1202 1361 10000 10001 10002 10003 10004 10005 10006" isoName="IBM834" pmI18nAliases="ibm-834_P100-1995" pmI18nName="ibm-834_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_17" xsi:type="description:Description" body="IBM+EBCDIC+Korean+CP834"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F874" xsi:type="codepage:CodePage" name="MS874" asciiBased="true" codePageId="874" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="TIS-620" pmI18nAliases="windows-874-2000" pmI18nName="windows-874-2000" sortIds="0 16" validForService="true">
+<annotations>
+<Annotation imx:id="ID_18" xsi:type="description:Description" body="MS-DOS+Thai%2C+superset+of+TIS+620"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F930" xsi:type="codepage:CodePage" name="IBM930" codePageId="930" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp930" pmI18nAliases="ibm-930_P120-1999" pmI18nName="ibm-930_P120-1999" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_19" xsi:type="description:Description" body="IBM+EBCDIC+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F933" xsi:type="codepage:CodePage" name="IBM933" codePageId="933" compatibleFromCodePageIds="1 949 1361" compatibleToCodePageIds="106 949 1200 1201 1202 1361 10000 10001 10002 10003 10004 10005 10006" isoName="IBM933" pmI18nAliases="ibm-933_P110-1995" pmI18nName="ibm-933_P110-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_20" xsi:type="description:Description" body="IBM+EBCDIC+Korean+CP933"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F935" xsi:type="codepage:CodePage" name="IBM935" codePageId="935" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp935" pmI18nAliases="ibm-935_P110-1999" pmI18nName="ibm-935_P110-1999" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_21" xsi:type="description:Description" body="IBM+EBCDIC+Simplified+Chinese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F936" xsi:type="codepage:CodePage" name="MS936" asciiBased="true" codePageId="936" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="gb2312" pmI18nAliases="windows-936-2000" pmI18nName="windows-936-2000" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_22" xsi:type="description:Description" body="MS+Windows+Simplified+Chinese%2C+superset+of+GB+2312-80%2C+EUC+encoding"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F937" xsi:type="codepage:CodePage" name="IBM937" codePageId="937" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp937" pmI18nAliases="ibm-937_P110-1999" pmI18nName="ibm-937_P110-1999" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_23" xsi:type="description:Description" body="IBM+EBCDIC+Traditional+Chinese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F939" xsi:type="codepage:CodePage" name="IBM939" codePageId="939" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM939" pmI18nAliases="ibm-939_P120-1999" pmI18nName="ibm-939_P120-1999" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_24" xsi:type="description:Description" body="IBM+EBCDIC+Japanese+CP939"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F949" xsi:type="codepage:CodePage" name="MS949" asciiBased="true" codePageId="949" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-IR-149" pmI18nAliases="windows-949-2000" pmI18nName="windows-949-2000" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_25" xsi:type="description:Description" body="MS+Windows+Korean%2C+superset+of+KS+C+5601-1992"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F950" xsi:type="codepage:CodePage" name="MS950" asciiBased="true" codePageId="950" compatibleToCodePageIds="106 1200 1201 1202 9200 10000 10001 10002 10003 10004 10005 10006" isoName="big5" pmI18nAliases="windows-950-2000" pmI18nName="windows-950-2000" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_26" xsi:type="description:Description" body="MS+Windows+Traditional+Chinese%2C+superset+of+Big+5"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F1047" xsi:type="codepage:CodePage" name="IBM1047" codePageId="1047" compatibleFromCodePageIds="4 106 2028 2252" compatibleToCodePageIds="4 106 1200 1201 1202 2028 2252 10000 10001 10002 10003 10004 10005 10006" isoName="IBM1047" pmI18nAliases="ibm-1047_P100-1995" pmI18nName="ibm-1047_P100-1995" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_27" xsi:type="description:Description" body="IBM+EBCDIC+US+English+IBM1047"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F1361" xsi:type="codepage:CodePage" name="MS1361" asciiBased="true" codePageId="1361" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="JOHAB" pmI18nAliases="windows-1361-2000" pmI18nName="windows-1361-2000" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_28" xsi:type="description:Description" body="MS+Windows+Korean+%28Johab%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2024" xsi:type="codepage:CodePage" name="MS932" asciiBased="true" codePageId="2024" compatibleFromCodePageIds="930 939" compatibleToCodePageIds="106 930 939 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="Shift_JIS" pmI18nAliases="ibm-943_P15A-2003" pmI18nName="ibm-943_P15A-2003" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_29" xsi:type="description:Description" body="MS+Windows+Japanese%2C+superset+of+Shift-JIS"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2028" xsi:type="codepage:CodePage" name="IBM037" codePageId="2028" compatibleFromCodePageIds="4 106 1047 2252" compatibleToCodePageIds="4 106 1047 1200 1201 1202 2252 10000 10001 10002 10003 10004 10005 10006" isoName="IBM037" pmI18nAliases="ibm-37_P100-1995" pmI18nName="ibm-37_P100-1995" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_30" xsi:type="description:Description" body="IBM+EBCDIC+US+English+IBM037"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2030" xsi:type="codepage:CodePage" name="IBM273" codePageId="2030" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM273" pmI18nAliases="ibm-273_P100-1995" pmI18nName="ibm-273_P100-1995" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_31" xsi:type="description:Description" body="IBM+EBCDIC+German"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2035" xsi:type="codepage:CodePage" name="IBM280" codePageId="2035" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM280" pmI18nAliases="ibm-280_P100-1995" pmI18nName="ibm-280_P100-1995" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_32" xsi:type="description:Description" body="IBM+EBCDIC+Italian"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2038" xsi:type="codepage:CodePage" name="IBM285" codePageId="2038" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM285" pmI18nAliases="ibm-285_P100-1995" pmI18nName="ibm-285_P100-1995" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_33" xsi:type="description:Description" body="IBM+EBCDIC+UK+English"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2040" xsi:type="codepage:CodePage" name="IBM297" codePageId="2040" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM297" pmI18nAliases="ibm-297_P100-1995" pmI18nName="ibm-297_P100-1995" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_34" xsi:type="description:Description" body="IBM+EBCDIC+French"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2044" xsi:type="codepage:CodePage" name="IBM500" codePageId="2044" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM500" pmI18nAliases="ibm-500_P100-1995" pmI18nName="ibm-500_P100-1995" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_35" xsi:type="description:Description" body="IBM+EBCDIC+International+Latin-1"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2250" xsi:type="codepage:CodePage" name="MS1250" asciiBased="true" codePageId="2250" compatibleFromCodePageIds="5" compatibleToCodePageIds="5 106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-1250" pmI18nAliases="ibm-5346_P100-1998" pmI18nName="ibm-5346_P100-1998" sortIds="0 7 8 10 13 14 15" validForService="true">
+<annotations>
+<Annotation imx:id="ID_36" xsi:type="description:Description" body="MS+Windows+Latin+2+%28Central+Europe%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2251" xsi:type="codepage:CodePage" name="MS1251" asciiBased="true" codePageId="2251" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-1251" pmI18nAliases="ibm-5347_P100-1998%2Cibm-1251_P100-1995" pmI18nName="ibm-5347_P100-1998" sortIds="0 18" validForService="true">
+<annotations>
+<Annotation imx:id="ID_37" xsi:type="description:Description" body="MS+Windows+Cyrillic+%28Slavic%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2252" xsi:type="codepage:CodePage" name="MS1252" asciiBased="true" codePageId="2252" compatibleFromCodePageIds="1047 2028" compatibleToCodePageIds="4 106 1047 1200 1201 1202 2028 10000 10001 10002 10003 10004 10005 10006" isoName="Windows-1252" pmI18nAliases="ibm-5348_P100-1997%2Cibm-1252_P100-2000" pmI18nName="ibm-5348_P100-1997" sortIds="0 2 3 4 5 6" validForService="true">
+<annotations>
+<Annotation imx:id="ID_38" xsi:type="description:Description" body="MS+Windows+Latin+1+%28ANSI%29%2C+superset+of+Latin1"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2253" xsi:type="codepage:CodePage" name="MS1253" asciiBased="true" codePageId="2253" compatibleFromCodePageIds="10" compatibleToCodePageIds="10 106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-1253" pmI18nAliases="ibm-5349_P100-1998%2Cibm-1253_P100-1995" pmI18nName="ibm-5349_P100-1998" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_39" xsi:type="description:Description" body="MS+Windows+Greek"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2254" xsi:type="codepage:CodePage" name="MS1254" asciiBased="true" codePageId="2254" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-1254" pmI18nAliases="ibm-5350_P100-1998" pmI18nName="ibm-5350_P100-1998" sortIds="0 17" validForService="true">
+<annotations>
+<Annotation imx:id="ID_40" xsi:type="description:Description" body="MS+Windows+Latin+5+%28Turkish%29%2C+superset+of+ISO+8859-9"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2255" xsi:type="codepage:CodePage" name="MS1255" asciiBased="true" codePageId="2255" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-1255" pmI18nAliases="ibm-9447_P100-2002" pmI18nName="ibm-9447_P100-2002" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_41" xsi:type="description:Description" body="MS+Windows+Hebrew"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2256" xsi:type="codepage:CodePage" name="MS1256" asciiBased="true" codePageId="2256" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-1256" pmI18nAliases="windows-1256-2000" pmI18nName="windows-1256-2000" sortIds="0" validForService="true">
+<annotations>
+<Annotation imx:id="ID_42" xsi:type="description:Description" body="MS+Windows+Arabic"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2257" xsi:type="codepage:CodePage" name="MS1257" asciiBased="true" codePageId="2257" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-1257" pmI18nAliases="ibm-9449_P100-2002" pmI18nName="ibm-9449_P100-2002" sortIds="0 9 11 12" validForService="true">
+<annotations>
+<Annotation imx:id="ID_43" xsi:type="description:Description" body="MS+Windows+Baltic+Rim"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F2258" xsi:type="codepage:CodePage" name="MS1258" asciiBased="true" codePageId="2258" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-1258" pmI18nAliases="ibm-5354_P100-1998" pmI18nName="ibm-5354_P100-1998" sortIds="0 19" validForService="true">
+<annotations>
+<Annotation imx:id="ID_44" xsi:type="description:Description" body="MS+Windows+Vietnamese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F1200" xsi:type="codepage:CodePage" name="UTF-16BE" asciiBased="true" codePageId="1200" compatibleFromCodePageIds="1 4 5 6 7 8 9 10 11 12 13 18 106 200 201 833 834 874 930 933 935 936 937 939 949 950 1047 1201 1202 1361 1392 2024 2028 2030 2035 2038 2040 2044 2250 2251 2252 2253 2254 2255 2256 2257 2258 9000 9001 9002 9003 9004 9005 9006 9007 9008 9009 9010 9011 9200 10000 10001 10002 10003 10004 10005 10006 10007 10008 10009 10010 10011 10012 10013 10014 10015 10016 10017 10018 10019 10020 10021 10022 10023 10024 10025 10026 10027 10028 10029 10030 10031 10032 10033 10034 10035 10036 10037 10038 10039 10040 10041 10042 10043 10044 10045 10046 10047 10048 10049 10050 10051 10052 10053 10054 10055 10056 10057 10058 10059 10060 10061 10062 10063 10064 10065 10066 10067 10068 10069 10070 10071 10072 10073 10074 10075 10076 10077 10078 10079 10080 10081 10082 10083 10084 10085 10086 10087 10088 10089 10090 10091 10092 10093 10094 10095 10096 10097 10098 10099 10100 10101 10102 10103 10104 10105 10106 10107 10108 10109 10110 10111 10112 10113 10114 10115 10116 10117 10118 10119 10120 10121 10122 10123 10124 10125 10126 10127 10128 10129 10130 10131 10132 10133 10134 10135 10136 10137 10138 10139 10140 10141 10142 10143 10144 10145 10146 10147 10148 10149 10150 10151 10152 10153 10154 10155 10156 10157 10158 10159 10160 10161 10162 10163 10164 10165 10166 10167 10168 10169 10170 10171 10172 10173 10174 10175 10176 10177 10178 10179 10180" compatibleToCodePageIds="106 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="UTF-16+BE" pmI18nAliases="cp1200" pmI18nName="UTF-16BE" sortIds="0 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19">
+<annotations>
+<Annotation imx:id="ID_45" xsi:type="description:Description" body="UTF-16+encoding+of+Unicode+%28Big+Endian%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F1201" xsi:type="codepage:CodePage" name="UTF-16LE" asciiBased="true" codePageId="1201" compatibleFromCodePageIds="1 4 5 6 7 8 9 10 11 12 13 18 106 200 201 833 834 874 930 933 935 936 937 939 949 950 1047 1200 1202 1361 1392 2024 2028 2030 2035 2038 2040 2044 2250 2251 2252 2253 2254 2255 2256 2257 2258 9000 9001 9002 9003 9004 9005 9006 9007 9008 9009 9010 9011 9200 10000 10001 10002 10003 10004 10005 10006 10007 10008 10009 10010 10011 10012 10013 10014 10015 10016 10017 10018 10019 10020 10021 10022 10023 10024 10025 10026 10027 10028 10029 10030 10031 10032 10033 10034 10035 10036 10037 10038 10039 10040 10041 10042 10043 10044 10045 10046 10047 10048 10049 10050 10051 10052 10053 10054 10055 10056 10057 10058 10059 10060 10061 10062 10063 10064 10065 10066 10067 10068 10069 10070 10071 10072 10073 10074 10075 10076 10077 10078 10079 10080 10081 10082 10083 10084 10085 10086 10087 10088 10089 10090 10091 10092 10093 10094 10095 10096 10097 10098 10099 10100 10101 10102 10103 10104 10105 10106 10107 10108 10109 10110 10111 10112 10113 10114 10115 10116 10117 10118 10119 10120 10121 10122 10123 10124 10125 10126 10127 10128 10129 10130 10131 10132 10133 10134 10135 10136 10137 10138 10139 10140 10141 10142 10143 10144 10145 10146 10147 10148 10149 10150 10151 10152 10153 10154 10155 10156 10157 10158 10159 10160 10161 10162 10163 10164 10165 10166 10167 10168 10169 10170 10171 10172 10173 10174 10175 10176 10177 10178 10179 10180" compatibleToCodePageIds="106 1200 1202 10000 10001 10002 10003 10004 10005 10006" isoName="UTF-16+LE" pmI18nAliases="cp1201" pmI18nName="UTF-16LE" sortIds="0 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19">
+<annotations>
+<Annotation imx:id="ID_46" xsi:type="description:Description" body="UTF-16+encoding+of+Unicode+%28Lower+Endian%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F1392" xsi:type="codepage:CodePage" name="gb18030" asciiBased="true" codePageId="1392" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="gb18030" pmI18nAliases="gb18030" pmI18nName="gb18030" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_47" xsi:type="description:Description" body="GB+18030+MBCS+codepage"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9000" xsi:type="codepage:CodePage" name="JEF" codePageId="9000" compatibleFromCodePageIds="1 18 2024" compatibleToCodePageIds="18 106 1200 1201 1202 2024 10000 10001 10002 10003 10004 10005 10006" isoName="JEF" pmI18nAliases="infa-FujitsuJEF" pmI18nName="infa-FujitsuJEF" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_48" xsi:type="description:Description" body="Japanese+EBCDIC+Fujitsu"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9001" xsi:type="codepage:CodePage" name="KEIS" codePageId="9001" compatibleFromCodePageIds="1 18 2024" compatibleToCodePageIds="18 106 1200 1201 1202 2024 10000 10001 10002 10003 10004 10005 10006" isoName="KEIS" pmI18nAliases="infa-HitachiKEIS" pmI18nName="infa-HitachiKEIS" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_49" xsi:type="description:Description" body="HITACHI+KEIS+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9002" xsi:type="codepage:CodePage" name="JIPSE" codePageId="9002" compatibleFromCodePageIds="1 18 2024" compatibleToCodePageIds="18 106 1200 1201 1202 2024 10000 10001 10002 10003 10004 10005 10006" isoName="JIPSE" pmI18nAliases="infa-jipse" pmI18nName="infa-jipse" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_50" xsi:type="description:Description" body="NEC+ACOS+JIPSE+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9003" xsi:type="codepage:CodePage" name="UNISYS" codePageId="9003" compatibleFromCodePageIds="1 18 2024" compatibleToCodePageIds="18 106 1200 1201 1202 2024 10000 10001 10002 10003 10004 10005 10006" isoName="UNISYS" pmI18nAliases="infa-unisys" pmI18nName="infa-unisys" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_51" xsi:type="description:Description" body="UNISYS+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9004" xsi:type="codepage:CodePage" name="MELCOM" codePageId="9004" compatibleFromCodePageIds="1 18 2024" compatibleToCodePageIds="18 106 1200 1201 1202 2024 10000 10001 10002 10003 10004 10005 10006" isoName="MELCOM" pmI18nAliases="infa-melcom" pmI18nName="infa-melcom" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_52" xsi:type="description:Description" body="MITSUBISHI+MELCOM+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9005" xsi:type="codepage:CodePage" name="JEF-K" codePageId="9005" compatibleFromCodePageIds="1 18 2024" compatibleToCodePageIds="18 106 1200 1201 1202 2024 10000 10001 10002 10003 10004 10005 10006" isoName="JEF-K" pmI18nAliases="infa-FujitsuJEF_kana" pmI18nName="infa-FujitsuJEF_kana" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_53" xsi:type="description:Description" body="Japanese+EBCDIC-Kana+Fujitsu"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9006" xsi:type="codepage:CodePage" name="KEIS-K" codePageId="9006" compatibleFromCodePageIds="1 18 2024" compatibleToCodePageIds="18 106 1200 1201 1202 2024 10000 10001 10002 10003 10004 10005 10006" isoName="KEIS-K" pmI18nAliases="infa-HitachiKEIS_kana" pmI18nName="infa-HitachiKEIS_kana" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_54" xsi:type="description:Description" body="HITACHI+KEIS-Kana+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9007" xsi:type="codepage:CodePage" name="JIPSE-K" codePageId="9007" compatibleFromCodePageIds="1 18 2024" compatibleToCodePageIds="18 106 1200 1201 1202 2024 10000 10001 10002 10003 10004 10005 10006" isoName="JIPSE-K" pmI18nAliases="infa-jipse_kana" pmI18nName="infa-jipse_kana" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_55" xsi:type="description:Description" body="NEC+ACOS+JIPSE-Kana+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9008" xsi:type="codepage:CodePage" name="UNISYS-K" codePageId="9008" compatibleFromCodePageIds="1 18 2024" compatibleToCodePageIds="18 106 1200 1201 1202 2024 10000 10001 10002 10003 10004 10005 10006" isoName="UNISYS-K" pmI18nAliases="infa-unisys_kana" pmI18nName="infa-unisys_kana" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_56" xsi:type="description:Description" body="UNISYS-Kana+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9009" xsi:type="codepage:CodePage" name="MELCOM-K" codePageId="9009" compatibleFromCodePageIds="1 18 2024" compatibleToCodePageIds="18 106 1200 1201 1202 2024 10000 10001 10002 10003 10004 10005 10006" isoName="MELCOM-K" pmI18nAliases="infa-melcom_kana" pmI18nName="infa-melcom_kana" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_57" xsi:type="description:Description" body="MITSUBISHI+MELCOM-Kana+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9010" xsi:type="codepage:CodePage" name="JP-EBCDIC" codePageId="9010" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="JP-EBCDIC" pmI18nAliases="infa-jp_ebcdic" pmI18nName="infa-jp_ebcdic" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_58" xsi:type="description:Description" body="EBCDIC+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9011" xsi:type="codepage:CodePage" name="JP-EBCDIK" codePageId="9011" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="JP-EBCDIK" pmI18nAliases="infa-jp_ebcdik" pmI18nName="infa-jp_ebcdik" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_59" xsi:type="description:Description" body="EBCDIK+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F9200" xsi:type="codepage:CodePage" name="HKSCS" asciiBased="true" codePageId="9200" compatibleFromCodePageIds="950" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="Big5-HKSCS" pmI18nAliases="macos-2566-10.2" pmI18nName="macos-2566-10.2" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_60" xsi:type="description:Description" body="Hong+Kong+Supplementary+Character+Set"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10001" xsi:type="codepage:CodePage" name="UTF-32BE" asciiBased="true" codePageId="10001" compatibleFromCodePageIds="1 4 5 6 7 8 9 10 11 12 13 18 106 200 201 833 834 874 930 933 935 936 937 939 949 950 1047 1200 1201 1202 1361 1392 2024 2028 2030 2035 2038 2040 2044 2250 2251 2252 2253 2254 2255 2256 2257 2258 9000 9001 9002 9003 9004 9005 9006 9007 9008 9009 9010 9011 9200 10000 10002 10003 10004 10005 10006 10007 10008 10009 10010 10011 10012 10013 10014 10015 10016 10017 10018 10019 10020 10021 10022 10023 10024 10025 10026 10027 10028 10029 10030 10031 10032 10033 10034 10035 10036 10037 10038 10039 10040 10041 10042 10043 10044 10045 10046 10047 10048 10049 10050 10051 10052 10053 10054 10055 10056 10057 10058 10059 10060 10061 10062 10063 10064 10065 10066 10067 10068 10069 10070 10071 10072 10073 10074 10075 10076 10077 10078 10079 10080 10081 10082 10083 10084 10085 10086 10087 10088 10089 10090 10091 10092 10093 10094 10095 10096 10097 10098 10099 10100 10101 10102 10103 10104 10105 10106 10107 10108 10109 10110 10111 10112 10113 10114 10115 10116 10117 10118 10119 10120 10121 10122 10123 10124 10125 10126 10127 10128 10129 10130 10131 10132 10133 10134 10135 10136 10137 10138 10139 10140 10141 10142 10143 10144 10145 10146 10147 10148 10149 10150 10151 10152 10153 10154 10155 10156 10157 10158 10159 10160 10161 10162 10163 10164 10165 10166 10167 10168 10169 10170 10171 10172 10173 10174 10175 10176 10177 10178 10179 10180" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="UTF-32BE" pmI18nAliases="UTF-32BE" pmI18nName="UTF-32BE" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_61" xsi:type="description:Description" body="UTF-32+encoding+of+Unicode+%28Big+Endian%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10002" xsi:type="codepage:CodePage" name="UTF-32LE" asciiBased="true" codePageId="10002" compatibleFromCodePageIds="1 4 5 6 7 8 9 10 11 12 13 18 106 200 201 833 834 874 930 933 935 936 937 939 949 950 1047 1200 1201 1202 1361 1392 2024 2028 2030 2035 2038 2040 2044 2250 2251 2252 2253 2254 2255 2256 2257 2258 9000 9001 9002 9003 9004 9005 9006 9007 9008 9009 9010 9011 9200 10000 10001 10003 10004 10005 10006 10007 10008 10009 10010 10011 10012 10013 10014 10015 10016 10017 10018 10019 10020 10021 10022 10023 10024 10025 10026 10027 10028 10029 10030 10031 10032 10033 10034 10035 10036 10037 10038 10039 10040 10041 10042 10043 10044 10045 10046 10047 10048 10049 10050 10051 10052 10053 10054 10055 10056 10057 10058 10059 10060 10061 10062 10063 10064 10065 10066 10067 10068 10069 10070 10071 10072 10073 10074 10075 10076 10077 10078 10079 10080 10081 10082 10083 10084 10085 10086 10087 10088 10089 10090 10091 10092 10093 10094 10095 10096 10097 10098 10099 10100 10101 10102 10103 10104 10105 10106 10107 10108 10109 10110 10111 10112 10113 10114 10115 10116 10117 10118 10119 10120 10121 10122 10123 10124 10125 10126 10127 10128 10129 10130 10131 10132 10133 10134 10135 10136 10137 10138 10139 10140 10141 10142 10143 10144 10145 10146 10147 10148 10149 10150 10151 10152 10153 10154 10155 10156 10157 10158 10159 10160 10161 10162 10163 10164 10165 10166 10167 10168 10169 10170 10171 10172 10173 10174 10175 10176 10177 10178 10179 10180" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="UTF-32LE" pmI18nAliases="UTF-32LE" pmI18nName="UTF-32LE" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_62" xsi:type="description:Description" body="UTF-32+encoding+of+Unicode+%28Lower+Endian%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10003" xsi:type="codepage:CodePage" name="UTF-16_PlatformEndian" asciiBased="true" codePageId="10003" compatibleFromCodePageIds="1 4 5 6 7 8 9 10 11 12 13 18 106 200 201 833 834 874 930 933 935 936 937 939 949 950 1047 1200 1201 1202 1361 1392 2024 2028 2030 2035 2038 2040 2044 2250 2251 2252 2253 2254 2255 2256 2257 2258 9000 9001 9002 9003 9004 9005 9006 9007 9008 9009 9010 9011 9200 10000 10001 10002 10004 10005 10006 10007 10008 10009 10010 10011 10012 10013 10014 10015 10016 10017 10018 10019 10020 10021 10022 10023 10024 10025 10026 10027 10028 10029 10030 10031 10032 10033 10034 10035 10036 10037 10038 10039 10040 10041 10042 10043 10044 10045 10046 10047 10048 10049 10050 10051 10052 10053 10054 10055 10056 10057 10058 10059 10060 10061 10062 10063 10064 10065 10066 10067 10068 10069 10070 10071 10072 10073 10074 10075 10076 10077 10078 10079 10080 10081 10082 10083 10084 10085 10086 10087 10088 10089 10090 10091 10092 10093 10094 10095 10096 10097 10098 10099 10100 10101 10102 10103 10104 10105 10106 10107 10108 10109 10110 10111 10112 10113 10114 10115 10116 10117 10118 10119 10120 10121 10122 10123 10124 10125 10126 10127 10128 10129 10130 10131 10132 10133 10134 10135 10136 10137 10138 10139 10140 10141 10142 10143 10144 10145 10146 10147 10148 10149 10150 10151 10152 10153 10154 10155 10156 10157 10158 10159 10160 10161 10162 10163 10164 10165 10166 10167 10168 10169 10170 10171 10172 10173 10174 10175 10176 10177 10178 10179 10180" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="UTF16_PlatformEndian" pmI18nAliases="UTF16_PlatformEndian" pmI18nName="UTF16_PlatformEndian" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_63" xsi:type="description:Description" body="UTF-16+encoding+of+Unicode+%28Platform+Endian%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10004" xsi:type="codepage:CodePage" name="UTF-16_OppositeEndian" asciiBased="true" codePageId="10004" compatibleFromCodePageIds="1 4 5 6 7 8 9 10 11 12 13 18 106 200 201 833 834 874 930 933 935 936 937 939 949 950 1047 1200 1201 1202 1361 1392 2024 2028 2030 2035 2038 2040 2044 2250 2251 2252 2253 2254 2255 2256 2257 2258 9000 9001 9002 9003 9004 9005 9006 9007 9008 9009 9010 9011 9200 10000 10001 10002 10003 10005 10006 10007 10008 10009 10010 10011 10012 10013 10014 10015 10016 10017 10018 10019 10020 10021 10022 10023 10024 10025 10026 10027 10028 10029 10030 10031 10032 10033 10034 10035 10036 10037 10038 10039 10040 10041 10042 10043 10044 10045 10046 10047 10048 10049 10050 10051 10052 10053 10054 10055 10056 10057 10058 10059 10060 10061 10062 10063 10064 10065 10066 10067 10068 10069 10070 10071 10072 10073 10074 10075 10076 10077 10078 10079 10080 10081 10082 10083 10084 10085 10086 10087 10088 10089 10090 10091 10092 10093 10094 10095 10096 10097 10098 10099 10100 10101 10102 10103 10104 10105 10106 10107 10108 10109 10110 10111 10112 10113 10114 10115 10116 10117 10118 10119 10120 10121 10122 10123 10124 10125 10126 10127 10128 10129 10130 10131 10132 10133 10134 10135 10136 10137 10138 10139 10140 10141 10142 10143 10144 10145 10146 10147 10148 10149 10150 10151 10152 10153 10154 10155 10156 10157 10158 10159 10160 10161 10162 10163 10164 10165 10166 10167 10168 10169 10170 10171 10172 10173 10174 10175 10176 10177 10178 10179 10180" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="UTF16_OppositeEndian" pmI18nAliases="UTF16_OppositeEndian" pmI18nName="UTF16_OppositeEndian" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_64" xsi:type="description:Description" body="UTF-16+encoding+of+Unicode+%28Opposite+Platform+Endian%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10005" xsi:type="codepage:CodePage" name="UTF-32_PlatformEndian" asciiBased="true" codePageId="10005" compatibleFromCodePageIds="1 4 5 6 7 8 9 10 11 12 13 18 106 200 201 833 834 874 930 933 935 936 937 939 949 950 1047 1200 1201 1202 1361 1392 2024 2028 2030 2035 2038 2040 2044 2250 2251 2252 2253 2254 2255 2256 2257 2258 9000 9001 9002 9003 9004 9005 9006 9007 9008 9009 9010 9011 9200 10000 10001 10002 10003 10004 10006 10007 10008 10009 10010 10011 10012 10013 10014 10015 10016 10017 10018 10019 10020 10021 10022 10023 10024 10025 10026 10027 10028 10029 10030 10031 10032 10033 10034 10035 10036 10037 10038 10039 10040 10041 10042 10043 10044 10045 10046 10047 10048 10049 10050 10051 10052 10053 10054 10055 10056 10057 10058 10059 10060 10061 10062 10063 10064 10065 10066 10067 10068 10069 10070 10071 10072 10073 10074 10075 10076 10077 10078 10079 10080 10081 10082 10083 10084 10085 10086 10087 10088 10089 10090 10091 10092 10093 10094 10095 10096 10097 10098 10099 10100 10101 10102 10103 10104 10105 10106 10107 10108 10109 10110 10111 10112 10113 10114 10115 10116 10117 10118 10119 10120 10121 10122 10123 10124 10125 10126 10127 10128 10129 10130 10131 10132 10133 10134 10135 10136 10137 10138 10139 10140 10141 10142 10143 10144 10145 10146 10147 10148 10149 10150 10151 10152 10153 10154 10155 10156 10157 10158 10159 10160 10161 10162 10163 10164 10165 10166 10167 10168 10169 10170 10171 10172 10173 10174 10175 10176 10177 10178 10179 10180" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="UTF32_PlatformEndian" pmI18nAliases="UTF32_PlatformEndian" pmI18nName="UTF32_PlatformEndian" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_65" xsi:type="description:Description" body="UTF-32+encoding+of+Unicode+%28Platform+Endian%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10006" xsi:type="codepage:CodePage" name="UTF-32_OppositeEndian" asciiBased="true" codePageId="10006" compatibleFromCodePageIds="1 4 5 6 7 8 9 10 11 12 13 18 106 200 201 833 834 874 930 933 935 936 937 939 949 950 1047 1200 1201 1202 1361 1392 2024 2028 2030 2035 2038 2040 2044 2250 2251 2252 2253 2254 2255 2256 2257 2258 9000 9001 9002 9003 9004 9005 9006 9007 9008 9009 9010 9011 9200 10000 10001 10002 10003 10004 10005 10007 10008 10009 10010 10011 10012 10013 10014 10015 10016 10017 10018 10019 10020 10021 10022 10023 10024 10025 10026 10027 10028 10029 10030 10031 10032 10033 10034 10035 10036 10037 10038 10039 10040 10041 10042 10043 10044 10045 10046 10047 10048 10049 10050 10051 10052 10053 10054 10055 10056 10057 10058 10059 10060 10061 10062 10063 10064 10065 10066 10067 10068 10069 10070 10071 10072 10073 10074 10075 10076 10077 10078 10079 10080 10081 10082 10083 10084 10085 10086 10087 10088 10089 10090 10091 10092 10093 10094 10095 10096 10097 10098 10099 10100 10101 10102 10103 10104 10105 10106 10107 10108 10109 10110 10111 10112 10113 10114 10115 10116 10117 10118 10119 10120 10121 10122 10123 10124 10125 10126 10127 10128 10129 10130 10131 10132 10133 10134 10135 10136 10137 10138 10139 10140 10141 10142 10143 10144 10145 10146 10147 10148 10149 10150 10151 10152 10153 10154 10155 10156 10157 10158 10159 10160 10161 10162 10163 10164 10165 10166 10167 10168 10169 10170 10171 10172 10173 10174 10175 10176 10177 10178 10179 10180" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="UTF32_OppositeEndian" pmI18nAliases="UTF32_OppositeEndian" pmI18nName="UTF32_OppositeEndian" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_66" xsi:type="description:Description" body="UTF-32+encoding+of+Unicode+%28Opposite+Platform+Endian%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10007" xsi:type="codepage:CodePage" name="UTF-7" asciiBased="true" codePageId="10007" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="UTF-7" pmI18nAliases="UTF-7" pmI18nName="UTF-7" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_67" xsi:type="description:Description" body="UTF-7+encoding+of+Unicode"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10008" xsi:type="codepage:CodePage" name="IMAP-mailbox-name" asciiBased="true" codePageId="10008" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IMAP-mailbox-name" pmI18nAliases="IMAP-mailbox-name" pmI18nName="IMAP-mailbox-name" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_68" xsi:type="description:Description" body="IMAP+Mailbox+Name"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10009" xsi:type="codepage:CodePage" name="SCSU" asciiBased="true" codePageId="10009" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="SCSU" pmI18nAliases="SCSU" pmI18nName="SCSU" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_69" xsi:type="description:Description" body="Standard+Compression+Scheme+for+Unicode+%28SCSU%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10010" xsi:type="codepage:CodePage" name="BOCU-1" asciiBased="true" codePageId="10010" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="BOCU-1" pmI18nAliases="BOCU-1" pmI18nName="BOCU-1" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_70" xsi:type="description:Description" body="Binary+Ordered+Compression+for+Unicode+%28BOCU-1%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10011" xsi:type="codepage:CodePage" name="CESU-8" asciiBased="true" codePageId="10011" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="CESU-8" pmI18nAliases="CESU-8" pmI18nName="CESU-8" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_71" xsi:type="description:Description" body="Compatibility+Encoding+Scheme+for+UTF-16+%28CESU-8%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10012" xsi:type="codepage:CodePage" name="IBM367" asciiBased="true" codePageId="10012" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM367" pmI18nAliases="ibm-367_P100-1995" pmI18nName="ibm-367_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_72" xsi:type="description:Description" body="IBM367"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10014" xsi:type="codepage:CodePage" name="ISO-8859-13" asciiBased="true" codePageId="10014" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-8859-13" pmI18nAliases="ibm-921_P100-1995" pmI18nName="ibm-921_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_73" xsi:type="description:Description" body="ISO+8859-13+PC+Baltic+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10015" xsi:type="codepage:CodePage" name="IBM-942" asciiBased="true" codePageId="10015" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-942" pmI18nAliases="ibm-942_P12A-1999" pmI18nName="ibm-942_P12A-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_74" xsi:type="description:Description" body="PC+Japanese+SJIS-78+syntax+%28IBM-942%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10016" xsi:type="codepage:CodePage" name="IBM-943" asciiBased="true" codePageId="10016" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-943" pmI18nAliases="ibm-943_P130-1999" pmI18nName="ibm-943_P130-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_75" xsi:type="description:Description" body="PC+Japanese+SJIS-90+%28IBM-943%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10017" xsi:type="codepage:CodePage" name="IBM-33722" asciiBased="true" codePageId="10017" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-33722" pmI18nAliases="ibm-33722_P120-1999" pmI18nName="ibm-33722_P120-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_76" xsi:type="description:Description" body="Japanese+EUC+%28with+%5C+%3C-%3E+Yen+mapping%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10018" xsi:type="codepage:CodePage" name="IBM-5050" asciiBased="true" codePageId="10018" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-5050" pmI18nAliases="ibm-33722_P12A-1999" pmI18nName="ibm-33722_P12A-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_77" xsi:type="description:Description" body="Japanese+EUC+%28Packed+Format%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10019" xsi:type="codepage:CodePage" name="IBM-1373" asciiBased="true" codePageId="10019" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1373" pmI18nAliases="ibm-1373_P100-2002" pmI18nName="ibm-1373_P100-2002" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_78" xsi:type="description:Description" body="Taiwan+Big-5+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10020" xsi:type="codepage:CodePage" name="IBM-950" asciiBased="true" codePageId="10020" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-950" pmI18nAliases="ibm-950_P110-1999" pmI18nName="ibm-950_P110-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_79" xsi:type="description:Description" body="Taiwan+Big-5+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10022" xsi:type="codepage:CodePage" name="IBM-1375" asciiBased="true" codePageId="10022" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1375" pmI18nAliases="ibm-1375_P100-2003" pmI18nName="ibm-1375_P100-2003" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_80" xsi:type="description:Description" body="MS+Taiwan+Big-5+w%2F+HKSCS+extensions"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10023" xsi:type="codepage:CodePage" name="IBM-1386" asciiBased="true" codePageId="10023" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1386" pmI18nAliases="ibm-1386_P100-2002" pmI18nName="ibm-1386_P100-2002" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_81" xsi:type="description:Description" body="PC+Chinese+GBK+%28IBM-1386%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10024" xsi:type="codepage:CodePage" name="GB2312" asciiBased="true" codePageId="10024" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="GB2312" pmI18nAliases="ibm-1383_P110-1999" pmI18nName="ibm-1383_P110-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_82" xsi:type="description:Description" body="Chinese+EUC"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10025" xsi:type="codepage:CodePage" name="GB_2312-80" asciiBased="true" codePageId="10025" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="GB_2312-80" pmI18nAliases="ibm-5478_P100-1995" pmI18nName="ibm-5478_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_83" xsi:type="description:Description" body="Simplified+Chinese+%28GB2312-80%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10026" xsi:type="codepage:CodePage" name="IBM-964" asciiBased="true" codePageId="10026" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-964" pmI18nAliases="ibm-964_P110-1999" pmI18nName="ibm-964_P110-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_84" xsi:type="description:Description" body="EUC+Taiwan"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10027" xsi:type="codepage:CodePage" name="IBM-949" asciiBased="true" codePageId="10027" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-949" pmI18nAliases="ibm-949_P110-1999" pmI18nName="ibm-949_P110-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_85" xsi:type="description:Description" body="PC+Korea+-+KS+%28default%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10028" xsi:type="codepage:CodePage" name="cp949c" asciiBased="true" codePageId="10028" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp949c" pmI18nAliases="ibm-949_P11A-1999" pmI18nName="ibm-949_P11A-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_86" xsi:type="description:Description" body="PC+Korea+-+KS"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10029" xsi:type="codepage:CodePage" name="EUC-KR" asciiBased="true" codePageId="10029" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="EUC-KR" pmI18nAliases="ibm-970_P110-1995" pmI18nName="ibm-970_P110-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_87" xsi:type="description:Description" body="EUC+Korean"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10030" xsi:type="codepage:CodePage" name="IBM-971" asciiBased="true" codePageId="10030" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-971" pmI18nAliases="ibm-971_P100-1995" pmI18nName="ibm-971_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_88" xsi:type="description:Description" body="EUC+Korean+%28DBCS-only%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10031" xsi:type="codepage:CodePage" name="KSC_5601" asciiBased="true" codePageId="10031" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="KSC_5601" pmI18nAliases="ibm-1363_P11B-1998" pmI18nName="ibm-1363_P11B-1998" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_89" xsi:type="description:Description" body="PC+Korean+KSC+MBCS+Extended+%28KSC_5601%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10032" xsi:type="codepage:CodePage" name="IBM-1363" asciiBased="true" codePageId="10032" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1363" pmI18nAliases="ibm-1363_P110-1997" pmI18nName="ibm-1363_P110-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_90" xsi:type="description:Description" body="PC+Korean+KSC+MBCS+Extended+%28with+%5C+%3C-%3E+Won+mapping%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10033" xsi:type="codepage:CodePage" name="IBM-1162" asciiBased="true" codePageId="10033" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1162" pmI18nAliases="ibm-1162_P100-1999" pmI18nName="ibm-1162_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_91" xsi:type="description:Description" body="Thai+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10034" xsi:type="codepage:CodePage" name="IBM-874" asciiBased="true" codePageId="10034" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-874" pmI18nAliases="ibm-874_P100-1995" pmI18nName="ibm-874_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_92" xsi:type="description:Description" body="PC+Thai+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10035" xsi:type="codepage:CodePage" name="IBM437" asciiBased="true" codePageId="10035" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM437" pmI18nAliases="ibm-437_P100-1995" pmI18nName="ibm-437_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_93" xsi:type="description:Description" body="PC+United+States"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10036" xsi:type="codepage:CodePage" name="cp850" asciiBased="true" codePageId="10036" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp850" pmI18nAliases="ibm-850_P100-1995" pmI18nName="ibm-850_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_94" xsi:type="description:Description" body="PC+Latin1"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10037" xsi:type="codepage:CodePage" name="cp851" asciiBased="true" codePageId="10037" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp851" pmI18nAliases="ibm-851_P100-1995" pmI18nName="ibm-851_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_95" xsi:type="description:Description" body="PC+DOS+Greek+%28w%2Fo+euro%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10038" xsi:type="codepage:CodePage" name="IBM852" asciiBased="true" codePageId="10038" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM852" pmI18nAliases="ibm-852_P100-1995" pmI18nName="ibm-852_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_96" xsi:type="description:Description" body="PC+Latin2+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10039" xsi:type="codepage:CodePage" name="IBM855" asciiBased="true" codePageId="10039" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM855" pmI18nAliases="ibm-855_P100-1995" pmI18nName="ibm-855_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_97" xsi:type="description:Description" body="PC+Cyrillic+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10040" xsi:type="codepage:CodePage" name="cp856" asciiBased="true" codePageId="10040" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp856" pmI18nAliases="ibm-856_P100-1995" pmI18nName="ibm-856_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_98" xsi:type="description:Description" body="PC+Hebrew+%28old%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10041" xsi:type="codepage:CodePage" name="cp857" asciiBased="true" codePageId="10041" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp857" pmI18nAliases="ibm-857_P100-1995" pmI18nName="ibm-857_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_99" xsi:type="description:Description" body="PC+Latin5+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10042" xsi:type="codepage:CodePage" name="cp858" asciiBased="true" codePageId="10042" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp858" pmI18nAliases="ibm-858_P100-1997" pmI18nName="ibm-858_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_100" xsi:type="description:Description" body="PC+Latin1+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10043" xsi:type="codepage:CodePage" name="cp860" asciiBased="true" codePageId="10043" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp860" pmI18nAliases="ibm-860_P100-1995" pmI18nName="ibm-860_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_101" xsi:type="description:Description" body="PC+Portugal"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10044" xsi:type="codepage:CodePage" name="cp861" asciiBased="true" codePageId="10044" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp861" pmI18nAliases="ibm-861_P100-1995" pmI18nName="ibm-861_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_102" xsi:type="description:Description" body="PC+Iceland"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10045" xsi:type="codepage:CodePage" name="cp862" asciiBased="true" codePageId="10045" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp862" pmI18nAliases="ibm-862_P100-1995" pmI18nName="ibm-862_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_103" xsi:type="description:Description" body="PC+Hebrew+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10046" xsi:type="codepage:CodePage" name="cp863" asciiBased="true" codePageId="10046" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp863" pmI18nAliases="ibm-863_P100-1995" pmI18nName="ibm-863_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_104" xsi:type="description:Description" body="PC+Canadian+French"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10047" xsi:type="codepage:CodePage" name="cp864" asciiBased="true" codePageId="10047" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp864" pmI18nAliases="ibm-864_X110-1999" pmI18nName="ibm-864_X110-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_105" xsi:type="description:Description" body="PC+Arabic+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10048" xsi:type="codepage:CodePage" name="cp865" asciiBased="true" codePageId="10048" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp865" pmI18nAliases="ibm-865_P100-1995" pmI18nName="ibm-865_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_106" xsi:type="description:Description" body="PC+Nordic"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10049" xsi:type="codepage:CodePage" name="cp866" asciiBased="true" codePageId="10049" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp866" pmI18nAliases="ibm-866_P100-1995" pmI18nName="ibm-866_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_107" xsi:type="description:Description" body="PC+Russian+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10050" xsi:type="codepage:CodePage" name="IBM-867" asciiBased="true" codePageId="10050" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-867" pmI18nAliases="ibm-867_P100-1998" pmI18nName="ibm-867_P100-1998" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_108" xsi:type="description:Description" body="PC+Hebrew+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10051" xsi:type="codepage:CodePage" name="cp868" asciiBased="true" codePageId="10051" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp868" pmI18nAliases="ibm-868_P100-1995" pmI18nName="ibm-868_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_109" xsi:type="description:Description" body="PC+Urdu"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10052" xsi:type="codepage:CodePage" name="cp869" asciiBased="true" codePageId="10052" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp869" pmI18nAliases="ibm-869_P100-1995" pmI18nName="ibm-869_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_110" xsi:type="description:Description" body="PC+Greek+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10053" xsi:type="codepage:CodePage" name="KOI8-R" asciiBased="true" codePageId="10053" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="KOI8-R" pmI18nAliases="ibm-878_P100-1996" pmI18nName="ibm-878_P100-1996" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_111" xsi:type="description:Description" body="Russian+Internet"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10054" xsi:type="codepage:CodePage" name="IBM-901" asciiBased="true" codePageId="10054" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-901" pmI18nAliases="ibm-901_P100-1999" pmI18nName="ibm-901_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_112" xsi:type="description:Description" body="PC+Baltic+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10055" xsi:type="codepage:CodePage" name="IBM-902" asciiBased="true" codePageId="10055" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-902" pmI18nAliases="ibm-902_P100-1999" pmI18nName="ibm-902_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_113" xsi:type="description:Description" body="PC+Estonian+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10056" xsi:type="codepage:CodePage" name="cp922" asciiBased="true" codePageId="10056" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp922" pmI18nAliases="ibm-922_P100-1999" pmI18nName="ibm-922_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_114" xsi:type="description:Description" body="PC+Estonian+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10057" xsi:type="codepage:CodePage" name="IBM-4909" asciiBased="true" codePageId="10057" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-4909" pmI18nAliases="ibm-4909_P100-1999" pmI18nName="ibm-4909_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_115" xsi:type="description:Description" body="ISO+Greek+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10058" xsi:type="codepage:CodePage" name="IBM-1250" asciiBased="true" codePageId="10058" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1250" pmI18nAliases="ibm-1250_P100-1995" pmI18nName="ibm-1250_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_116" xsi:type="description:Description" body="MS+Windows+Latin2+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10059" xsi:type="codepage:CodePage" name="IBM-1251" asciiBased="true" codePageId="10059" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1251" pmI18nAliases="ibm-1254_P100-1995" pmI18nName="ibm-1254_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_117" xsi:type="description:Description" body="MS+Windows+Cyrillic+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10060" xsi:type="codepage:CodePage" name="IBM-1255" asciiBased="true" codePageId="10060" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1255" pmI18nAliases="ibm-1255_P100-1995" pmI18nName="ibm-1255_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_118" xsi:type="description:Description" body="MS+Windows+Hebrew+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10061" xsi:type="codepage:CodePage" name="IBM-5351" asciiBased="true" codePageId="10061" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-5351" pmI18nAliases="ibm-5351_P100-1998" pmI18nName="ibm-5351_P100-1998" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_119" xsi:type="description:Description" body="MS+Windows+Hebrew+%28older+version%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10062" xsi:type="codepage:CodePage" name="IBM-1256" asciiBased="true" codePageId="10062" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1256" pmI18nAliases="ibm-1256_P110-1997" pmI18nName="ibm-1256_P110-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_120" xsi:type="description:Description" body="MS+Windows+Arabic+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10063" xsi:type="codepage:CodePage" name="IBM-5352" asciiBased="true" codePageId="10063" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-5352" pmI18nAliases="ibm-5352_P100-1998" pmI18nName="ibm-5352_P100-1998" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_121" xsi:type="description:Description" body="MS+Windows+Arabic+%28older+version%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10064" xsi:type="codepage:CodePage" name="IBM-1257" asciiBased="true" codePageId="10064" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1257" pmI18nAliases="ibm-1257_P100-1995" pmI18nName="ibm-1257_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_122" xsi:type="description:Description" body="MS+Windows+Baltic+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10065" xsi:type="codepage:CodePage" name="IBM-5353" asciiBased="true" codePageId="10065" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-5353" pmI18nAliases="ibm-5353_P100-1998" pmI18nName="ibm-5353_P100-1998" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_123" xsi:type="description:Description" body="MS+Windows+Baltic+%28older+version%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10066" xsi:type="codepage:CodePage" name="IBM-1258" asciiBased="true" codePageId="10066" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1258" pmI18nAliases="ibm-1258_P100-1997" pmI18nName="ibm-1258_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_124" xsi:type="description:Description" body="MS+Windows+Vietnamese+%28w%2Fo+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10067" xsi:type="codepage:CodePage" name="macintosh" asciiBased="true" codePageId="10067" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="macintosh" pmI18nAliases="macos-0_2-10.2" pmI18nName="macos-0_2-10.2" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_125" xsi:type="description:Description" body="Apple+Latin+1"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10068" xsi:type="codepage:CodePage" name="x-mac-greek" asciiBased="true" codePageId="10068" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="x-mac-greek" pmI18nAliases="macos-6-10.2" pmI18nName="macos-6-10.2" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_126" xsi:type="description:Description" body="Apple+Greek"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10069" xsi:type="codepage:CodePage" name="x-mac-cyrillic" asciiBased="true" codePageId="10069" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="x-mac-cyrillic" pmI18nAliases="macos-7_3-10.2" pmI18nName="macos-7_3-10.2" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_127" xsi:type="description:Description" body="Apple+Cyrillic"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10070" xsi:type="codepage:CodePage" name="x-mac-centraleurroman" asciiBased="true" codePageId="10070" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="x-mac-centraleurroman" pmI18nAliases="macos-29-10.2" pmI18nName="macos-29-10.2" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_128" xsi:type="description:Description" body="Apple+Central+Europe"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10071" xsi:type="codepage:CodePage" name="x-mac-turkish" asciiBased="true" codePageId="10071" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="x-mac-turkish" pmI18nAliases="macos-35-10.2" pmI18nName="macos-35-10.2" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_129" xsi:type="description:Description" body="Apple+Turkish"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10072" xsi:type="codepage:CodePage" name="hp-roman8" asciiBased="true" codePageId="10072" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="hp-roman8" pmI18nAliases="ibm-1051_P100-1995" pmI18nName="ibm-1051_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_130" xsi:type="description:Description" body="HP+Latin1"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10073" xsi:type="codepage:CodePage" name="Adobe-Standard-Encoding" asciiBased="true" codePageId="10073" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="Adobe-Standard-Encoding" pmI18nAliases="ibm-1276_P100-1995" pmI18nName="ibm-1276_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_131" xsi:type="description:Description" body="Adobe+Standard+Encoding"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10074" xsi:type="codepage:CodePage" name="IBM-1277" asciiBased="true" codePageId="10074" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1277" pmI18nAliases="ibm-1277_P100-1995" pmI18nName="ibm-1277_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_132" xsi:type="description:Description" body="Adobe+Latin1+Encoding"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10075" xsi:type="codepage:CodePage" name="cp1006" asciiBased="true" codePageId="10075" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp1006" pmI18nAliases="ibm-1006_P100-1995" pmI18nName="ibm-1006_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_133" xsi:type="description:Description" body="ISO+Urdu"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10076" xsi:type="codepage:CodePage" name="cp1098" asciiBased="true" codePageId="10076" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp1098" pmI18nAliases="ibm-1098_P100-1995" pmI18nName="ibm-1098_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_134" xsi:type="description:Description" body="PC+Farsi"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10077" xsi:type="codepage:CodePage" name="cp1124" asciiBased="true" codePageId="10077" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp1124" pmI18nAliases="ibm-1124_P100-1996" pmI18nName="ibm-1124_P100-1996" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_135" xsi:type="description:Description" body="ISO+Cyrillic+Ukraine"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10078" xsi:type="codepage:CodePage" name="cp1125" asciiBased="true" codePageId="10078" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp1125" pmI18nAliases="ibm-1125_P100-1997" pmI18nName="ibm-1125_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_136" xsi:type="description:Description" body="PC+Cyrillic+Ukraine"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10079" xsi:type="codepage:CodePage" name="IBM-1129" asciiBased="true" codePageId="10079" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1129" pmI18nAliases="ibm-1129_P100-1997" pmI18nName="ibm-1129_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_137" xsi:type="description:Description" body="ISO+Vietnamese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10080" xsi:type="codepage:CodePage" name="cp1131" asciiBased="true" codePageId="10080" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp1131" pmI18nAliases="ibm-1131_P100-1997" pmI18nName="ibm-1131_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_138" xsi:type="description:Description" body="PC+Cyrillic+Belarus"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10081" xsi:type="codepage:CodePage" name="IBM-1133" asciiBased="true" codePageId="10081" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1133" pmI18nAliases="ibm-1133_P100-1997" pmI18nName="ibm-1133_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_139" xsi:type="description:Description" body="ISO+Lao"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10082" xsi:type="codepage:CodePage" name="cp1381" asciiBased="true" codePageId="10082" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="cp1381" pmI18nAliases="ibm-1381_P110-1999" pmI18nName="ibm-1381_P110-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_140" xsi:type="description:Description" body="PC+Chinese+GB+%28S-Ch+Data+mixed%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10083" xsi:type="codepage:CodePage" name="ISO-2022-JP" asciiBased="true" codePageId="10083" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-2022-JP" pmI18nAliases="ISO_2022%2Clocale%3Dja%2Cversion%3D0" pmI18nName="ISO_2022%2Clocale%3Dja%2Cversion%3D0" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_141" xsi:type="description:Description" body="ISO-2022+encoding+for+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10084" xsi:type="codepage:CodePage" name="JIS_Encoding" asciiBased="true" codePageId="10084" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="JIS_Encoding" pmI18nAliases="ISO_2022%2Clocale%3Dja%2Cversion%3D1" pmI18nName="ISO_2022%2Clocale%3Dja%2Cversion%3D1" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_142" xsi:type="description:Description" body="ISO-2022+encoding+for+Japanese+%28extension+1%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10085" xsi:type="codepage:CodePage" name="ISO-2022-JP-2" asciiBased="true" codePageId="10085" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-2022-JP-2" pmI18nAliases="ISO_2022%2Clocale%3Dja%2Cversion%3D2" pmI18nName="ISO_2022%2Clocale%3Dja%2Cversion%3D2" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_143" xsi:type="description:Description" body="ISO-2022+encoding+for+Japanese+%28extension+2%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10086" xsi:type="codepage:CodePage" name="JIS7" asciiBased="true" codePageId="10086" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="JIS7" pmI18nAliases="ISO_2022%2Clocale%3Dja%2Cversion%3D3" pmI18nName="ISO_2022%2Clocale%3Dja%2Cversion%3D3" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_144" xsi:type="description:Description" body="ISO-2022+encoding+for+Japanese+%28extension+3%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10087" xsi:type="codepage:CodePage" name="JIS8" asciiBased="true" codePageId="10087" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="JIS8" pmI18nAliases="ISO_2022%2Clocale%3Dja%2Cversion%3D4" pmI18nName="ISO_2022%2Clocale%3Dja%2Cversion%3D4" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_145" xsi:type="description:Description" body="ISO-2022+encoding+for+Japanese+%28extension+4%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10088" xsi:type="codepage:CodePage" name="ISO-2022-KR" asciiBased="true" codePageId="10088" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-2022-KR" pmI18nAliases="ISO_2022%2Clocale%3Dko%2Cversion%3D0" pmI18nName="ISO_2022%2Clocale%3Dko%2Cversion%3D0" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_146" xsi:type="description:Description" body="ISO-2022+encoding+for+Korean"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10089" xsi:type="codepage:CodePage" name="IBM-25546" asciiBased="true" codePageId="10089" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-25546" pmI18nAliases="ISO_2022%2Clocale%3Dko%2Cversion%3D1" pmI18nName="ISO_2022%2Clocale%3Dko%2Cversion%3D1" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_147" xsi:type="description:Description" body="ISO-2022+encoding+for+Korean+%28extension+1%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10090" xsi:type="codepage:CodePage" name="ISO-2022-CN" asciiBased="true" codePageId="10090" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-2022-CN" pmI18nAliases="ISO_2022%2Clocale%3Dzh%2Cversion%3D0" pmI18nName="ISO_2022%2Clocale%3Dzh%2Cversion%3D0" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_148" xsi:type="description:Description" body="ISO-2022+encoding+for+Chinese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10091" xsi:type="codepage:CodePage" name="ISO-2022-CN-EXT" asciiBased="true" codePageId="10091" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ISO-2022-CN-EXT" pmI18nAliases="ISO_2022%2Clocale%3Dzh%2Cversion%3D1" pmI18nName="ISO_2022%2Clocale%3Dzh%2Cversion%3D1" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_149" xsi:type="description:Description" body="ISO-2022+encoding+for+Chinese+%28extension+1%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10092" xsi:type="codepage:CodePage" name="HZ-GB-2312" asciiBased="true" codePageId="10092" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="HZ-GB-2312" pmI18nAliases="HZ" pmI18nName="HZ" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_150" xsi:type="description:Description" body="Simplified+Chinese+%28HZ+GB2312%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10093" xsi:type="codepage:CodePage" name="JIS_X0201" asciiBased="true" codePageId="10093" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="JIS_X0201" pmI18nAliases="ibm-897_P100-1995" pmI18nName="ibm-897_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_151" xsi:type="description:Description" body="ISO-2022+encoding+for+Japanese+%28JIS_X0201%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10094" xsi:type="codepage:CodePage" name="windows-57002" asciiBased="true" codePageId="10094" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-57002" pmI18nAliases="ISCII%2Cversion%3D0" pmI18nName="ISCII%2Cversion%3D0" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_152" xsi:type="description:Description" body="Indian+Script+Code+for+Information+Interchange+-+Devanagari"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10095" xsi:type="codepage:CodePage" name="windows-57003" asciiBased="true" codePageId="10095" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-57003" pmI18nAliases="ISCII%2Cversion%3D1" pmI18nName="ISCII%2Cversion%3D1" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_153" xsi:type="description:Description" body="Indian+Script+Code+for+Information+Interchange+-+Bengali"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10096" xsi:type="codepage:CodePage" name="windows-57011" asciiBased="true" codePageId="10096" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-57011" pmI18nAliases="ISCII%2Cversion%3D2" pmI18nName="ISCII%2Cversion%3D2" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_154" xsi:type="description:Description" body="Indian+Script+Code+for+Information+Interchange+-+Gurumukhi"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10097" xsi:type="codepage:CodePage" name="windows-57010" asciiBased="true" codePageId="10097" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-57010" pmI18nAliases="ISCII%2Cversion%3D3" pmI18nName="ISCII%2Cversion%3D3" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_155" xsi:type="description:Description" body="Indian+Script+Code+for+Information+Interchange+-+Gujarati"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10098" xsi:type="codepage:CodePage" name="windows-57007" asciiBased="true" codePageId="10098" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-57007" pmI18nAliases="ISCII%2Cversion%3D4" pmI18nName="ISCII%2Cversion%3D4" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_156" xsi:type="description:Description" body="Indian+Script+Code+for+Information+Interchange+-+Oriya"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10099" xsi:type="codepage:CodePage" name="windows-57004" asciiBased="true" codePageId="10099" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-57004" pmI18nAliases="ISCII%2Cversion%3D5" pmI18nName="ISCII%2Cversion%3D5" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_157" xsi:type="description:Description" body="Indian+Script+Code+for+Information+Interchange+-+Tamil"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10100" xsi:type="codepage:CodePage" name="windows-57005" asciiBased="true" codePageId="10100" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-57005" pmI18nAliases="ISCII%2Cversion%3D6" pmI18nName="ISCII%2Cversion%3D6" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_158" xsi:type="description:Description" body="Indian+Script+Code+for+Information+Interchange+-+Telugu"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10101" xsi:type="codepage:CodePage" name="windows-57008" asciiBased="true" codePageId="10101" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-57008" pmI18nAliases="ISCII%2Cversion%3D7" pmI18nName="ISCII%2Cversion%3D7" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_159" xsi:type="description:Description" body="Indian+Script+Code+for+Information+Interchange+-+Kannada"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10102" xsi:type="codepage:CodePage" name="windows-57009" asciiBased="true" codePageId="10102" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="windows-57009" pmI18nAliases="ISCII%2Cversion%3D8" pmI18nName="ISCII%2Cversion%3D8" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_160" xsi:type="description:Description" body="Indian+Script+Code+for+Information+Interchange+-+Malayalam"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10103" xsi:type="codepage:CodePage" name="LMBCS-1" asciiBased="true" codePageId="10103" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-1" pmI18nAliases="LMBCS-1" pmI18nName="LMBCS-1" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_161" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+PC+Latin1"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10104" xsi:type="codepage:CodePage" name="LMBCS-2" asciiBased="true" codePageId="10104" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-2" pmI18nAliases="LMBCS-2" pmI18nName="LMBCS-2" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_162" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+PC+DOS+Greek"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10105" xsi:type="codepage:CodePage" name="LMBCS-3" asciiBased="true" codePageId="10105" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-3" pmI18nAliases="LMBCS-3" pmI18nName="LMBCS-3" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_163" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+Windows+Hebrew"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10106" xsi:type="codepage:CodePage" name="LMBCS-4" asciiBased="true" codePageId="10106" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-4" pmI18nAliases="LMBCS-4" pmI18nName="LMBCS-4" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_164" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+Windows+Arabic"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10107" xsi:type="codepage:CodePage" name="LMBCS-5" asciiBased="true" codePageId="10107" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-5" pmI18nAliases="LMBCS-5" pmI18nName="LMBCS-5" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_165" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+Windows+Cyrillic"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10108" xsi:type="codepage:CodePage" name="LMBCS-6" asciiBased="true" codePageId="10108" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-6" pmI18nAliases="LMBCS-6" pmI18nName="LMBCS-6" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_166" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+PC+Latin2"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10109" xsi:type="codepage:CodePage" name="LMBCS-8" asciiBased="true" codePageId="10109" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-8" pmI18nAliases="LMBCS-8" pmI18nName="LMBCS-8" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_167" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+Windows+Turkish"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10110" xsi:type="codepage:CodePage" name="LMBCS-11" asciiBased="true" codePageId="10110" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-11" pmI18nAliases="LMBCS-11" pmI18nName="LMBCS-11" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_168" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+MS-DOS+Thai"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10111" xsi:type="codepage:CodePage" name="LMBCS-16" asciiBased="true" codePageId="10111" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-16" pmI18nAliases="LMBCS-16" pmI18nName="LMBCS-16" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_169" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+Windows+Japanese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10112" xsi:type="codepage:CodePage" name="LMBCS-17" asciiBased="true" codePageId="10112" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-17" pmI18nAliases="LMBCS-17" pmI18nName="LMBCS-17" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_170" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+Windows+Korean"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10113" xsi:type="codepage:CodePage" name="LMBCS-18" asciiBased="true" codePageId="10113" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-18" pmI18nAliases="LMBCS-18" pmI18nName="LMBCS-18" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_171" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+Windows+Chinese+%28Traditional%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10114" xsi:type="codepage:CodePage" name="LMBCS-19" asciiBased="true" codePageId="10114" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="LMBCS-19" pmI18nAliases="LMBCS-19" pmI18nName="LMBCS-19" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_172" xsi:type="description:Description" body="Lotus+MBCS+encoding+for+Windows+Chinese+%28Simplified%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10115" xsi:type="codepage:CodePage" name="IBM277" codePageId="10115" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM277" pmI18nAliases="ibm-277_P100-1995" pmI18nName="ibm-277_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_173" xsi:type="description:Description" body="EBCDIC+Denmark%2C+Norway"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10116" xsi:type="codepage:CodePage" name="IBM278" codePageId="10116" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM278" pmI18nAliases="ibm-278_P100-1995" pmI18nName="ibm-278_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_174" xsi:type="description:Description" body="EBCDIC+Finland%2C+Sweden"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10117" xsi:type="codepage:CodePage" name="IBM284" codePageId="10117" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM284" pmI18nAliases="ibm-284_P100-1995" pmI18nName="ibm-284_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_175" xsi:type="description:Description" body="EBCDIC+Spain%2C+Latin+America"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10118" xsi:type="codepage:CodePage" name="IBM290" codePageId="10118" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM290" pmI18nAliases="ibm-290_P100-1995" pmI18nName="ibm-290_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_176" xsi:type="description:Description" body="EBCDIC+Japanese+Katakana+SBCS"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10119" xsi:type="codepage:CodePage" name="IBM420" codePageId="10119" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM420" pmI18nAliases="ibm-420_X120-1999" pmI18nName="ibm-420_X120-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_177" xsi:type="description:Description" body="EBCDIC+Arabic"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10120" xsi:type="codepage:CodePage" name="IBM424" codePageId="10120" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM424" pmI18nAliases="ibm-424_P100-1995" pmI18nName="ibm-424_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_178" xsi:type="description:Description" body="EBCDIC+Hebrew+%28updated+with+new+sheqel%2C+control+charaters%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10121" xsi:type="codepage:CodePage" name="IBM-803" codePageId="10121" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-803" pmI18nAliases="ibm-803_P100-1999" pmI18nName="ibm-803_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_179" xsi:type="description:Description" body="EBCDIC+Hebrew"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10122" xsi:type="codepage:CodePage" name="IBM-838" codePageId="10122" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-838" pmI18nAliases="ibm-838_P100-1995" pmI18nName="ibm-838_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_180" xsi:type="description:Description" body="EBCDIC+Thai"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10123" xsi:type="codepage:CodePage" name="IBM870" codePageId="10123" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM870" pmI18nAliases="ibm-870_P100-1995" pmI18nName="ibm-870_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_181" xsi:type="description:Description" body="EBCDIC+Latin2"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10124" xsi:type="codepage:CodePage" name="IBM871" codePageId="10124" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM871" pmI18nAliases="ibm-871_P100-1995" pmI18nName="ibm-871_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_182" xsi:type="description:Description" body="EBCDIC+Iceland"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10125" xsi:type="codepage:CodePage" name="IBM-875" codePageId="10125" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-875" pmI18nAliases="ibm-875_P100-1995" pmI18nName="ibm-875_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_183" xsi:type="description:Description" body="EBCDIC+Greek"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10126" xsi:type="codepage:CodePage" name="IBM918" codePageId="10126" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM918" pmI18nAliases="ibm-918_P100-1995" pmI18nName="ibm-918_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_184" xsi:type="description:Description" body="EBCDIC+Urdu"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10127" xsi:type="codepage:CodePage" name="IBM-1025" codePageId="10127" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1025" pmI18nAliases="ibm-1025_P100-1995" pmI18nName="ibm-1025_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_185" xsi:type="description:Description" body="EBCDIC+Cyrillic"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10128" xsi:type="codepage:CodePage" name="IBM1026" codePageId="10128" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM1026" pmI18nAliases="ibm-1026_P100-1995" pmI18nName="ibm-1026_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_186" xsi:type="description:Description" body="EBCDIC+Turkey"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10129" xsi:type="codepage:CodePage" name="IBM-1097" codePageId="10129" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1097" pmI18nAliases="ibm-1097_P100-1995" pmI18nName="ibm-1097_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_187" xsi:type="description:Description" body="EBCDIC+Farsi"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10130" xsi:type="codepage:CodePage" name="IBM-1112" codePageId="10130" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1112" pmI18nAliases="ibm-1112_P100-1995" pmI18nName="ibm-1112_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_188" xsi:type="description:Description" body="EBCDIC+Baltic"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10131" xsi:type="codepage:CodePage" name="IBM-1122" codePageId="10131" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1122" pmI18nAliases="ibm-1122_P100-1999" pmI18nName="ibm-1122_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_189" xsi:type="description:Description" body="EBCDIC+Estonia"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10132" xsi:type="codepage:CodePage" name="IBM-1123" codePageId="10132" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1123" pmI18nAliases="ibm-1123_P100-1995" pmI18nName="ibm-1123_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_190" xsi:type="description:Description" body="EBCDIC+Cyrillic+Ukraine"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10133" xsi:type="codepage:CodePage" name="IBM-1130" codePageId="10133" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1130" pmI18nAliases="ibm-1130_P100-1997" pmI18nName="ibm-1130_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_191" xsi:type="description:Description" body="EBCDIC+Vietnamese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10134" xsi:type="codepage:CodePage" name="IBM-1132" codePageId="10134" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1132" pmI18nAliases="ibm-1132_P100-1998" pmI18nName="ibm-1132_P100-1998" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_192" xsi:type="description:Description" body="EBCDIC+Lao"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10135" xsi:type="codepage:CodePage" name="IBM-1140" codePageId="10135" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1140" pmI18nAliases="ibm-1140_P100-1997" pmI18nName="ibm-1140_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_193" xsi:type="description:Description" body="EBCDIC+US+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10136" xsi:type="codepage:CodePage" name="IBM-1141" codePageId="10136" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1141" pmI18nAliases="ibm-1141_P100-1997" pmI18nName="ibm-1141_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_194" xsi:type="description:Description" body="EBCDIC+Germanay%2C+Austria+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10137" xsi:type="codepage:CodePage" name="IBM-1142" codePageId="10137" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1142" pmI18nAliases="ibm-1142_P100-1997" pmI18nName="ibm-1142_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_195" xsi:type="description:Description" body="EBCDIC+Denmark%2C+Norway+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10138" xsi:type="codepage:CodePage" name="IBM-1143" codePageId="10138" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1143" pmI18nAliases="ibm-1143_P100-1997" pmI18nName="ibm-1143_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_196" xsi:type="description:Description" body="EBCDIC+Finland%2C+Sweden+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10139" xsi:type="codepage:CodePage" name="IBM-1144" codePageId="10139" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1144" pmI18nAliases="ibm-1144_P100-1997" pmI18nName="ibm-1144_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_197" xsi:type="description:Description" body="EBCDIC+Italy+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10140" xsi:type="codepage:CodePage" name="IBM-1145" codePageId="10140" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1145" pmI18nAliases="ibm-1145_P100-1997" pmI18nName="ibm-1145_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_198" xsi:type="description:Description" body="EBCDIC+Spain%2C+Latin+America+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10141" xsi:type="codepage:CodePage" name="IBM-1146" codePageId="10141" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1146" pmI18nAliases="ibm-1146_P100-1997" pmI18nName="ibm-1146_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_199" xsi:type="description:Description" body="EBCDIC+UK%2C+Ireland+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10142" xsi:type="codepage:CodePage" name="IBM-1147" codePageId="10142" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1147" pmI18nAliases="ibm-1147_P100-1997" pmI18nName="ibm-1147_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_200" xsi:type="description:Description" body="EBCDIC+French+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10143" xsi:type="codepage:CodePage" name="IBM-1148" codePageId="10143" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1148" pmI18nAliases="ibm-1148_P100-1997" pmI18nName="ibm-1148_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_201" xsi:type="description:Description" body="EBCDIC+International+Latin1+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10144" xsi:type="codepage:CodePage" name="IBM-1149" codePageId="10144" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1149" pmI18nAliases="ibm-1149_P100-1997" pmI18nName="ibm-1149_P100-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_202" xsi:type="description:Description" body="EBCDIC+Iceland+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10145" xsi:type="codepage:CodePage" name="IBM-1153" codePageId="10145" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1153" pmI18nAliases="ibm-1153_P100-1999" pmI18nName="ibm-1153_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_203" xsi:type="description:Description" body="EBCDIC+Latin2+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10146" xsi:type="codepage:CodePage" name="IBM-1154" codePageId="10146" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1154" pmI18nAliases="ibm-1154_P100-1999" pmI18nName="ibm-1154_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_204" xsi:type="description:Description" body="EBCDIC+Cyrillic+Multilingual+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10147" xsi:type="codepage:CodePage" name="IBM-1155" codePageId="10147" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1155" pmI18nAliases="ibm-1155_P100-1999" pmI18nName="ibm-1155_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_205" xsi:type="description:Description" body="EBCDIC+Turkey+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10148" xsi:type="codepage:CodePage" name="IBM-1156" codePageId="10148" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1156" pmI18nAliases="ibm-1156_P100-1999" pmI18nName="ibm-1156_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_206" xsi:type="description:Description" body="EBCDIC+Baltic+Multilingual+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10149" xsi:type="codepage:CodePage" name="IBM-1157" codePageId="10149" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1157" pmI18nAliases="ibm-1157_P100-1999" pmI18nName="ibm-1157_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_207" xsi:type="description:Description" body="EBCDIC+Estonia+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10150" xsi:type="codepage:CodePage" name="IBM-1158" codePageId="10150" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1158" pmI18nAliases="ibm-1158_P100-1999" pmI18nName="ibm-1158_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_208" xsi:type="description:Description" body="EBCDIC+Cyrillic+Ukraine+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10151" xsi:type="codepage:CodePage" name="IBM-1160" codePageId="10151" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1160" pmI18nAliases="ibm-1160_P100-1999" pmI18nName="ibm-1160_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_209" xsi:type="description:Description" body="EBCDIC+Thai+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10152" xsi:type="codepage:CodePage" name="IBM-1164" codePageId="10152" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1164" pmI18nAliases="ibm-1164_P100-1999" pmI18nName="ibm-1164_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_210" xsi:type="description:Description" body="EBCDIC+Vietnamese+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10153" xsi:type="codepage:CodePage" name="IBM-1364" codePageId="10153" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1364" pmI18nAliases="ibm-1364_P110-1997" pmI18nName="ibm-1364_P110-1997" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_211" xsi:type="description:Description" body="EBCDIC+Korean+Extended+%28SBCS+IBM-13121+combined+with+DBCS+IBM-4930%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10154" xsi:type="codepage:CodePage" name="IBM-1371" codePageId="10154" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1371" pmI18nAliases="ibm-1371_P100-1999" pmI18nName="ibm-1371_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_212" xsi:type="description:Description" body="EBCDIC+Taiwan+Extended+%28SBCS+IBM-1159+combined+with+DBCS+IBM-9027%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10155" xsi:type="codepage:CodePage" name="IBM-1388" codePageId="10155" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1388" pmI18nAliases="ibm-1388_P103-2001" pmI18nName="ibm-1388_P103-2001" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_213" xsi:type="description:Description" body="EBCDIC+Chinese+GB+%28S-Ch+DBCS-Host+Data%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10156" xsi:type="codepage:CodePage" name="IBM-1390" codePageId="10156" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1390" pmI18nAliases="ibm-1390_P110-2003" pmI18nName="ibm-1390_P110-2003" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_214" xsi:type="description:Description" body="EBCDIC+Japanese+Katakana+%28w%2F+euro%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10157" xsi:type="codepage:CodePage" name="IBM-1399" codePageId="10157" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1399" pmI18nAliases="ibm-1399_P110-2003" pmI18nName="ibm-1399_P110-2003" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_215" xsi:type="description:Description" body="EBCDIC+Japanese+Latin-Kanji+%28w%2F+euro%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10158" xsi:type="codepage:CodePage" name="IBM-16684" asciiBased="true" codePageId="10158" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-16684" pmI18nAliases="ibm-16684_P110-2003" pmI18nName="ibm-16684_P110-2003" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_216" xsi:type="description:Description" body="EBCDIC+Japanese+Extended+%28DBCS+IBM-1390+combined+with+DBCS+IBM-1399%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10159" xsi:type="codepage:CodePage" name="IBM-4899" codePageId="10159" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-4899" pmI18nAliases="ibm-4899_P100-1998" pmI18nName="ibm-4899_P100-1998" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_217" xsi:type="description:Description" body="EBCDIC+Hebrew+%28w%2F+euro%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10160" xsi:type="codepage:CodePage" name="IBM-4971" codePageId="10160" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-4971" pmI18nAliases="ibm-4971_P100-1999" pmI18nName="ibm-4971_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_218" xsi:type="description:Description" body="EBCDIC+Greek+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10161" xsi:type="codepage:CodePage" name="IBM-12712" codePageId="10161" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-12712" pmI18nAliases="ibm-12712_P100-1998" pmI18nName="ibm-12712_P100-1998" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_219" xsi:type="description:Description" body="EBCDIC+Hebrew+%28updated+w%2F+euro+and+new+sheqel%2C+control+charaters%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10162" xsi:type="codepage:CodePage" name="IBM-16804" codePageId="10162" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-16804" pmI18nAliases="ibm-16804_X110-1999" pmI18nName="ibm-16804_X110-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_220" xsi:type="description:Description" body="EBCDIC+Arabic+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10163" xsi:type="codepage:CodePage" name="IBM-1137" codePageId="10163" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1137" pmI18nAliases="ibm-1137_P100-1999" pmI18nName="ibm-1137_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_221" xsi:type="description:Description" body="EBCDIC+Devanagari"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10164" xsi:type="codepage:CodePage" name="IBM-5123" codePageId="10164" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-5123" pmI18nAliases="ibm-5123_P100-1999" pmI18nName="ibm-5123_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_222" xsi:type="description:Description" body="EBCDIC+Japanese+Latin+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10165" xsi:type="codepage:CodePage" name="IBM-8482" codePageId="10165" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-8482" pmI18nAliases="ibm-8482_P100-1999" pmI18nName="ibm-8482_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_223" xsi:type="description:Description" body="EBCDIC+Japanese+Katakana+SBCS+%28w%2F+euro+update%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10166" xsi:type="codepage:CodePage" name="IBM-37-s390" codePageId="10166" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-37-s390" pmI18nAliases="ibm-37_P100-1995%2Cswaplfnl" pmI18nName="ibm-37_P100-1995%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_224" xsi:type="description:Description" body="EBCDIC+IBM-37+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10167" xsi:type="codepage:CodePage" name="IBM-1047-s390" codePageId="10167" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1047-s390" pmI18nAliases="ibm-1047_P100-1995%2Cswaplfnl" pmI18nName="ibm-1047_P100-1995%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_225" xsi:type="description:Description" body="EBCDIC+IBM-1047+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10168" xsi:type="codepage:CodePage" name="IBM-1140-s390" codePageId="10168" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1140-s390" pmI18nAliases="ibm-1140_P100-1997%2Cswaplfnl" pmI18nName="ibm-1140_P100-1997%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_226" xsi:type="description:Description" body="EBCDIC+IBM-1140+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10169" xsi:type="codepage:CodePage" name="IBM-1142-s390" codePageId="10169" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1142-s390" pmI18nAliases="ibm-1142_P100-1997%2Cswaplfnl" pmI18nName="ibm-1142_P100-1997%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_227" xsi:type="description:Description" body="EBCDIC+IBM-1142+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10170" xsi:type="codepage:CodePage" name="IBM-1143-s390" codePageId="10170" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1143-s390" pmI18nAliases="ibm-1143_P100-1997%2Cswaplfnl" pmI18nName="ibm-1143_P100-1997%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_228" xsi:type="description:Description" body="EBCDIC+IBM-1143+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10171" xsi:type="codepage:CodePage" name="IBM-1144-s390" codePageId="10171" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1144-s390" pmI18nAliases="ibm-1144_P100-1997%2Cswaplfnl" pmI18nName="ibm-1144_P100-1997%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_229" xsi:type="description:Description" body="EBCDIC+IBM-1144+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10172" xsi:type="codepage:CodePage" name="IBM-1145-s390" codePageId="10172" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1145-s390" pmI18nAliases="ibm-1145_P100-1997%2Cswaplfnl" pmI18nName="ibm-1145_P100-1997%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_230" xsi:type="description:Description" body="EBCDIC+IBM-1145+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10173" xsi:type="codepage:CodePage" name="IBM-1146-s390" codePageId="10173" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1146-s390" pmI18nAliases="ibm-1146_P100-1997%2Cswaplfnl" pmI18nName="ibm-1146_P100-1997%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_231" xsi:type="description:Description" body="EBCDIC+IBM-1146+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10174" xsi:type="codepage:CodePage" name="IBM-1147-s390" codePageId="10174" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1147-s390" pmI18nAliases="ibm-1147_P100-1997%2Cswaplfnl" pmI18nName="ibm-1147_P100-1997%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_232" xsi:type="description:Description" body="EBCDIC+IBM-1147+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10175" xsi:type="codepage:CodePage" name="IBM-1148-s390" codePageId="10175" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1148-s390" pmI18nAliases="ibm-1148_P100-1997%2Cswaplfnl" pmI18nName="ibm-1148_P100-1997%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_233" xsi:type="description:Description" body="EBCDIC+IBM-1148+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10176" xsi:type="codepage:CodePage" name="IBM-1149-s390" codePageId="10176" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1149-s390" pmI18nAliases="ibm-1149_P100-1997%2Cswaplfnl" pmI18nName="ibm-1149_P100-1997%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_234" xsi:type="description:Description" body="EBCDIC+IBM-1149+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10177" xsi:type="codepage:CodePage" name="IBM-1153-s390" codePageId="10177" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-1153-s390" pmI18nAliases="ibm-1153_P100-1999%2Cswaplfnl" pmI18nName="ibm-1153_P100-1999%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_235" xsi:type="description:Description" body="EBCDIC+IBM-1153+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10178" xsi:type="codepage:CodePage" name="IBM-12712-s390" codePageId="10178" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-12712-s390" pmI18nAliases="ibm-12712_P100-1998%2Cswaplfnl" pmI18nName="ibm-12712_P100-1998%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_236" xsi:type="description:Description" body="EBCDIC+IBM-12712+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10179" xsi:type="codepage:CodePage" name="IBM-16804-s390" codePageId="10179" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM-16804-s390" pmI18nAliases="ibm-16804_X110-1999%2Cswaplfnl" pmI18nName="ibm-16804_X110-1999%2Cswaplfnl" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_237" xsi:type="description:Description" body="EBCDIC+IBM-16804+for+S%2F390+%28lf+and+nl+swapped%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F10180" xsi:type="codepage:CodePage" name="ebcdic-xml-us" codePageId="10180" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="ebcdic-xml-us" pmI18nAliases="ebcdic-xml-us" pmI18nName="ebcdic-xml-us" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_238" xsi:type="description:Description" body="EBCDIC+US+%28w%2F+euro%29+-+Extension+for+XML4C%28Xerces%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F11000" xsi:type="codepage:CodePage" name="is-960" asciiBased="true" codePageId="11000" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="is-960" pmI18nAliases="is-960" pmI18nName="is-960" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_239" xsi:type="description:Description" body="Israeli+Standard+960+%287-bit+Hebrew+encoding%29"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F11001" xsi:type="codepage:CodePage" name="IBM1159" codePageId="11001" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM1159" pmI18nAliases="ibm-1159_P100-1999" pmI18nName="ibm-1159_P100-1999" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_240" xsi:type="description:Description" body="IBM+EBCDIC+Taiwan%2C+Traditional+Chinese"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F11002" xsi:type="codepage:CodePage" name="IBM13121" codePageId="11002" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM13121" pmI18nAliases="ibm-13121_P100-1995" pmI18nName="ibm-13121_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_241" xsi:type="description:Description" body="IBM+EBCDIC+Korean+Extended+CP13121"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F11003" xsi:type="codepage:CodePage" name="IBM13124" codePageId="11003" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM13124" pmI18nAliases="ibm-13124_P100-1995" pmI18nName="ibm-13124_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_242" xsi:type="description:Description" body="IBM+EBCDIC+Simplified+Chinese+CP13124"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F11004" xsi:type="codepage:CodePage" name="IBM4933" asciiBased="true" codePageId="11004" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM4933" pmI18nAliases="ibm-4933_P100-2002" pmI18nName="ibm-4933_P100-2002" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_243" xsi:type="description:Description" body="IBM+Simplified+Chinese+CP4933"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F11005" xsi:type="codepage:CodePage" name="IBM835" asciiBased="true" codePageId="11005" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM835" pmI18nAliases="ibm-835_X100-1995" pmI18nName="ibm-835_X100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_244" xsi:type="description:Description" body="IBM+Taiwan%2C+Traditional+Chinese+CP835"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F11006" xsi:type="codepage:CodePage" name="IBM836" codePageId="11006" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM836" pmI18nAliases="ibm-836_P100-1995" pmI18nName="ibm-836_P100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_245" xsi:type="description:Description" body="IBM+EBCDIC+Simplified+Chinese+Extended"/>
+</annotations>
+</CodePage>
+<CodePage imx:id="smd:com.informatica.metadata.seed.platform.CodePages.codepagesystem%2F11007" xsi:type="codepage:CodePage" name="IBM837" asciiBased="true" codePageId="11007" compatibleToCodePageIds="106 1200 1201 1202 10000 10001 10002 10003 10004 10005 10006" isoName="IBM837" pmI18nAliases="ibm-837_X100-1995" pmI18nName="ibm-837_X100-1995" sortIds="0">
+<annotations>
+<Annotation imx:id="ID_246" xsi:type="description:Description" body="IBM+Simplified+Chinese+CP837"/>
+</annotations>
+</CodePage>
+</codePages>
+</codepage:CodePageSystem>
+<codepage:SortSystem imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem" name="CodePages">
+<annotations>
+<Annotation imx:id="ID_247" xsi:type="description:Description" body="Platform+sort+system"/>
+</annotations>
+<sorts>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F0" xsi:type="codepage:Sort" name="Binary" localeName="Binary"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F1" xsi:type="codepage:Sort" name="English" localeName="en" sortId="1"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F2" xsi:type="codepage:Sort" name="Spanish" localeName="es" sortId="2"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F3" xsi:type="codepage:Sort" name="TraditionalSpanish" localeName="es__TRADITIONAL" sortId="3"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F4" xsi:type="codepage:Sort" name="Danish" localeName="da" sortId="4"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F5" xsi:type="codepage:Sort" name="Swedish" localeName="sv" sortId="5"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F6" xsi:type="codepage:Sort" name="Finnish" localeName="fi" sortId="6"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F7" xsi:type="codepage:Sort" name="Croatian" localeName="hr" sortId="7"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F8" xsi:type="codepage:Sort" name="Czech" localeName="cs" sortId="8"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F9" xsi:type="codepage:Sort" name="Estonian" localeName="et" sortId="9"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F10" xsi:type="codepage:Sort" name="Hungarian" localeName="hu" sortId="10"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F11" xsi:type="codepage:Sort" name="Latvian" localeName="lv" sortId="11"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F12" xsi:type="codepage:Sort" name="Lithuanian" localeName="lt" sortId="12"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F13" xsi:type="codepage:Sort" name="Romanian" localeName="ro" sortId="13"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F14" xsi:type="codepage:Sort" name="Slovak" localeName="sk" sortId="14"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F15" xsi:type="codepage:Sort" name="Slovenian" localeName="sl" sortId="15"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F16" xsi:type="codepage:Sort" name="Thai" localeName="th" sortId="16"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F17" xsi:type="codepage:Sort" name="Turkish" localeName="tr" sortId="17"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F18" xsi:type="codepage:Sort" name="Ukrainian" localeName="uk" sortId="18"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F19" xsi:type="codepage:Sort" name="Vietnamese" localeName="vi" sortId="19"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F20" xsi:type="codepage:Sort" name="Belarusian" localeName="be" sortId="20"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F21" xsi:type="codepage:Sort" name="Bulgarian" localeName="bg" sortId="21"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F22" xsi:type="codepage:Sort" name="Bengali" localeName="bn" sortId="22"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F23" xsi:type="codepage:Sort" name="Catalan" localeName="ca" sortId="23"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F24" xsi:type="codepage:Sort" name="German" localeName="de" sortId="24"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F25" xsi:type="codepage:Sort" name="GermanPhonebook" localeName="de__PHONEBOOK" sortId="25"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F26" xsi:type="codepage:Sort" name="Greek" localeName="el" sortId="26"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F27" xsi:type="codepage:Sort" name="Arabic" localeName="ar" sortId="27"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F28" xsi:type="codepage:Sort" name="Persian" localeName="fa" sortId="28"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F29" xsi:type="codepage:Sort" name="French" localeName="fr" sortId="29"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F30" xsi:type="codepage:Sort" name="Hebrew" localeName="he" sortId="30"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F31" xsi:type="codepage:Sort" name="Hindi" localeName="hi" sortId="31"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F32" xsi:type="codepage:Sort" name="Armenian" localeName="hy" sortId="32"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F33" xsi:type="codepage:Sort" name="Indonesian" localeName="id" sortId="33"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F34" xsi:type="codepage:Sort" name="Italian" localeName="it" sortId="34"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F35" xsi:type="codepage:Sort" name="Japanese" localeName="ja" sortId="35"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F36" xsi:type="codepage:Sort" name="Kazakh" localeName="kk" sortId="36"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F37" xsi:type="codepage:Sort" name="Korean" localeName="ko" sortId="37"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F38" xsi:type="codepage:Sort" name="Macedonian" localeName="mk" sortId="38"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F39" xsi:type="codepage:Sort" name="Norwegian" localeName="nb" sortId="39"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F40" xsi:type="codepage:Sort" name="Dutch" localeName="nl" sortId="40"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F41" xsi:type="codepage:Sort" name="Polish" localeName="pl" sortId="41"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F42" xsi:type="codepage:Sort" name="Pashto" localeName="ps" sortId="42"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F43" xsi:type="codepage:Sort" name="Portuguese" localeName="pt" sortId="43"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F44" xsi:type="codepage:Sort" name="Russian" localeName="ru" sortId="44"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F45" xsi:type="codepage:Sort" name="Albanian" localeName="sq" sortId="45"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F46" xsi:type="codepage:Sort" name="Serbian" localeName="sr" sortId="46"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F47" xsi:type="codepage:Sort" name="SimplifiedChinese" localeName="zh_Hans" sortId="47"/>
+<Sort imx:id="smd:com.informatica.metadata.seed.platform.CodePages.sortsystem%2F48" xsi:type="codepage:Sort" name="TraditionalChinese" localeName="zh_Hant" sortId="48"/>
+</sorts>
+</codepage:SortSystem>
+</imx:IMX>

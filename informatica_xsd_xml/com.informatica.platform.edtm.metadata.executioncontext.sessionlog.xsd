@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.platform.edtm.metadata.executioncontext.sessionlog/2" xmlns:dtm="http://com.informatica.sdk.dtm/2" xmlns:imx="http://com.informatica.imx" xmlns:sessionlog="http://com.informatica.platform.edtm.metadata.executioncontext.sessionlog/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.platform.edtm.metadata.executioncontext.sessionlog/2">
+<xsd:import namespace="http://com.informatica.sdk.dtm/2" schemaLocation="com.informatica.sdk.dtm.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThis package contains subclasses of common.executioncontext.SessionLogConfig that encapsulate the configuration metadata for Informatica-provided (i.e. built-in) implementation of the DTM's ILogger interface.\n \n In order to use a built-in implementation associated with the classes from this package, the DTM must have previously been configured by its embedding application to understand the association between this package's subclasses and their associated built-in implementation DLLs.\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="PCSFSessionLogConfig">
+<xsd:complexContent>
+<xsd:extension base="dtm:SessionLogConfig">
+<xsd:annotation>
+<xsd:documentation> Each instance of this class contains metadata for configuring an implementation of the DTM's session log handler interface (ILogger) that works by writing the post-PCSF machine-readable binary file format.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="numRunsToSave" type="xsd:int"/>
+<xsd:attribute name="saveSessionLogByTimestamp" type="xsd:boolean"/>
+<xsd:attribute name="sessionLogFileDir">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sessionLogFilePrefix">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PCSFSessionLogConfig" type="sessionlog:PCSFSessionLogConfig"/>
+<xsd:complexType name="TextFileSessionLogConfig">
+<xsd:complexContent>
+<xsd:extension base="dtm:SessionLogConfig">
+<xsd:annotation>
+<xsd:documentation> Each instance of this class contains metadata for configuring an implementation of the DTM's session log handler interface (ILogger) that works by writing the pre-Zeus human-readable text file format.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="numRunsToSave" type="xsd:int"/>
+<xsd:attribute name="saveSessionLogByTimestamp" type="xsd:boolean"/>
+<xsd:attribute name="sessionLogFileDir">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sessionLogFilePrefix">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TextFileSessionLogConfig" type="sessionlog:TextFileSessionLogConfig"/>
+</xsd:schema>

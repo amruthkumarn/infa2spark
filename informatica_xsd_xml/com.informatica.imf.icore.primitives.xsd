@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns="http://com.informatica.imf.icore.primitives/1" xmlns:imx="http://com.informatica.imx" xmlns:primitives="http://com.informatica.imf.icore.primitives/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.imf.icore.primitives/1">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> Package containing boxed primitive types exposed by IMF.\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="IBlob">
+<xsd:annotation>
+<xsd:documentation> Class representing the boxed Blob in the context of IMF
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="IBlob" type="primitives:IBlob"/>
+<xsd:complexType name="IBoolean">
+<xsd:annotation>
+<xsd:documentation> Class representing the boxed Boolean in the context of IMF
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute name="value" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="IBoolean" type="primitives:IBoolean"/>
+<xsd:complexType name="IByte">
+<xsd:annotation>
+<xsd:documentation> Class representing the boxed Byte in the context of IMF
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute name="value" type="xsd:byte"/>
+</xsd:complexType>
+<xsd:element name="IByte" type="primitives:IByte"/>
+<xsd:complexType name="ICharacter">
+<xsd:annotation>
+<xsd:documentation> Class representing the boxed Character in the context of IMF
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="imx:char">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ICharacter" type="primitives:ICharacter"/>
+<xsd:complexType name="IDate">
+<xsd:annotation>
+<xsd:documentation> Class representing the boxed Date in the context of IMF
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="IDate" type="primitives:IDate"/>
+<xsd:complexType name="IDouble">
+<xsd:annotation>
+<xsd:documentation> Class representing the boxed Double in the context of IMF
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute name="value" type="xsd:double"/>
+</xsd:complexType>
+<xsd:element name="IDouble" type="primitives:IDouble"/>
+<xsd:complexType name="IFloat">
+<xsd:annotation>
+<xsd:documentation> Class representing the boxed Float in the context of IMF
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute name="value" type="xsd:float"/>
+</xsd:complexType>
+<xsd:element name="IFloat" type="primitives:IFloat"/>
+<xsd:complexType name="IInteger">
+<xsd:annotation>
+<xsd:documentation> Class representing the boxed Integer in the context of IMF
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute name="value" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="IInteger" type="primitives:IInteger"/>
+<xsd:complexType name="ILong">
+<xsd:annotation>
+<xsd:documentation> Class representing the boxed Long in the context of IMF
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute name="value" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="ILong" type="primitives:ILong"/>
+<xsd:complexType name="IShort">
+<xsd:annotation>
+<xsd:documentation> Class representing the boxed Short in the context of IMF
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute name="value" type="xsd:short"/>
+</xsd:complexType>
+<xsd:element name="IShort" type="primitives:IShort"/>
+<xsd:complexType name="IString">
+<xsd:annotation>
+<xsd:documentation> Class representing the boxed String in the context of IMF
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="IString" type="primitives:IString"/>
+</xsd:schema>

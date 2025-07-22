@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.ds.sql.feature.metadata.common/0" xmlns:common="http://com.informatica.ds.app.feature.metadata.common/0" xmlns:common1="http://com.informatica.ds.sql.feature.metadata.common/0" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.ds.sql.feature.metadata.common/0">
+<xsd:import namespace="http://com.informatica.ds.app.feature.metadata.common/0" schemaLocation="com.informatica.ds.app.feature.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="SQLFeature">
+<xsd:complexContent>
+<xsd:extension base="common:Feature">
+<xsd:annotation>
+<xsd:documentation> This is the runtime model of an SQL end point.
+ 
+ @author Andy Lai
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="sqlEndpoint" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SQLFeature" type="common1:SQLFeature"/>
+</xsd:schema>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Informatica proprietary -->
+<imx:IMX xmlns:imx="http://com.informatica.imx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" serializationSpecVersion="14.0" crcEnabled="0" xmlns:core="http://com.informatica.metadata.common.core/2" versioncore="2.2.1" xmlns:types="http://com.informatica.metadata.common.types/2" versiontypes="2.4.0" xmlns:directmaps="http://com.informatica.metadata.common.typesystem.directmaps/2" versiondirectmaps="2.1.0" xmlns:description="http://com.informatica.metadata.common.description/2" versiondescription="2.1.0" xmlns:storagesemantics="http://com.informatica.metadata.common.typesystem.storagesemantics/2" versionstoragesemantics="2.1.0" xmlns:typesystem="http://com.informatica.metadata.common.typesystem/2" versiontypesystem="2.2.0" xsi:schemaLocation="http://com.informatica.imx IMX.xsd http://com.informatica.metadata.common.core/2 com.informatica.metadata.common.core.xsd http://com.informatica.metadata.common.types/2 com.informatica.metadata.common.types.xsd http://com.informatica.metadata.common.typesystem.directmaps/2 com.informatica.metadata.common.typesystem.directmaps.xsd http://com.informatica.metadata.common.description/2 com.informatica.metadata.common.description.xsd http://com.informatica.metadata.common.typesystem.storagesemantics/2 com.informatica.metadata.common.typesystem.storagesemantics.xsd http://com.informatica.metadata.common.typesystem/2 com.informatica.metadata.common.typesystem.xsd">
+<typesystem:TypeSystem imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem" name="sybase">
+<annotations>
+<Annotation imx:id="ID_1" xsi:type="description:Description" body="Sybase+Type+System"/>
+</annotations>
+<dataTypes>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fbigint" xsi:type="typesystem:DataType" name="bigint" displayName="bigint">
+<annotations>
+<Annotation imx:id="ID_2" xsi:type="description:Description" body="Integer+%28whole+number%29+data+from+-2%5E63+%28-9%2C223%2C372%2C036%2C854%2C775%2C808%29+through+2%5E63-1+%289%2C223%2C372%2C036%2C854%2C775%2C807%29.+Storage+size+is+8+bytes"/>
+</annotations>
+<semantic xsi:type="storagesemantics:IntegerStorageSemantic" defaultPrecision="19" maxPrecision="19"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fbinary" xsi:type="typesystem:DataType" name="binary" displayName="binary">
+<annotations>
+<Annotation imx:id="ID_4" xsi:type="description:Description" body="Binary%5B%28n%29%5D+datatype+can+store+up+to+8000+bytes+of+fixed-length+binary+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="bytes" maxLength="8000" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fbit" xsi:type="typesystem:DataType" name="bit" displayName="bit">
+<annotations>
+<Annotation imx:id="ID_6" xsi:type="description:Description" body="Bit+datatype+is+usually+used+for+true%2Ffalse+or+yes%2Fno+types+of+data%2C+because+it+holds+either+1+or+0"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="1" lengthUnit="bytes" maxLength="1"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fchar" xsi:type="typesystem:DataType" name="char" displayName="char">
+<annotations>
+<Annotation imx:id="ID_8" xsi:type="description:Description" body="Char%5B%28n%29%5D+datatype+can+store+up+to+8000+bytes+of+fixed-length+character+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="characters" maxLength="8000" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fdatetime" xsi:type="typesystem:DataType" name="datetime" displayName="datetime">
+<annotations>
+<Annotation imx:id="ID_10" xsi:type="description:Description" body="Datetime+datatype+can+store+dates+from+January+1%2C+1753%2C+to+December+31%2C+9999%2C+with+accuracy+of+3.33+milliseconds"/>
+</annotations>
+<semantic xsi:type="storagesemantics:GregorianTimeStorageSemantic" daySupported="true" defaultScale="3" hourSupported="true" maxScale="3" minuteSupported="true" monthSupported="true" secondSupported="true" yearSupported="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fdecimal" xsi:type="typesystem:DataType" name="decimal" displayName="decimal">
+<annotations>
+<Annotation imx:id="ID_12" xsi:type="description:Description" body="Exact+Numeric+Data+holds+values+from+10%5E38+-+1+through+-+10%5E38+-+1.+The+storage+size+varies+based+on+the+specified+precision%2C+and+it+ranges+from+a+minimum+of+2+bytes+to+a+maximum+of+17+bytes"/>
+</annotations>
+<semantic xsi:type="storagesemantics:ScientificDecimalStorageSemantic" editablePrecision="true" maxPrecision="38" editableScale="true" maxScale="38"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Ffloat" xsi:type="typesystem:DataType" name="float" displayName="float">
+<annotations>
+<Annotation imx:id="ID_14" xsi:type="description:Description" body="Float%5B%28n%29%5D+datatype+is+stored+in+8+bytes+and+is+used+to+hold+positive+or+negative+floating-point+numbers"/>
+</annotations>
+<semantic xsi:type="storagesemantics:FloatStorageSemantic" defaultPrecision="15" exponentMax="308" exponentMin="-308" exponentRadix="decimal" maxPrecision="15" precisionRadix="decimal"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fimage" xsi:type="typesystem:DataType" name="image" displayName="image">
+<annotations>
+<Annotation imx:id="ID_16" xsi:type="description:Description" body="Image+datatype+is+a+variable-length+datatype+that+can+hold+up+to+2147483647+bytes+of+binary+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="4000" editableLength="true" lengthUnit="bytes" maxLength="2147483647"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fint" xsi:type="typesystem:DataType" name="int" displayName="int">
+<annotations>
+<Annotation imx:id="ID_18" xsi:type="description:Description" body="Integer+%28whole+number%29+data+from+-2%5E31+%28-2%2C147%2C483%2C648%29+through+2%5E31+-+1+%282%2C147%2C483%2C647%29.+Storage+size+is+4+bytes"/>
+</annotations>
+<semantic xsi:type="storagesemantics:IntegerStorageSemantic" defaultPrecision="10" maxPrecision="10"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fmoney" xsi:type="typesystem:DataType" name="money" displayName="money">
+<annotations>
+<Annotation imx:id="ID_20" xsi:type="description:Description" body="Money+datatype+is+stored+in+8+bytes+and+is+used+to+hold+monetary+values+from+-922337203685477.5808+through+922337203685477.5807"/>
+</annotations>
+<semantic xsi:type="storagesemantics:ScientificDecimalStorageSemantic" defaultPrecision="19" maxPrecision="19" defaultScale="4" maxScale="4" minScale="4"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fnchar" xsi:type="typesystem:DataType" name="nchar" displayName="nchar">
+<annotations>
+<Annotation imx:id="ID_22" xsi:type="description:Description" body="nchar%5B%28n%29%5D+datatype+can+store+up+to+4000+bytes+of+fixed-length+unicode+character+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="characters" maxLength="4000" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fnumeric" xsi:type="typesystem:DataType" name="numeric" displayName="numeric">
+<annotations>
+<Annotation imx:id="ID_24" xsi:type="description:Description" body="Exact+Numeric+Data+holds+values+from+10%5E38+-+1+through+-+10%5E38+-+1.+The+storage+size+varies+based+on+the+specified+precision%2C+and+it+ranges+from+a+minimum+of+2+bytes+to+a+maximum+of+17+bytes"/>
+</annotations>
+<semantic xsi:type="storagesemantics:ScientificDecimalStorageSemantic" editablePrecision="true" maxPrecision="38" editableScale="true" maxScale="38"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fnumeric+identity" xsi:type="typesystem:DataType" name="numeric+identity" displayName="numeric+identity">
+<annotations>
+<Annotation imx:id="ID_26" xsi:type="description:Description" body="Exact+Numeric+Data+holds+values+from+10%5E38+-+1+through+-+10%5E38+-+1.+The+storage+size+varies+based+on+the+specified+precision%2C+and+it+ranges+from+a+minimum+of+2+bytes+to+a+maximum+of+17+bytes"/>
+</annotations>
+<semantic xsi:type="storagesemantics:ScientificDecimalStorageSemantic" editablePrecision="true" maxPrecision="38"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fnvarchar" xsi:type="typesystem:DataType" name="nvarchar" displayName="nvarchar">
+<annotations>
+<Annotation imx:id="ID_28" xsi:type="description:Description" body="nvarchar%5B%28n%29%5D+datatype+can+store+up+to+4000+bytes+of+variable-length+unicode+character+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="characters" maxLength="4000" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Freal" xsi:type="typesystem:DataType" name="real" displayName="real">
+<annotations>
+<Annotation imx:id="ID_30" xsi:type="description:Description" body="Real+datatype+is+stored+in+4+bytes+and+is+used+as+float+datatype+to+hold+positive+or+negative+floating-point+numbers"/>
+</annotations>
+<semantic xsi:type="storagesemantics:FloatStorageSemantic" defaultPrecision="7" exponentMax="38" exponentMin="-38" exponentRadix="decimal" maxPrecision="7" precisionRadix="decimal"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fsmalldatetime" xsi:type="typesystem:DataType" name="smalldatetime" displayName="smalldatetime">
+<annotations>
+<Annotation imx:id="ID_32" xsi:type="description:Description" body="Smalldatetime+datatype+can+store+dates+from+January+1%2C+1900%2C+to+June+6%2C+2079%2C+with+accuracy+to+the+minute"/>
+</annotations>
+<semantic xsi:type="storagesemantics:GregorianTimeStorageSemantic" daySupported="true" hourSupported="true" minuteSupported="true" monthSupported="true" yearSupported="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fsmallint" xsi:type="typesystem:DataType" name="smallint" displayName="smallint">
+<annotations>
+<Annotation imx:id="ID_34" xsi:type="description:Description" body="Integer+data+from+-2%5E15+%28-32%2C768%29+through+2%5E15+-+1+%2832%2C767%29.+Storage+size+is+2+bytes"/>
+</annotations>
+<semantic xsi:type="storagesemantics:IntegerStorageSemantic" defaultPrecision="5" maxPrecision="5"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fsmallmoney" xsi:type="typesystem:DataType" name="smallmoney" displayName="smallmoney">
+<annotations>
+<Annotation imx:id="ID_36" xsi:type="description:Description" body="Smallmoney+datatype+is+stored+in+4+bytes+and+is+used+to+hold+monetary+values+from+-+214748.3648+through+214748.3647"/>
+</annotations>
+<semantic xsi:type="storagesemantics:ScientificDecimalStorageSemantic" defaultPrecision="10" maxPrecision="10" defaultScale="4" maxScale="4" minScale="4"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Ftext" xsi:type="typesystem:DataType" name="text" displayName="text">
+<annotations>
+<Annotation imx:id="ID_38" xsi:type="description:Description" body="Text+datatype+is+a+variable-length+datatype+that+can+hold+up+to+2147483647+characters"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="4000" editableLength="true" lengthUnit="characters" maxLength="2147483647" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Ftimestamp" xsi:type="typesystem:DataType" name="timestamp" displayName="timestamp">
+<annotations>
+<Annotation imx:id="ID_40" xsi:type="description:Description" body="Timestamp+datatype+is+stored+in+8+bytes+as+binary%288%29+datatype.+The+timestamp+value+is+automatically+updated+every+time+a+row+containing+a+timestamp+column+is+inserted+or+updated"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="8" lengthUnit="bytes" maxLength="8"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Ftinyint" xsi:type="typesystem:DataType" name="tinyint" displayName="tinyint">
+<annotations>
+<Annotation imx:id="ID_42" xsi:type="description:Description" body="Integer+data+from+0+through+255.+Storage+size+is+1+byte"/>
+</annotations>
+<semantic xsi:type="storagesemantics:IntegerStorageSemantic" defaultPrecision="3" maxPrecision="3"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fvarbinary" xsi:type="typesystem:DataType" name="varbinary" displayName="varbinary">
+<annotations>
+<Annotation imx:id="ID_44" xsi:type="description:Description" body="Varbinary%5B%28n%29%5D+datatype+can+store+up+to+8000+bytes+of+variable-length+binary+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="bytes" maxLength="8000" variableAllocation="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fvarchar" xsi:type="typesystem:DataType" name="varchar" displayName="varchar">
+<annotations>
+<Annotation imx:id="ID_46" xsi:type="description:Description" body="Varchar%5B%28n%29%5D+datatype+can+store+up+to+8000+bytes+of+variable-length+character+data"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="characters" maxLength="8000" variableAllocation="true"/>
+</DataType>
+</dataTypes>
+<ownedMaps>
+<TypeSystemMap imx:id="ID_48" xsi:type="directmaps:DirectTypeSystemMap" to="ID_49">
+<dataTypeMaps>
+<DataTypeMap imx:id="ID_50" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_51" localType="ID_52"/>
+<DataTypeMap imx:id="ID_53" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_54" localType="ID_55"/>
+<DataTypeMap imx:id="ID_56" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_57" localType="ID_58"/>
+<DataTypeMap imx:id="ID_59" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_60" localType="ID_61"/>
+<DataTypeMap imx:id="ID_62" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_63" localType="ID_64" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_65" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_66" localType="ID_64" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_67" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_68" localType="ID_64"/>
+<DataTypeMap imx:id="ID_69" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_70" localType="ID_71"/>
+<DataTypeMap imx:id="ID_72" xsi:type="directmaps:DataTypeMap" foreignType="ID_51" localType="ID_71" lossyToForeign="true"/>
+<DataTypeMap imx:id="ID_73" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_74" localType="ID_75"/>
+<DataTypeMap imx:id="ID_76" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_77" localType="ID_75"/>
+<DataTypeMap imx:id="ID_78" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_79" localType="ID_80"/>
+<DataTypeMap imx:id="ID_81" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_82" localType="ID_83"/>
+<DataTypeMap imx:id="ID_84" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_70" localType="ID_85"/>
+<DataTypeMap imx:id="ID_86" xsi:type="directmaps:DataTypeMap" foreignType="ID_60" localType="ID_87"/>
+<DataTypeMap imx:id="ID_88" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_89" localType="ID_87"/>
+<DataTypeMap imx:id="ID_90" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_91" localType="ID_92"/>
+<DataTypeMap imx:id="ID_93" xsi:type="directmaps:DataTypeMap" foreignType="ID_51" localType="ID_94"/>
+<DataTypeMap imx:id="ID_95" xsi:type="directmaps:DataTypeMap" bestMapFromLocal="true" foreignType="ID_70" localType="ID_94"/>
+<DataTypeMap imx:id="ID_96" xsi:type="directmaps:DataTypeMap" foreignType="ID_82" localType="ID_94" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_97" xsi:type="directmaps:DataTypeMap" foreignType="ID_91" localType="ID_94"/>
+<DataTypeMap imx:id="ID_98" xsi:type="directmaps:DataTypeMap" foreignType="ID_99" localType="ID_94" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_100" xsi:type="directmaps:DataTypeMap" foreignType="ID_101" localType="ID_94" lossyToLocal="true"/>
+<DataTypeMap imx:id="ID_102" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" foreignType="ID_103" localType="ID_104"/>
+<DataTypeMap imx:id="ID_105" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_106" localType="ID_104"/>
+<DataTypeMap imx:id="ID_107" xsi:type="directmaps:DataTypeMap" foreignType="ID_108" localType="ID_104"/>
+<DataTypeMap imx:id="ID_109" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_110" localType="ID_111"/>
+<DataTypeMap imx:id="ID_112" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_68" localType="ID_113"/>
+<DataTypeMap imx:id="ID_114" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_99" localType="ID_115"/>
+<DataTypeMap imx:id="ID_116" xsi:type="directmaps:DataTypeMap" bestMapFromLocal="true" foreignType="ID_70" localType="ID_117"/>
+<DataTypeMap imx:id="ID_118" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_119" localType="ID_120"/>
+<DataTypeMap imx:id="ID_121" xsi:type="directmaps:DataTypeMap" bestMapFromLocal="true" foreignType="ID_54" localType="ID_122"/>
+<DataTypeMap imx:id="ID_123" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_101" localType="ID_124"/>
+<DataTypeMap imx:id="ID_125" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_126" localType="ID_127"/>
+<DataTypeMap imx:id="ID_128" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_108" localType="ID_129"/>
+</dataTypeMaps>
+</TypeSystemMap>
+</ownedMaps>
+</typesystem:TypeSystem>
+<imx:proxies>
+<proxy imx:id="ID_49" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem" type="typesystem:TypeSystem" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_51" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fbigint" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_52" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fbigint" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_54" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fbinary" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_55" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fbinary" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_57" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fbit" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_58" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fbit" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_60" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_61" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_63" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fdate" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_64" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fdatetime" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_66" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Ftime" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_68" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Ftimestamp" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_70" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fdecimal" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_71" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fdecimal" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_74" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fdouble" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_75" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Ffloat" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_77" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Ffloat" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_79" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Flongvarbinary" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_80" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fimage" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_82" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Finteger" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_83" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fint" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_85" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fmoney" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_87" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fnchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_89" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fnchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_91" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fnumeric" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_92" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fnumeric" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_94" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fnumeric+identity" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_99" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fsmallint" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_101" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Ftinyint" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_103" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fntext" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_104" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fnvarchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_106" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fnvarchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_108" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fvarchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_110" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Freal" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_111" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Freal" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_113" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fsmalldatetime" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_115" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fsmallint" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_117" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fsmallmoney" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_119" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Ftext" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_120" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Ftext" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_122" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Ftimestamp" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_124" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Ftinyint" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_126" objectId="smd:com.informatica.metadata.seed.odbc.ODBC.typesystem%2Fvarbinary" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_127" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fvarbinary" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_129" objectId="smd:com.informatica.adapters.typesystem.relational.SybaseTypeSystem.typesystem%2Fvarchar" type="typesystem:DataType" xsi:type="imx:proxy"/>
+</imx:proxies>
+</imx:IMX>

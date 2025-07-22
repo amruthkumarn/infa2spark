@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.typesystem/2" xmlns:imx="http://com.informatica.imx" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:typesystem="http://com.informatica.metadata.common.typesystem/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.typesystem/2">
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> Change log: 13-Aug-2015: (amittal) Added a new property 'displayName' in DataType to allow for a display name to be used for logging and display.\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="DataTypeConversion">
+<xsd:annotation>
+<xsd:documentation> DataTypeConversions define a relation between source and target DataTypes from the same parent TypeSystem.  A DataTypeConversion object is created when type conversion semantics exists between values from the two DataTypes.  DataTypeConversions are either lossy or precise.  They are also complete or partial.  There is no concept of a "best" DataTypeConversion.
+ 
+ A DataTypeConversion is lossy if some values defined by the source DataType must be reduced to less accurate representation.  By contrast, a DataTypeConversion is precise if every value defined by the source data type which does not generate an exception on conversion can be retrieved by an inverse mapping from the target data value to which it maps.  Lossiness is describeded independently of storage constraints imposed by precision and scale when DataTypes are used.
+ 
+ A conversion if complete if no source data values generate an exception when conversion is attempted.  It is partial if some source data values generate exceptions (i.e. string conversion which only accepts validly formatted strings).
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="complete" type="xsd:boolean"/>
+<xsd:attribute name="from" type="imx:idref"/>
+<xsd:attribute name="lossy" type="xsd:boolean"/>
+<xsd:attribute name="to" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="DataTypeConversion" type="typesystem:DataTypeConversion"/>
+<xsd:complexType abstract="true" name="StorageSemantic">
+<xsd:annotation>
+<xsd:documentation> When a model-driven program needs to interpret the storage requirements described by the precision and scale attributes associated with use of a DataType, the StorageSemantic abstraction is required.  Applications that implicitly understand how a DataType's name maps to precision and scale semantics need not use this abstraction.  
+ 
+ Although precision and scale are provided where a DataType is used, different DataTypes define different algorithms for constraining valid values for precision and scale.  Each concrete subclass of StorageSemantic captures the data required to describe a unique well-known algorithm for describing bounds on precision and scale.  Similarly, each concrete subclass  represents one known way that storage requirements are described using precision and scale, allowing their use for comparison with usage different DataTypes, possibly from different TypeSystems.
+ 
+ In order for a model-driven application to predict the result of conversion between any two DataType usages (both qualified by precision and scale), a model driven utility is required.  This utility will use both source and target DataTypes' StorageSemantic objects to convert the source's usage qualifiers (precision and scale) to value that can be compared to the target's usage qualifiers (precision and scale).  A table describing the combinations this utility must consider is described in Table 02 of the documentation for com.informatica.metadata.common.typesystem.storagesemantics.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="TypeSystemMap">
+<xsd:annotation>
+<xsd:documentation> This is the abstract base class that captures a relationship between two type systems.  Each concrete subclasses describes the nature of the relationship it represents.  Currently the only published concrete subclass, DirectTypeSystemMap, is used to describe the existience of DataType conversion semantics between DataType objects of two different TypeSystems.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="to" type="imx:idref"/>
+</xsd:complexType>
+<xsd:complexType name="DataType">
+<xsd:complexContent>
+<xsd:extension base="types:Type">
+<xsd:annotation>
+<xsd:documentation> A DataType classifies instances of real world (M0) data at the model (M1) layer.  The set of all DataType objects that a TypeSystem contains defines a category for each possible data value abstracted by that TypeSystem.
+ 
+ DataTypes each have a name that is unique among all DataTypes contained by their parent TypeSystem.  This name can be used to identify the DataType to an end user through the UI.
+ 
+ When a modeled object references a DataType, it requires attributes for scale and precision properties to qualify the referenced DataType with information about the size constraints for values within that DataType's domain.
+ 
+ Each DataType may optionally contain a StorageSemantic object.  In general, a model consumer only requires StorageSemantic objects if handling DataTypes from a foreign TypeSystem.  In cases where the data value classes represented by a DataType are implicitly understood from it's name, no contained StorageSemantic is required.
+ 
+ When used, a StorageSemantic's subclass and state contain all necessary information to describe what a DataType's precision and scale attributes mean and what bounds exist for legal precision and scale values.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="semantic" type="typesystem:StorageSemantic"/>
+</xsd:choice>
+<xsd:attribute name="displayName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataType" type="typesystem:DataType"/>
+<xsd:complexType name="TypeSystem">
+<xsd:complexContent>
+<xsd:extension base="types:TypeContainer">
+<xsd:annotation>
+<xsd:documentation> TypeSystems are first class containers for three other abstractions that are defined in this packages:
+ -- DataType objects describe value domains
+ -- TypeSystemMap objects describe relationships between TypeSystems
+ -- DataTypeConversion objects describe conversion semantics between compatible DataTypes that are both owned by the TypeSystem.
+ 
+  The DataType objects that are contained by a TypeSystem are all associated with some real-world system or standard specification.
+ 
+ TypeSystemMap is an abstract class, but a concrete implementation, com.informatica.metadata.common.typesystem.directmaps.DirectTypeSystemMap, is used when a TypeSystem includes information about how it's DataTypes are mapped to or from DataType objects owned by a different TypeSystem.
+ 
+ DataTypeConversion objects describe conversion semantics between compatible DataTypes that are both owned by the TypeSystem.  These are different from the com.informatica.metadata.common.typesystem.directmaps.DataTypeMap objects that can are contained by a com.informatica.metadata.common.typesystem.directmaps.DirectTypeSystemMap to describe conversion semantics between DataType objects owned by different TypeSystems.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="conversions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DataTypeConversion" type="typesystem:DataTypeConversion"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="dataTypes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DataType" type="typesystem:DataType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ownedMaps">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TypeSystemMap" type="typesystem:TypeSystemMap"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TypeSystem" type="typesystem:TypeSystem"/>
+</xsd:schema>

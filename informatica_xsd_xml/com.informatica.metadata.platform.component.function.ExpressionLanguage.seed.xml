@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Informatica proprietary -->
+<imx:IMX xmlns:imx="http://com.informatica.imx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" serializationSpecVersion="14.0" crcEnabled="0" xmlns:core="http://com.informatica.metadata.common.core/2" versioncore="2.2.1" xmlns:types="http://com.informatica.metadata.common.types/2" versiontypes="2.4.0" xmlns:description="http://com.informatica.metadata.common.description/2" versiondescription="2.1.0" xmlns:storagesemantics="http://com.informatica.metadata.common.typesystem.storagesemantics/2" versionstoragesemantics="2.1.0" xmlns:typesystem="http://com.informatica.metadata.common.typesystem/2" versiontypesystem="2.2.0" xsi:schemaLocation="http://com.informatica.imx IMX.xsd http://com.informatica.metadata.common.core/2 com.informatica.metadata.common.core.xsd http://com.informatica.metadata.common.types/2 com.informatica.metadata.common.types.xsd http://com.informatica.metadata.common.description/2 com.informatica.metadata.common.description.xsd http://com.informatica.metadata.common.typesystem.storagesemantics/2 com.informatica.metadata.common.typesystem.storagesemantics.xsd http://com.informatica.metadata.common.typesystem/2 com.informatica.metadata.common.typesystem.xsd">
+<typesystem:TypeSystem imx:id="smd:com.informatica.metadata.platform.component.function.ExpressionLanguage.typesystem" name="expressionLanguage">
+<annotations>
+<Annotation imx:id="ID_1" xsi:type="description:Description" body="Platform+Expression+Language+Type+System"/>
+</annotations>
+<dataTypes>
+<DataType imx:id="smd:com.informatica.metadata.platform.component.function.ExpressionLanguage.typesystem%2Finteger" xsi:type="typesystem:DataType" name="integer" displayName="integer">
+<annotations>
+<Annotation imx:id="ID_2" xsi:type="description:Description" body="32-bit+Machine+integer+data+type"/>
+</annotations>
+<semantic xsi:type="storagesemantics:MachineIntegerStorageSemantic" defaultBytes="4" maxBytes="4" signed="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.metadata.platform.component.function.ExpressionLanguage.typesystem%2Fchar" xsi:type="typesystem:DataType" name="char" displayName="char">
+<annotations>
+<Annotation imx:id="ID_4" xsi:type="description:Description" body="Single+unicode+character+data+type"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="1" lengthUnit="characters" maxLength="1"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.metadata.platform.component.function.ExpressionLanguage.typesystem%2Fstring" xsi:type="typesystem:DataType" name="string" displayName="string">
+<annotations>
+<Annotation imx:id="ID_6" xsi:type="description:Description" body="Unicode+character+string+data+type"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="characters" maxLength="2000"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.metadata.platform.component.function.ExpressionLanguage.typesystem%2Fbinary" xsi:type="typesystem:DataType" name="binary" displayName="binary">
+<annotations>
+<Annotation imx:id="ID_8" xsi:type="description:Description" body="Variable+length+byte-based+data+type"/>
+</annotations>
+<semantic xsi:type="storagesemantics:LengthStorageSemantic" defaultLength="10" editableLength="true" lengthUnit="bytes" maxLength="2000"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.metadata.platform.component.function.ExpressionLanguage.typesystem%2Fnumeric" xsi:type="typesystem:DataType" name="numeric" displayName="numeric">
+<annotations>
+<Annotation imx:id="ID_10" xsi:type="description:Description" body="Precise+numeric+decimal+data+type"/>
+</annotations>
+<semantic xsi:type="storagesemantics:DecimalStorageSemantic" defaultPrecision="10" editablePrecision="true" maxPrecision="38" editableScale="true"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.metadata.platform.component.function.ExpressionLanguage.typesystem%2Ffloat" xsi:type="typesystem:DataType" name="float" displayName="float">
+<annotations>
+<Annotation imx:id="ID_12" xsi:type="description:Description" body="Floating+point+data+type"/>
+</annotations>
+<semantic xsi:type="storagesemantics:FloatStorageSemantic" defaultPrecision="10" editablePrecision="true" exponentMax="100" maxPrecision="100"/>
+</DataType>
+<DataType imx:id="smd:com.informatica.metadata.platform.component.function.ExpressionLanguage.typesystem%2Fdate" xsi:type="typesystem:DataType" name="date" displayName="date">
+<annotations>
+<Annotation imx:id="ID_14" xsi:type="description:Description" body="Gregorian+data+time+data+type"/>
+</annotations>
+<semantic xsi:type="storagesemantics:GregorianTimeStorageSemantic" daySupported="true" hourSupported="true" minuteSupported="true" monthSupported="true" secondSupported="true" yearSupported="true"/>
+</DataType>
+</dataTypes>
+</typesystem:TypeSystem>
+</imx:IMX>

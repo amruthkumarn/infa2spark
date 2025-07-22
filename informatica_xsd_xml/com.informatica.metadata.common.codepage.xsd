@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.codepage/2" xmlns:codepage="http://com.informatica.metadata.common.codepage/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.codepage/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="CodePage">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:attribute name="asciiBased" type="xsd:boolean"/>
+<xsd:attribute name="codePageId" type="xsd:int"/>
+<xsd:attribute name="compatibleFromCodePageIds">
+<xsd:simpleType>
+<xsd:list itemType="xsd:int"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="compatibleToCodePageIds">
+<xsd:simpleType>
+<xsd:list itemType="xsd:int"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="isoName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="pmI18nAliases">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="pmI18nName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sortIds">
+<xsd:simpleType>
+<xsd:list itemType="xsd:int"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="validForService" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CodePage" type="codepage:CodePage"/>
+<xsd:complexType name="CodePageSystem">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="codePages">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="CodePage" type="codepage:CodePage"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CodePageSystem" type="codepage:CodePageSystem"/>
+<xsd:complexType name="Sort">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:attribute name="localeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sortId" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Sort" type="codepage:Sort"/>
+<xsd:complexType name="SortSystem">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="sorts">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Sort" type="codepage:Sort"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SortSystem" type="codepage:SortSystem"/>
+</xsd:schema>

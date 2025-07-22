@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.binding/1" xmlns:binding="http://com.informatica.metadata.common.binding/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:parameter="http://com.informatica.metadata.common.parameter/9" xmlns:property="http://com.informatica.metadata.common.property/1" xmlns:scope="http://com.informatica.metadata.common.scope/1" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.binding/1">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.parameter/9" schemaLocation="com.informatica.metadata.common.parameter.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.scope/1" schemaLocation="com.informatica.metadata.common.scope.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.property/1" schemaLocation="com.informatica.metadata.common.property.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType abstract="true" name="AbstractBinding">
+<xsd:annotation>
+<xsd:documentation> An abstract binding which represents the binding from a source to a target.
+ This model is not expected to exist by itself. Hence, 2nd class.
+ 
+ @author yqiu
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="sourceRef" type="core:ElementReference"/>
+<xsd:element name="targetRef" type="core:ElementReference"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="AbstractParameterContent">
+<xsd:annotation>
+<xsd:documentation> An abstract marker class to represent parameter binding content.
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="AbstractTarget">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="AbstractValue">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="InputBinding">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="input" type="binding:TaskInput"/>
+<xsd:element name="value" type="binding:AbstractValue"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="InputBinding" type="binding:InputBinding"/>
+<xsd:complexType name="OutputBinding">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="output" type="binding:TaskOutput"/>
+<xsd:element name="target" type="binding:AbstractTarget"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="OutputBinding" type="binding:OutputBinding"/>
+<xsd:complexType name="TaskOutputSeedContainer">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="outputs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="BaseTaskOutput" type="binding:BaseTaskOutput"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="TaskOutputSeedContainer" type="binding:TaskOutputSeedContainer"/>
+<xsd:complexType name="CustomProperty">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="value" type="property:BoxedReceiverObject"/>
+</xsd:choice>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CustomProperty" type="binding:CustomProperty"/>
+<xsd:complexType name="ParameterBinding">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractBinding">
+<xsd:annotation>
+<xsd:documentation> A binding which represents the binding from a source to a Parameter.
+ 
+ @author yqiu
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="parameterRef" type="parameter:ParameterObjectReference"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParameterBinding" type="binding:ParameterBinding"/>
+<xsd:complexType name="ParameterContentText">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractParameterContent">
+<xsd:attribute name="content">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParameterContentText" type="binding:ParameterContentText"/>
+<xsd:complexType name="RollupParameterTarget">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractTarget">
+<xsd:attribute name="parameter" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RollupParameterTarget" type="binding:RollupParameterTarget"/>
+<xsd:complexType name="RollupTaskOutputTarget">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractTarget">
+<xsd:attribute name="output" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RollupTaskOutputTarget" type="binding:RollupTaskOutputTarget"/>
+<xsd:complexType name="RollupVariableTarget">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractTarget">
+<xsd:attribute name="variable" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RollupVariableTarget" type="binding:RollupVariableTarget"/>
+<xsd:complexType name="ScopedParameterContent">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractParameterContent">
+<xsd:annotation>
+<xsd:documentation> This model is used to represent the parameter content in the context of their
+ scopes.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="projectScopeDescriptors">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ProjectScopeDescriptor" type="scope:ProjectScopeDescriptor"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ScopedParameterContent" type="binding:ScopedParameterContent"/>
+<xsd:complexType abstract="true" name="AbstractParameterBinding">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="ParameterEntry">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> This model represents an entry in the parameter set.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="nestedParameterEntries">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ParameterEntry" type="binding:ParameterEntry"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="value" type="parameter:ParameterValue"/>
+</xsd:choice>
+<xsd:attribute name="parameterName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParameterEntry" type="binding:ParameterEntry"/>
+<xsd:complexType name="ParameterSet">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="content" type="binding:AbstractParameterContent"/>
+</xsd:choice>
+<xsd:attribute name="lastUpdatedTime" type="xsd:long"/>
+<xsd:attribute name="securityDomain">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParameterSet" type="binding:ParameterSet"/>
+<xsd:complexType name="ParameterFileContent">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractParameterBinding">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="content" type="binding:AbstractParameterContent"/>
+</xsd:choice>
+<xsd:attribute name="filePath">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParameterFileContent" type="binding:ParameterFileContent"/>
+<xsd:complexType name="ParameterSetBinding">
+<xsd:complexContent>
+<xsd:extension base="binding:AbstractParameterBinding">
+<xsd:attribute name="parameterSetName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParameterSetBinding" type="binding:ParameterSetBinding"/>
+<xsd:complexType name="TaskInput">
+<xsd:complexContent>
+<xsd:extension base="types:TypedElement"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TaskInput" type="binding:TaskInput"/>
+<xsd:complexType name="TaskOutput">
+<xsd:complexContent>
+<xsd:extension base="types:TypedElement"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TaskOutput" type="binding:TaskOutput"/>
+<xsd:complexType name="BaseTaskOutput">
+<xsd:complexContent>
+<xsd:extension base="binding:TaskOutput"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BaseTaskOutput" type="binding:BaseTaskOutput"/>
+<xsd:complexType name="BoxedReceiverTaskInput">
+<xsd:complexContent>
+<xsd:extension base="binding:TaskInput">
+<xsd:attribute name="boxedReceiverObject" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BoxedReceiverTaskInput" type="binding:BoxedReceiverTaskInput"/>
+<xsd:complexType name="ExpressionTaskInput">
+<xsd:complexContent>
+<xsd:extension base="binding:TaskInput">
+<xsd:annotation>
+<xsd:documentation> Task input that represents an operand that may be used in Workflow Expressions.
+
+
+ MODIFICATIONS
+ 1.0.0	clay		10/19/2011		Introduced the model
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="operandName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExpressionTaskInput" type="binding:ExpressionTaskInput"/>
+<xsd:complexType name="ObjectScopeParameterDescriptor">
+<xsd:complexContent>
+<xsd:extension base="scope:ObjectScopeDescriptor">
+<xsd:annotation>
+<xsd:documentation> This models is used to describe the parameters at Object level. [Ex: Mapping,
+ Workflow].
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="parameterEntries">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ParameterEntry" type="binding:ParameterEntry"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="parameterizedObjectType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ObjectScopeParameterDescriptor" type="binding:ObjectScopeParameterDescriptor"/>
+<xsd:complexType name="ParameterTaskInput">
+<xsd:complexContent>
+<xsd:extension base="binding:TaskInput">
+<xsd:attribute name="parameter" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParameterTaskInput" type="binding:ParameterTaskInput"/>
+<xsd:complexType name="TaskInputTaskInput">
+<xsd:complexContent>
+<xsd:extension base="binding:TaskInput">
+<xsd:attribute name="taskInput" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TaskInputTaskInput" type="binding:TaskInputTaskInput"/>
+<xsd:complexType name="TaskOutputTaskOuput">
+<xsd:complexContent>
+<xsd:extension base="binding:TaskOutput">
+<xsd:attribute name="taskOutput" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TaskOutputTaskOuput" type="binding:TaskOutputTaskOuput"/>
+<xsd:complexType name="TokenizedTaskInput">
+<xsd:complexContent>
+<xsd:extension base="binding:TaskInput">
+<xsd:attribute name="token">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TokenizedTaskInput" type="binding:TokenizedTaskInput"/>
+</xsd:schema>

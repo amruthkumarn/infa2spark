@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.mapping.operation/2" xmlns:imx="http://com.informatica.imx" xmlns:mapping="http://com.informatica.metadata.common.mapping/2" xmlns:operation="http://com.informatica.metadata.common.mapping.operation/2" xmlns:transformation="http://com.informatica.metadata.common.transformation/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.mapping.operation/2">
+<xsd:import namespace="http://com.informatica.metadata.common.mapping/2" schemaLocation="com.informatica.metadata.common.mapping.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.transformation/3" schemaLocation="com.informatica.metadata.common.transformation.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="OperationCharacteristic">
+<xsd:complexContent>
+<xsd:extension base="mapping:Characteristic">
+<xsd:annotation>
+<xsd:documentation> An operation is the implementation of a mapping using the PowerCenter mapping language that can be invoked by the DTM with function call semantics.
+ 
+ Well-formed (e.g. not corrupt) Operations must contain exactly one non-reusable InputTx and one non-reusable OutputTx.  These transformations must each contain a single interface with a single field that is typed by a ComplexType from the contained TypeLibrary that the Operation uses to store its anonymous types.
+ 
+ Well-formed Operations contain any number of FaultTx objects, each of which must contain a single interface with a single field.  The types used by all FaultTx fields may include any combination of anonymous types from the Operation's TypeLibrary, anonymous types from re-usable transformations, and named types from an imported TypeLibrary.
+ 
+ The concatenation rule does not apply to the OperationSignatureTx used for output.  Will the DTM or general mapping validation want to separate faults into separate structural groups/interfaces for any other reason?
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="faults" type="imx:idrefs"/>
+<xsd:attribute name="inputType" type="imx:idref"/>
+<xsd:attribute name="outputType" type="imx:idref"/>
+<xsd:attribute name="returnValue" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OperationCharacteristic" type="operation:OperationCharacteristic"/>
+<xsd:complexType name="FaultInterface">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="faultFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="FaultField" type="operation:FaultField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FaultInterface" type="operation:FaultInterface"/>
+<xsd:complexType name="FaultTx">
+<xsd:complexContent>
+<xsd:extension base="transformation:AbstractTransformation">
+<xsd:annotation>
+<xsd:documentation> A pseudo-transformation that represents a data flow fault.
+ 
+ This transformation will never be instantiated as a re-usable object, but may be instantiated multiple times within the Mapping that contains it.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="faultInterface">
+<xsd:complexType>
+<xsd:choice maxOccurs="1" minOccurs="1">
+<xsd:element name="FaultInterface" type="operation:FaultInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FaultTx" type="operation:FaultTx"/>
+<xsd:complexType name="InputInterface">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="inputFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="InputField" type="operation:InputField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="InputInterface" type="operation:InputInterface"/>
+<xsd:complexType name="InputTx">
+<xsd:complexContent>
+<xsd:extension base="transformation:AbstractTransformation">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="inputInterface">
+<xsd:complexType>
+<xsd:choice maxOccurs="1" minOccurs="1">
+<xsd:element name="InputInterface" type="operation:InputInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="InputTx" type="operation:InputTx"/>
+<xsd:complexType name="OutputInterface">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="outputFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OutputField" type="operation:OutputField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OutputInterface" type="operation:OutputInterface"/>
+<xsd:complexType name="OutputTx">
+<xsd:complexContent>
+<xsd:extension base="transformation:AbstractTransformation">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="outputInterface">
+<xsd:complexType>
+<xsd:choice maxOccurs="1" minOccurs="1">
+<xsd:element name="OutputInterface" type="operation:OutputInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OutputTx" type="operation:OutputTx"/>
+<xsd:complexType name="FaultField">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FaultField" type="operation:FaultField"/>
+<xsd:complexType name="InputField">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="InputField" type="operation:InputField"/>
+<xsd:complexType name="OutputField">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OutputField" type="operation:OutputField"/>
+</xsd:schema>

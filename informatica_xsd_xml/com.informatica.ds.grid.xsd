@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.ds.grid/0" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:connectinfo="http://com.informatica.metadata.common.connectinfo/2" xmlns:grid="http://com.informatica.ds.grid/0" xmlns:imx="http://com.informatica.imx" xmlns:permission="http://com.informatica.repository.models.permission/1" xmlns:runtime="http://com.informatica.ds.app.metadata.runtime/0" xmlns:statistics="http://com.informatica.ds.statistics/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.ds.grid/0">
+<xsd:import namespace="http://com.informatica.metadata.common.connectinfo/2" schemaLocation="com.informatica.metadata.common.connectinfo.xsd"/>
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.ds.app.metadata.runtime/0" schemaLocation="com.informatica.ds.app.metadata.runtime.xsd"/>
+<xsd:import namespace="http://com.informatica.repository.models.permission/1" schemaLocation="com.informatica.repository.models.permission.xsd"/>
+<xsd:import namespace="http://com.informatica.ds.statistics/0" schemaLocation="com.informatica.ds.statistics.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType abstract="true" name="GridCallbackMessage">
+<xsd:annotation>
+<xsd:documentation> This model is a base container used by GridCallbackHandler.
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="JobInfo">
+<xsd:annotation>
+<xsd:documentation> This model holds information for a job.
+ More fields will be added in the future
+
+ @author pchao
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="JobInfo" type="grid:JobInfo"/>
+<xsd:complexType name="LogRecordInfo">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="level">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="message">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="millis" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="LogRecordInfo" type="grid:LogRecordInfo"/>
+<xsd:complexType name="LoggerInfo">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="fileName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="level">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="LoggerInfo" type="grid:LoggerInfo"/>
+<xsd:complexType abstract="true" name="MissedCallbackEvent">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="ModelLink">
+<xsd:annotation>
+<xsd:documentation> Describes a link in the application model graph.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="aggregationPropertyName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="targetUUID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ModelLink" type="grid:ModelLink"/>
+<xsd:complexType name="NodeDetail">
+<xsd:annotation>
+<xsd:documentation> This contains information of a node, used by node-to-node on-demand queries.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="NodeDetail" type="grid:NodeDetail"/>
+<xsd:complexType name="NodeDetailHandshake">
+<xsd:annotation>
+<xsd:documentation> This model contains information about a DIS process, will be used for initial master-worker handshake.
+
+ @author pchao
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="nodeOptionGroups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="version" type="runtime:Version"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="computeNode" type="xsd:boolean"/>
+<xsd:attribute name="doubleHandshake" type="xsd:boolean"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="NodeDetailHandshake" type="grid:NodeDetailHandshake"/>
+<xsd:complexType name="NodeDetailPing">
+<xsd:annotation>
+<xsd:documentation> This model contains name of a node
+ which will be used by pingMasterThread
+ More fields will be added if necessary
+
+ @author pchao
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="missedCallbackEvents">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="MissedCallbackEvent" type="grid:MissedCallbackEvent"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="NodeDetailPing" type="grid:NodeDetailPing"/>
+<xsd:complexType name="NodeDetailRequest">
+<xsd:annotation>
+<xsd:documentation> This is a request for a node-detail.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="NodeDetailRequest" type="grid:NodeDetailRequest"/>
+<xsd:complexType name="PingResponse">
+<xsd:annotation>
+<xsd:documentation> @author pchao
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="gridNodeNames">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="PingResponse" type="grid:PingResponse"/>
+<xsd:complexType name="RemoteExecutionCompletedEvent">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="executionOutput" type="xsd:anyType"/>
+<xsd:element name="statistics" type="xsd:anyType"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="operationHandle">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="RemoteExecutionCompletedEvent" type="grid:RemoteExecutionCompletedEvent"/>
+<xsd:complexType name="RemoteExecutionLogs">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="logRecordInfos">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LogRecordInfo" type="grid:LogRecordInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="operationHandle">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="RemoteExecutionLogs" type="grid:RemoteExecutionLogs"/>
+<xsd:complexType abstract="true" name="UpdateInfo">
+<xsd:annotation>
+<xsd:documentation> @author pchao
+
+ Information that needs to be pass down to worker nodes.
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="uuid">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="updateInfoId" type="xsd:int"/>
+</xsd:complexType>
+<xsd:complexType name="ApplicationLoadingCompleted">
+<xsd:complexContent>
+<xsd:extension base="grid:GridCallbackMessage">
+<xsd:annotation>
+<xsd:documentation> Contains the application name that was loaded by the work node
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="appName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationLoadingCompleted" type="grid:ApplicationLoadingCompleted"/>
+<xsd:complexType name="ApplicationLoadingUpdate">
+<xsd:complexContent>
+<xsd:extension base="grid:UpdateInfo">
+<xsd:annotation>
+<xsd:documentation>
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="appNames">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationLoadingUpdate" type="grid:ApplicationLoadingUpdate"/>
+<xsd:complexType name="ApplicationPriorityUpdate">
+<xsd:complexContent>
+<xsd:extension base="grid:MissedCallbackEvent">
+<xsd:annotation>
+<xsd:documentation> Contains the application name that was loaded by the work node
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="appNames">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationPriorityUpdate" type="grid:ApplicationPriorityUpdate"/>
+<xsd:complexType name="ApplicationReconcileUpdate">
+<xsd:complexContent>
+<xsd:extension base="grid:UpdateInfo">
+<xsd:attribute name="appNames">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationReconcileUpdate" type="grid:ApplicationReconcileUpdate"/>
+<xsd:complexType name="ApplicationUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:UpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Represents application updates.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="appRepoIdentifier">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationUpdateInfo" type="grid:ApplicationUpdateInfo"/>
+<xsd:complexType name="ConnectionInfoRequest">
+<xsd:complexContent>
+<xsd:extension base="grid:NodeDetailRequest">
+<xsd:annotation>
+<xsd:documentation> Request for connection info snapshot used by an application.  The application should be started already
+ or else an exception will be thrown.  (special case is on DIS startup, then will wait until master
+ has loaded and started application).
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="appName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConnectionInfoRequest" type="grid:ConnectionInfoRequest"/>
+<xsd:complexType name="ConnectionInfoResponse">
+<xsd:complexContent>
+<xsd:extension base="grid:NodeDetail">
+<xsd:annotation>
+<xsd:documentation> This contains connect info of application on the master.  We need all nodes on grid to have same connection
+ info for this application.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="connectInfos">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ConnectInfo" type="connectinfo:ConnectInfo"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConnectionInfoResponse" type="grid:ConnectionInfoResponse"/>
+<xsd:complexType name="DataObjectCacheInfoRequest">
+<xsd:complexContent>
+<xsd:extension base="grid:NodeDetailRequest">
+<xsd:annotation>
+<xsd:documentation> @author pchao
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="app">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="identifier">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataObjectCacheInfoRequest" type="grid:DataObjectCacheInfoRequest"/>
+<xsd:complexType name="MetaCacheAddStringValueMasterUpdate">
+<xsd:complexContent>
+<xsd:extension base="grid:UpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Used when Master node has added a simple resource comprising of String key and String value to MetaCache.
+ 
+ @author prsharma
+ @since 10.4.0
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="key">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MetaCacheAddStringValueMasterUpdate" type="grid:MetaCacheAddStringValueMasterUpdate"/>
+<xsd:complexType name="MetaCacheBulkStringValBroadcastMasterUpdate">
+<xsd:complexContent>
+<xsd:extension base="grid:UpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Used by master to send bulk string-based key-value pairs to either all worker nodes
+ or to a particular worker node.
+ 
+ @author prsharma
+ @since 10.4.0
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="stringValResources">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="MetaCacheAddStringValueMasterUpdate" type="grid:MetaCacheAddStringValueMasterUpdate"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="workerNodeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MetaCacheBulkStringValBroadcastMasterUpdate" type="grid:MetaCacheBulkStringValBroadcastMasterUpdate"/>
+<xsd:complexType name="MetaCacheStringValuesFromWorkerUpdate">
+<xsd:complexContent>
+<xsd:extension base="grid:MissedCallbackEvent">
+<xsd:annotation>
+<xsd:documentation> This event represents a list of worker-side string keys and their corresponding string values 
+ which need to be shared with master.
+ 
+ @author prsharma
+ @since 10.4.0
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="keys">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="values">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MetaCacheStringValuesFromWorkerUpdate" type="grid:MetaCacheStringValuesFromWorkerUpdate"/>
+<xsd:complexType name="MetaCacheSyncWorkerRequestUpdate">
+<xsd:complexContent>
+<xsd:extension base="grid:MissedCallbackEvent">
+<xsd:annotation>
+<xsd:documentation> 
+ Event to signal the master that a worker is requesting MetaCache resources sync.
+ 
+ @author prsharma
+ @since 10.4.0
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="requestWorkerNodeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MetaCacheSyncWorkerRequestUpdate" type="grid:MetaCacheSyncWorkerRequestUpdate"/>
+<xsd:complexType name="MissedApplicationLoadedEvent">
+<xsd:complexContent>
+<xsd:extension base="grid:MissedCallbackEvent">
+<xsd:attribute name="appName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MissedApplicationLoadedEvent" type="grid:MissedApplicationLoadedEvent"/>
+<xsd:complexType name="MissedUpdateCompletedEvent">
+<xsd:complexContent>
+<xsd:extension base="grid:MissedCallbackEvent">
+<xsd:attribute name="errorMsg">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="updateInfoId" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MissedUpdateCompletedEvent" type="grid:MissedUpdateCompletedEvent"/>
+<xsd:complexType name="PinnedCacheInstances">
+<xsd:complexContent>
+<xsd:extension base="grid:NodeDetail">
+<xsd:annotation>
+<xsd:documentation>
+ @author pchao
+
+ List of pinned DataObject CacheInsatnce and the latest instance storageNames.
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="storageNames">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PinnedCacheInstances" type="grid:PinnedCacheInstances"/>
+<xsd:complexType name="UpdateInfoId">
+<xsd:complexContent>
+<xsd:extension base="grid:GridCallbackMessage">
+<xsd:annotation>
+<xsd:documentation> Contains the application name that was loaded by the work node
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="updateInfoId" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UpdateInfoId" type="grid:UpdateInfoId"/>
+<xsd:complexType name="UpgradeUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:UpdateInfo">
+<xsd:annotation>
+<xsd:documentation> This update represents completion of upgrade.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="failedModules">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="successfulModules">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UpgradeUpdateInfo" type="grid:UpgradeUpdateInfo"/>
+<xsd:complexType name="ApplicationStateUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:ApplicationUpdateInfo">
+<xsd:annotation>
+<xsd:documentation> This represents an application state change.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="applicationState" type="statistics:ApplicationState"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ApplicationStateUpdateInfo" type="grid:ApplicationStateUpdateInfo"/>
+<xsd:complexType name="AttachmentUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:ApplicationUpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Represents application Attachment.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="pathFromApplication">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ModelLink" type="grid:ModelLink"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="attachmentUUID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="referenceIds">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="AttachmentUpdateInfo" type="grid:AttachmentUpdateInfo"/>
+<xsd:complexType name="CacheInstanceInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:ApplicationUpdateInfo">
+<xsd:annotation>
+<xsd:documentation>
+ @author pchao
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="completedAt" type="xsd:long"/>
+<xsd:attribute name="createdAt" type="xsd:long"/>
+<xsd:attribute name="identifier">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="storageName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CacheInstanceInfo" type="grid:CacheInstanceInfo"/>
+<xsd:complexType name="ConfigObjectUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:ApplicationUpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Updates of config objects in application.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="pathFromApplication">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ModelLink" type="grid:ModelLink"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="configObjectUUID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConfigObjectUpdateInfo" type="grid:ConfigObjectUpdateInfo"/>
+<xsd:complexType name="DeployApplicationUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:ApplicationUpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Represents application deployment.
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DeployApplicationUpdateInfo" type="grid:DeployApplicationUpdateInfo"/>
+<xsd:complexType name="FeatureStateUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:ApplicationUpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Represents feature state change.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="featureState" type="statistics:FeatureState"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FeatureStateUpdateInfo" type="grid:FeatureStateUpdateInfo"/>
+<xsd:complexType name="IncrementalDeployApplicationUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:ApplicationUpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Represents application deployment.
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="IncrementalDeployApplicationUpdateInfo" type="grid:IncrementalDeployApplicationUpdateInfo"/>
+<xsd:complexType name="PermissionUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:ApplicationUpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Represents permission update.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="addedACEs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ACE" type="permission:ACE"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="deletedRecipients">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Recipient" type="permission:Recipient"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="pathFromApplication">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ModelLink" type="grid:ModelLink"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="objectInfoUUID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PermissionUpdateInfo" type="grid:PermissionUpdateInfo"/>
+<xsd:complexType name="RedeployApplicationUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:ApplicationUpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Represents application redeployment.
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RedeployApplicationUpdateInfo" type="grid:RedeployApplicationUpdateInfo"/>
+<xsd:complexType name="RenameApplicationUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:ApplicationUpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Represents application rename.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="appConfigUUID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RenameApplicationUpdateInfo" type="grid:RenameApplicationUpdateInfo"/>
+<xsd:complexType name="UndeployApplicationUpdateInfo">
+<xsd:complexContent>
+<xsd:extension base="grid:ApplicationUpdateInfo">
+<xsd:annotation>
+<xsd:documentation> Represents undeployment.
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UndeployApplicationUpdateInfo" type="grid:UndeployApplicationUpdateInfo"/>
+</xsd:schema>

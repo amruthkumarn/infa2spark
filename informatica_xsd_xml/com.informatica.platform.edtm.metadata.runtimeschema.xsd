@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.platform.edtm.metadata.runtimeschema/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:runtimeschema="http://com.informatica.platform.edtm.metadata.runtimeschema/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.platform.edtm.metadata.runtimeschema/1">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="RuntimeSchemaNode">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="firstChild" type="runtimeschema:RuntimeSchemaNode"/>
+<xsd:element name="sibling" type="runtimeschema:RuntimeSchemaNode"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="parent" type="imx:idref"/>
+</xsd:complexType>
+<xsd:simpleType name="SimpleXSDTypeKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="xs_string"/>
+<xsd:enumeration value="xs_normalizedString"/>
+<xsd:enumeration value="xs_token"/>
+<xsd:enumeration value="xs_NMTOKEN"/>
+<xsd:enumeration value="xs_NMTOKENS"/>
+<xsd:enumeration value="xs_language"/>
+<xsd:enumeration value="xs_Name"/>
+<xsd:enumeration value="xs_NCName"/>
+<xsd:enumeration value="xs_ENTITY"/>
+<xsd:enumeration value="xs_ENTITIES"/>
+<xsd:enumeration value="xs_ID"/>
+<xsd:enumeration value="xs_IDREF"/>
+<xsd:enumeration value="xs_IDREFS"/>
+<xsd:enumeration value="xs_QName"/>
+<xsd:enumeration value="xs_anyURI"/>
+<xsd:enumeration value="xs_NOTATION"/>
+<xsd:enumeration value="xs_byte"/>
+<xsd:enumeration value="xs_unsignedByte"/>
+<xsd:enumeration value="xs_short"/>
+<xsd:enumeration value="xs_unsignedShort"/>
+<xsd:enumeration value="xs_int"/>
+<xsd:enumeration value="xs_unsignedInt"/>
+<xsd:enumeration value="xs_long"/>
+<xsd:enumeration value="xs_unsignedLong"/>
+<xsd:enumeration value="xs_integer"/>
+<xsd:enumeration value="xs_positiveInteger"/>
+<xsd:enumeration value="xs_negativeInteger"/>
+<xsd:enumeration value="xs_nonPositiveInteger"/>
+<xsd:enumeration value="xs_nonNegativeInteger"/>
+<xsd:enumeration value="xs_decimal"/>
+<xsd:enumeration value="xs_float"/>
+<xsd:enumeration value="xs_double"/>
+<xsd:enumeration value="xs_base64Binary"/>
+<xsd:enumeration value="xs_hexBinary"/>
+<xsd:enumeration value="xs_dateTime"/>
+<xsd:enumeration value="xs_date"/>
+<xsd:enumeration value="xs_time"/>
+<xsd:enumeration value="xs_gYear"/>
+<xsd:enumeration value="xs_gYearMonth"/>
+<xsd:enumeration value="xs_gMonth"/>
+<xsd:enumeration value="xs_gMonthDay"/>
+<xsd:enumeration value="xs_gDay"/>
+<xsd:enumeration value="xs_duration"/>
+<xsd:enumeration value="xs_boolean"/>
+<xsd:enumeration value="xs_UNKNOWN"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="RuntimeCompositeNode">
+<xsd:complexContent>
+<xsd:extension base="runtimeschema:RuntimeSchemaNode">
+<xsd:attribute name="all" type="xsd:boolean"/>
+<xsd:attribute name="choice" type="xsd:boolean"/>
+<xsd:attribute name="maxOccur" type="xsd:int"/>
+<xsd:attribute name="minOccur" type="xsd:int"/>
+<xsd:attribute name="sequence" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RuntimeCompositeNode" type="runtimeschema:RuntimeCompositeNode"/>
+<xsd:complexType abstract="true" name="RuntimeTypedNode">
+<xsd:complexContent>
+<xsd:extension base="runtimeschema:RuntimeSchemaNode">
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="nameSpace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="typeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="typeNameSpace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="FieldPathNodeRef">
+<xsd:complexContent>
+<xsd:extension base="core:Annotation">
+<xsd:attribute name="effectiveType" type="runtimeschema:SimpleXSDTypeKind"/>
+<xsd:attribute name="feature" type="imx:idref"/>
+<xsd:attribute name="node" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="FieldPathNodeRef" type="runtimeschema:FieldPathNodeRef"/>
+<xsd:complexType name="RowPathNodeRef">
+<xsd:complexContent>
+<xsd:extension base="core:Annotation">
+<xsd:attribute name="injPoint" type="imx:idref"/>
+<xsd:attribute name="maxCardinality" type="xsd:int"/>
+<xsd:attribute name="namespace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="node" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RowPathNodeRef" type="runtimeschema:RowPathNodeRef"/>
+<xsd:complexType name="RuntimeAttributeNode">
+<xsd:complexContent>
+<xsd:extension base="runtimeschema:RuntimeTypedNode">
+<xsd:attribute name="fixed" type="xsd:boolean"/>
+<xsd:attribute name="optional" type="xsd:boolean"/>
+<xsd:attribute name="prohibited" type="xsd:boolean"/>
+<xsd:attribute name="required" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RuntimeAttributeNode" type="runtimeschema:RuntimeAttributeNode"/>
+<xsd:complexType name="RuntimeElementNode">
+<xsd:complexContent>
+<xsd:extension base="runtimeschema:RuntimeTypedNode">
+<xsd:attribute name="contibuteGroupId" type="xsd:int"/>
+<xsd:attribute name="localype" type="xsd:boolean"/>
+<xsd:attribute name="maxOccur" type="xsd:int"/>
+<xsd:attribute name="minOccur" type="xsd:int"/>
+<xsd:attribute name="mixed" type="xsd:boolean"/>
+<xsd:attribute name="simpleContent" type="xsd:boolean"/>
+<xsd:attribute name="simpleType" type="xsd:boolean"/>
+<xsd:attribute name="substitutable" type="xsd:boolean"/>
+<xsd:attribute name="substitutedElem" type="xsd:boolean"/>
+<xsd:attribute name="substitutedType" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RuntimeElementNode" type="runtimeschema:RuntimeElementNode"/>
+<xsd:complexType name="RuntimeSchemaInfo">
+<xsd:complexContent>
+<xsd:extension base="core:Annotation">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="root" type="runtimeschema:RuntimeSchemaNode"/>
+</xsd:choice>
+<xsd:attribute name="H2RComp" type="imx:idref"/>
+<xsd:attribute name="R2HComp" type="imx:idref"/>
+<xsd:attribute name="supportXMLValidation" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RuntimeSchemaInfo" type="runtimeschema:RuntimeSchemaInfo"/>
+</xsd:schema>

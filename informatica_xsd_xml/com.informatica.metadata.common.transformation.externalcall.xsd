@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.transformation.externalcall/2" xmlns:externalcall="http://com.informatica.metadata.common.transformation.externalcall/2" xmlns:imx="http://com.informatica.imx" xmlns:resourceaccess="http://com.informatica.metadata.common.transformation.resourceaccess/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.transformation.externalcall/2">
+<xsd:import namespace="http://com.informatica.metadata.common.transformation.resourceaccess/2" schemaLocation="com.informatica.metadata.common.transformation.resourceaccess.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="ExternalCallDataInterface">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="externalCallTxFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ExternalCallTxField" type="externalcall:ExternalCallTxField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExternalCallDataInterface" type="externalcall:ExternalCallDataInterface"/>
+<xsd:complexType name="ExternalCallTx">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessTx">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="externalCallInterfaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ExternalCallDataInterface" type="externalcall:ExternalCallDataInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExternalCallTx" type="externalcall:ExternalCallTx"/>
+<xsd:complexType name="ExternalCallTxField">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessTxField">
+<xsd:attribute name="passthroughInput" type="imx:idref"/>
+<xsd:attribute name="passthroughInputFeature" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExternalCallTxField" type="externalcall:ExternalCallTxField"/>
+</xsd:schema>

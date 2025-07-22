@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.platform.ldtm.common/2" xmlns:audit="http://com.informatica.metadata.common.audit/1" xmlns:common="http://com.informatica.platform.ldtm.common/2" xmlns:imx="http://com.informatica.imx" xmlns:pdo="http://com.informatica.metadata.common.optimizerconfig.pdo/1" xmlns:session="http://com.informatica.metadata.common.session/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.platform.ldtm.common/2">
+<xsd:import namespace="http://com.informatica.metadata.common.session/2" schemaLocation="com.informatica.metadata.common.session.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.audit/1" schemaLocation="com.informatica.metadata.common.audit.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.optimizerconfig.pdo/1" schemaLocation="com.informatica.metadata.common.optimizerconfig.pdo.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> Change Log\n 2.2.4 pgouda 12/01/2020: Added a new property in AuditRuleResult\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:simpleType name="AuditConditionResultType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="CONDITION_NOT_COMPUTED"/>
+<xsd:enumeration value="CONDITION_PASSED"/>
+<xsd:enumeration value="CONDITION_FAILED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="DataBlockStreamState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="DATABLOCK"/>
+<xsd:enumeration value="EXCEPTION"/>
+<xsd:enumeration value="END"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType abstract="true" name="DataEntity">
+<xsd:annotation>
+<xsd:documentation> Base level Data Entity. This is the base level class that all Data Entity extend from
+ @author Michael Brevard (mbrevard@informatica.com)
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="metadata" type="common:DataMetadata"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="isNull" type="xsd:boolean"/>
+<xsd:attribute name="parentNode" type="imx:idref"/>
+</xsd:complexType>
+<xsd:complexType name="DataEntityRow">
+<xsd:annotation>
+<xsd:documentation> Row of Data Entities.
+ @author Michael Brevard (mbrevard@informatica.com)
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="row" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="DataEntityRow" type="common:DataEntityRow"/>
+<xsd:complexType name="DataMetadata">
+<xsd:annotation>
+<xsd:documentation> Base level Data Metadata. This is the base level class that all Data Metadata extend from
+ @author Michael Brevard (mbrevard@informatica.com)
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="type" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="DataMetadata" type="common:DataMetadata"/>
+<xsd:simpleType name="EDTM_RUN_TYPE">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="IP"/>
+<xsd:enumeration value="OOP"/>
+<xsd:enumeration value="OOPPP"/>
+<xsd:enumeration value="REMOTE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="Encoding">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="XML"/>
+<xsd:enumeration value="FASTINFOSET"/>
+<xsd:enumeration value="BINARY"/>
+<xsd:enumeration value="DATABLOCK"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="HeaderModel">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="earliestCompatibleVersion" type="imx:idref"/>
+<xsd:attribute name="encoding" type="common:Encoding"/>
+<xsd:attribute name="version" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="HeaderModel" type="common:HeaderModel"/>
+<xsd:simpleType name="IsolationLevel">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="AFFINITY"/>
+<xsd:enumeration value="FULL"/>
+<xsd:enumeration value="EXCLUSIVE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="LDTMConfigModel">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="cloneSession" type="xsd:boolean"/>
+<xsd:attribute name="clusterConfig" type="imx:idref"/>
+<xsd:attribute name="dispatchCriteria" type="imx:idref"/>
+<xsd:attribute name="executionCtx" type="imx:idref"/>
+<xsd:attribute name="fastInfoSetAttributeValueMapMemoryLimit" type="xsd:int"/>
+<xsd:attribute name="fastInfoSetCharacterContentChunkMapMemoryLimit" type="xsd:int"/>
+<xsd:attribute name="keepAliveInterval" type="xsd:int"/>
+<xsd:attribute name="localeLanguage">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="optCtx" type="imx:idref"/>
+<xsd:attribute name="postCompileValidate" type="xsd:boolean"/>
+<xsd:attribute name="provisionedConnectionID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="runType" type="common:EDTM_RUN_TYPE"/>
+<xsd:attribute name="tracePerformance" type="xsd:boolean"/>
+<xsd:attribute name="validate" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="LDTMConfigModel" type="common:LDTMConfigModel"/>
+<xsd:complexType name="MappingAuditResult">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="auditConditionResults">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="AuditConditionResult" type="common:AuditConditionResult"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="auditRuleResults">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="AuditRuleResult" type="common:AuditRuleResult"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="MappingAuditResult" type="common:MappingAuditResult"/>
+<xsd:complexType name="MappingDispatchCriteria">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="affinityId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="isAffinityMutable" type="xsd:boolean"/>
+<xsd:attribute name="isolation" type="common:IsolationLevel"/>
+</xsd:complexType>
+<xsd:element name="MappingDispatchCriteria" type="common:MappingDispatchCriteria"/>
+<xsd:simpleType name="OOPChannelState">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="OPEN"/>
+<xsd:enumeration value="CLOSED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="OptimizerCtxModel">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="customProperties">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ValuePairModel" type="common:ValuePairModel"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="commitType" type="session:CommitKind"/>
+<xsd:attribute name="dateFormat">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="doBranchPruning" type="xsd:boolean"/>
+<xsd:attribute name="doCostBasedOptimization" type="xsd:boolean"/>
+<xsd:attribute name="doDatashipJoin" type="xsd:boolean"/>
+<xsd:attribute name="doEarlyProjection" type="xsd:boolean"/>
+<xsd:attribute name="doEarlySelection" type="xsd:boolean"/>
+<xsd:attribute name="doEarlyUncorrelatedSubquery" type="xsd:boolean"/>
+<xsd:attribute name="doPredicateInference" type="xsd:boolean"/>
+<xsd:attribute name="doPredicateMinimization" type="xsd:boolean"/>
+<xsd:attribute name="doSemiJoin" type="xsd:boolean"/>
+<xsd:attribute name="highPrecisionEnabled" type="xsd:boolean"/>
+<xsd:attribute name="ignoreOrderOfImplicitDataConv" type="xsd:boolean"/>
+<xsd:attribute name="ignoreOrderOfOp" type="xsd:boolean"/>
+<xsd:attribute name="isAsciiMode" type="xsd:boolean"/>
+<xsd:attribute name="lookupParseOverride" type="xsd:boolean"/>
+<xsd:attribute name="optimizationLevel" type="xsd:int"/>
+<xsd:attribute name="pushdownType" type="pdo:PushdownKind"/>
+<xsd:attribute name="treatNullInComparisonOperatorsAs">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="treatOutputFieldErrorAsSideEffect" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="OptimizerCtxModel" type="common:OptimizerCtxModel"/>
+<xsd:complexType name="ParameterModel">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="feature" type="imx:idref"/>
+<xsd:attribute name="highPrecisionMode" type="xsd:boolean"/>
+<xsd:attribute name="role" type="common:ParameterRole"/>
+<xsd:attribute name="type" type="imx:idref"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ParameterModel" type="common:ParameterModel"/>
+<xsd:simpleType name="ParameterRole">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="INPUT"/>
+<xsd:enumeration value="OUTPUT"/>
+<xsd:enumeration value="RETURN_VALUE"/>
+<xsd:enumeration value="FAULT"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ParameterValueModel">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="value" type="common:ValueObjectModel"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="nullValue" type="xsd:boolean"/>
+<xsd:attribute name="p" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="ParameterValueModel" type="common:ParameterValueModel"/>
+<xsd:complexType abstract="true" name="ParameterValuesModel">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="values">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ParameterValueModel" type="common:ParameterValueModel"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="StringMultiMap">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="from">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="to">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="StringMultiMap" type="common:StringMultiMap"/>
+<xsd:complexType name="StringMultiMapMultiMap">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="from">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="to" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="StringMultiMapMultiMap" type="common:StringMultiMapMultiMap"/>
+<xsd:complexType abstract="true" name="ValueObjectModel">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="feature" type="imx:idref"/>
+<xsd:attribute name="type" type="imx:idref"/>
+</xsd:complexType>
+<xsd:complexType name="ValuePairModel">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="key">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ValuePairModel" type="common:ValuePairModel"/>
+<xsd:complexType name="Version">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="majorVersion" type="xsd:int"/>
+<xsd:attribute name="minorVersion" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="Version" type="common:Version"/>
+<xsd:complexType name="ArrayValueDataMetadata">
+<xsd:complexContent>
+<xsd:extension base="common:DataMetadata">
+<xsd:annotation>
+<xsd:documentation> Array value version of the Data Metadata. This Metadata relates to a "value" in an array. 
+ @author Michael Brevard (mbrevard@informatica.com)
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="index" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ArrayValueDataMetadata" type="common:ArrayValueDataMetadata"/>
+<xsd:complexType name="ComplexDataEntity">
+<xsd:complexContent>
+<xsd:extension base="common:DataEntity">
+<xsd:annotation>
+<xsd:documentation> Complex version of the Data Entity which is used with Array, Structure, and Map
+ Michael Brevard (mbrevard@informatica.com)
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="data" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ComplexDataEntity" type="common:ComplexDataEntity"/>
+<xsd:complexType name="ComplexValueInputsModel">
+<xsd:complexContent>
+<xsd:extension base="common:ParameterValuesModel"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ComplexValueInputsModel" type="common:ComplexValueInputsModel"/>
+<xsd:complexType name="ComplexValueObjectModel">
+<xsd:complexContent>
+<xsd:extension base="common:ValueObjectModel">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="values">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ValueObjectModel" type="common:ValueObjectModel"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ComplexValueObjectModel" type="common:ComplexValueObjectModel"/>
+<xsd:complexType name="ComplexValueOutputsModel">
+<xsd:complexContent>
+<xsd:extension base="common:ParameterValuesModel"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ComplexValueOutputsModel" type="common:ComplexValueOutputsModel"/>
+<xsd:complexType name="MapValueDataMetadata">
+<xsd:complexContent>
+<xsd:extension base="common:DataMetadata">
+<xsd:annotation>
+<xsd:documentation> Array value version of the Data Metadata. This Metadata relates to a "value" in the map. 
+ @author Michael Brevard (mbrevard@informatica.com)
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="key" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MapValueDataMetadata" type="common:MapValueDataMetadata"/>
+<xsd:complexType name="SimpleDataEntity">
+<xsd:complexContent>
+<xsd:extension base="common:DataEntity">
+<xsd:annotation>
+<xsd:documentation> Simple (primitive) version of the Data Entity. This is used for all primitive types
+ Michael Brevard (mbrevard@informatica.com)
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="data" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SimpleDataEntity" type="common:SimpleDataEntity"/>
+<xsd:complexType name="SimpleValueInputsModel">
+<xsd:complexContent>
+<xsd:extension base="common:ParameterValuesModel"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SimpleValueInputsModel" type="common:SimpleValueInputsModel"/>
+<xsd:complexType name="SimpleValueObjectModel">
+<xsd:complexContent>
+<xsd:extension base="common:ValueObjectModel">
+<xsd:attribute name="value" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SimpleValueObjectModel" type="common:SimpleValueObjectModel"/>
+<xsd:complexType name="SimpleValueOutputsModel">
+<xsd:complexContent>
+<xsd:extension base="common:ParameterValuesModel">
+<xsd:attribute name="returnParameterIndex" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SimpleValueOutputsModel" type="common:SimpleValueOutputsModel"/>
+<xsd:complexType name="ArrayDataEntity">
+<xsd:complexContent>
+<xsd:extension base="common:ComplexDataEntity">
+<xsd:annotation>
+<xsd:documentation> Array version of the Complex Data Entity
+ Michael Brevard (mbrevard@informatica.com)
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ArrayDataEntity" type="common:ArrayDataEntity"/>
+<xsd:complexType name="MapDataEntity">
+<xsd:complexContent>
+<xsd:extension base="common:ComplexDataEntity">
+<xsd:annotation>
+<xsd:documentation> Map version of the Complex Data Entity
+ Michael Brevard (mbrevard@informatica.com)
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MapDataEntity" type="common:MapDataEntity"/>
+<xsd:complexType name="StructureDataEntity">
+<xsd:complexContent>
+<xsd:extension base="common:ComplexDataEntity">
+<xsd:annotation>
+<xsd:documentation> Structure version of the Complex Data Entity
+ Michael Brevard (mbrevard@informatica.com)
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StructureDataEntity" type="common:StructureDataEntity"/>
+<xsd:complexType name="AuditConditionResult">
+<xsd:complexContent>
+<xsd:extension base="audit:AuditConditionConfig">
+<xsd:attribute name="auditConditionResult" type="common:AuditConditionResultType"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="AuditConditionResult" type="common:AuditConditionResult"/>
+<xsd:complexType name="AuditRuleResult">
+<xsd:complexContent>
+<xsd:extension base="audit:AuditRuleConfig">
+<xsd:attribute name="strResult">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="AuditRuleResult" type="common:AuditRuleResult"/>
+</xsd:schema>

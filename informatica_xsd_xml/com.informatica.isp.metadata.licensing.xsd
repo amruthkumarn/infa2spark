@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.metadata.licensing/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:domainconfigurationservice="http://com.informatica.isp.metadata.domainconfigurationservice/2" xmlns:imx="http://com.informatica.imx" xmlns:licensing="http://com.informatica.isp.metadata.licensing/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.metadata.licensing/2">
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.isp.metadata.domainconfigurationservice/2" schemaLocation="com.informatica.isp.metadata.domainconfigurationservice.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:simpleType name="DatabaseType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="ORACLE"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="LicenseHostServices">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="licenseName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="services">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="LicenseHostServices" type="licensing:LicenseHostServices"/>
+<xsd:complexType name="LicenseOption">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="active" type="xsd:boolean"/>
+<xsd:attribute name="expiryTime" type="xsd:long"/>
+<xsd:attribute name="issueTime" type="xsd:long"/>
+<xsd:attribute name="licenseId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="units" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="LicenseOption" type="licensing:LicenseOption"/>
+<xsd:complexType name="NodeServices">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="cpuCount" type="xsd:int"/>
+<xsd:attribute name="nodeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="services">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="NodeServices" type="licensing:NodeServices"/>
+<xsd:complexType name="LicenseFeatures">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="connects">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LicenseOption" type="licensing:LicenseOption"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="exchanges">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LicenseOption" type="licensing:LicenseOption"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="flags">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LicenseOption" type="licensing:LicenseOption"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="options">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LicenseOption" type="licensing:LicenseOption"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="platforms">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LicenseOption" type="licensing:LicenseOption"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="calUsageCount" type="xsd:int"/>
+<xsd:attribute name="checkTime" type="xsd:long"/>
+<xsd:attribute name="deployment">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="deploymentId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="distributor">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="distributorId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="edition">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="editionId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="expiryTime" type="xsd:long"/>
+<xsd:attribute name="issueTime" type="xsd:long"/>
+<xsd:attribute name="licenseName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="numOfMMUsers" type="xsd:int"/>
+<xsd:attribute name="numOfRepositories" type="xsd:int"/>
+<xsd:attribute name="productVersion">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serialNumber">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="validityPeriod">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="validityPeriodId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LicenseFeatures" type="licensing:LicenseFeatures"/>
+<xsd:complexType name="CALUsage">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:attribute name="day" type="xsd:long"/>
+<xsd:attribute name="lastUpdate" type="xsd:long"/>
+<xsd:attribute name="usageCount" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CALUsage" type="licensing:CALUsage"/>
+<xsd:complexType name="DomainUsage">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:attribute name="day" type="xsd:long"/>
+<xsd:attribute name="domainName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="lastUpdate" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DomainUsage" type="licensing:DomainUsage"/>
+<xsd:complexType name="HostUsage">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="licenseServicesInfo">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LicenseHostServices" type="licensing:LicenseHostServices"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="day" type="xsd:long"/>
+<xsd:attribute name="domainName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="hostName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="lastUpdate" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="HostUsage" type="licensing:HostUsage"/>
+<xsd:complexType name="LicenseUsage">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="nodes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NodeServices" type="licensing:NodeServices"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="day" type="xsd:long"/>
+<xsd:attribute name="lastUpdate" type="xsd:long"/>
+<xsd:attribute name="licenseSerialNumber">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LicenseUsage" type="licensing:LicenseUsage"/>
+<xsd:complexType name="LicensedService">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LicensedService" type="licensing:LicensedService"/>
+<xsd:complexType name="CALPrivilegeStatsSummary">
+<xsd:complexContent>
+<xsd:extension base="licensing:CALUsage"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CALPrivilegeStatsSummary" type="licensing:CALPrivilegeStatsSummary"/>
+<xsd:complexType name="CPUUsageSummary">
+<xsd:complexContent>
+<xsd:extension base="licensing:LicenseUsage">
+<xsd:attribute name="busSize" type="xsd:int"/>
+<xsd:attribute name="cpuCount" type="xsd:int"/>
+<xsd:attribute name="os">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CPUUsageSummary" type="licensing:CPUUsageSummary"/>
+<xsd:complexType name="ConnectivityUsage">
+<xsd:complexContent>
+<xsd:extension base="licensing:LicenseUsage">
+<xsd:attribute name="accessCount" type="xsd:int"/>
+<xsd:attribute name="databaseType" type="licensing:DatabaseType"/>
+<xsd:attribute name="isSource" type="xsd:long"/>
+<xsd:attribute name="lastAccesstime" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConnectivityUsage" type="licensing:ConnectivityUsage"/>
+<xsd:complexType name="DomainCPUUsageSummary">
+<xsd:complexContent>
+<xsd:extension base="licensing:DomainUsage">
+<xsd:attribute name="cpuCount" type="xsd:int"/>
+<xsd:attribute name="deployment">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="edition">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DomainCPUUsageSummary" type="licensing:DomainCPUUsageSummary"/>
+<xsd:complexType name="DomainRepoUsageSummary">
+<xsd:complexContent>
+<xsd:extension base="licensing:DomainUsage">
+<xsd:attribute name="deployment">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="edition">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="repoCount" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DomainRepoUsageSummary" type="licensing:DomainRepoUsageSummary"/>
+<xsd:complexType name="HostCPUUsageSummary">
+<xsd:complexContent>
+<xsd:extension base="licensing:HostUsage">
+<xsd:attribute name="busSize" type="xsd:int"/>
+<xsd:attribute name="cpuCount" type="xsd:int"/>
+<xsd:attribute name="deployment">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="edition">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="os">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="HostCPUUsageSummary" type="licensing:HostCPUUsageSummary"/>
+<xsd:complexType name="HostRepoUsageSummary">
+<xsd:complexContent>
+<xsd:extension base="licensing:HostUsage">
+<xsd:attribute name="deployment">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="edition">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="repoCount" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="HostRepoUsageSummary" type="licensing:HostRepoUsageSummary"/>
+<xsd:complexType name="License">
+<xsd:complexContent>
+<xsd:extension base="domainconfigurationservice:DomainObj">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="licensedServices">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LicensedService" type="licensing:LicensedService"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="keys">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceNames">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="License" type="licensing:License"/>
+<xsd:complexType name="RepoUsageSummary">
+<xsd:complexContent>
+<xsd:extension base="licensing:LicenseUsage">
+<xsd:attribute name="repoCount" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RepoUsageSummary" type="licensing:RepoUsageSummary"/>
+<xsd:complexType name="UserCALUsageSummary">
+<xsd:complexContent>
+<xsd:extension base="licensing:CALUsage">
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="ipAddresses">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserCALUsageSummary" type="licensing:UserCALUsageSummary"/>
+</xsd:schema>

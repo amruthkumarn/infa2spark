@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.modeledtypes/1" xmlns:imx="http://com.informatica.imx" xmlns:modeledtypes="http://com.informatica.metadata.common.modeledtypes/1" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.modeledtypes/1">
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="ModeledType">
+<xsd:complexContent>
+<xsd:extension base="types:Type"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ModeledType" type="modeledtypes:ModeledType"/>
+<xsd:complexType name="ModeledTypeContainer">
+<xsd:complexContent>
+<xsd:extension base="types:TypeContainer">
+<xsd:annotation>
+<xsd:documentation> ModelTypeContainer are first class containers for other abstractions that are defined in this package:
+ -- ModeledType objects describe value domains
+
+  The ModeledType objects that are contained by a TypeContainer are all associated with some real-world system or standard specification.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="modeledTypes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ModeledType" type="modeledtypes:ModeledType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ModeledTypeContainer" type="modeledtypes:ModeledTypeContainer"/>
+</xsd:schema>

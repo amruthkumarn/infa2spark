@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.optimizerconfig.instance/1" xmlns:imx="http://com.informatica.imx" xmlns:instance="http://com.informatica.metadata.common.optimizerconfig.instance/1" xmlns:optimizerconfig="http://com.informatica.metadata.common.optimizerconfig/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.optimizerconfig.instance/1">
+<xsd:import namespace="http://com.informatica.metadata.common.optimizerconfig/1" schemaLocation="com.informatica.metadata.common.optimizerconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="TxInstanceOptimizerConfig">
+<xsd:complexContent>
+<xsd:extension base="optimizerconfig:OptimizerConfig">
+<xsd:annotation>
+<xsd:documentation>  Statistics or other constants describing the data and how it is modified by this instance
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="cardinality" type="xsd:long"/>
+<xsd:attribute name="dataInterfaceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="selectivity" type="xsd:double"/>
+<xsd:attribute name="txInstance" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TxInstanceOptimizerConfig" type="instance:TxInstanceOptimizerConfig"/>
+</xsd:schema>

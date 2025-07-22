@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.parameter/9" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:parameter="http://com.informatica.metadata.common.parameter/9" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.parameter/9">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="ParameterContainer">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="parameters">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="PredefinedParameter" type="parameter:PredefinedParameter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="ParameterContainer" type="parameter:ParameterContainer"/>
+<xsd:complexType name="ParameterReference">
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute name="type">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ParameterReference" type="parameter:ParameterReference"/>
+<xsd:complexType name="ParameterType">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="representableBy">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ParameterType" type="parameter:ParameterType"/>
+<xsd:complexType abstract="true" name="ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Represents a value that a parameter can take. 
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="SortPort">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="ascending" type="xsd:boolean"/>
+<xsd:attribute name="portName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SortPort" type="parameter:SortPort"/>
+<xsd:complexType name="BooleanParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Represents the boolean form of a value
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BooleanParameterValue" type="parameter:BooleanParameterValue"/>
+<xsd:complexType name="ConnectionParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Connection parameter value.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="connectionName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConnectionParameterValue" type="parameter:ConnectionParameterValue"/>
+<xsd:complexType name="DateTimeParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Represents the date/time form of a value
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DateTimeParameterValue" type="parameter:DateTimeParameterValue"/>
+<xsd:complexType name="DecimalParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Represents the decimal form of a value
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DecimalParameterValue" type="parameter:DecimalParameterValue"/>
+<xsd:complexType name="DoubleParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Represents the double form of a value
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral" type="xsd:double"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DoubleParameterValue" type="parameter:DoubleParameterValue"/>
+<xsd:complexType name="ExpressionParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Expression parameter value
+ 
+ @author Kevin Liu (cliu) 
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="expression">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExpressionParameterValue" type="parameter:ExpressionParameterValue"/>
+<xsd:complexType name="IntegerParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Represents the int form of a value
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="IntegerParameterValue" type="parameter:IntegerParameterValue"/>
+<xsd:complexType name="JSONParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:attribute name="jsonData">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="JSONParameterValue" type="parameter:JSONParameterValue"/>
+<xsd:complexType name="LongParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Represents the long form of a value
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LongParameterValue" type="parameter:LongParameterValue"/>
+<xsd:complexType name="MidStringParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Represents the string form of a value upto size 666
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MidStringParameterValue" type="parameter:MidStringParameterValue"/>
+<xsd:complexType name="PortListParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:attribute name="portNameEntries">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PortListParameterValue" type="parameter:PortListParameterValue"/>
+<xsd:complexType name="PortNameParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Port name parameter value
+ 
+ @author David Qiu  yqiu@informatica.com 
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="portName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PortNameParameterValue" type="parameter:PortNameParameterValue"/>
+<xsd:complexType name="ResourceParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> This model represents a path of the resource. Resource can be a data source, mapping, transformation etc
+ 
+ @author anagaraj
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="resourceName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ResourceParameterValue" type="parameter:ResourceParameterValue"/>
+<xsd:complexType name="SQLParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Represents the SQL Query value of an SQL Parameter
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="sqlQuery">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SQLParameterValue" type="parameter:SQLParameterValue"/>
+<xsd:complexType name="SortPortListParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="sortPortEntries">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SortPort" type="parameter:SortPort"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SortPortListParameterValue" type="parameter:SortPortListParameterValue"/>
+<xsd:complexType name="StringParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Represents the string form of a value
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="valueLiteral">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StringParameterValue" type="parameter:StringParameterValue"/>
+<xsd:complexType name="TimeDurationParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:attribute name="duration">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TimeDurationParameterValue" type="parameter:TimeDurationParameterValue"/>
+<xsd:complexType abstract="true" name="Parameter">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> A parameter is an object that can be defined in first class objects for use in parameterizing
+ properties of contained objects
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="input" type="xsd:boolean"/>
+<xsd:attribute name="output" type="xsd:boolean"/>
+<xsd:attribute name="precision" type="xsd:int"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+<xsd:attribute name="type" type="imx:idref"/>
+<xsd:attribute name="typeinfo" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="ParameterObjectReference">
+<xsd:complexContent>
+<xsd:extension base="core:ElementReference">
+<xsd:annotation>
+<xsd:documentation> Representing a reference to an Parameter object
+ @author yqiu
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="parameter" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParameterObjectReference" type="parameter:ParameterObjectReference"/>
+<xsd:complexType name="PredefinedParameter">
+<xsd:complexContent>
+<xsd:extension base="parameter:Parameter">
+<xsd:annotation>
+<xsd:documentation> A parameter is an object that can be defined in first class objects for use in parameterizing
+ properties of contained objects
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PredefinedParameter" type="parameter:PredefinedParameter"/>
+<xsd:complexType name="UserDefinedParameter">
+<xsd:complexContent>
+<xsd:extension base="parameter:Parameter">
+<xsd:annotation>
+<xsd:documentation> A parameter is an object that can be defined in first class objects for use in parameterizing
+ properties of contained objects
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="defaultValue" type="parameter:ParameterValue"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserDefinedParameter" type="parameter:UserDefinedParameter"/>
+</xsd:schema>

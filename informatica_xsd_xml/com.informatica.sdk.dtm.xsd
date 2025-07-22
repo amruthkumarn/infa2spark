@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.sdk.dtm/2" xmlns:common="http://com.informatica.common/1" xmlns:connectinfo="http://com.informatica.metadata.common.connectinfo/2" xmlns:dtm="http://com.informatica.sdk.dtm/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.sdk.dtm/2">
+<xsd:import namespace="http://com.informatica.metadata.common.connectinfo/2" schemaLocation="com.informatica.metadata.common.connectinfo.xsd"/>
+<xsd:import namespace="http://com.informatica.common/1" schemaLocation="com.informatica.common.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> &lt;p&gt;\n The classes in this package encapsulate runtime behavior of a DTM that is\n independent of any particular Session or Mapping.&lt;/p&gt;\n &lt;p&gt;\n Instances of this package are to be used transiently, derived from some other\n persistent model that encapsulates only the aspects of this model that are\n exposed to an end user. All applications must be able to translate their\n user-exposes and persistent abstraction to an instance of this metamodel in\n order to provide a common invocation model for the embeddable DTM.&lt;/p&gt;\n &lt;p&gt;\n &lt;b&gt;MODIFICATIONS&lt;/b&gt;&lt;/p&gt;\n 2.3.0\n &lt;ul&gt;\n  &lt;li&gt;Adding a new boolean value to ExecutionContext to indicate whether or not\n        DTM should ignore extended stats.&lt;/li&gt;\n &lt;/ul&gt;\n 2.4.0\n &lt;ul&gt;\n   &lt;li&gt;Adding a new integer value to ExecutionContext as a cutoff for using\n         variable-length format for storing rows in Data Cache for\n         transformations that support that format. (Joiner, Lookup, SetOps)&lt;/li&gt;\n &lt;/ul&gt;\n 2.5.0\n &lt;ul&gt;\n   &lt;li&gt;Adding OSProfile as member to spawn DTM process with correct user when\n         OS Profiles are on in DIS.&lt;/li&gt;\n &lt;/ul&gt;\n 2.6.0\n &lt;ul&gt;\n   &lt;li&gt;Adding maximumRuntimeIntervalPerSource to ExecutionContext to set the\n         max run interval for unbounded sources.&lt;/li&gt;\n &lt;/ul&gt;\n 2.7.0\n &lt;ul&gt;\n   &lt;li&gt;Removed OSProfilesON which is not used any more.&lt;/li&gt;\n   &lt;li&gt;Added executionId to ExecutionContext which is used for generating unique\n         path/name. This was available in parameter bindings previously.&lt;/li&gt;\n &lt;/ul&gt;\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:simpleType name="ESeverity">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="eMSG_ERROR"/>
+<xsd:enumeration value="eMSG_WARNING"/>
+<xsd:enumeration value="eMSG_INFO"/>
+<xsd:enumeration value="eMSG_TRACE"/>
+<xsd:enumeration value="eMSG_DEBUG"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ExecutionContext">
+<xsd:annotation>
+<xsd:documentation> ExecutionContext objects encapsulate runtime behavior of a DTM that is
+ independent of any particular Session or Mapping.
+ 
+ Applications that wish to expose attributes from an ExecutionContext should
+ provide an abstraction that exposes only as much functionality as the
+ application wishes to expose. When executing an instance of that abstraction,
+ the embedding application will then translate its abstraction to an instance
+ of ExecutionContext when preparing to invoke the DTM component.
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="containerContext" type="common:Context"/>
+<xsd:element name="errorLogConfig">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SessionErrorLogConfig" type="dtm:SessionErrorLogConfig"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="parameterBindings">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ParameterBinding" type="dtm:ParameterBinding"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="securityConfig" type="dtm:SecurityConfig"/>
+<xsd:element name="sessionLogConfig">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SessionLogConfig" type="dtm:SessionLogConfig"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="dataSliceInKbs" type="xsd:int"/>
+<xsd:attribute name="discardTargetData" type="xsd:boolean"/>
+<xsd:attribute name="dumpMappingToXML" type="xsd:boolean"/>
+<xsd:attribute name="executionId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="executionPolicy" type="dtm:ExecutionPolicy"/>
+<xsd:attribute name="ignoreEnhancedStats" type="xsd:boolean"/>
+<xsd:attribute name="javaClasspath">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="maximumRuntimeIntervalPerSource">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="numTestRows" type="xsd:int"/>
+<xsd:attribute name="overrideTracing" type="dtm:TracingLevelEnum"/>
+<xsd:attribute name="perfFeedbackEnabled" type="xsd:boolean"/>
+<xsd:attribute name="sessionRunId" type="xsd:int"/>
+<xsd:attribute name="timeSliceInMs" type="xsd:int"/>
+<xsd:attribute name="varLenDataRowSize" type="xsd:int"/>
+</xsd:complexType>
+<xsd:element name="ExecutionContext" type="dtm:ExecutionContext"/>
+<xsd:simpleType name="ExecutionPolicy">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="Legacy"/>
+<xsd:enumeration value="Unconstrained"/>
+<xsd:enumeration value="Serial"/>
+<xsd:enumeration value="OnDemand"/>
+<xsd:enumeration value="Inline"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="LdtmPhase">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="Initialization"/>
+<xsd:enumeration value="Compilation"/>
+<xsd:enumeration value="Translation"/>
+<xsd:enumeration value="Optimization"/>
+<xsd:enumeration value="Execution"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ParameterBinding">
+<xsd:annotation>
+<xsd:documentation> A ParameterBinding is a key/value pair that is used to bind object parameters exposed by the accompanying Session.
+ 
+ Applications that embed a DTM are responsible for extracting the key/value pairs for parameter bindings and converting them to String forms before invoking the DTM.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ParameterBinding" type="dtm:ParameterBinding"/>
+<xsd:complexType name="SecurityConfig">
+<xsd:annotation>
+<xsd:documentation> A SecurityConfig subclass encapsulates configuration metadata about Kerberos and SSL.
+ 
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="SPN">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="credentialCacheLocation">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="isKerberos" type="xsd:boolean"/>
+<xsd:attribute name="isSSL" type="xsd:boolean"/>
+<xsd:attribute name="keytabLocation">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="osProfile" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="SecurityConfig" type="dtm:SecurityConfig"/>
+<xsd:complexType abstract="true" name="SessionErrorLogConfig">
+<xsd:annotation>
+<xsd:documentation> A SessionErrorLogConfig describes a location where error log output should be sent and the granularity of data provided at that location.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="errorColumnDelimiter">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="logSourceRowDataOnError" type="xsd:boolean"/>
+<xsd:attribute name="logTxRowDataOnError" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:complexType name="SessionLog">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="eSeverity" type="dtm:ESeverity"/>
+<xsd:attribute name="sMsg">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sMsgCategory">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sMsgCode" type="xsd:int"/>
+<xsd:attribute name="sThreadDesc">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SessionLog" type="dtm:SessionLog"/>
+<xsd:complexType abstract="true" name="SessionLogConfig">
+<xsd:annotation>
+<xsd:documentation> A SessionLogConfig subclass encapsulates configuration metadata for one implementation of the DTM's ILogger interface.
+ 
+ The DTM must have previously been configured by its embedding application to understand the association any submitted subclass and its associated implementation DLL.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:simpleType name="TracingLevelEnum">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="none"/>
+<xsd:enumeration value="terse"/>
+<xsd:enumeration value="normal"/>
+<xsd:enumeration value="verboseInitialization"/>
+<xsd:enumeration value="verboseData"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="SessionDatabaseErrorLogConfig">
+<xsd:complexContent>
+<xsd:extension base="dtm:SessionErrorLogConfig">
+<xsd:annotation>
+<xsd:documentation> Each instance of this class contains metadata that configures the DTM's built-in error log to Database functionality.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="relationalConnectInfo" type="connectinfo:ConnectInfo"/>
+</xsd:choice>
+<xsd:attribute name="errorLogTableNamePrefix">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SessionDatabaseErrorLogConfig" type="dtm:SessionDatabaseErrorLogConfig"/>
+<xsd:complexType name="SessionFileErrorLogConfig">
+<xsd:complexContent>
+<xsd:extension base="dtm:SessionErrorLogConfig">
+<xsd:annotation>
+<xsd:documentation> Each instance of this class contains metadata that configures the DTM's built-in error log to Flat File functionality.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="errorLogFileDirectory">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="errorLogFileName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SessionFileErrorLogConfig" type="dtm:SessionFileErrorLogConfig"/>
+</xsd:schema>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.interfaces.usermanagement.sso/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:domainconfigurationservice="http://com.informatica.isp.metadata.domainconfigurationservice/2" xmlns:imx="http://com.informatica.imx" xmlns:sso="http://com.informatica.isp.interfaces.usermanagement.sso/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.interfaces.usermanagement.sso/2">
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.isp.metadata.domainconfigurationservice/2" schemaLocation="com.informatica.isp.metadata.domainconfigurationservice.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="SamlAuthRequest">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="requestID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="samlAuthReq">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SamlAuthRequest" type="sso:SamlAuthRequest"/>
+<xsd:complexType name="NodeLoginParameter">
+<xsd:complexContent>
+<xsd:extension base="common:NodeRef">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="predefinedResources">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NodeResource" type="domainconfigurationservice:NodeResource"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="resources">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NodeResource" type="domainconfigurationservice:NodeResource"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="logServiceDir">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="nameSpace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="optionGroups" type="imx:idrefs"/>
+<xsd:attribute name="password">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="portal" type="xsd:boolean"/>
+<xsd:attribute name="resetHostPort" type="xsd:boolean"/>
+<xsd:attribute name="userName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="version">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NodeLoginParameter" type="sso:NodeLoginParameter"/>
+<xsd:complexType name="CredentialData">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj">
+<xsd:attribute name="active" type="xsd:boolean"/>
+<xsd:attribute name="nonExpiring" type="xsd:boolean"/>
+<xsd:attribute name="renewTimeInterval" type="xsd:int"/>
+<xsd:attribute name="service" type="xsd:boolean"/>
+<xsd:attribute name="userType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CredentialData" type="sso:CredentialData"/>
+<xsd:complexType name="UserSession">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj">
+<xsd:attribute name="admin" type="xsd:boolean"/>
+<xsd:attribute name="credential">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="expirationTime" type="xsd:long"/>
+<xsd:attribute name="parentGroups" type="imx:idrefs"/>
+<xsd:attribute name="service" type="xsd:boolean"/>
+<xsd:attribute name="unionedPrivileges" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserSession" type="sso:UserSession"/>
+</xsd:schema>

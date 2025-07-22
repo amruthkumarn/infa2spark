@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.datasourceoperation/2" xmlns:constraint="http://com.informatica.metadata.common.constraint/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:datasourceoperation="http://com.informatica.metadata.common.datasourceoperation/2" xmlns:dsoconfig="http://com.informatica.metadata.common.dsoconfig/2" xmlns:imx="http://com.informatica.imx" xmlns:typelibrary="http://com.informatica.metadata.common.typesystem.typelibrary/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.datasourceoperation/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.dsoconfig/2" schemaLocation="com.informatica.metadata.common.dsoconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.typesystem.typelibrary/2" schemaLocation="com.informatica.metadata.common.typesystem.typelibrary.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.constraint/1" schemaLocation="com.informatica.metadata.common.constraint.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> kdhuria: version 2.4.0 change Updated the package version for adding parameter list reference in DataSourceOperation model\n amanjrek: version 2.5.0 change Updated the package version for introducing the Field Selector model and adding list reference to it in DataSourceOperation model\n skathuri: version 2.6.0 change Updated the package version for introducing the typelibrary attribute in DataSourceOperation for containing complex types\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="Capability">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="defaultAdapter" type="imx:idref"/>
+<xsd:attribute name="defaultConfig" type="imx:idref"/>
+</xsd:complexType>
+<xsd:complexType final="#all" name="DataAccessGroup">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="groupType" type="imx:idref"/>
+<xsd:attribute name="input" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="DataAccessGroup" type="datasourceoperation:DataAccessGroup"/>
+<xsd:complexType final="#all" name="CallCapability">
+<xsd:complexContent>
+<xsd:extension base="datasourceoperation:Capability">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="inGroups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="DataAccessGroup" type="datasourceoperation:DataAccessGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="outGroups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="DataAccessGroup" type="datasourceoperation:DataAccessGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CallCapability" type="datasourceoperation:CallCapability"/>
+<xsd:complexType final="#all" name="LookupCapability">
+<xsd:complexContent>
+<xsd:extension base="datasourceoperation:Capability">
+<xsd:attribute name="lookupCandidates" type="imx:idrefs"/>
+<xsd:attribute name="lookupType" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LookupCapability" type="datasourceoperation:LookupCapability"/>
+<xsd:complexType final="#all" name="ReadCapability">
+<xsd:complexContent>
+<xsd:extension base="datasourceoperation:Capability">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="outGroups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="DataAccessGroup" type="datasourceoperation:DataAccessGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ReadCapability" type="datasourceoperation:ReadCapability"/>
+<xsd:complexType final="#all" name="WriteCapability">
+<xsd:complexContent>
+<xsd:extension base="datasourceoperation:Capability">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="inGroups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="DataAccessGroup" type="datasourceoperation:DataAccessGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="WriteCapability" type="datasourceoperation:WriteCapability"/>
+<xsd:complexType abstract="true" name="DataSourceOperation">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> 
+ @author 
+ Update log: kdhuria 11/3/2014 : Added new referenced property dataSource
+ 			   amanjrek 01/18/2016: Added a new contained property for field selectors
+             skathuri 01/09/2017: Added a typelibrary attribute for containing hierarchical complex types 
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="defaultConfigs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DSORuntimeConfig" type="dsoconfig:DSORuntimeConfig"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="fieldSelectors">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="FieldSelector" type="typelibrary:FieldSelector"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="operations">
+<xsd:complexType>
+<xsd:choice maxOccurs="4" minOccurs="0">
+<xsd:element name="Capability" type="datasourceoperation:Capability"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ownedCapabilityTypes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ComplexType" type="typelibrary:ComplexType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="sourceConstraints">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SourceConstraint" type="constraint:SourceConstraint"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="typeLibrary" type="typelibrary:TypeLibrary"/>
+</xsd:choice>
+<xsd:attribute name="dataSource" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+</xsd:schema>

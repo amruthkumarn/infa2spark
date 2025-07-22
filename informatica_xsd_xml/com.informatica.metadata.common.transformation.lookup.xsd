@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.transformation.lookup/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:lookup="http://com.informatica.metadata.common.transformation.lookup/2" xmlns:resourceaccess="http://com.informatica.metadata.common.transformation.resourceaccess/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.transformation.lookup/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.transformation.resourceaccess/2" schemaLocation="com.informatica.metadata.common.transformation.resourceaccess.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThis package contains the lookup transformation metamodel.\n \n 2.4.0	rsindhu		8/21/2013    Added Expression and Parameterizable \n 									 annotation to lookupCondition in LookupTx\n \n 2.6.0    salluri     2/11/2016    Added a property to ignore null comaprison\n                                   in LookupTx\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:simpleType name="AssociatedFieldKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="INPUTFIELD"/>
+<xsd:enumeration value="SEQUENCEID"/>
+<xsd:enumeration value="EXPRESSION"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="DynamicCacheField">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="associatedExpression">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="associatedFieldType" type="lookup:AssociatedFieldKind"/>
+<xsd:attribute name="dynamicUpdatesFrom" type="imx:idref"/>
+<xsd:attribute name="ignoreInMatch" type="xsd:boolean"/>
+<xsd:attribute name="ignoreNulls" type="xsd:boolean"/>
+<xsd:attribute name="lookupFeature" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="DynamicCacheField" type="lookup:DynamicCacheField"/>
+<xsd:simpleType name="MultiMatchResolutionKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="returnFirst"/>
+<xsd:enumeration value="returnLast"/>
+<xsd:enumeration value="returnAny"/>
+<xsd:enumeration value="reportError"/>
+<xsd:enumeration value="returnAll"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="MasterLookupFieldRole">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:annotation>
+<xsd:documentation> MasterLookupFieldRole marks output-only fields that represent the structure of data in the lookup cache.
+ 
+ Each Master field must refer to the common.datarecord.Field from the lookup's DataRecord (LookupTx.lookupRecord) and be type compatible with that Field.
+ 
+ One Master field is marked for use as the return port when a lookup is used in the disconnected case.
+ 
+ When Dynamic Lookup is used, three properties of the MasterLookupFieldRole are used to configure:
+ -- Which detail port maps to the master field.
+ -- Which rows not used in a non-unique join condition are required for unique insert/update action
+ -- Whether or not null values from the detail should be used to update the cache.
+ 
+ A LookupField that contains an instance of this class is required to refer to a
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="associatedExpression">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="associatedFieldType" type="lookup:AssociatedFieldKind"/>
+<xsd:attribute name="dynamicUpdatesFrom" type="imx:idref"/>
+<xsd:attribute name="ignoreInMatch" type="xsd:boolean"/>
+<xsd:attribute name="ignoreNulls" type="xsd:boolean"/>
+<xsd:attribute name="returnPort" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="MasterLookupFieldRole" type="lookup:MasterLookupFieldRole"/>
+<xsd:complexType name="LookupDataInterface">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessDataInterface">
+<xsd:annotation>
+<xsd:documentation> LookupDataInterface is the subtype of TransformationDataInterface that may be used to define the interface of a LookupTx.
+ 
+ A LookupTx is a passive transformation and therefore contains one instance of this class, marked for both input and output.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="lookupFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LookupField" type="lookup:LookupField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LookupDataInterface" type="lookup:LookupDataInterface"/>
+<xsd:complexType name="LookupTx">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessTx">
+<xsd:annotation>
+<xsd:documentation> Lookup transformations operate either against a disk-based cache of data read from a master pipeline or uncached by issuing queries to a live system.  Rows of data are read from the detail pipeline and a single matching row is retrieved from either the indexed cache or live system based on a match condition.
+ 
+ The source mapping of a lookup transformation instance may come from any of the following first class DataResource object types.  To support upgrade cases, where Lookup transformations did not re-use table, file, or cache definitions, a LookupTx may optionally contain the instance it uses as a source.
+ -- A RelationalResource
+ -- A UserDefinedResource *not yet modeled*
+ -- A FlatFileResource *not yet modeled*
+ 
+ * talk about lookup condition* (TBD: Nothing new here)
+ 
+ TBD: * talk about sort order properties *
+ 
+ * talk about multiple match handling *
+ 
+ * talk about disconnected detail use *
+ 
+ * TBD: talk about intra-mapping cache sharing *
+ 
+ * talk about persistent caches *
+ 
+ * talk about dynamic caches *
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="dynamicCacheFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DynamicCacheField" type="lookup:DynamicCacheField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="lookupInterface">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LookupDataInterface" type="lookup:LookupDataInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="dynamicCache" type="xsd:boolean"/>
+<xsd:attribute name="ignoreNullComparision" type="xsd:boolean"/>
+<xsd:attribute name="insertElseUpdate" type="xsd:boolean"/>
+<xsd:attribute name="lookupCondition">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="multipleMatchHandling" type="lookup:MultiMatchResolutionKind"/>
+<xsd:attribute name="newLookupRowField" type="imx:idref"/>
+<xsd:attribute name="nullHighest" type="xsd:boolean"/>
+<xsd:attribute name="oldValueReturnedOnUpdate" type="xsd:boolean"/>
+<xsd:attribute name="persistentCache" type="xsd:boolean"/>
+<xsd:attribute name="returnPort" type="imx:idref"/>
+<xsd:attribute name="sortedInput" type="xsd:boolean"/>
+<xsd:attribute name="stringCompareWithCase" type="xsd:boolean"/>
+<xsd:attribute name="updateDynamicCacheCondition">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="updateElseInsert" type="xsd:boolean"/>
+<xsd:attribute name="lookupCondition." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LookupTx" type="lookup:LookupTx"/>
+<xsd:complexType name="LookupField">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessTxField">
+<xsd:annotation>
+<xsd:documentation> LookupField is the subtype of TransformationField that can be contained through a lookup transformation (LookupTx).
+ 
+ There are two kinds of LookupField objects.
+ -- Master LookupField fields are output-only fields that represent the structure of data in the lookup cache.
+ -- Detail LookupField fields are input or input/output fields that provide values used to lookup a row from the cache.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="masterRole" type="lookup:MasterLookupFieldRole"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LookupField" type="lookup:LookupField"/>
+</xsd:schema>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.partition.txhandlerconfig.transformation/2" xmlns:dsoconfig="http://com.informatica.metadata.common.partition.dsoconfig/1" xmlns:imx="http://com.informatica.imx" xmlns:transformation="http://com.informatica.metadata.common.partition.txhandlerconfig.transformation/2" xmlns:txhandlerconfig="http://com.informatica.metadata.common.partition.txhandlerconfig/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.partition.txhandlerconfig.transformation/2">
+<xsd:import namespace="http://com.informatica.metadata.common.partition.txhandlerconfig/2" schemaLocation="com.informatica.metadata.common.partition.txhandlerconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.partition.dsoconfig/1" schemaLocation="com.informatica.metadata.common.partition.dsoconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n All partitioning strategies currently in existence need to expose partition-dependent properties and partitition-scope transformation property overrides.\n Future partitioning strategies may not require these concerns, which have purposely been designed such that partition-independent session objects need not know of their existence.\n \n This package contains the classes that define partition-dependent properties for a transformation handler.\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="AggregatorTxHandlerConfigPartition">
+<xsd:complexContent>
+<xsd:extension base="txhandlerconfig:TxHandlerConfigPartition">
+<xsd:annotation>
+<xsd:documentation> This is an abstract base class which is extended to model partition-dependent properties that a session handler implementation defines and consumes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="cacheDir">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="cacheDir." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="AggregatorTxHandlerConfigPartition" type="transformation:AggregatorTxHandlerConfigPartition"/>
+<xsd:complexType name="DefaultTxHandlerConfigPartition">
+<xsd:complexContent>
+<xsd:extension base="txhandlerconfig:TxHandlerConfigPartition">
+<xsd:annotation>
+<xsd:documentation> This is an abstract base class which is extended to model partition-dependent properties that a session handler implementation defines and consumes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DefaultTxHandlerConfigPartition" type="transformation:DefaultTxHandlerConfigPartition"/>
+<xsd:complexType name="JoinerTxHandlerConfigPartition">
+<xsd:complexContent>
+<xsd:extension base="txhandlerconfig:TxHandlerConfigPartition">
+<xsd:annotation>
+<xsd:documentation> This is an abstract base class which is extended to model partition-dependent properties that a session handler implementation defines and consumes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="cacheDir">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="cacheDir." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="JoinerTxHandlerConfigPartition" type="transformation:JoinerTxHandlerConfigPartition"/>
+<xsd:complexType name="RankTxHandlerConfigPartition">
+<xsd:complexContent>
+<xsd:extension base="txhandlerconfig:TxHandlerConfigPartition">
+<xsd:annotation>
+<xsd:documentation> This is an abstract base class which is extended to model partition-dependent properties that a session handler implementation defines and consumes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="cacheDir">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="cacheDir." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="RankTxHandlerConfigPartition" type="transformation:RankTxHandlerConfigPartition"/>
+<xsd:complexType name="ReadTxHandlerConfigPartition">
+<xsd:complexContent>
+<xsd:extension base="txhandlerconfig:TxHandlerConfigPartition">
+<xsd:annotation>
+<xsd:documentation> This is an abstract base class which is extended to model partition-dependent properties that a session handler implementation defines and consumes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="sourceFilter">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ReadTxHandlerConfigPartition" type="transformation:ReadTxHandlerConfigPartition"/>
+<xsd:complexType abstract="true" name="ResourceAccessTxHandlerConfigPartition">
+<xsd:complexContent>
+<xsd:extension base="txhandlerconfig:TxHandlerConfigPartition">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="dsoRuntimeConfigPartition" type="dsoconfig:DSORuntimeConfigPartition"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="SorterTxHandlerConfigPartition">
+<xsd:complexContent>
+<xsd:extension base="txhandlerconfig:TxHandlerConfigPartition">
+<xsd:annotation>
+<xsd:documentation> This is an abstract base class which is extended to model partition-dependent properties that a session handler implementation defines and consumes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="cacheDir">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="cacheDir." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SorterTxHandlerConfigPartition" type="transformation:SorterTxHandlerConfigPartition"/>
+<xsd:complexType name="LookupTxHandlerConfigPartition">
+<xsd:complexContent>
+<xsd:extension base="transformation:ResourceAccessTxHandlerConfigPartition">
+<xsd:annotation>
+<xsd:documentation> This is an abstract base class which is extended to model partition-dependent properties that a session handler implementation defines and consumes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LookupTxHandlerConfigPartition" type="transformation:LookupTxHandlerConfigPartition"/>
+<xsd:complexType name="SourceTxHandlerConfigPartition">
+<xsd:complexContent>
+<xsd:extension base="transformation:ResourceAccessTxHandlerConfigPartition">
+<xsd:annotation>
+<xsd:documentation> This is an abstract base class which is extended to model partition-dependent properties that a session handler implementation defines and consumes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SourceTxHandlerConfigPartition" type="transformation:SourceTxHandlerConfigPartition"/>
+<xsd:complexType name="TargetTxHandlerConfigPartition">
+<xsd:complexContent>
+<xsd:extension base="transformation:ResourceAccessTxHandlerConfigPartition">
+<xsd:annotation>
+<xsd:documentation> This is an abstract base class which is extended to model partition-dependent properties that a session handler implementation defines and consumes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="rejectDirectory">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="rejectFile">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="rejectDirectory." type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TargetTxHandlerConfigPartition" type="transformation:TargetTxHandlerConfigPartition"/>
+</xsd:schema>

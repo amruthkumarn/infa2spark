@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.txinstancememory/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:mapping="http://com.informatica.metadata.common.mapping/2" xmlns:txinstancememory="http://com.informatica.metadata.common.txinstancememory/1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.txinstancememory/1">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.mapping/2" schemaLocation="com.informatica.metadata.common.mapping.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="TxInstanceMemory">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:annotation>
+<xsd:documentation> @author Ashutosh
+ This is used to store the Memory Info for an instance
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="txInstance" type="imx:idref"/>
+<xsd:attribute name="autoMemoryUnits" type="xsd:int"/>
+<xsd:attribute name="minRequiredMemory" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TxInstanceMemory" type="txinstancememory:TxInstanceMemory"/>
+<xsd:complexType name="TxInstanceMemoryCharacteristic">
+<xsd:complexContent>
+<xsd:extension base="mapping:Characteristic">
+<xsd:annotation>
+<xsd:documentation> @author Ashutosh
+ Contains the memory of Tx Instances
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="memory">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TxInstanceMemory" type="txinstancememory:TxInstanceMemory"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TxInstanceMemoryCharacteristic" type="txinstancememory:TxInstanceMemoryCharacteristic"/>
+</xsd:schema>

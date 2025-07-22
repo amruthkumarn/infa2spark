@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.description/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:description="http://com.informatica.metadata.common.description/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.description/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="BusinessName">
+<xsd:complexContent>
+<xsd:extension base="core:Annotation">
+<xsd:annotation>
+<xsd:documentation> A short description which provides a user-friendly label to a metadata object.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="text">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BusinessName" type="description:BusinessName"/>
+<xsd:complexType name="Description">
+<xsd:complexContent>
+<xsd:extension base="core:Annotation">
+<xsd:annotation>
+<xsd:documentation> A user-provided description of what a named metadata object is.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="body">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Description" type="description:Description"/>
+</xsd:schema>

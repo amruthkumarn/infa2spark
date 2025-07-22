@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.sdk.sourcedataobject/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:datasourceoperation="http://com.informatica.metadata.common.datasourceoperation/2" xmlns:imx="http://com.informatica.imx" xmlns:sdk="http://com.informatica.metadata.sdk/2" xmlns:sourcedataobject="http://com.informatica.metadata.sdk.sourcedataobject/2" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.sdk.sourcedataobject/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.datasourceoperation/2" schemaLocation="com.informatica.metadata.common.datasourceoperation.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.sdk/2" schemaLocation="com.informatica.metadata.sdk.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nA model package for PowerCenter 8.5-era SDK backwards compatibility.\n \n PowerCenter SDK sources and targets provide a model based on groups of fields.  It provides a Metadata Extension API for customizing the properties of the source or target itself, and a Field Attribute API for customizing the properties of a field.\n \n This model extends the ResourceEntity abstraction for adapter models and imposes the PowerCenter 8.5 group-contains-fields structure on the metadata.  Custom attributes are attached to the resulting objects by containing GenericAnnotation objects through NamedElement.annotations.  See individual classes for more details about annotations that should be used for this purpose.\n \n The platform metamodel for adapter objects only accounts for a single partition, single group interface at this time.  Consequently, only single-group SDK sources and targets are supported.\n \n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="SDKFieldAttr">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:attribute name="field" type="imx:idref"/>
+<xsd:attribute name="fieldAttrType" type="imx:idref"/>
+<xsd:attribute name="literalValue">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SDKFieldAttr" type="sourcedataobject:SDKFieldAttr"/>
+<xsd:complexType name="SDKFieldAttrDef">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:attribute name="dbType" type="imx:idref"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="type" type="sdk:SDKAttrDataType"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SDKFieldAttrDef" type="sourcedataobject:SDKFieldAttrDef"/>
+<xsd:complexType name="SDKDBType">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="fieldAttrDefs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SDKFieldAttrDef" type="sourcedataobject:SDKFieldAttrDef"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="typesystem" type="imx:idref"/>
+<xsd:attribute name="uniqueId" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SDKDBType" type="sourcedataobject:SDKDBType"/>
+<xsd:complexType name="SDKRecord">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="fields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SDKField" type="sourcedataobject:SDKField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="dataObject" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SDKRecord" type="sourcedataobject:SDKRecord"/>
+<xsd:complexType name="SDKField">
+<xsd:complexContent>
+<xsd:extension base="types:TypedElement">
+<xsd:annotation>
+<xsd:documentation> This class represents a field of an SDK source and/or target.
+ 
+ Every instance of this class has a name, a native data type, a precision, and a scale.  
+ 
+ SDK field attributes are exposed today by IField.getAttributeXXX( ) methods.  The state to support this interface is found by using IMF reflection for properties with the same name on a subclass.  
+ 
+ Since the SDK only supports String and Integer data types as return values, no other IProperty types may be used on a subclass of this object.
+ 
+ A Generic Resource Entity will use types from the same TypeSystem for each of its fields.  That TypeSystem must have a mapping to ODBC, so the DTM can satisfy its interface, which expects to provide ODBC type identifies.
+ 
+ TODO: 
+ -- If the DTM wants to analyze data maps to infer the ODBC type required by legacy SDK support, no further properties are required.  
+ -- If the DTM wishes the mapped ODBC type be inferred at creation time and stored with the object, then a second "type" paramter is required and possibly second ODBCPrecision and ODBCScale arguments.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="fieldAttrs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SDKFieldAttr" type="sourcedataobject:SDKFieldAttr"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="precision" type="xsd:int"/>
+<xsd:attribute name="record" type="imx:idref"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SDKField" type="sourcedataobject:SDKField"/>
+<xsd:complexType name="SDKSourceDataObject">
+<xsd:complexContent>
+<xsd:extension base="datasourceoperation:DataSourceOperation">
+<xsd:annotation>
+<xsd:documentation> This class represents a field of an SDK source and/or target.  It provides the record-contains-fields structure of an 8.5 SDK source or target and should be subclassed by individual adapter developers.
+ 
+ Every instance of this class has a name and a resource entity type.  The resource entity type will identify the kind of logical adapter required.  For example, the seeded resource entity type may identify the object as a "Mock" resource entity, a "SQL-99 Query" resource entity, or any other plugged in type.
+ 
+ A GenericSDKResourceEntity can be used as a source only if there is  at least one registered DataAdapter that can consume objects of its Resource Entity Type to implement the SDK Reader Extension API.
+ 
+ A GenericSDKResourceEntity can be used as a target only if there is  at least one registered DataAdapter that can consume objects of its Resource Entity Type to implement the SDK Writer Extension API.
+ 
+ SDK source and target attributes are exposed today by IExtensibleObject methods, supported by Metadata Extension Domains.  The state to support this interface is modeled in subclasses of ResourceEntityMetadataExtensionDomain, found in GenericSDKResourceEntity.metadataExtensionDomains by matching their vendor and domain IDs.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="records">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="SDKRecord" type="sourcedataobject:SDKRecord"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="dbType" type="imx:idref"/>
+<xsd:attribute name="source" type="xsd:boolean"/>
+<xsd:attribute name="target" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SDKSourceDataObject" type="sourcedataobject:SDKSourceDataObject"/>
+</xsd:schema>

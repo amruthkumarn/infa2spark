@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.ds.sql.runtime/0" xmlns:imx="http://com.informatica.imx" xmlns:runtime="http://com.informatica.ds.sql.runtime/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.ds.sql.runtime/0">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> This package is meant for runtime models only, and it should not be\n registered with MRS.\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="ParamLocator">
+<xsd:annotation>
+<xsd:documentation> This model is an abstract parent to either integer index or string name locators.
+ 
+ @author Anmol
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="ParamVal">
+<xsd:annotation>
+<xsd:documentation> This model is an abstract parent to all the parameter value type models.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="Parameter">
+<xsd:annotation>
+<xsd:documentation> This model holds a pair of locator and value.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="locator" type="imx:idref"/>
+<xsd:attribute name="value" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="Parameter" type="runtime:Parameter"/>
+<xsd:complexType name="BlobVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:ParamVal">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates the byte stream.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BlobVal" type="runtime:BlobVal"/>
+<xsd:complexType name="BooleanVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:ParamVal">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates the primitive boolean.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BooleanVal" type="runtime:BooleanVal"/>
+<xsd:complexType abstract="true" name="CharacterVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:ParamVal">
+<xsd:annotation>
+<xsd:documentation> This abstract model discerns itself from a Numeric value.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="DateVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:ParamVal">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates the java.util.Date.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="time" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DateVal" type="runtime:DateVal"/>
+<xsd:complexType name="NullVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:ParamVal">
+<xsd:annotation>
+<xsd:documentation> Encapsulates Null objects.
+ @author jlo
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="sqlType" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NullVal" type="runtime:NullVal"/>
+<xsd:complexType abstract="true" name="NumericVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:ParamVal">
+<xsd:annotation>
+<xsd:documentation> This model discerns itself from Character values.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="ParamIndex">
+<xsd:complexContent>
+<xsd:extension base="runtime:ParamLocator">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates an integer locator key.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="key" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParamIndex" type="runtime:ParamIndex"/>
+<xsd:complexType name="ParamName">
+<xsd:complexContent>
+<xsd:extension base="runtime:ParamLocator">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates the String key or parameter name as key.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="key">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParamName" type="runtime:ParamName"/>
+<xsd:complexType name="TimeVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:ParamVal">
+<xsd:annotation>
+<xsd:documentation> Encapsulates Time.
+ @author jlo
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="time" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TimeVal" type="runtime:TimeVal"/>
+<xsd:complexType name="TimestampVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:ParamVal">
+<xsd:annotation>
+<xsd:documentation>
+ Encapsulates timestamp.
+ @author jlo
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="nano" type="xsd:int"/>
+<xsd:attribute name="time" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TimestampVal" type="runtime:TimestampVal"/>
+<xsd:complexType name="CharVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:CharacterVal">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates the primitive char.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="imx:char">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CharVal" type="runtime:CharVal"/>
+<xsd:complexType name="DecimalVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:NumericVal">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates BigDecimal via a String.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DecimalVal" type="runtime:DecimalVal"/>
+<xsd:complexType name="DoubleVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:NumericVal">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates the primitive double.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value" type="xsd:double"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DoubleVal" type="runtime:DoubleVal"/>
+<xsd:complexType name="IntVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:NumericVal">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates the primitive integer.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="IntVal" type="runtime:IntVal"/>
+<xsd:complexType name="LongVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:NumericVal">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates the primitive long.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value" type="xsd:long"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LongVal" type="runtime:LongVal"/>
+<xsd:complexType name="ShortVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:NumericVal">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates the primitive short.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value" type="xsd:short"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ShortVal" type="runtime:ShortVal"/>
+<xsd:complexType name="StringVal">
+<xsd:complexContent>
+<xsd:extension base="runtime:CharacterVal">
+<xsd:annotation>
+<xsd:documentation> This model encapsulates the java string.
+ 
+ @author Anmol
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="value">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="StringVal" type="runtime:StringVal"/>
+</xsd:schema>

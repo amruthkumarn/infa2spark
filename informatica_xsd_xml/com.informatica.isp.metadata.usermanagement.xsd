@@ -1,0 +1,1155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.isp.metadata.usermanagement/2" xmlns:common="http://com.informatica.isp.metadata.common/2" xmlns:imx="http://com.informatica.imx" xmlns:usermanagement="http://com.informatica.isp.metadata.usermanagement/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.isp.metadata.usermanagement/2">
+<xsd:import namespace="http://com.informatica.isp.metadata.common/2" schemaLocation="com.informatica.isp.metadata.common.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType name="HadoopImpersonationProfile">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="enableBDM" type="xsd:boolean"/>
+<xsd:attribute name="hadoopConnectionPassThrough" type="xsd:boolean"/>
+<xsd:attribute name="hadoopImpersonationUser">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="hadoopKerberosKeytab">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="hadoopKerberosPrincipal">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="useInfaUserAsProxy" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="HadoopImpersonationProfile" type="usermanagement:HadoopImpersonationProfile"/>
+<xsd:simpleType name="IdentityType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="UserIdentity"/>
+<xsd:enumeration value="GroupIdentity"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="LDAPType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="MicrosoftActiveDirectory"/>
+<xsd:enumeration value="SunJavaSystemDirectory"/>
+<xsd:enumeration value="NovellEDirectory"/>
+<xsd:enumeration value="IBMTivoliDirectory"/>
+<xsd:enumeration value="OpenLDAP"/>
+<xsd:enumeration value="OracleDirectory"/>
+<xsd:enumeration value="OracleDirectoryServerODSEE"/>
+<xsd:enumeration value="MicrosoftAzureActiveDirectory"/>
+<xsd:enumeration value="OracleUnifiedDirectory"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="OSProfileProductExtension">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="options">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="OSProfileProductExtension" type="usermanagement:OSProfileProductExtension"/>
+<xsd:complexType name="SAMLSignedAssertionConfig">
+<xsd:annotation>
+<xsd:documentation> This model represent configuration to validate the SAML Assertion Signature. 
+ @author gsood
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="assertionSigned" type="xsd:boolean"/>
+<xsd:attribute name="assertionSigningCertificateAlias">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SAMLSignedAssertionConfig" type="usermanagement:SAMLSignedAssertionConfig"/>
+<xsd:complexType name="SAMLSignedResponseConfig">
+<xsd:annotation>
+<xsd:documentation> This model represent configuration to validate the SAML Response Signature. 
+ @author gsood
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="responseSigned" type="xsd:boolean"/>
+<xsd:attribute name="responseSigningCertificateAlias">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="SAMLSignedResponseConfig" type="usermanagement:SAMLSignedResponseConfig"/>
+<xsd:complexType name="UMServiceConfig">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.3.0 smittal 9/7/2011 Added new contained property 'accountConfig' 
+
+ 2.9.0 abatra 3/11/2015 Added new contained property 'uumNamespaces'
+ 
+ 2.12.0 vmehta 3/8/2016 Added new contained property 'samlConfig'
+ 
+ 2.17.0 vmehta 5/1/2018 Added new contained property 'passwordComplexityConfig'
+ 
+ 2.19.0 muverma 28/03/2019 Added new contained properties 'LDAPHostConfigurations', 'serviceRealmName', 'userRealmName' and 'kerberosEnabled'
+ 
+ 2.20.0 muverma 17/05/2019 Deprecated 'synchronizeTimes'. This should be per ldap host configuration.
+ 
+ 2.21.0 muverma 30/May/2019 Added 'customLDAPTypes' to store the different types of LDAPs with its properties.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="LDAPHostConfigurations">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LDAPOptions" type="usermanagement:LDAPOptions"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="accountConfig" type="usermanagement:UserAccountSecurityConfig"/>
+<xsd:element name="customLDAPTypes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="CustomLDAPType" type="usermanagement:CustomLDAPType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ldapNamespaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="LDAPNamespace" type="usermanagement:LDAPNamespace"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ldapOptions" type="usermanagement:LDAPOptions"/>
+<xsd:element name="passwordComplexityConfig" type="usermanagement:PasswordComplexityConfig"/>
+<xsd:element name="repoLDAPNamespace" type="usermanagement:LDAPNamespace"/>
+<xsd:element name="samlConfig" type="usermanagement:SAMLConfig"/>
+<xsd:element name="synchronizeTimes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TimeOfDay" type="common:TimeOfDay"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="uumNamespaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="UUMNamespace" type="usermanagement:UUMNamespace"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="kerberosEnabled" type="xsd:boolean"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="resyncWithServiceTime" type="xsd:int"/>
+<xsd:attribute name="serviceRealmName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userLoginSessionActiveTime" type="xsd:long"/>
+<xsd:attribute name="userRealmName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="UMServiceConfig" type="usermanagement:UMServiceConfig"/>
+<xsd:complexType name="LDAPOptions">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation>Model Change log
+ 	2.7.0 skakkar 8/17/2013 
+  Added a new property : 'credential' (There is a property 'encryptedCredential' which is not marked as 'isSensitive' 
+ 						   hence we need to explicity encrypt and decrypt it. We want to leverage IMF encryption and decryption, 
+ 						   hence marking it as'isSensitive'.
+  2.19.0 muverma 23/04/2019
+ 	Added a new property : 'LDAPHostConfigurationName ' (This property is to identify the ldap connection info uniquely 
+ 							and will be mapped to the security domain).
+  Deprecated 			 :  serviceRealmName, userRealmName and kerberosEnabled. Since these properties are specific to domain and not related to ldap configurations, 
+  						therefore moved to UMServiceConfig.	
+  2.20.0 muverma 21/05/2019
+  Added a new property : 'ldapHostLevelSynchronizeTimes' moved here from UMServiceConfig. This should be per ldap host configuration.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ldapHostLevelSynchronizeTimes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="TimeOfDay" type="common:TimeOfDay"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="LDAPHostConfigurationName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="aSSLKeyStore">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="aSSLKeyStorePassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="credential">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="encryptedCredential">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="groupMembershipAttr">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="host">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="kerberosEnabled" type="xsd:boolean"/>
+<xsd:attribute name="ldapCaseInsensitive" type="xsd:boolean"/>
+<xsd:attribute name="ldapType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="maxElemForSecurityDomain" type="xsd:int"/>
+<xsd:attribute name="pagingDisabled" type="xsd:boolean"/>
+<xsd:attribute name="port" type="xsd:int"/>
+<xsd:attribute name="principle">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="serviceRealmName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="trustLDAPCertificate" type="xsd:boolean"/>
+<xsd:attribute name="useSSL" type="xsd:boolean"/>
+<xsd:attribute name="userRealmName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LDAPOptions" type="usermanagement:LDAPOptions"/>
+<xsd:complexType name="PasswordComplexityConfig">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation> This model represents password complexity config for UUM authentication.
+ @author vmehta
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="passwordRules">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="PasswordRuleModel" type="usermanagement:PasswordRuleModel"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="passwordComplexityEnabled" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PasswordComplexityConfig" type="usermanagement:PasswordComplexityConfig"/>
+<xsd:complexType name="PasswordRuleModel">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation> This model represents UUM password rule contained in UMServiceConfig
+ @author vmehta
+
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PasswordRuleModel" type="usermanagement:PasswordRuleModel"/>
+<xsd:complexType name="SAMLAuthnContext">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation> This model represents configuration for Requested AuthnContext in SAML Request
+ @author gsood
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="authContextClassRef">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="authContextComparison">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SAMLAuthnContext" type="usermanagement:SAMLAuthnContext"/>
+<xsd:complexType name="SAMLConfig">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation> This model represents SAML configuration for UUM authentication.
+ @author vmehta
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="advanceOptions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="samlAuthnContext" type="usermanagement:SAMLAuthnContext"/>
+<xsd:element name="samlEncryptedAssertionConfig" type="usermanagement:SAMLEncryptedAssertionConfig"/>
+<xsd:element name="samlRequestSigningConfig" type="usermanagement:SAMLRequestSigningConfig"/>
+<xsd:element name="samlSignedAssertionConfig" type="usermanagement:SAMLSignedAssertionConfig"/>
+<xsd:element name="samlSignedResponseConfig" type="usermanagement:SAMLSignedResponseConfig"/>
+</xsd:choice>
+<xsd:attribute name="clockSkewTolerance" type="xsd:int"/>
+<xsd:attribute name="idpUrl">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="samlEnabled" type="xsd:boolean"/>
+<xsd:attribute name="serviceProviderId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SAMLConfig" type="usermanagement:SAMLConfig"/>
+<xsd:complexType name="SAMLEncryptedAssertionConfig">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation> This model represent configuration for the SAML Assertion decryption.
+ @author gsood
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="assertionEncrypted" type="xsd:boolean"/>
+<xsd:attribute name="encyptedAssertionPrivateKeyAlias">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="encyptedAssertionPrivateKeyPassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SAMLEncryptedAssertionConfig" type="usermanagement:SAMLEncryptedAssertionConfig"/>
+<xsd:complexType name="SAMLRequestSigningConfig">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation> This model represent configuration for signing the SAML Request. 
+ @author gsood
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="reqSigningAlgorithm">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="reqSigningPrivateKeyAlias">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="reqSigningPrivateKeyPassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="signAuthRequest" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SAMLRequestSigningConfig" type="usermanagement:SAMLRequestSigningConfig"/>
+<xsd:complexType name="UserAccountSecurityConfig">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation> @author smittal
+ 
+ Model Change Log
+ 
+ 2.3.0 smittal 9/7/2011 Introduced the model
+  
+ 2.8.0 achauhan 04/9/2013 Added AdminAccLockoutEnabled
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="accountLockoutEnabled" type="xsd:boolean"/>
+<xsd:attribute name="adminAccLockoutEnabled" type="xsd:boolean"/>
+<xsd:attribute name="maxInvalidLoginAttempts" type="xsd:int"/>
+<xsd:attribute name="maxPasswordValidDuration" type="xsd:int"/>
+<xsd:attribute name="minPasswordHistory" type="xsd:int"/>
+<xsd:attribute name="minPasswordLength" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserAccountSecurityConfig" type="usermanagement:UserAccountSecurityConfig"/>
+<xsd:complexType name="UserInfo">
+<xsd:complexContent>
+<xsd:extension base="common:ISPObject">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.3.0 smittal 9/7/2011 Added new properties : 'invalidLoginAttempts', 'accountLocked,' 
+ 							'previousPasswords', 'passwordExpired', 'passwordLastModifiedTime' 
+ 
+ 2.3.0 smittal 9/21/2011 Added @Persistence annotation for all String properties
+ 
+ 2.6.0 skakkar 7/19/2013 Added a new property : 'password' (There is a property 'encryptedPassword' which is
+ 												   not marked as 'isSensitive' hence we need to explicity encrypt and decrypt
+ 												   it. We want to leverage IMF encryption and decryption, hence marking it as
+                                                 'isSensitive'.				  		
+ 
+ 2.7.0 dchhatan 19/8/2013 For property description:
+ 							Changed the persistence size to LengthTypeMax.UNBOUNDED
+ 							Changed Length to LengthType.UNBOUNDED
+ 							To support unbounded length of description
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="accountLocked" type="xsd:boolean"/>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="email">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="encryptedPassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="fullName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="invalidLoginAttempts" type="xsd:int"/>
+<xsd:attribute name="password">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="passwordExpired" type="xsd:boolean"/>
+<xsd:attribute name="passwordLastModifiedTime" type="xsd:long"/>
+<xsd:attribute name="phone">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="previousEncryptedPasswords">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UserInfo" type="usermanagement:UserInfo"/>
+<xsd:complexType name="CustomLDAPType">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:attribute name="cnAttr">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="displayName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="fetchRangedAttribute" type="xsd:boolean"/>
+<xsd:attribute name="groupDescriptionAttr">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="groupMembershipAttr">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="uid">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userDescriptionAttr">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userEmailAttr">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userEnableAttr">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userGivenNameAttr">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userSurnameAttr">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userTelephoneAttr">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CustomLDAPType" type="usermanagement:CustomLDAPType"/>
+<xsd:complexType name="DefaultOSProfile">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="userIdentity" type="usermanagement:IdentityObj"/>
+</xsd:choice>
+<xsd:attribute name="osProfileName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DefaultOSProfile" type="usermanagement:DefaultOSProfile"/>
+<xsd:complexType name="LDAPNamespace">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:annotation>
+<xsd:documentation> change log
+ 
+ 2.7.0 dchhatan 19/8/2013 For properites groupFilter,groupSearchBase,userFilter,userSearchBase:
+ 							Changed the persistence size to LengthTypeMax.UNBOUNDED
+ 							Changed Length to LengthType.UNBOUNDED
+ 							To support unbounded length of groupFilter,groupSearchBase,userFilter,userSearchBase
+ 2.19.0 muverma 23/04/2019
+ Added a new property : 'LDAPHostConfigurationName ' (This property is to identify the ldap connection info uniquely 
+ 							and will be mapped to the security domain).
+ 
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="LDAPHostConfigurationName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="groupFilter">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="groupSearchBase">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userFilter">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userSearchBase">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LDAPNamespace" type="usermanagement:LDAPNamespace"/>
+<xsd:complexType name="OSProfile">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="hip" type="usermanagement:HadoopImpersonationProfile"/>
+<xsd:element name="options">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OptionGroup" type="common:OptionGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="products">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OSProfileProductExtension" type="usermanagement:OSProfileProductExtension"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="systemEncryptedPassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sytemUsername">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OSProfile" type="usermanagement:OSProfile"/>
+<xsd:complexType name="PasswordAlphabetCharacterRuleModel">
+<xsd:complexContent>
+<xsd:extension base="usermanagement:PasswordRuleModel">
+<xsd:annotation>
+<xsd:documentation> This model represents UUM password alphabet rule contained in PasswordComplexityConfig
+ @author vmehta
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="requiredAlphabetCharacterCount" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PasswordAlphabetCharacterRuleModel" type="usermanagement:PasswordAlphabetCharacterRuleModel"/>
+<xsd:complexType name="PasswordDigitCharacterRuleModel">
+<xsd:complexContent>
+<xsd:extension base="usermanagement:PasswordRuleModel">
+<xsd:annotation>
+<xsd:documentation> This model represents UUM password digit rule contained in PasswordComplexityConfig
+ @author vmehta
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="requiredDigitCharacterCount" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PasswordDigitCharacterRuleModel" type="usermanagement:PasswordDigitCharacterRuleModel"/>
+<xsd:complexType name="PasswordLengthRuleModel">
+<xsd:complexContent>
+<xsd:extension base="usermanagement:PasswordRuleModel">
+<xsd:annotation>
+<xsd:documentation> This model represents UUM password length rule contained in PasswordComplexityConfig
+ @author vmehta
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="requiredPasswordLength" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PasswordLengthRuleModel" type="usermanagement:PasswordLengthRuleModel"/>
+<xsd:complexType name="PasswordSpecialCharacterRuleModel">
+<xsd:complexContent>
+<xsd:extension base="usermanagement:PasswordRuleModel">
+<xsd:annotation>
+<xsd:documentation> This model represents UUM password special rule contained in PasswordComplexityConfig
+ @author vmehta
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="requiredSpecialCharacterCount" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PasswordSpecialCharacterRuleModel" type="usermanagement:PasswordSpecialCharacterRuleModel"/>
+<xsd:complexType name="Privilege">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:attribute name="catagory">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="childrenPrivilegeIds">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="enable" type="xsd:boolean"/>
+<xsd:attribute name="idKey">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="type" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Privilege" type="usermanagement:Privilege"/>
+<xsd:complexType name="SecurityDomain">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:attribute name="groupFilter">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="groupSearchBase">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userFilter">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="userSearchBase">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SecurityDomain" type="usermanagement:SecurityDomain"/>
+<xsd:complexType name="ServicePrivilegeDef">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="privileges">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Privilege" type="usermanagement:Privilege"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ServicePrivilegeDef" type="usermanagement:ServicePrivilegeDef"/>
+<xsd:complexType name="UUMNamespace">
+<xsd:complexContent>
+<xsd:extension base="common:ISPNamedObject">
+<xsd:annotation>
+<xsd:documentation> This model represents an UUM internal namespace.
+ Contained in UMServiceConfig FIRST_CLASS model.
+ @author abatra
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="UUMNamespace" type="usermanagement:UUMNamespace"/>
+<xsd:complexType name="DomainPrivilege">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj">
+<xsd:annotation>
+<xsd:documentation> Model Change Log
+ 
+ 2.4.0 nupaman 27/8/2012 Added new property : 'privilegeProviderType'
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="privileges">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Privilege" type="usermanagement:Privilege"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="privilegeId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="privilegeIds">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="privilegeProviderType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="roles">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DomainPrivilege" type="usermanagement:DomainPrivilege"/>
+<xsd:complexType name="Group">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj">
+<xsd:annotation>
+<xsd:documentation> 
+ 2.7.0 dchhatan 19/8/2013 For property description:
+ 							Changed the persistence size to LengthTypeMax.UNBOUNDED
+ 							Changed Length to LengthType.UNBOUNDED
+ 							To support unbounded length of description
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="childGroupRefs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="GroupRef" type="common:GroupRef"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="userRefs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="UserRef" type="common:UserRef"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="groupId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Group" type="usermanagement:Group"/>
+<xsd:complexType name="IdentityObj">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj">
+<xsd:attribute name="objectType" type="usermanagement:IdentityType"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="IdentityObj" type="usermanagement:IdentityObj"/>
+<xsd:complexType name="Role">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj">
+<xsd:annotation>
+<xsd:documentation> Model Change log
+ 
+ 2.7.0 dchhatan 19/8/2013 For property description:
+ 							Changed the persistence size to LengthTypeMax.UNBOUNDED
+ 							Changed Length to LengthType.UNBOUNDED
+ 							To support unbounded length of description
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="servicePrivileges">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ServicePrivilegeDef" type="usermanagement:ServicePrivilegeDef"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="roleId" type="xsd:int"/>
+<xsd:attribute name="systemRole" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Role" type="usermanagement:Role"/>
+<xsd:complexType name="User">
+<xsd:complexContent>
+<xsd:extension base="common:IdObj">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="userInfo" type="usermanagement:UserInfo"/>
+</xsd:choice>
+<xsd:attribute name="admin" type="xsd:boolean"/>
+<xsd:attribute name="disable" type="xsd:boolean"/>
+<xsd:attribute name="readOnly" type="xsd:boolean"/>
+<xsd:attribute name="userId">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="User" type="usermanagement:User"/>
+<xsd:complexType name="LDAPGroup">
+<xsd:complexContent>
+<xsd:extension base="usermanagement:Group">
+<xsd:attribute name="dn">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="ldapGroups" type="imx:idrefs"/>
+<xsd:attribute name="ldapUsers" type="imx:idrefs"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LDAPGroup" type="usermanagement:LDAPGroup"/>
+<xsd:complexType name="LDAPUser">
+<xsd:complexContent>
+<xsd:extension base="usermanagement:User">
+<xsd:attribute name="dn">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="LDAPUser" type="usermanagement:LDAPUser"/>
+<xsd:complexType name="NativeUser">
+<xsd:complexContent>
+<xsd:extension base="usermanagement:User">
+<xsd:attribute name="encryptedPassword">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="NativeUser" type="usermanagement:NativeUser"/>
+</xsd:schema>

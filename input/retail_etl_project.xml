@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="RetailETL_Project" version="2.0" 
+         xmlns="http://www.informatica.com/BDM/Project/10.2"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.informatica.com/BDM/Project/10.2 project.xsd">
+  
+  <description>Simple Retail ETL Pipeline - Products and Sales Processing</description>
+  
+  <!-- Folders structure following XSD -->
+  <folders>
+    <folder name="Mappings" type="MappingFolder">
+      
+      <!-- Simple Product Load Mapping -->
+      <mapping name="Product_Load" id="MAP_PROD_001">
+        <description>Load product master data with basic transformations</description>
+        <components>
+          <source name="PRODUCT_SOURCE" type="HDFS" format="CSV" id="SRC_001">
+            <properties>
+              <property name="file_path" value="/data/raw/products/*.csv"/>
+              <property name="delimiter" value=","/>
+              <property name="header" value="true"/>
+            </properties>
+          </source>
+          
+          <transformation name="VALIDATE_PRODUCT" type="Expression" id="TXN_001">
+            <properties>
+              <property name="expressions">
+                <expression name="product_category" value="UPPER(TRIM(category))"/>
+                <expression name="price_tier" value="CASE WHEN price > 100 THEN 'Premium' WHEN price > 50 THEN 'Standard' ELSE 'Budget' END"/>
+                <expression name="is_active" value="NVL(active_flag, 'Y')"/>
+              </property>
+              <property name="filters">
+                <filter name="valid_products" value="product_id IS NOT NULL AND price > 0"/>
+              </property>
+            </properties>
+          </transformation>
+          
+          <target name="DIM_PRODUCT" type="HIVE" id="TGT_001">
+            <properties>
+              <property name="table_name" value="retail_dw.dim_product"/>
+              <property name="write_mode" value="OVERWRITE"/>
+            </properties>
+          </target>
+        </components>
+      </mapping>
+      
+      <!-- Sales Transaction Processing -->
+      <mapping name="Sales_Processing" id="MAP_SALES_001">
+        <description>Process daily sales transactions with aggregations</description>
+        <components>
+          <source name="SALES_TRANSACTIONS" type="HDFS" format="PARQUET" id="SRC_002">
+            <properties>
+              <property name="file_path" value="/data/raw/sales/dt=${LOAD_DATE}/*.parquet"/>
+            </properties>
+          </source>
+          
+          <source name="PRODUCT_LOOKUP" type="HIVE" id="SRC_003">
+            <properties>
+              <property name="table_name" value="retail_dw.dim_product"/>
+            </properties>
+          </source>
+          
+          <transformation name="ENRICH_SALES" type="Lookup" id="TXN_002">
+            <properties>
+              <property name="lookup_table" value="PRODUCT_LOOKUP"/>
+              <property name="join_conditions">
+                <condition value="SALES_TRANSACTIONS.product_id = PRODUCT_LOOKUP.product_id"/>
+              </property>
+              <property name="join_type" value="INNER"/>
+            </properties>
+          </transformation>
+          
+          <transformation name="AGGREGATE_SALES" type="Aggregator" id="TXN_003">
+            <properties>
+              <property name="group_by">
+                <column name="product_category"/>
+                <column name="store_id"/>
+                <column name="sale_date"/>
+              </property>
+              <property name="aggregations">
+                <aggregation name="total_sales" type="SUM" column="sale_amount"/>
+                <aggregation name="total_quantity" type="SUM" column="quantity"/>
+                <aggregation name="transaction_count" type="COUNT" column="transaction_id"/>
+                <aggregation name="avg_sale_amount" type="AVG" column="sale_amount"/>
+              </property>
+            </properties>
+          </transformation>
+          
+          <target name="FACT_DAILY_SALES" type="HIVE" id="TGT_002">
+            <properties>
+              <property name="table_name" value="retail_dw.fact_daily_sales"/>
+              <property name="write_mode" value="APPEND"/>
+              <property name="partition_by" value="sale_date"/>
+            </properties>
+          </target>
+        </components>
+      </mapping>
+      
+    </folder>
+    
+    <folder name="Workflows" type="WorkflowFolder">
+      <workflow name="Daily_Retail_ETL" id="WF_001">
+        <description>Daily retail data processing workflow</description>
+        <tasks>
+          <task name="Load_Products" type="Mapping" mapping="Product_Load" id="TASK_001">
+            <properties>
+              <property name="timeout" value="3600"/>
+              <property name="retry_count" value="2"/>
+            </properties>
+          </task>
+          
+          <task name="Process_Sales" type="Mapping" mapping="Sales_Processing" id="TASK_002">
+            <properties>
+              <property name="timeout" value="7200"/>
+              <property name="retry_count" value="3"/>
+            </properties>
+          </task>
+          
+          <task name="Data_Quality_Check" type="Command" id="TASK_003">
+            <properties>
+              <property name="command" value="python /scripts/data_quality_check.py"/>
+              <property name="success_criteria" value="EXIT_CODE = 0"/>
+            </properties>
+          </task>
+          
+          <task name="Send_Success_Email" type="Email" id="TASK_004">
+            <properties>
+              <property name="Recipient" value="data-team@retail.com"/>
+              <property name="Subject" value="Retail ETL Completed - ${LOAD_DATE}"/>
+              <property name="Body" value="Daily retail ETL process completed successfully"/>
+            </properties>
+          </task>
+        </tasks>
+        
+        <links>
+          <link from="Load_Products" to="Process_Sales" condition="SUCCESS"/>
+          <link from="Process_Sales" to="Data_Quality_Check" condition="SUCCESS"/>
+          <link from="Data_Quality_Check" to="Send_Success_Email" condition="SUCCESS"/>
+        </links>
+      </workflow>
+    </folder>
+  </folders>
+  
+  <!-- Connections following XSD schema -->
+  <connections>
+    <connection name="HDFS_RETAIL" type="HDFS" id="CONN_001">
+      <properties>
+        <property name="host" value="hdfs-namenode.retail.com"/>
+        <property name="port" value="8020"/>
+        <property name="default_fs" value="hdfs://hdfs-namenode.retail.com:8020"/>
+      </properties>
+    </connection>
+    
+    <connection name="HIVE_DW" type="HIVE" id="CONN_002">
+      <properties>
+        <property name="host" value="hive-server.retail.com"/>
+        <property name="port" value="10000"/>
+        <property name="database" value="retail_dw"/>
+      </properties>
+    </connection>
+  </connections>
+  
+  <!-- Project parameters -->
+  <parameters>
+    <parameter name="LOAD_DATE" value="$$SystemDate" type="DateTime"/>
+    <parameter name="ENV" value="PROD" type="String"/>
+    <parameter name="BATCH_SIZE" value="10000" type="Integer"/>
+    <parameter name="ERROR_THRESHOLD" value="5" type="Integer"/>
+  </parameters>
+  
+</project> 

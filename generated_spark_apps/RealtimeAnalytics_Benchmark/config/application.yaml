@@ -1,0 +1,40 @@
+connections:
+  DELTA_LAKE_S3:
+    database: ''
+    host: localhost
+    port: ''
+    type: UNKNOWN
+  ELASTICSEARCH_CLUSTER:
+    database: ''
+    host: localhost
+    port: ''
+    type: UNKNOWN
+  KAFKA_CLUSTER:
+    database: ''
+    host: localhost
+    port: ''
+    type: UNKNOWN
+  REDIS_CACHE:
+    database: ''
+    host: localhost
+    port: ''
+    type: UNKNOWN
+log_level: INFO
+parameters:
+  ANOMALY_DETECTION_WINDOW: 5 minutes
+  BATCH_INTERVAL: 1 second
+  CACHE_TTL: 1 hour
+  CHECKPOINT_INTERVAL: 10 seconds
+  FRAUD_THRESHOLD: 0.8
+  MAX_RECORDS_PER_TRIGGER: '10000'
+  ML_MODEL_REFRESH_INTERVAL: 24 hours
+  PARALLELISM_LEVEL: '16'
+  SESSION_TIMEOUT: 30 minutes
+  STREAM_PROCESSING_TIME: $$StreamingTime
+  WATERMARK_DELAY: 30 seconds
+spark:
+  spark.app.name: RealtimeAnalytics_Platform
+  spark.master: local[*]
+  spark.sql.adaptive.coalescePartitions.enabled: 'true'
+  spark.sql.adaptive.enabled: 'true'
+  spark.sql.warehouse.dir: ./spark-warehouse

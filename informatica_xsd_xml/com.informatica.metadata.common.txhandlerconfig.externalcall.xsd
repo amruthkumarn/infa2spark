@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.txhandlerconfig.externalcall/2" xmlns:externalcall="http://com.informatica.metadata.common.txhandlerconfig.externalcall/2" xmlns:imx="http://com.informatica.imx" xmlns:resourceaccess="http://com.informatica.metadata.common.txhandlerconfig.resourceaccess/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.txhandlerconfig.externalcall/2">
+<xsd:import namespace="http://com.informatica.metadata.common.txhandlerconfig.resourceaccess/2" schemaLocation="com.informatica.metadata.common.txhandlerconfig.resourceaccess.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType final="#all" name="ExternalCallTxHandlerConfig">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessTxHandlerConfig"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ExternalCallTxHandlerConfig" type="externalcall:ExternalCallTxHandlerConfig"/>
+</xsd:schema>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.txhandlerconfig.source/2" xmlns:imx="http://com.informatica.imx" xmlns:resourceaccess="http://com.informatica.metadata.common.txhandlerconfig.resourceaccess/2" xmlns:source="http://com.informatica.metadata.common.txhandlerconfig.source/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.txhandlerconfig.source/2">
+<xsd:import namespace="http://com.informatica.metadata.common.txhandlerconfig.resourceaccess/2" schemaLocation="com.informatica.metadata.common.txhandlerconfig.resourceaccess.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType final="#all" name="SourceTxHandlerConfig">
+<xsd:complexContent>
+<xsd:extension base="resourceaccess:ResourceAccessTxHandlerConfig"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SourceTxHandlerConfig" type="source:SourceTxHandlerConfig"/>
+</xsd:schema>

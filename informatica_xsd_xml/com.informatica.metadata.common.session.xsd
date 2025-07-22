@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.session/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:partitionstrategy="http://com.informatica.metadata.common.partitionstrategy/2" xmlns:session="http://com.informatica.metadata.common.session/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.session/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.partitionstrategy/2" schemaLocation="com.informatica.metadata.common.partitionstrategy.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n 2.2.0    jmaurice  28 april 2015   Exposing targetCommitInterval and stopOnErrors. \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:simpleType name="CommitKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="source"/>
+<xsd:enumeration value="target"/>
+<xsd:enumeration value="userDefined"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="DefaultUpdateStrategyKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="insertRow"/>
+<xsd:enumeration value="deleteRow"/>
+<xsd:enumeration value="updateRow"/>
+<xsd:enumeration value="dataDriven"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="PushdownOptimizationKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="none"/>
+<xsd:enumeration value="toSource"/>
+<xsd:enumeration value="toSourceWithView"/>
+<xsd:enumeration value="toTarget"/>
+<xsd:enumeration value="full"/>
+<xsd:enumeration value="fullWithView"/>
+<xsd:enumeration value="fromServerEnv"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="SessionRecoveryKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="resumeFromLastCheckpoint"/>
+<xsd:enumeration value="restartTask"/>
+<xsd:enumeration value="failTask"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="UnicodeSortOrderKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="binary"/>
+<xsd:enumeration value="english"/>
+<xsd:enumeration value="spanish"/>
+<xsd:enumeration value="traditionalSpanish"/>
+<xsd:enumeration value="danish"/>
+<xsd:enumeration value="swedish"/>
+<xsd:enumeration value="finnish"/>
+<xsd:enumeration value="croatian"/>
+<xsd:enumeration value="czech"/>
+<xsd:enumeration value="estonian"/>
+<xsd:enumeration value="hungarian"/>
+<xsd:enumeration value="latvian"/>
+<xsd:enumeration value="lithuanian"/>
+<xsd:enumeration value="romanian"/>
+<xsd:enumeration value="slovak"/>
+<xsd:enumeration value="slovenian"/>
+<xsd:enumeration value="thai"/>
+<xsd:enumeration value="turkish"/>
+<xsd:enumeration value="ukrainian"/>
+<xsd:enumeration value="vietnamese"/>
+<xsd:enumeration value="belarusian"/>
+<xsd:enumeration value="bulgarian"/>
+<xsd:enumeration value="bengali"/>
+<xsd:enumeration value="catalan"/>
+<xsd:enumeration value="german"/>
+<xsd:enumeration value="germanPhonebook"/>
+<xsd:enumeration value="greek"/>
+<xsd:enumeration value="arabic"/>
+<xsd:enumeration value="persian"/>
+<xsd:enumeration value="french"/>
+<xsd:enumeration value="hebrew"/>
+<xsd:enumeration value="hindi"/>
+<xsd:enumeration value="armenian"/>
+<xsd:enumeration value="indonesian"/>
+<xsd:enumeration value="italian"/>
+<xsd:enumeration value="japanese"/>
+<xsd:enumeration value="kazakh"/>
+<xsd:enumeration value="korean"/>
+<xsd:enumeration value="macedonian"/>
+<xsd:enumeration value="norwegian"/>
+<xsd:enumeration value="dutch"/>
+<xsd:enumeration value="polish"/>
+<xsd:enumeration value="pashto"/>
+<xsd:enumeration value="portuguese"/>
+<xsd:enumeration value="russian"/>
+<xsd:enumeration value="albanian"/>
+<xsd:enumeration value="serbian"/>
+<xsd:enumeration value="simplifiedChinese"/>
+<xsd:enumeration value="traditionalChinese"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="Session">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> A session task object augments the data flow information contained in the mapping object it references by adding run-time configuration.
+ 
+ Configuration metadata includes things like connection bindings, output log file locations, and server behavior modifiers such as buffer sizes and the strategy used when chosing when to commit to transactional targets.
+ 
+ Some reusable portions of a session's configuration are implicitly imported from a referenced first class SessionConfiguration object.  
+ 
+ Some instances in a mapping may require that the server delegate some processing to a widget-specific helper.  SessionTxInstance, the session-level representation of a mapping transformation instance, contains TxHandler objects with configuration metadata for each such extension.
+ 
+ TODO: Session Stages and Partitions.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="partitionStrategy" type="partitionstrategy:PartitionStrategy"/>
+</xsd:choice>
+<xsd:attribute name="bufferBlockSize" type="xsd:int"/>
+<xsd:attribute name="commitInterval" type="xsd:int"/>
+<xsd:attribute name="commitOnEndOfFile" type="xsd:boolean"/>
+<xsd:attribute name="commitType" type="session:CommitKind"/>
+<xsd:attribute name="constraintBasedLoadOrdering" type="xsd:boolean"/>
+<xsd:attribute name="defaultDateFormat">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="defaultUpdateStrategy" type="session:DefaultUpdateStrategyKind"/>
+<xsd:attribute name="dtmBufferPoolSize" type="xsd:long"/>
+<xsd:attribute name="dtmBufferSize" type="xsd:int"/>
+<xsd:attribute name="failOnAnyPostSessionTaskError" type="xsd:boolean"/>
+<xsd:attribute name="failOnAnyPreSessionTaskError" type="xsd:boolean"/>
+<xsd:attribute name="failOnAnyTxHandlerSetupError" type="xsd:boolean"/>
+<xsd:attribute name="failOnAnyTxHandlerTeardownError" type="xsd:boolean"/>
+<xsd:attribute name="highPrecisionEnabled" type="xsd:boolean"/>
+<xsd:attribute name="mapping" type="imx:idref"/>
+<xsd:attribute name="maximumAutoMemBytes" type="xsd:long"/>
+<xsd:attribute name="maximumAutoMemTotalPercent" type="xsd:int"/>
+<xsd:attribute name="maximumDataErrors" type="xsd:int"/>
+<xsd:attribute name="pushdownStrategy" type="session:PushdownOptimizationKind"/>
+<xsd:attribute name="recoveryStrategy" type="session:SessionRecoveryKind"/>
+<xsd:attribute name="retryOnDeadlock" type="xsd:boolean"/>
+<xsd:attribute name="sortOrder" type="session:UnicodeSortOrderKind"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Session" type="session:Session"/>
+</xsd:schema>

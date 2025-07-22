@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.ds.app.attachment.metadata.common/0" xmlns:binding="http://com.informatica.metadata.common.binding/1" xmlns:common="http://com.informatica.ds.app.attachment.metadata.common/0" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.ds.app.attachment.metadata.common/0">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.binding/1" schemaLocation="com.informatica.metadata.common.binding.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:complexType abstract="true" name="Attachment">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> Attachments. They don't contribute to the application metadata.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="ParameterSetAttachment">
+<xsd:complexContent>
+<xsd:extension base="common:Attachment">
+<xsd:annotation>
+<xsd:documentation> Concrete sub-class of Attachment used for ParameterSet.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="containedParameterSet" type="binding:ParameterSet"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ParameterSetAttachment" type="common:ParameterSetAttachment"/>
+<xsd:complexType abstract="true" name="ReferenceAttachment">
+<xsd:complexContent>
+<xsd:extension base="common:Attachment">
+<xsd:annotation>
+<xsd:documentation> Abstract base model for design time attachments. Attachments that has a
+ reference to the content and can have references from other metadata objects.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="referencingObjects">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="ObjectReference" type="core:ObjectReference"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="ReferenceParameterSetAttachment">
+<xsd:complexContent>
+<xsd:extension base="common:ReferenceAttachment">
+<xsd:annotation>
+<xsd:documentation> Concrete sub-class of ReferenceAttachment used for ParameterSets.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="parameterSet" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ReferenceParameterSetAttachment" type="common:ReferenceParameterSetAttachment"/>
+</xsd:schema>

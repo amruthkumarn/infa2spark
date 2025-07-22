@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.partitionstrategy.detailed/2" xmlns:detailed="http://com.informatica.metadata.common.partitionstrategy.detailed/2" xmlns:imx="http://com.informatica.imx" xmlns:partitionpoint="http://com.informatica.metadata.common.partitionpoint/2" xmlns:partitionstrategy="http://com.informatica.metadata.common.partitionstrategy/2" xmlns:txhandlerconfig="http://com.informatica.metadata.common.partition.txhandlerconfig/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.partitionstrategy.detailed/2">
+<xsd:import namespace="http://com.informatica.metadata.common.partition.txhandlerconfig/2" schemaLocation="com.informatica.metadata.common.partition.txhandlerconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.partitionpoint/2" schemaLocation="com.informatica.metadata.common.partitionpoint.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.partitionstrategy/2" schemaLocation="com.informatica.metadata.common.partitionstrategy.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThis package contains a concrete implementation of common.task.session.PartitionStrategy that represents partitioning abstractions as they are consumed by the DTM.\n \n Any other package that contains a subclass of PartitionStrategy provides an indirect abstration that must be translated into a DetailedPartionStrategy from this package prior to execution by a DTM.\n \n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="DetailedPartitionPoint">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:PartitionPoint">
+<xsd:annotation>
+<xsd:documentation> Each DetailedPartitionPoint declares the number of data partitions that get created at its referenced transformation's input.
+ 
+ The use of a head widget and strategies for re-arranging input metadata are inheritted from the common.session.partitionpoint.PartitionPoint abstraction.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="numPartitions" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DetailedPartitionPoint" type="detailed:DetailedPartitionPoint"/>
+<xsd:complexType name="DetailedTxHandlerConfigAssociation">
+<xsd:complexContent>
+<xsd:extension base="txhandlerconfig:TxHandlerConfigAssociation">
+<xsd:annotation>
+<xsd:documentation> Each DynamicTxHandlerConfigAssociation inherits the ability to contain TxHandlerConfigPartition objects and associate them with a referenced TxHandlerConfig object.
+ 
+ This class makes its inheritted superclass concrete, but adds no additional properties.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="numPartitions" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DetailedTxHandlerConfigAssociation" type="detailed:DetailedTxHandlerConfigAssociation"/>
+<xsd:complexType name="DetailedPartitioningStrategy">
+<xsd:complexContent>
+<xsd:extension base="partitionstrategy:PartitionStrategy">
+<xsd:annotation>
+<xsd:documentation> This is the root container object of partitioning plan metadata that the DTM knows how to execute.  Other partitioning plan packages have an algorithm which is applied during session preparation to derive an instance of this class and its contained objects.
+ 
+ Two containment properties are used to define an instance of this partitioning strategy.
+ -- A collection of DetailedPartitionPoint objects identity the transformations where either new data is generated (sources), or the data in one pipeline is re-arranged for the next pipeline.  They also describe the number of partitions that are created at each such point.
+ -- A collection of DetailedTxHandlerConfigAssociation objects associate each of a Session's TxHandlerConfig objects with a collection of contained TxHandlerConfigParititon objects, one for each data pipeline running through the TxHandlerConfig's transformation.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="handlerAssociations">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DetailedTxHandlerConfigAssociation" type="detailed:DetailedTxHandlerConfigAssociation"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="partitionPoints">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DetailedPartitionPoint" type="detailed:DetailedPartitionPoint"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DetailedPartitioningStrategy" type="detailed:DetailedPartitioningStrategy"/>
+</xsd:schema>

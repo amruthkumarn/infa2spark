@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.platform.edtm.metadata.mapping.parameter/2" xmlns:imx="http://com.informatica.imx" xmlns:parameter="http://com.informatica.platform.edtm.metadata.mapping.parameter/2" xmlns:types="http://com.informatica.metadata.common.types/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.platform.edtm.metadata.mapping.parameter/2">
+<xsd:import namespace="http://com.informatica.metadata.common.types/2" schemaLocation="com.informatica.metadata.common.types.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThe classes in this package encapsulate runtime behavior of a DTM that is independent of any particular Session or Mapping.  \n \n Instances of this package are to be used transiently, derived from some other persistent model that encapsulates only the aspects of this model that are exposed to an end user.  All applications must be able to translate their user-exposes and persistent abstraction to an instance of this metamodel in order to provide a common invocation model for the embeddable DTM.\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="InputParameter">
+<xsd:annotation>
+<xsd:documentation> Input parameters which are passed to DTM.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="defaultValue" type="types:Value"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="precision" type="xsd:int"/>
+<xsd:attribute name="scale" type="xsd:int"/>
+<xsd:attribute name="type" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="InputParameter" type="parameter:InputParameter"/>
+</xsd:schema>

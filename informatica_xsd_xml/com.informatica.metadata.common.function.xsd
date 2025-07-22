@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.function/2" xmlns:function="http://com.informatica.metadata.common.function/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.function/2">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="AdvancedParameter">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="advancedSignature" type="imx:idref"/>
+</xsd:complexType>
+<xsd:complexType name="AdvancedSignature">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="inputs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="AdvancedParameter" type="function:AdvancedParameter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="function" type="imx:idref"/>
+<xsd:attribute name="returnType" type="function:ExprTypeKind"/>
+</xsd:complexType>
+<xsd:element name="AdvancedSignature" type="function:AdvancedSignature"/>
+<xsd:simpleType name="ExprTypeKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="INT"/>
+<xsd:enumeration value="FLOAT"/>
+<xsd:enumeration value="HIPRECDECIMAL"/>
+<xsd:enumeration value="DATE"/>
+<xsd:enumeration value="STRING"/>
+<xsd:enumeration value="BINARY"/>
+<xsd:enumeration value="BIGINT"/>
+<xsd:enumeration value="BOOLEAN"/>
+<xsd:enumeration value="TIMESTAMPWITHTZ"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="Function">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="advancedSignatures">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="AdvancedSignature" type="function:AdvancedSignature"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="signatures">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="Signature" type="function:Signature"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="categories">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="functionGroup" type="imx:idref"/>
+<xsd:attribute name="functionType" type="function:FunctionTypeKind"/>
+<xsd:attribute name="logicalFunction" type="xsd:boolean"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="sideEffecting" type="xsd:boolean"/>
+</xsd:complexType>
+<xsd:element name="Function" type="function:Function"/>
+<xsd:complexType name="FunctionGroup">
+<xsd:annotation>
+<xsd:documentation> TODO: Component Version has not been accounted for.  If it is needed, we will add it when the requirement becomes clear.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="functions">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Function" type="function:Function"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="implementedBy">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Library" type="function:Library"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="namespace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="FunctionGroup" type="function:FunctionGroup"/>
+<xsd:simpleType name="FunctionTypeKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="ROWLEVEL"/>
+<xsd:enumeration value="AGGREGATE"/>
+<xsd:enumeration value="VARIABLE"/>
+<xsd:enumeration value="CONTROL"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="Library">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="className">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="implementedCapabilities" type="imx:idrefs"/>
+<xsd:attribute name="moduleName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="operatingSystem" type="function:OSSupportKind"/>
+</xsd:complexType>
+<xsd:element name="Library" type="function:Library"/>
+<xsd:simpleType name="OSSupportKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="NT"/>
+<xsd:enumeration value="LINUX_"/>
+<xsd:enumeration value="SOLARIS"/>
+<xsd:enumeration value="AIX_"/>
+<xsd:enumeration value="HPUX"/>
+<xsd:enumeration value="DEC"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType abstract="true" name="Parameter">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="signature" type="imx:idref"/>
+</xsd:complexType>
+<xsd:simpleType name="ReturnTypeKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="BOOLEAN"/>
+<xsd:enumeration value="NUMERIC"/>
+<xsd:enumeration value="STRING"/>
+<xsd:enumeration value="DATE"/>
+<xsd:enumeration value="BINARY"/>
+<xsd:enumeration value="TIMESTAMPWITHTZ"/>
+<xsd:enumeration value="STRUCTTYPE"/>
+<xsd:enumeration value="STRUCT"/>
+<xsd:enumeration value="ARRAY"/>
+<xsd:enumeration value="MAP"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="Signature">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="inputs">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Parameter" type="function:Parameter"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="function" type="imx:idref"/>
+<xsd:attribute name="prototype">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="returnType" type="function:ReturnTypeKind"/>
+</xsd:complexType>
+<xsd:element name="Signature" type="function:Signature"/>
+<xsd:complexType name="TypedAdvancedParameter">
+<xsd:complexContent>
+<xsd:extension base="function:AdvancedParameter">
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="optional" type="xsd:boolean"/>
+<xsd:attribute name="paramType" type="function:ExprTypeKind"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TypedAdvancedParameter" type="function:TypedAdvancedParameter"/>
+<xsd:complexType name="TypedParameter">
+<xsd:complexContent>
+<xsd:extension base="function:Parameter">
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="paramType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="TypedParameter" type="function:TypedParameter"/>
+<xsd:complexType name="VariableAdvancedParameter">
+<xsd:complexContent>
+<xsd:extension base="function:AdvancedParameter">
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VariableAdvancedParameter" type="function:VariableAdvancedParameter"/>
+<xsd:complexType name="VariableParameter">
+<xsd:complexContent>
+<xsd:extension base="function:Parameter">
+<xsd:attribute name="description">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="VariableParameter" type="function:VariableParameter"/>
+</xsd:schema>

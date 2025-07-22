@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Informatica proprietary -->
+<imx:IMX xmlns:imx="http://com.informatica.imx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" serializationSpecVersion="14.0" crcEnabled="0" xmlns:core="http://com.informatica.metadata.common.core/2" versioncore="2.2.1" xmlns:types="http://com.informatica.metadata.common.types/2" versiontypes="2.4.0" xmlns:directmaps="http://com.informatica.metadata.common.typesystem.directmaps/2" versiondirectmaps="2.1.0" xmlns:description="http://com.informatica.metadata.common.description/2" versiondescription="2.1.0" xmlns:typesystem="http://com.informatica.metadata.common.typesystem/2" versiontypesystem="2.2.0" xsi:schemaLocation="http://com.informatica.imx IMX.xsd http://com.informatica.metadata.common.core/2 com.informatica.metadata.common.core.xsd http://com.informatica.metadata.common.types/2 com.informatica.metadata.common.types.xsd http://com.informatica.metadata.common.typesystem.directmaps/2 com.informatica.metadata.common.typesystem.directmaps.xsd http://com.informatica.metadata.common.description/2 com.informatica.metadata.common.description.xsd http://com.informatica.metadata.common.typesystem/2 com.informatica.metadata.common.typesystem.xsd">
+<typesystem:TypeSystem imx:id="smd:com.informatica.metadata.seed.infatype.InfaType.typesystem" name="INFAType">
+<annotations>
+<Annotation imx:id="ID_1" xsi:type="description:Description" body="INFA+Type+System"/>
+</annotations>
+<dataTypes>
+<DataType imx:id="smd:com.informatica.metadata.seed.infatype.InfaType.typesystem%2Fcom.informatica.datatype.timestamptimezone" xsi:type="typesystem:DataType" name="com.informatica.datatype.timestamptimezone" displayName="timestampWithTZ">
+<annotations>
+<Annotation imx:id="ID_2" xsi:type="description:Description" body="Timestamp+TimeZone+DataType"/>
+</annotations>
+</DataType>
+</dataTypes>
+<ownedMaps>
+<TypeSystemMap imx:id="ID_3" xsi:type="directmaps:DirectTypeSystemMap" to="ID_4">
+<dataTypeMaps>
+<DataTypeMap imx:id="ID_5" xsi:type="directmaps:DataTypeMap" bestMapFromForeign="true" bestMapFromLocal="true" foreignType="ID_6" localType="ID_6"/>
+</dataTypeMaps>
+</TypeSystemMap>
+<TypeSystemMap imx:id="ID_7" xsi:type="directmaps:DirectTypeSystemMap" to="ID_8">
+<dataTypeMaps>
+<DataTypeMap imx:id="ID_9" xsi:type="directmaps:DataTypeMap" foreignType="ID_10" localType="ID_6"/>
+</dataTypeMaps>
+</TypeSystemMap>
+</ownedMaps>
+</typesystem:TypeSystem>
+<imx:proxies>
+<proxy imx:id="ID_4" objectId="smd:com.informatica.metadata.seed.infatype.InfaType.typesystem" type="typesystem:TypeSystem" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_6" objectId="smd:com.informatica.metadata.seed.infatype.InfaType.typesystem%2Fcom.informatica.datatype.timestamptimezone" type="typesystem:DataType" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_8" objectId="smd:com.informatica.metadata.seed.platform.Platform.typesystem" type="typesystem:TypeSystem" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_10" objectId="smd:com.informatica.metadata.seed.platform.Platform.typesystem%2Fany" type="typesystem:DataType" xsi:type="imx:proxy"/>
+</imx:proxies>
+</imx:IMX>

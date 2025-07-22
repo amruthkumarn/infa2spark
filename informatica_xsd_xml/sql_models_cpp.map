@@ -1,0 +1,15 @@
+#
+# Copyright (c) 2007 Informatica Corporation.  This file contains material
+# proprietary to Informatica Corporation and may not be copied or distributed
+# in any form without the written permission of Informatica Corporation.
+#
+
+##########################################################################
+#   This file is generated. Do not modify
+#   
+#   This file contains list of packages contained in library and can be used
+#   in automatic package registration
+#   
+##########################################################################
+
+com.informatica.ds.sql.runtime, com.informatica.ds.sql.statistics, com.informatica.ds.sql.metadata.runtime.events, com.informatica.ds.sql.metadata.common, com.informatica.ds.sql.metadata.common.vtmap, com.informatica.ds.sql.feature.metadata.common, com.informatica.ds.sql.metadata.runtime = sql_models_cpp;

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.statistics.sourcestats/1" xmlns:imx="http://com.informatica.imx" xmlns:sourcestats="http://com.informatica.metadata.common.statistics.sourcestats/1" xmlns:statistics="http://com.informatica.metadata.common.statistics/0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.statistics.sourcestats/1">
+<xsd:import namespace="http://com.informatica.metadata.common.statistics/0" schemaLocation="com.informatica.metadata.common.statistics.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThis package contains the models used for data stream statistics and related entities.\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="FrequencyCell">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="value" type="sourcestats:KeyValue"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="cardinality" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="FrequencyCell" type="sourcestats:FrequencyCell"/>
+<xsd:simpleType name="FrequencyCellKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="regularRange"/>
+<xsd:enumeration value="exclusiveRange"/>
+<xsd:enumeration value="inclusiveRange"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="Key">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="keyFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="1">
+<xsd:element name="KeyField" type="sourcestats:KeyField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="Key" type="sourcestats:Key"/>
+<xsd:complexType name="KeyField">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="name">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="type" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="KeyField" type="sourcestats:KeyField"/>
+<xsd:complexType name="KeyStatistics">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="frequencyCells">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="FrequencyCell" type="sourcestats:FrequencyCell"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="key" type="sourcestats:Key"/>
+<xsd:element name="rangeStatistics">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="RangeStatistics" type="sourcestats:RangeStatistics"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="avgKeyLength" type="xsd:int"/>
+<xsd:attribute name="cardinality" type="xsd:long"/>
+<xsd:attribute name="distinctCardinality" type="xsd:long"/>
+<xsd:attribute name="frequencyCellsCardinality" type="xsd:long"/>
+<xsd:attribute name="nullCardinality" type="xsd:long"/>
+<xsd:attribute name="sampleSize" type="xsd:long"/>
+<xsd:attribute name="statisticsComputedOn">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="KeyStatistics" type="sourcestats:KeyStatistics"/>
+<xsd:complexType name="KeyValue">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="values">
+<xsd:simpleType>
+<xsd:list itemType="xsd:string"/>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="KeyValue" type="sourcestats:KeyValue"/>
+<xsd:simpleType name="RangeKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="open"/>
+<xsd:enumeration value="leftOpen"/>
+<xsd:enumeration value="rightOpen"/>
+<xsd:enumeration value="closed"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="RangeStatistics">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="lowerBound" type="sourcestats:KeyValue"/>
+<xsd:element name="upperBound" type="sourcestats:KeyValue"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="cardinality" type="xsd:long"/>
+<xsd:attribute name="distinctCardinality" type="xsd:long"/>
+</xsd:complexType>
+<xsd:element name="RangeStatistics" type="sourcestats:RangeStatistics"/>
+<xsd:complexType name="SourceDataStatistics">
+<xsd:complexContent>
+<xsd:extension base="statistics:StatObject">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="keyStatistics">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="KeyStatistics" type="sourcestats:KeyStatistics"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute name="cardinality" type="xsd:long"/>
+<xsd:attribute name="distinctCardinality" type="xsd:long"/>
+<xsd:attribute name="frequencyCellType" type="sourcestats:FrequencyCellKind"/>
+<xsd:attribute name="rangeType" type="sourcestats:RangeKind"/>
+<xsd:attribute name="statisticsKey">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="statisticsKeyCompositeHash">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="statisticsKeyHashCode" type="xsd:int"/>
+<xsd:attribute name="statisticsUpdatedOn">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SourceDataStatistics" type="sourcestats:SourceDataStatistics"/>
+</xsd:schema>

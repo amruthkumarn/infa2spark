@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.hierarchy/1" xmlns:hierarchy="http://com.informatica.metadata.common.hierarchy/1" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.hierarchy/1">
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="HComponent">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="groups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="HGroup" type="hierarchy:HGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="namespaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NamespaceToPrefixMap" type="hierarchy:NamespaceToPrefixMap"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="generateChildlessRows" type="xsd:boolean"/>
+<xsd:attribute name="schema" type="imx:idref"/>
+<xsd:attribute name="validationType" type="hierarchy:XMLValidationType"/>
+</xsd:complexType>
+<xsd:element name="HComponent" type="hierarchy:HComponent"/>
+<xsd:complexType name="HGroup">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="path" type="hierarchy:XPath"/>
+<xsd:element name="ports">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="HPort" type="hierarchy:HPort"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="port" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="HGroup" type="hierarchy:HGroup"/>
+<xsd:complexType name="HPort">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="path" type="hierarchy:XPath"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="feature" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="HPort" type="hierarchy:HPort"/>
+<xsd:complexType name="InjectionPoint">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="path" type="hierarchy:XPath"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="foreignKey" type="imx:idrefs"/>
+<xsd:attribute name="primaryKey" type="imx:idrefs"/>
+</xsd:complexType>
+<xsd:element name="InjectionPoint" type="hierarchy:InjectionPoint"/>
+<xsd:complexType name="NamespaceToPrefixMap">
+<xsd:annotation>
+<xsd:documentation>  MODIFICATIONS
+	
+  1.6.0  clam	11/23/2011  Added a new property 'namespaceRef'
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="namespace">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="namespaceRef" type="imx:idref"/>
+<xsd:attribute name="prefix">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="NamespaceToPrefixMap" type="hierarchy:NamespaceToPrefixMap"/>
+<xsd:complexType name="RHComponent">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="groups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="RHGroup" type="hierarchy:RHGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="namespaces">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="NamespaceToPrefixMap" type="hierarchy:NamespaceToPrefixMap"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="enforceUniqueness" type="xsd:boolean"/>
+<xsd:attribute name="generateAttributeWhenNull" type="xsd:boolean"/>
+<xsd:attribute name="generateTagWhenNull" type="xsd:boolean"/>
+<xsd:attribute name="schema" type="imx:idref"/>
+<xsd:attribute name="sortedInput" type="xsd:boolean"/>
+<xsd:attribute name="validationType" type="hierarchy:XMLValidationType"/>
+</xsd:complexType>
+<xsd:element name="RHComponent" type="hierarchy:RHComponent"/>
+<xsd:complexType name="RHGroup">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="injectionPoints">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="InjectionPoint" type="hierarchy:InjectionPoint"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ports">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="HPort" type="hierarchy:HPort"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="port" type="imx:idref"/>
+</xsd:complexType>
+<xsd:element name="RHGroup" type="hierarchy:RHGroup"/>
+<xsd:simpleType name="XMLValidationType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="noValidation"/>
+<xsd:enumeration value="warnOnInvalidXML"/>
+<xsd:enumeration value="errorOnInvalidXML"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="XPath">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+<xsd:attribute name="path">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="XPath" type="hierarchy:XPath"/>
+</xsd:schema>

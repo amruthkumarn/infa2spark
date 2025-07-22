@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.aggregationtypes/1" xmlns:aggregationtypes="http://com.informatica.metadata.common.aggregationtypes/1" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.aggregationtypes/1">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> AggregationType seeded models.\n \n @author cthumuru\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="AggregationTypeContainer">
+<xsd:annotation>
+<xsd:documentation> AggregationTypeContainer - container to hold the aggregation type seeds.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+<xsd:element name="aggTypes">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="AggregationType" type="aggregationtypes:AggregationType"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:element name="AggregationTypeContainer" type="aggregationtypes:AggregationTypeContainer"/>
+<xsd:complexType name="AggregationType">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> AggregationType - aggregation type seeded model.
+ 
+ @author cthumuru
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="aggTypeName">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="AggregationType" type="aggregationtypes:AggregationType"/>
+</xsd:schema>

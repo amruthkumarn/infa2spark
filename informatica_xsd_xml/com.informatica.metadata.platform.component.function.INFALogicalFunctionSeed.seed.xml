@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Informatica proprietary -->
+<imx:IMX xmlns:imx="http://com.informatica.imx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" serializationSpecVersion="14.0" crcEnabled="0" xmlns:component="http://com.informatica.metadata.common.component/2" versioncomponent="2.1.0" xmlns:function="http://com.informatica.metadata.common.function/2" versionfunction="2.3.1" xsi:schemaLocation="http://com.informatica.imx IMX.xsd http://com.informatica.metadata.common.component/2 com.informatica.metadata.common.component.xsd http://com.informatica.metadata.common.function/2 com.informatica.metadata.common.function.xsd">
+<function:FunctionGroup imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup" namespace="INFAVirtual">
+<functions>
+<Function imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP" xsi:type="function:Function" categories="Special" description="Searches+a+named+global+Reference+Table%27s+alternate+columns+for+a+match+to+the+respective+values+given.++If+found%2C+returns+the+actual+value+column+from+the+matching+record.++If+not+match+is+found%2C+the+reference+table%27s+default+value+is+returned.++If+no+default+value+is+defined%2C+null+is+returned." functionGroup="ID_1" name="LOOKUP">
+<advancedSignatures>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig1" xsi:type="function:AdvancedSignature" function="ID_2">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig1%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_3" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig1%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_3" name="default-return-value"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig1%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_3" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig1%2F3" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_3" name="value-to-match"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig1%2F4" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_3" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig2" xsi:type="function:AdvancedSignature" function="ID_2" returnType="FLOAT">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig2%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_4" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig2%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_4" name="default-return-value" paramType="FLOAT"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig2%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_4" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig2%2F3" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_4" name="value-to-match" paramType="FLOAT"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig2%2F4" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_4" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig3" xsi:type="function:AdvancedSignature" function="ID_2" returnType="BIGINT">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig3%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_5" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig3%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_5" name="default-return-value" paramType="BIGINT"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig3%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_5" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig3%2F3" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_5" name="value-to-match" paramType="BIGINT"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig3%2F4" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_5" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig4" xsi:type="function:AdvancedSignature" function="ID_2" returnType="HIPRECDECIMAL">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig4%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_6" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig4%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_6" name="default-return-value" paramType="HIPRECDECIMAL"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig4%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_6" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig4%2F3" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_6" name="value-to-match" paramType="HIPRECDECIMAL"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig4%2F4" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_6" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig5" xsi:type="function:AdvancedSignature" function="ID_2" returnType="STRING">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig5%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_7" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig5%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_7" name="default-return-value" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig5%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_7" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig5%2F3" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_7" name="value-to-match" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig5%2F4" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_7" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig6" xsi:type="function:AdvancedSignature" function="ID_2" returnType="DATE">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig6%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_8" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig6%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_8" name="default-return-value" paramType="DATE"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig6%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_8" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig6%2F3" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_8" name="value-to-match" paramType="DATE"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig6%2F4" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_8" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig7" xsi:type="function:AdvancedSignature" function="ID_2" returnType="BINARY">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig7%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_9" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig7%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_9" name="default-return-value" paramType="BINARY"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig7%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_9" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig7%2F3" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_9" name="value-to-match" paramType="BINARY"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig7%2F4" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_9" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig8" xsi:type="function:AdvancedSignature" function="ID_2">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig8%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_10" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig8%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_10" name="value-to-match"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig9" xsi:type="function:AdvancedSignature" function="ID_2" returnType="FLOAT">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig9%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_11" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig9%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_11" name="value-to-match" paramType="FLOAT"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig10" xsi:type="function:AdvancedSignature" function="ID_2" returnType="BIGINT">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig10%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_12" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig10%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_12" name="value-to-match" paramType="BIGINT"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig11" xsi:type="function:AdvancedSignature" function="ID_2" returnType="HIPRECDECIMAL">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig11%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_13" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig11%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_13" name="value-to-match" paramType="HIPRECDECIMAL"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig12" xsi:type="function:AdvancedSignature" function="ID_2" returnType="STRING">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig12%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_14" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig12%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_14" name="value-to-match" paramType="STRING"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig13" xsi:type="function:AdvancedSignature" function="ID_2" returnType="DATE">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig13%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_15" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig13%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_15" name="value-to-match" paramType="DATE"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig14" xsi:type="function:AdvancedSignature" function="ID_2" returnType="BINARY">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig14%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_16" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig14%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_16" name="value-to-match" paramType="BINARY"/>
+</inputs>
+</AdvancedSignature>
+</advancedSignatures>
+<signatures>
+<Signature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig1" xsi:type="function:Signature" description="Searches+a+named+global+Reference+Table%27s+alternate+columns+for+a+match+to+the+respective+values+given.++If+found%2C+returns+the+actual+value+column+from+the+matching+record.++If+not+match+is+found%2C+the+reference+table%27s+default+value+is+returned.++If+no+default+value+is+defined%2C+null+is+returned." function="ID_2" returnType="STRING">
+<inputs>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig1%2F0" xsi:type="function:TypedParameter" signature="ID_17" description="SDO+Name" name="SDO-Name" paramType="string"/>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig1%2F1" xsi:type="function:TypedParameter" signature="ID_17" description="return+column+name" name="return-column-name" paramType="string"/>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig1%2F2" xsi:type="function:TypedParameter" signature="ID_17" description="default+return+value" name="default-return-value" paramType="any"/>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig1%2F3" xsi:type="function:TypedParameter" signature="ID_17" description="key+column+name" name="key-column-name" paramType="string"/>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig1%2F4" xsi:type="function:TypedParameter" signature="ID_17" description="value+to+match" name="value-to-match" paramType="any"/>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig1%2F5" xsi:type="function:VariableParameter" signature="ID_17" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</Signature>
+<Signature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig2" xsi:type="function:Signature" description="Searches+all+the+alternate+columns+of+a+Dictionary+Reference+Table+for+a+match+to+the+second+input+parameter.++If+found%2C+returns+the+actual+value+of+the+return+column+of+the+Dictionary+Reference+Table+from+the+matching+record.++If+no+match+is+found%2C+the+default+value+of+the+return+column+is+returned.++If+no+default+value+is+defined%2C+null+is+returned." function="ID_2" returnType="STRING">
+<inputs>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig2%2F0" xsi:type="function:TypedParameter" signature="ID_18" description="Dictionary+SDO+Name" name="Dictionary-SDO-Name" paramType="string"/>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig2%2F1" xsi:type="function:TypedParameter" signature="ID_18" description="value+to+match" name="value-to-match" paramType="any"/>
+</inputs>
+</Signature>
+</signatures>
+</Function>
+<Function imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS" xsi:type="function:Function" categories="Special" description="Searches+a+named+global+Reference+Table%27s+alternate+column+for+a+match+to+the+second+input+parameter.++If+found%2C+returns+true.++Otherwise%2C+return+false." functionGroup="ID_1" name="EXISTS">
+<advancedSignatures>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig1" xsi:type="function:AdvancedSignature" function="ID_19">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig1%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_20" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig1%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_20" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig1%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_20" name="value-to-match"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig1%2F3" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_20" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig2" xsi:type="function:AdvancedSignature" function="ID_19" returnType="FLOAT">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig2%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_21" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig2%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_21" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig2%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_21" name="value-to-match" paramType="FLOAT"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig2%2F3" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_21" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig3" xsi:type="function:AdvancedSignature" function="ID_19" returnType="BIGINT">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig3%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_22" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig3%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_22" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig3%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_22" name="value-to-match" paramType="BIGINT"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig3%2F3" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_22" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig4" xsi:type="function:AdvancedSignature" function="ID_19" returnType="HIPRECDECIMAL">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig4%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_23" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig4%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_23" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig4%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_23" name="value-to-match" paramType="HIPRECDECIMAL"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig4%2F3" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_23" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig5" xsi:type="function:AdvancedSignature" function="ID_19" returnType="STRING">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig5%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_24" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig5%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_24" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig5%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_24" name="value-to-match" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig5%2F3" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_24" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig6" xsi:type="function:AdvancedSignature" function="ID_19" returnType="DATE">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig6%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_25" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig6%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_25" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig6%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_25" name="value-to-match" paramType="DATE"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig6%2F3" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_25" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig7" xsi:type="function:AdvancedSignature" function="ID_19" returnType="BINARY">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig7%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_26" name="SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig7%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_26" name="key-column-name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig7%2F2" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_26" name="value-to-match" paramType="BINARY"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig7%2F3" xsi:type="function:VariableAdvancedParameter" advancedSignature="ID_26" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig8" xsi:type="function:AdvancedSignature" function="ID_19">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig8%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_27" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig8%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_27" name="value-to-match"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig9" xsi:type="function:AdvancedSignature" function="ID_19">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig9%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_28" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig9%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_28" name="value-to-match" paramType="FLOAT"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig10" xsi:type="function:AdvancedSignature" function="ID_19">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig10%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_29" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig10%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_29" name="value-to-match" paramType="BIGINT"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig11" xsi:type="function:AdvancedSignature" function="ID_19">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig11%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_30" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig11%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_30" name="value-to-match" paramType="HIPRECDECIMAL"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig12" xsi:type="function:AdvancedSignature" function="ID_19">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig12%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_31" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig12%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_31" name="value-to-match" paramType="STRING"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig13" xsi:type="function:AdvancedSignature" function="ID_19">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig13%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_32" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig13%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_32" name="value-to-match" paramType="DATE"/>
+</inputs>
+</AdvancedSignature>
+<AdvancedSignature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig14" xsi:type="function:AdvancedSignature" function="ID_19">
+<inputs>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig14%2F0" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_33" name="Dictionary-SDO-Name" paramType="STRING"/>
+<AdvancedParameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig14%2F1" xsi:type="function:TypedAdvancedParameter" advancedSignature="ID_33" name="value-to-match" paramType="BINARY"/>
+</inputs>
+</AdvancedSignature>
+</advancedSignatures>
+<signatures>
+<Signature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2Fsig1" xsi:type="function:Signature" description="Searches+a+named+global+Reference+Table%27s+alternate+columns+for+a+match+to+the+respective+values+given.++If+found%2C+returns+true.++Otherwise%2C+returns+false." function="ID_19">
+<inputs>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2Fsig1%2F0" xsi:type="function:TypedParameter" signature="ID_34" description="SDO+Name" name="SDO-Name" paramType="string"/>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2Fsig1%2F1" xsi:type="function:TypedParameter" signature="ID_34" description="key+column+name" name="key-column-name" paramType="string"/>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2Fsig1%2F2" xsi:type="function:TypedParameter" signature="ID_34" description="value+to+match" name="value-to-match" paramType="any"/>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2Fsig1%2F3" xsi:type="function:VariableParameter" signature="ID_34" description="indefinite+list+of+pairs+of+values%2C+each+of+which+is+a+key+column+%28as+string%29+followed+by+the+value+to+match+for+that+key+column"/>
+</inputs>
+</Signature>
+<Signature imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2Fsig2" xsi:type="function:Signature" description="Searches+all+the+alternate+columns+of+a+Dictionary+Reference+Table+for+a+match+to+the+second+input+parameter.++If+found%2C+returns+true.++Otherwise%2C+returns+false." function="ID_19">
+<inputs>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2Fsig2%2F0" xsi:type="function:TypedParameter" signature="ID_35" description="Dictionary+SDO+Name" name="Dictionary-SDO-Name" paramType="string"/>
+<Parameter imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2Fsig2%2F1" xsi:type="function:TypedParameter" signature="ID_35" description="value+to+match" name="value-to-match" paramType="any"/>
+</inputs>
+</Signature>
+</signatures>
+</Function>
+</functions>
+<implementedBy>
+<Library imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Flib1" xsi:type="function:Library" implementedCapabilities="ID_36" moduleName="libInfaVirtualFunc.dll"/>
+<Library imx:id="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Flib2" xsi:type="function:Library" implementedCapabilities="ID_37" moduleName="libInfaVirtualFunc.dll"/>
+</implementedBy>
+</function:FunctionGroup>
+<imx:proxies>
+<proxy imx:id="ID_1" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup" type="function:FunctionGroup" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_2" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP" type="function:Function" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_3" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig1" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_4" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig2" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_5" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig3" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_6" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig4" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_7" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig5" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_8" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig6" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_9" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig7" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_10" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig8" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_11" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig9" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_12" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig10" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_13" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig11" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_14" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig12" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_15" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig13" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_16" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2FadvSig14" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_17" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig1" type="function:Signature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_18" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_LOOKUP%2Fsig2" type="function:Signature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_19" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS" type="function:Function" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_20" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig1" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_21" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig2" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_22" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig3" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_23" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig4" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_24" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig5" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_25" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig6" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_26" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig7" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_27" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig8" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_28" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig9" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_29" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig10" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_30" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig11" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_31" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig12" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_32" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig13" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_33" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2FadvSig14" type="function:AdvancedSignature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_34" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2Fsig1" type="function:Signature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_35" objectId="smd:com.informatica.metadata.platform.component.function.INFALogicalFunctionSeed.functionGroup%2Ffn_EXISTS%2Fsig2" type="function:Signature" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_36" objectId="smd:com.informatica.metadata.platform.component.function.ExpressionComponent.component%2FFunctionValidate" type="component:ComponentInterface" xsi:type="imx:proxy"/>
+<proxy imx:id="ID_37" objectId="smd:com.informatica.metadata.platform.component.function.ExpressionComponent.component%2FFunctionRuntime" type="component:ComponentInterface" xsi:type="imx:proxy"/>
+</imx:proxies>
+</imx:IMX>

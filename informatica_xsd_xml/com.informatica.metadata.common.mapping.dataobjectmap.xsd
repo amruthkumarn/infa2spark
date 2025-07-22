@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.mapping.dataobjectmap/2" xmlns:dataobjectmap="http://com.informatica.metadata.common.mapping.dataobjectmap/2" xmlns:imx="http://com.informatica.imx" xmlns:mapping="http://com.informatica.metadata.common.mapping/2" xmlns:transformation="http://com.informatica.metadata.common.transformation/3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.mapping.dataobjectmap/2">
+<xsd:import namespace="http://com.informatica.metadata.common.mapping/2" schemaLocation="com.informatica.metadata.common.mapping.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.transformation/3" schemaLocation="com.informatica.metadata.common.transformation.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:simpleType name="MethodKind">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="read"/>
+<xsd:enumeration value="dataDrivenWrite"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="DataObjectMapCharacteristic">
+<xsd:complexContent>
+<xsd:extension base="mapping:Characteristic">
+<xsd:attribute name="batchMode" type="xsd:boolean"/>
+<xsd:attribute name="mappedDataObjects" type="imx:idrefs"/>
+<xsd:attribute name="method" type="dataobjectmap:MethodKind"/>
+<xsd:attribute name="realTimeMode" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataObjectMapCharacteristic" type="dataobjectmap:DataObjectMapCharacteristic"/>
+<xsd:complexType abstract="true" name="DataObjectMapTx">
+<xsd:complexContent>
+<xsd:extension base="transformation:AbstractTransformation">
+<xsd:attribute name="mappedDataObject" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="InputInterface">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="inputFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="InputField" type="dataobjectmap:InputField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="InputInterface" type="dataobjectmap:InputInterface"/>
+<xsd:complexType name="OutputInterface">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationDataInterface">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="outputFields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="OutputField" type="dataobjectmap:OutputField"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OutputInterface" type="dataobjectmap:OutputInterface"/>
+<xsd:complexType name="InputField">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="InputField" type="dataobjectmap:InputField"/>
+<xsd:complexType name="InputTx">
+<xsd:complexContent>
+<xsd:extension base="dataobjectmap:DataObjectMapTx">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="inputInterface">
+<xsd:complexType>
+<xsd:choice maxOccurs="1" minOccurs="1">
+<xsd:element name="InputInterface" type="dataobjectmap:InputInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="InputTx" type="dataobjectmap:InputTx"/>
+<xsd:complexType name="OutputField">
+<xsd:complexContent>
+<xsd:extension base="transformation:TransformationField"/>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OutputField" type="dataobjectmap:OutputField"/>
+<xsd:complexType name="OutputTx">
+<xsd:complexContent>
+<xsd:extension base="dataobjectmap:DataObjectMapTx">
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="outputInterface">
+<xsd:complexType>
+<xsd:choice maxOccurs="1" minOccurs="1">
+<xsd:element name="OutputInterface" type="dataobjectmap:OutputInterface"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="OutputTx" type="dataobjectmap:OutputTx"/>
+</xsd:schema>

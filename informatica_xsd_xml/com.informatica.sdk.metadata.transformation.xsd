@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.sdk.metadata.transformation/1" xmlns:imx="http://com.informatica.imx" xmlns:modelextension="http://com.informatica.metadata.common.modelextension/2" xmlns:transformation="http://com.informatica.sdk.metadata.transformation/1" xmlns:transformation1="http://com.informatica.metadata.common.transformation/3" xmlns:txhandlerconfig="http://com.informatica.metadata.common.txhandlerconfig/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.sdk.metadata.transformation/1">
+<xsd:import namespace="http://com.informatica.metadata.common.modelextension/2" schemaLocation="com.informatica.metadata.common.modelextension.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.txhandlerconfig/2" schemaLocation="com.informatica.metadata.common.txhandlerconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.transformation/3" schemaLocation="com.informatica.metadata.common.transformation.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation> \n This package defines the base pattern model for sdk based transformations\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="DataElementExtension">
+<xsd:complexContent>
+<xsd:extension base="modelextension:ModelExtension">
+<xsd:annotation>
+<xsd:documentation> This is base for all field and group extensions. This required for sharing of
+ MRS table across CTs.
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType abstract="true" name="TransformationExtension">
+<xsd:complexContent>
+<xsd:extension base="modelextension:ModelExtension">
+<xsd:annotation>
+<xsd:documentation> This is base for all transformation and instance extensions. This required
+ for sharing of MRS table across CTs.
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="InstanceConfiguration">
+<xsd:complexContent>
+<xsd:extension base="txhandlerconfig:TxHandlerConfig">
+<xsd:annotation>
+<xsd:documentation> This class carries the configuration metadata for the instance of a
+ transformation object
+
+
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="extension" type="transformation:TransformationExtension"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="InstanceConfiguration" type="transformation:InstanceConfiguration"/>
+<xsd:complexType name="BasePatternTransformation">
+<xsd:complexContent>
+<xsd:extension base="transformation1:AbstractTransformation">
+<xsd:annotation>
+<xsd:documentation> Base pattern model for all sdk based transformations
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="dataGroups">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DataGroup" type="transformation:DataGroup"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="extension" type="transformation:TransformationExtension"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="BasePatternTransformation" type="transformation:BasePatternTransformation"/>
+<xsd:complexType name="DataGroup">
+<xsd:complexContent>
+<xsd:extension base="transformation1:TransformationDataInterface">
+<xsd:annotation>
+<xsd:documentation> Base model for data groups of a sdk based transformation
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="extension" type="transformation:DataElementExtension"/>
+<xsd:element name="fields">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="Field" type="transformation:Field"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DataGroup" type="transformation:DataGroup"/>
+<xsd:complexType name="Field">
+<xsd:complexContent>
+<xsd:extension base="transformation1:TransformationField">
+<xsd:annotation>
+<xsd:documentation> Base model for a field of a sdk based transformation
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="extension" type="transformation:DataElementExtension"/>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="Field" type="transformation:Field"/>
+</xsd:schema>

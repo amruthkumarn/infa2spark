@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.partitionstrategy.dynamic/2" xmlns:dynamic="http://com.informatica.metadata.common.partitionstrategy.dynamic/2" xmlns:imx="http://com.informatica.imx" xmlns:partitionpoint="http://com.informatica.metadata.common.partitionpoint/2" xmlns:partitionstrategy="http://com.informatica.metadata.common.partitionstrategy/2" xmlns:txhandlerconfig="http://com.informatica.metadata.common.partition.txhandlerconfig/2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.partitionstrategy.dynamic/2">
+<xsd:import namespace="http://com.informatica.metadata.common.partition.txhandlerconfig/2" schemaLocation="com.informatica.metadata.common.partition.txhandlerconfig.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.partitionpoint/2" schemaLocation="com.informatica.metadata.common.partitionpoint.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.partitionstrategy/2" schemaLocation="com.informatica.metadata.common.partitionstrategy.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThis package contains a concrete implementation of common.partitionstrategy.PartitionStrategy that represents partitioning abstractions necessary to describe a dynamically sized partitioning strategy.\n \n In this strategy, a user may select partition points and partition types where concurrent data pipelines may get allocated at runtime.  Users may provide one set of partitionable attributes per partition that will be used as templates to dynamically generate as many partition configurations as needed at runtime.\n \n A session preparation time analysis is performed to calculate actual data pipeline concurency.  The purpose of this analysis is to translate a user-provided DynamicPartitoningStrategy to an instance of common.session.partitioning.detailed.DetailedPartitioningStrategy that the DTM knows how to consume.  The DTM does not know how to execute DynamicPartitioningStrategy strategy directly without this preparation-time translation.\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType abstract="true" name="PartitionAllocationStrategy">
+<xsd:annotation>
+<xsd:documentation> This is the base class of a hierarchy that is used to differentiate between the different algorithms for calculating the number of partitions to use when a session is executed.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element ref="imx:annotations"/>
+</xsd:choice>
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute ref="imx:idref"/>
+<xsd:attribute ref="imx:iid"/>
+</xsd:complexType>
+<xsd:complexType name="CPUBasedPartitionAllocationStrategy">
+<xsd:complexContent>
+<xsd:extension base="dynamic:PartitionAllocationStrategy">
+<xsd:annotation>
+<xsd:documentation> This class describes the algorithm that allocates a number of partitions based on the number of nodes in the gride where a session executes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CPUBasedPartitionAllocationStrategy" type="dynamic:CPUBasedPartitionAllocationStrategy"/>
+<xsd:complexType name="CountBasedPartitionAllocationStrategy">
+<xsd:complexContent>
+<xsd:extension base="dynamic:PartitionAllocationStrategy">
+<xsd:annotation>
+<xsd:documentation> This class describes the algorithm that allocates a number of partitions based on the value of a property.  The number of partitions described by numDynamicPartitions is the number of partitions this strategy will distribute across a mapping.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="numDynamicPartitions" type="xsd:int"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="CountBasedPartitionAllocationStrategy" type="dynamic:CountBasedPartitionAllocationStrategy"/>
+<xsd:complexType name="DynamicPartitionPoint">
+<xsd:complexContent>
+<xsd:extension base="partitionpoint:PartitionPoint">
+<xsd:annotation>
+<xsd:documentation> Each DynamicPartitionPoint inherits use of a head widget and strategies for re-arranging input metadata are inheritted from the common.session.partitionpoint.PartitionPoint abstraction, and makes it concrete without adding any additional properties.
+ 
+ DynamicPartitionPoint objects are translated to DetailedPartitionPoint objects by the dynamic partitioning algorithm after it has calculated the number of partitions to use and assigned them to partition points.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DynamicPartitionPoint" type="dynamic:DynamicPartitionPoint"/>
+<xsd:complexType name="DynamicTxHandlerConfigAssociation">
+<xsd:complexContent>
+<xsd:extension base="txhandlerconfig:TxHandlerConfigAssociation">
+<xsd:annotation>
+<xsd:documentation> Each DynamicTxHandlerConfigAssociation inherits the ability to contain TxHandlerConfigPartition objects and associate them with a referenced TxHandlerConfig object.
+ 
+ In addition to making the base class concrete, this class restricts the containment of TxHandlerConfigPartition objects to exactly 1.  This single TxHandlerConfigPartition object is used as a template for however many objects are required (one per assigned partition) during the session preparation time translation from DynamicPartitioningStrategy to  DetailedPartitioningStrategy.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="partitionConfigTemplate">
+<xsd:complexType>
+<xsd:choice maxOccurs="1" minOccurs="1">
+<xsd:element name="TxHandlerConfigPartition" type="txhandlerconfig:TxHandlerConfigPartition"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DynamicTxHandlerConfigAssociation" type="dynamic:DynamicTxHandlerConfigAssociation"/>
+<xsd:complexType name="GridBasedPartitionAllocationStrategy">
+<xsd:complexContent>
+<xsd:extension base="dynamic:PartitionAllocationStrategy">
+<xsd:annotation>
+<xsd:documentation> This class describes the algorithm that allocates a number of partitions based on the number of nodes in the gride where a session executes.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="GridBasedPartitionAllocationStrategy" type="dynamic:GridBasedPartitionAllocationStrategy"/>
+<xsd:complexType name="SourceBasedPartitionAllocationStrategy">
+<xsd:complexContent>
+<xsd:extension base="dynamic:PartitionAllocationStrategy">
+<xsd:annotation>
+<xsd:documentation> This class describes the algorithm that allocates a number of partitions based on the number of source instances in the session's mapping.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="SourceBasedPartitionAllocationStrategy" type="dynamic:SourceBasedPartitionAllocationStrategy"/>
+<xsd:complexType name="DynamicPartitioningStrategy">
+<xsd:complexContent>
+<xsd:extension base="partitionstrategy:PartitionStrategy">
+<xsd:annotation>
+<xsd:documentation> This is the root container object of partitioning plan metadata where an algorithm is used during session preparation to derive the actual number of partitions to use at each user-defined partition point.
+ 
+ Three containment properties are used to define an instance of this partitioning strategy.
+ -- A collection of DynamicPartitionPoint objects identity the transformations where either new data is generated (sources), or the data in one pipeline is re-arranged for the next pipeline.
+ -- A collection of DynamicTxHandlerConfigAssociation objects associates each of a Session's TxHandlerConfig objects with a contained TxHandlerConfigParititon object that serves as a template for creating additional TxHandlerConfigPartition objects, based on the number of partitions actually running through a transformation at runtime.
+ -- A single PartitionAllocationStrategy determines how many partitions the session pre-processor may create and allocate when deriving a DetailedPartitionStrategy at runtime.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="allocationStrategy" type="dynamic:PartitionAllocationStrategy"/>
+<xsd:element name="handlerAssociations">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DynamicTxHandlerConfigAssociation" type="dynamic:DynamicTxHandlerConfigAssociation"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="partitionPoints">
+<xsd:complexType>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="DynamicPartitionPoint" type="dynamic:DynamicPartitionPoint"/>
+</xsd:choice>
+</xsd:complexType>
+</xsd:element>
+</xsd:choice>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="DynamicPartitioningStrategy" type="dynamic:DynamicPartitioningStrategy"/>
+</xsd:schema>

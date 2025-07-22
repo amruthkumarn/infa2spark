@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://com.informatica.metadata.common.connectinfo/2" xmlns:connectinfo="http://com.informatica.metadata.common.connectinfo/2" xmlns:core="http://com.informatica.metadata.common.core/2" xmlns:imx="http://com.informatica.imx" xmlns:parameter="http://com.informatica.metadata.common.parameter/9" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://com.informatica.metadata.common.connectinfo/2">
+<xsd:import namespace="http://com.informatica.metadata.common.core/2" schemaLocation="com.informatica.metadata.common.core.xsd"/>
+<xsd:import namespace="http://com.informatica.metadata.common.parameter/9" schemaLocation="com.informatica.metadata.common.parameter.xsd"/>
+<xsd:import namespace="http://com.informatica.imx" schemaLocation="IMX.xsd"/>
+<xsd:element name="IMX">
+<xsd:annotation>
+<xsd:documentation>\nThe ConnectInfo class provides classes for describing the initialization metadata for software elements that provide access to remote systems.  \n \n BasicConnectInfo should be extended by those modeling the parameters required by low-level connectivity drivers, such as JDBC variants, Oracle OCI, and SAP.\n \n Service-specific use of low-level drivers should extend from ConnectInfo and hold a references to BasicConnectInfo or one of its subclasses, based on the low-level drivers supported.\n\n 2.2.0	elee	10/18/2010    Added model ConnectInfoParameterValue\n 2.3.0	eding	09/30/2011    Added model PlaceholderConnectInfo\n 2.4.0    mho     12/2/2011     Added 'passThruEnabled' property in ConnectInfo\n \n</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:complexType name="ConnectInfoClassifierConstraint">
+<xsd:attribute ref="imx:id"/>
+<xsd:attribute name="requiredType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+</xsd:complexType>
+<xsd:element name="ConnectInfoClassifierConstraint" type="connectinfo:ConnectInfoClassifierConstraint"/>
+<xsd:complexType name="ConnectInfoParameterValue">
+<xsd:complexContent>
+<xsd:extension base="parameter:ParameterValue">
+<xsd:annotation>
+<xsd:documentation> Represents the string form of a value
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="connectInfoValue" type="imx:idref"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConnectInfoParameterValue" type="connectinfo:ConnectInfoParameterValue"/>
+<xsd:complexType name="ConnectionPoolAttributes">
+<xsd:complexContent>
+<xsd:extension base="core:Element">
+<xsd:annotation>
+<xsd:documentation> This class encapsulates attributes to be used with a connection pool.
+</xsd:documentation>
+</xsd:annotation>
+<xsd:attribute name="maxIdelTime" type="xsd:int"/>
+<xsd:attribute name="minConnections" type="xsd:int"/>
+<xsd:attribute name="poolSize" type="xsd:int"/>
+<xsd:attribute name="usePool" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="ConnectionPoolAttributes" type="connectinfo:ConnectionPoolAttributes"/>
+<xsd:complexType abstract="true" name="ConnectInfo">
+<xsd:complexContent>
+<xsd:extension base="core:NamedElement">
+<xsd:annotation>
+<xsd:documentation> ConnectInfo subclasses capture the use of metadata to establish a connection using a particular software element.
+ 
+ Software implementing connectivity is often layered--a higher level interface implementation may depend on use of a lower-level driver that it needs to configure.  A concrete ConnectInfo subclass captures the metadata required to use a driver to access an external source of data or metadata.
+ 
+ 
+</xsd:documentation>
+</xsd:annotation>
+<xsd:choice maxOccurs="unbounded" minOccurs="0">
+<xsd:element name="defaultAttributes" type="connectinfo:ConnectionPoolAttributes"/>
+</xsd:choice>
+<xsd:attribute name="connectionType">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:whiteSpace value="preserve"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:attribute>
+<xsd:attribute name="passThruEnabled" type="xsd:boolean"/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:complexType name="PlaceholderConnectInfo">
+<xsd:complexContent>
+<xsd:extension base="connectinfo:ConnectInfo">
+<xsd:annotation>
+<xsd:documentation> PlaceholderConnectInfo is intended as a placeholder to enable creation of generic ConnectInfo proxy.  It is useful 
+ in upgrade where the concrete connection type cannot be determined.
+</xsd:documentation>
+</xsd:annotation>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<xsd:element name="PlaceholderConnectInfo" type="connectinfo:PlaceholderConnectInfo"/>
+</xsd:schema>
