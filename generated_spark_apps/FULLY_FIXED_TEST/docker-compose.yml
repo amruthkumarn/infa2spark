@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  complex_production_project:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./config:/app/config
+    environment:
+      - SPARK_MASTER=local[*]

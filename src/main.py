@@ -4,6 +4,7 @@ Main application entry point for Informatica to PySpark PoC
 import sys
 import os
 import logging
+import argparse
 from pathlib import Path
 
 # Add src directory to Python path
@@ -14,7 +15,7 @@ from core.spark_manager import SparkManager
 from core.config_manager import ConfigManager
 from core.xml_parser import InformaticaXMLParser
 from core.spark_code_generator import SparkCodeGenerator  # Add this import
-from workflows.daily_etl_process import DailyETLProcess
+# from workflows.daily_etl_process import DailyETLProcess  # Temporarily commented out
 
 def setup_logging():
     """Setup logging configuration"""
@@ -27,22 +28,22 @@ def setup_logging():
         ]
     )
 
-def generate_spark_app():
+def generate_spark_app(xml_file, app_name, output_dir="generated_spark_apps"):
     """Generate standalone Spark application from XML"""
     setup_logging()
     logger = logging.getLogger("SparkGenerator")
     
     try:
-        logger.info("Starting Spark application generation")
+        logger.info(f"Starting Spark application generation")
+        logger.info(f"XML file: {xml_file}")
+        logger.info(f"App name: {app_name}")
+        logger.info(f"Output directory: {output_dir}")
         
         # Initialize code generator
-        generator = SparkCodeGenerator("generated_spark_apps")
+        generator = SparkCodeGenerator(output_dir)
         
-        # Generate application from sample XML
-        app_path = generator.generate_spark_application(
-            "input/sample_project.xml",
-            "MyBDMProject_SparkApp"
-        )
+        # Generate application from provided XML
+        app_path = generator.generate_spark_application(xml_file, app_name)
         
         logger.info(f"Spark application generated at: {app_path}")
         return app_path
@@ -56,9 +57,27 @@ def main():
     setup_logging()
     logger = logging.getLogger("Main")
     
+    # Set up argument parser
+    parser = argparse.ArgumentParser(description='Informatica to PySpark PoC')
+    parser.add_argument('--generate-spark-app', action='store_true', 
+                       help='Generate standalone Spark application')
+    parser.add_argument('--xml-file', type=str, 
+                       help='Path to Informatica XML file')
+    parser.add_argument('--app-name', type=str, 
+                       help='Name for the generated Spark application')
+    parser.add_argument('--output-dir', type=str, default='generated_spark_apps',
+                       help='Output directory for generated application (default: generated_spark_apps)')
+    
+    args = parser.parse_args()
+    
     # Check if user wants to generate Spark app
-    if len(sys.argv) > 1 and sys.argv[1] == "--generate-spark-app":
-        app_path = generate_spark_app()
+    if args.generate_spark_app:
+        if not args.xml_file or not args.app_name:
+            logger.error("--xml-file and --app-name are required when using --generate-spark-app")
+            parser.print_help()
+            sys.exit(1)
+            
+        app_path = generate_spark_app(args.xml_file, args.app_name, args.output_dir)
         logger.info(f"Generated Spark application available at: {app_path}")
         logger.info("To run the generated app:")
         logger.info(f"  cd {app_path}")

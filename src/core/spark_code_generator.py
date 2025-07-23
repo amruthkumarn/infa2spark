@@ -328,31 +328,48 @@ class DataSourceManager:
         self.logger.info("Generated base_classes.py")
     
     def _generate_mapping_classes(self, app_dir: Path, project: Project):
-        """Generate mapping classes from project mappings with production-ready code"""
-        mappings = self._extract_mappings_from_project(project)
+        """Generate mapping classes"""
+        mappings_dir = app_dir / "src" / "main" / "python" / "mappings"
+        mappings_dir.mkdir(parents=True, exist_ok=True)
         
-        self.logger.info(f"Generating {len(mappings)} production-ready mapping classes...")
+        # Generate __init__.py
+        init_content = '''"""
+Mapping classes for the Spark application
+"""
+from .base_mapping import BaseMapping
+
+__all__ = ['BaseMapping']
+'''
+        with open(mappings_dir / "__init__.py", "w") as f:
+            f.write(init_content)
+        
+        mappings = list(project.mappings.values())
+        self.logger.info(f"Generating {len(mappings)} mapping classes")
         
         for mapping in mappings:
-            # Use enhanced generator for production-ready transformations
-            self.enhanced_generator.generate_production_mapping(app_dir, mapping, project)
+            # Use field port integrated mapping generation - this is the correct one with field-level logic
+            self._generate_single_mapping_class(app_dir, mapping, project)
             
-            # Also generate the original version for comparison (can be removed later)
-            # self._generate_single_mapping_class(app_dir, mapping, project)
+            # Enhanced generator disabled to use field port integration
+            # self.enhanced_generator.generate_production_mapping(app_dir, mapping, project)
     
     def _generate_single_mapping_class(self, app_dir: Path, mapping: Dict[str, Any], project: Project):
         """Generate a single mapping class"""
         class_name = self._to_class_name(mapping['name'])
         file_name = self._sanitize_name(mapping['name']) + '.py'
         
+        # Add custom filters for Informatica to Spark conversion
+        self.jinja_env.filters['convert_informatica_to_spark'] = self._convert_informatica_expression_to_spark
+        self.jinja_env.filters['convert_informatica_type_to_spark'] = self._convert_informatica_type_to_spark
+        
         mapping_template = '''"""
 {{ mapping.name }} Mapping Implementation
 Generated from Informatica BDM Project: {{ project.name }}
 
 Components:
-{%- for component in mapping.components %}
+{% for component in mapping.components -%}
 - {{ component.name }} ({{ component.type }})
-{%- endfor %}
+{% endfor %}
 """
 from pyspark.sql import DataFrame
 from pyspark.sql.functions import *
@@ -373,9 +390,9 @@ class {{ class_name }}(BaseMapping):
         try:
             self.logger.info("Starting {{ mapping.name }} mapping execution")
             
-            {%- set sources = mapping.components | selectattr('component_type', 'equalto', 'source') | list %}
-            {%- set transformations = mapping.components | selectattr('component_type', 'equalto', 'transformation') | list %}
-            {%- set targets = mapping.components | selectattr('component_type', 'equalto', 'target') | list %}
+            {% set sources = mapping.components | selectattr('component_type', 'equalto', 'source') | list -%}
+            {% set transformations = mapping.components | selectattr('component_type', 'equalto', 'transformation') | list -%}
+            {% set targets = mapping.components | selectattr('component_type', 'equalto', 'target') | list -%}
             
             # Read source data
             {%- for source in sources %}
@@ -424,6 +441,7 @@ class {{ class_name }}(BaseMapping):
             raise
     
     {%- for source in sources %}
+    
     def _read_{{ source.name | lower }}(self) -> DataFrame:
         """Read from {{ source.name }}"""
         self.logger.info("Reading from {{ source.name }}")
@@ -435,20 +453,47 @@ class {{ class_name }}(BaseMapping):
     {%- endfor %}
     
     {%- for transformation in transformations %}
+    
     def _apply_{{ transformation.name | lower }}(self, input_df: DataFrame{% if transformation.type == 'Joiner' %}, *additional_dfs{% endif %}) -> DataFrame:
         """Apply {{ transformation.name }} transformation"""
         self.logger.info("Applying {{ transformation.name }} transformation")
         
-        {%- if transformation.type == 'Expression' %}
-        # Expression transformation logic
-        transformation = ExpressionTransformation(
-            name="{{ transformation.name }}",
-            expressions=self._get_{{ transformation.name | lower }}_expressions(),
-            filters=self._get_{{ transformation.name | lower }}_filters()
-        )
-        return transformation.transform(input_df)
+        {% if transformation.type == 'Expression' -%}
+        # Expression transformation with field-level logic
+        {% set input_ports = transformation.ports | selectattr('direction', 'equalto', 'INPUT') | list -%}
+        {% set output_ports = transformation.ports | selectattr('direction', 'equalto', 'OUTPUT') | list -%}
         
-        {%- elif transformation.type == 'Aggregator' %}
+        {% if input_ports %}
+        # Input fields validation
+        input_fields = {{ input_ports | map(attribute='name') | list }}
+        missing_fields = [f for f in input_fields if f not in input_df.columns]
+        if missing_fields:
+            raise ValueError(f"Missing input fields: {missing_fields}")
+        {% endif %}
+        
+        result_df = input_df
+        
+        {% if transformation.expressions %}
+        # Apply field expressions based on ExpressionField definitions
+        {% for expr in transformation.expressions -%}
+        # Expression: {{ expr.name }} = {{ expr.expression }}
+        result_df = result_df.withColumn("{{ expr.name }}", expr("{{ expr.expression | convert_informatica_to_spark }}"))
+        {% endfor %}
+        {% endif %}
+        
+        {% if output_ports %}
+        # Apply data type casting based on port types
+        {% for port in output_ports -%}
+        {% if port.type %}
+        # Cast {{ port.name }} to {{ port.type }}
+        result_df = result_df.withColumn("{{ port.name }}", col("{{ port.name }}").cast("{{ port.type | convert_informatica_type_to_spark }}"))
+        {% endif -%}
+        {% endfor %}
+        {% endif %}
+        
+        return result_df
+        
+        {% elif transformation.type == 'Aggregator' -%}
         # Aggregator transformation logic
         transformation = AggregatorTransformation(
             name="{{ transformation.name }}",
@@ -457,7 +502,7 @@ class {{ class_name }}(BaseMapping):
         )
         return transformation.transform(input_df)
         
-        {%- elif transformation.type == 'Lookup' %}
+        {% elif transformation.type == 'Lookup' -%}
         # Lookup transformation logic
         lookup_df = self._get_{{ transformation.name | lower }}_lookup_data()
         transformation = LookupTransformation(
@@ -467,7 +512,7 @@ class {{ class_name }}(BaseMapping):
         )
         return transformation.transform(input_df, lookup_df)
         
-        {%- elif transformation.type == 'Joiner' %}
+        {% elif transformation.type == 'Joiner' -%}
         # Joiner transformation logic
         if len(additional_dfs) > 0:
             right_df = additional_dfs[0]
@@ -479,62 +524,26 @@ class {{ class_name }}(BaseMapping):
             return transformation.transform(input_df, right_df)
         return input_df
         
-        {%- elif transformation.type == 'Sequence' %}
-        # Sequence transformation logic
-        transformation = SequenceTransformation(
-            name="{{ transformation.name }}",
-            start_value=self._get_{{ transformation.name | lower }}_start_value(),
-            increment_value=self._get_{{ transformation.name | lower }}_increment()
-        )
-        return transformation.transform(input_df)
-        
-        {%- elif transformation.type == 'Sorter' %}
-        # Sorter transformation logic
-        transformation = SorterTransformation(
-            name="{{ transformation.name }}",
-            sort_keys=self._get_{{ transformation.name | lower }}_sort_keys()
-        )
-        return transformation.transform(input_df)
-        
-        {%- elif transformation.type == 'Router' %}
-        # Router transformation logic
-        transformation = RouterTransformation(
-            name="{{ transformation.name }}",
-            output_groups=self._get_{{ transformation.name | lower }}_output_groups()
-        )
-        return transformation.transform(input_df)
-        
-        {%- elif transformation.type == 'Union' %}
-        # Union transformation logic
-        if len(additional_dfs) > 0:
-            transformation = UnionTransformation(
-                name="{{ transformation.name }}",
-                union_type=self._get_{{ transformation.name | lower }}_union_type()
-            )
-            return transformation.transform(input_df, *additional_dfs)
-        return input_df
-        
-        {%- elif transformation.type == 'Java' %}
-        # Java/Custom transformation logic
-        transformation = JavaTransformation(
-            name="{{ transformation.name }}",
-            logic_type="custom"
-        )
-        return transformation.transform(input_df)
-        
-        {%- else %}
+        {% else -%}
         # Generic transformation
         self.logger.warning("Unknown transformation type: {{ transformation.type }}")
         return input_df
-        {%- endif %}
+        {% endif %}
     
     {%- if transformation.type == 'Expression' %}
+    
     def _get_{{ transformation.name | lower }}_expressions(self) -> dict:
         """Get expression transformation expressions"""
         return {
+            {% if transformation.expressions -%}
+            {% for expr in transformation.expressions -%}
+            "{{ expr.name }}": "{{ expr.expression | convert_informatica_to_spark }}",
+            {% endfor -%}
+            {% else -%}
             # Add your expression logic here
             "processed_date": "current_date()",
             "load_timestamp": "current_timestamp()"
+            {% endif %}
         }
     
     def _get_{{ transformation.name | lower }}_filters(self) -> list:
@@ -546,6 +555,7 @@ class {{ class_name }}(BaseMapping):
         ]
         
     {%- elif transformation.type == 'Aggregator' %}
+    
     def _get_{{ transformation.name | lower }}_group_by(self) -> list:
         """Get aggregator group by columns"""
         return [
@@ -562,6 +572,7 @@ class {{ class_name }}(BaseMapping):
         }
         
     {%- elif transformation.type in ['Lookup', 'Joiner'] %}
+    
     def _get_{{ transformation.name | lower }}_join_conditions(self) -> list:
         """Get join conditions"""
         return [
@@ -570,52 +581,24 @@ class {{ class_name }}(BaseMapping):
         ]
         
     {%- if transformation.type == 'Lookup' %}
+    
     def _get_{{ transformation.name | lower }}_lookup_data(self) -> DataFrame:
         """Get lookup data"""
         # Implement lookup data retrieval
         return self.data_source_manager.read_source("LOOKUP_TABLE", "HIVE")
     {%- endif %}
-    {%- elif transformation.type == 'Sequence' %}
-    def _get_{{ transformation.name | lower }}_start_value(self) -> int:
-        """Get sequence start value"""
-        return 1  # Configure as needed
-    
-    def _get_{{ transformation.name | lower }}_increment(self) -> int:
-        """Get sequence increment value"""
-        return 1  # Configure as needed
-        
-    {%- elif transformation.type == 'Sorter' %}
-    def _get_{{ transformation.name | lower }}_sort_keys(self) -> list:
-        """Get sorter sort keys"""
-        return [
-            # Add your sort keys here
-            # {"field_name": "column_name", "direction": "ASC", "null_treatment": "LAST"}
-        ]
-        
-    {%- elif transformation.type == 'Router' %}
-    def _get_{{ transformation.name | lower }}_output_groups(self) -> list:
-        """Get router output groups"""
-        return [
-            # Add your routing conditions here
-            # {"name": "high_value", "condition": "amount > 1000", "priority": 1}
-        ]
-        
-    {%- elif transformation.type == 'Union' %}
-    def _get_{{ transformation.name | lower }}_union_type(self) -> str:
-        """Get union type"""
-        return "UNION_ALL"  # or "UNION_DISTINCT"
     {%- endif %}
     {%- endfor %}
     
     {%- for target in targets %}
+    
     def _write_to_{{ target.name | lower }}(self, output_df: DataFrame):
         """Write to {{ target.name }} target"""
         self.logger.info("Writing to {{ target.name }} target")
         
         # Add audit columns
-        final_df = output_df.withColumn("load_date", current_date()) \\
-                           .withColumn("load_timestamp", current_timestamp()) \\
-                           .withColumn("source_system", lit("{{ project.name | upper }}"))
+        final_df = output_df.withColumn("load_timestamp", current_timestamp()) \\
+                          .withColumn("load_date", current_date())
         
         self.data_source_manager.write_target(
             final_df, 
@@ -626,16 +609,25 @@ class {{ class_name }}(BaseMapping):
     {%- endfor %}
 '''
 
-        template = Template(mapping_template)
+        template = self.jinja_env.from_string(mapping_template)
         output = template.render(
             mapping=mapping, 
             project=project, 
             class_name=class_name
         )
         
-        mapping_file = app_dir / "src/main/python/mappings" / file_name
-        mapping_file.write_text(output)
-        self.logger.info(f"Generated mapping class: {file_name}")
+        # Write the file
+        mappings_dir = app_dir / "src" / "main" / "python" / "mappings"
+        mappings_dir.mkdir(parents=True, exist_ok=True)
+        
+        output_file = mappings_dir / file_name
+        with open(output_file, 'w') as f:
+            f.write(output)
+        
+        # Apply manual formatting fixes
+        self._apply_manual_formatting(output_file)
+            
+        self.logger.info(f"Generated mapping class: {output_file}")
     
     def _generate_workflow_classes(self, app_dir: Path, project: Project):
         """Generate workflow orchestration classes"""
@@ -1792,6 +1784,148 @@ This application was generated automatically. For modifications:
         """Convert name to Python class name"""
         return ''.join(word.capitalize() for word in name.replace('_', ' ').split())
     
+    def _convert_informatica_expression_to_spark(self, informatica_expr: str) -> str:
+        """Convert Informatica expression syntax to Spark SQL syntax"""
+        if not informatica_expr:
+            return ""
+            
+        spark_expr = informatica_expr.strip()
+        
+        # String concatenation: || -> concat()
+        if '||' in spark_expr:
+            # Split by || and clean up parts
+            parts = []
+            for part in spark_expr.split('||'):
+                part = part.strip()
+                # Remove extra quotes if present
+                if part.startswith("'") and part.endswith("'"):
+                    parts.append(part)
+                elif part.startswith('"') and part.endswith('"'):
+                    parts.append(part)
+                else:
+                    # Field reference - add it as is
+                    parts.append(part)
+            spark_expr = f"concat({', '.join(parts)})"
+        
+        # Other common conversions
+        spark_expr = spark_expr.replace('SUBSTR(', 'substring(')
+        spark_expr = spark_expr.replace('NVL(', 'coalesce(')
+        spark_expr = spark_expr.replace('TO_DATE(', 'to_date(')
+        spark_expr = spark_expr.replace('TO_TIMESTAMP(', 'to_timestamp(')
+        spark_expr = spark_expr.replace('SYSDATE', 'current_date()')
+        spark_expr = spark_expr.replace('SYSTIMESTAMP', 'current_timestamp()')
+        
+        return spark_expr
+    
+    def _convert_informatica_type_to_spark(self, informatica_type: str) -> str:
+        """Convert Informatica data type to Spark SQL type"""
+        if not informatica_type:
+            return "string"
+            
+        type_mapping = {
+            'string': 'string',
+            'varchar': 'string', 
+            'char': 'string',
+            'integer': 'int',
+            'int': 'int',
+            'bigint': 'bigint',
+            'decimal': 'decimal',
+            'double': 'double',
+            'float': 'float',
+            'date': 'date',
+            'timestamp': 'timestamp',
+            'boolean': 'boolean',
+            'binary': 'binary'
+        }
+        return type_mapping.get(informatica_type.lower(), 'string')
+    
+    def _apply_manual_formatting(self, file_path: Path):
+        """Apply manual formatting fixes to resolve indentation issues"""
+        try:
+            with open(file_path, 'r') as f:
+                content = f.read()
+            
+            # First, fix the line concatenation issue by adding proper line breaks
+            import re
+            
+            # Fix patterns where multiple statements are on the same line
+            content = re.sub(r'(\w+_df = self\._read_\w+\(\))(\s*)(\# Apply transformations)', r'\1\n            \3', content)
+            content = re.sub(r'(current_df = \w+_df)(\s*)(current_df = self\._apply_)', r'\1\n            \3', content)
+            content = re.sub(r'(\# Write to targets)(\s*)(self\._write_to_)', r'\1\n            \3', content)
+            content = re.sub(r'(self\._write_to_\w+\(current_df\))(\s*)(self\.logger\.info)', r'\1\n            \3', content)
+            
+            # Fix comment-to-code concatenation (the line 32 issue)
+            content = re.sub(r'(# Read source data)(\s+)(\w+_df = self\._read_)', r'\1\n            \3', content)
+            content = re.sub(r'(# Apply transformations)(\s+)(current_df = )', r'\1\n            \3', content)
+            content = re.sub(r'(# Write to targets)(\s+)(self\._write_to_)', r'\1\n            \3', content)
+            
+            # Fix method definitions that are concatenated
+            content = re.sub(r'(raise)(\s*)(def _\w+)', r'\1\n\n    \3', content)
+            content = re.sub(r'(\)\s*)(def _\w+)', r')\n\n    \2', content)
+            
+            # Fix missing line breaks between functions (especially important)
+            content = re.sub(r'(\]\s*)(def _\w+)', r'\1\n\n    \2', content)  # After closing brackets
+            content = re.sub(r'(\}\s*)(def _\w+)', r'\1\n\n    \2', content)  # After closing braces
+            content = re.sub(r'(return \w+\s*)(def _\w+)', r'\1\n\n    \2', content)  # After return statements
+            
+            lines = content.split('\n')
+            formatted_lines = []
+            in_execute_method = False
+            
+            for line in lines:
+                # Detect if we're in the execute method
+                if 'def execute(self) -> bool:' in line:
+                    in_execute_method = True
+                elif line.strip().startswith('def ') and in_execute_method:
+                    in_execute_method = False
+                
+                # Fix indentation for execute method content
+                if in_execute_method and line.strip() and not line.startswith('    '):
+                    # Lines that should be indented within the execute method
+                    if any(pattern in line for pattern in [
+                        '_df = self._read_',
+                        'current_df = self._apply_',
+                        'current_df =', 
+                        'self._write_to_',
+                        '# Read source data',
+                        '# Apply transformations', 
+                        '# Write to targets'
+                    ]):
+                        line = '            ' + line.strip()  # 12 spaces for try block content
+                
+                formatted_lines.append(line)
+            
+            # Write back the formatted content
+            with open(file_path, 'w') as f:
+                f.write('\n'.join(formatted_lines))
+                
+            self.logger.info(f"Applied manual formatting to {file_path}")
+            
+            # Now apply black formatting on top of manual formatting
+            self._format_python_file(file_path)
+            
+        except Exception as e:
+            self.logger.warning(f"Could not apply manual formatting to {file_path}: {str(e)}")
+    
+    def _format_python_file(self, file_path: Path):
+        """Apply automatic formatting to a Python file using black"""
+        try:
+            import subprocess
+            result = subprocess.run(
+                ['python', '-m', 'black', str(file_path)], 
+                capture_output=True, 
+                text=True,
+                timeout=30
+            )
+            if result.returncode == 0:
+                self.logger.info(f"Successfully formatted {file_path}")
+            else:
+                self.logger.warning(f"Black formatting failed for {file_path}: {result.stderr}")
+        except (ImportError, subprocess.TimeoutExpired, FileNotFoundError) as e:
+            self.logger.warning(f"Could not format {file_path} with black: {str(e)}")
+        except Exception as e:
+            self.logger.warning(f"Unexpected error formatting {file_path}: {str(e)}")
+      
     def _generate_transformations_module(self, app_dir: Path):
         """Generate the transformations module"""
         transformations_content = '''"""

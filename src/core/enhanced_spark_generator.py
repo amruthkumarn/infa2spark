@@ -45,7 +45,7 @@ class EnhancedSparkCodeGenerator:
             self.parameter_manager = None
             
         self.logger = logging.getLogger("EnhancedSparkGenerator")
-        
+    
         # Transformation pattern detection rules
         self.transformation_patterns = {
             'scd_type2': ['scd', 'dimension', 'slowly_changing', 'type_2', 'type2'],

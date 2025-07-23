@@ -150,6 +150,8 @@ class InformaticaXMLParser:
                     project.folders["Mappings"] = []
                 mapping_info = self._extract_imx_mapping_info(child)
                 project.folders["Mappings"].append(mapping_info)
+                # Also add to project.mappings for SparkCodeGenerator
+                project.mappings[mapping_info['name']] = mapping_info
             elif object_type in ["TWorkflow", "Workflow"]:
                 self.logger.info(f"Found Workflow: {child.get('name', 'Unknown')}")
                 if "Workflows" not in project.folders:
@@ -164,7 +166,7 @@ class InformaticaXMLParser:
                 project.folders["Applications"].append(app_info)
             else:
                 self.logger.debug(f"Skipping unknown object type '{object_type}'")
-                
+                    
     def _extract_imx_mapping_info(self, mapping_elem: ET.Element) -> Dict:
         """Extract mapping information from IMX format"""
         mapping_info = {
@@ -196,14 +198,71 @@ class InformaticaXMLParser:
             components_container = mapping_elem
 
         for transformation in components_container.findall('.//{*}AbstractTransformation'):
-            component_info = {
-                'name': transformation.get('name', ''),
-                'type': transformation.get('type', ''),
-                'component_type': transformation.get('type', 'transformation').lower() # Normalize to source, target, expression etc.
-            }
+            component_info = self._extract_transformation_details(transformation)
             mapping_info['components'].append(component_info)
                 
         return mapping_info
+        
+    def _extract_transformation_details(self, transformation_elem: ET.Element) -> Dict:
+        """Extract detailed transformation information including ports and expressions"""
+        
+        # Basic info
+        transform_type = transformation_elem.get('type', '').lower()
+        
+        # Classify component type for template filtering
+        if transform_type in ['source', 'flatfilesource', 'relationalsource']:
+            component_type = 'source'
+        elif transform_type in ['target', 'flatfiletarget', 'relationaltarget']:
+            component_type = 'target'
+        else:
+            component_type = 'transformation'
+        
+        transform_info = {
+            'name': transformation_elem.get('name', ''),
+            'type': transformation_elem.get('type', ''),
+            'component_type': component_type,
+            'ports': [],
+            'expressions': [],
+            'characteristics': {}
+        }
+        
+        # Extract TransformationFieldPort elements
+        ports_elem = transformation_elem.find('ports')
+        if ports_elem is not None:
+            for port in ports_elem.findall('TransformationFieldPort'):
+                port_info = {
+                    'name': port.get('name'),
+                    'type': port.get('type'),
+                    'direction': port.get('direction'),
+                    'length': port.get('length'),
+                    'precision': port.get('precision'),
+                    'scale': port.get('scale')
+                }
+                transform_info['ports'].append(port_info)
+        
+        # Extract ExpressionField elements (for Expression transformations)
+        expr_interface = transformation_elem.find('.//expressioninterface')
+        if expr_interface is not None:
+            expr_fields = expr_interface.find('expressionFields')
+            if expr_fields is not None:
+                for expr_field in expr_fields.findall('ExpressionField'):
+                    expr_info = {
+                        'name': expr_field.get('name'),
+                        'expression': expr_field.get('expression'),
+                        'type': expr_field.get('type', 'GENERAL')
+                    }
+                    transform_info['expressions'].append(expr_info)
+        
+        # Extract characteristics
+        characteristics = transformation_elem.find('characteristics')
+        if characteristics is not None:
+            for char in characteristics.findall('Characteristic'):
+                char_name = char.get('name')
+                char_value = char.get('value')
+                if char_name:
+                    transform_info['characteristics'][char_name] = char_value
+        
+        return transform_info
         
     def _extract_imx_workflow_info(self, workflow_elem: ET.Element) -> Dict:
         """Extract workflow information from IMX format"""
@@ -233,12 +292,12 @@ class InformaticaXMLParser:
                     'mapping': '',
                     'properties': {}
                 }
-
+                
                 # Extract mapping name if it's a mapping task
                 mapping_task_config = task_elem.find('.//{*}mappingTaskConfig')
                 if mapping_task_config is not None:
                     task_info['mapping'] = mapping_task_config.get('mapping', '')
-
+                            
                 workflow_info['tasks'].append(task_info)
                 
         # Links (handle both <links> and <outgoingSequenceFlows>)
