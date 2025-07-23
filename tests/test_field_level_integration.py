@@ -140,15 +140,11 @@ class TestFieldLevelIntegration(unittest.TestCase):
         project = self.parser.parse_project('input/complex_production_project.xml')
         
         # Generate code 
-        output_dir = 'generated_spark_app/generated_spark_apps/EndToEndTest'
-        self.generator.generate_spark_application('input/complex_production_project.xml', output_dir)
+        output_dir = 'EndToEndTest'
+        app_path = self.generator.generate_spark_application('input/complex_production_project.xml', output_dir)
         
-        # Verify generated structure
-        mapping_file = f'{output_dir}/src/main/python/mappings/m_process_customer_data.py'
-        
-        # Handle nested directory structure
-        if not os.path.exists(mapping_file):
-            mapping_file = f'generated_spark_app/{output_dir}/src/main/python/mappings/m_process_customer_data.py'
+        # Verify generated structure - use the returned path
+        mapping_file = f'{app_path}/src/main/python/mappings/m_process_customer_data.py'
         
         self.assertTrue(os.path.exists(mapping_file))
         
@@ -164,18 +160,23 @@ class TestFieldLevelIntegration(unittest.TestCase):
         has_expression_application = False
         has_type_casting = False
         
+        # Join lines to handle multi-line expressions
+        method_content = ""
+        in_method = False
+        
         for line in lines:
             if '_apply_exp_standardize_names' in line and 'def' in line:
-                in_transform_method = True
-            elif in_transform_method:
-                if 'input_fields = [' in line:
-                    has_input_validation = True
-                elif 'withColumn(' in line and 'expr(' in line:
-                    has_expression_application = True
-                elif 'withColumn(' in line and 'cast(' in line:
-                    has_type_casting = True
-                elif 'return result_df' in line:
+                in_method = True
+                method_content += line + " "
+            elif in_method:
+                method_content += line + " "
+                if 'return result_df' in line:
                     break
+                    
+        # Check for patterns in the method content
+        has_input_validation = 'input_fields = [' in method_content
+        has_expression_application = 'withColumn(' in method_content and 'expr(' in method_content
+        has_type_casting = 'withColumn(' in method_content and 'cast(' in method_content
                     
         self.assertTrue(has_input_validation, "Input field validation not found")
         self.assertTrue(has_expression_application, "Expression application not found")

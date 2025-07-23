@@ -459,30 +459,17 @@ class {{ class_name }}(BaseMapping):
         self.logger.info("Applying {{ transformation.name }} transformation")
         
         {% if transformation.type == 'Expression' -%}
-        # Expression transformation with field-level logic
-        {% set input_ports = transformation.ports | selectattr('direction', 'equalto', 'INPUT') | list -%}
+        # Use ExpressionTransformation class for reusability
+        transformation = ExpressionTransformation(
+            name="{{ transformation.name }}",
+            expressions=self._get_{{ transformation.name | lower }}_expressions(),
+            filters=self._get_{{ transformation.name | lower }}_filters()
+        )
+        result_df = transformation.transform(input_df)
+        
         {% set output_ports = transformation.ports | selectattr('direction', 'equalto', 'OUTPUT') | list -%}
-        
-        {% if input_ports %}
-        # Input fields validation
-        input_fields = {{ input_ports | map(attribute='name') | list }}
-        missing_fields = [f for f in input_fields if f not in input_df.columns]
-        if missing_fields:
-            raise ValueError(f"Missing input fields: {missing_fields}")
-        {% endif %}
-        
-        result_df = input_df
-        
-        {% if transformation.expressions %}
-        # Apply field expressions based on ExpressionField definitions
-        {% for expr in transformation.expressions -%}
-        # Expression: {{ expr.name }} = {{ expr.expression }}
-        result_df = result_df.withColumn("{{ expr.name }}", expr("{{ expr.expression | convert_informatica_to_spark }}"))
-        {% endfor %}
-        {% endif %}
-        
         {% if output_ports %}
-        # Apply data type casting based on port types
+        # Apply data type casting based on port types (manual implementation for specific typing)
         {% for port in output_ports -%}
         {% if port.type %}
         # Cast {{ port.name }} to {{ port.type }}
@@ -524,9 +511,52 @@ class {{ class_name }}(BaseMapping):
             return transformation.transform(input_df, right_df)
         return input_df
         
+        {% elif transformation.type == 'Sequence' -%}
+        # Use SequenceTransformation class for reusability
+        transformation = SequenceTransformation(
+            name="{{ transformation.name }}",
+            start_value=self._get_{{ transformation.name | lower }}_start_value(),
+            increment_value=self._get_{{ transformation.name | lower }}_increment_value()
+        )
+        return transformation.transform(input_df)
+        
+        {% elif transformation.type == 'Sorter' -%}
+        # Use SorterTransformation class for reusability
+        transformation = SorterTransformation(
+            name="{{ transformation.name }}",
+            sort_keys=self._get_{{ transformation.name | lower }}_sort_keys()
+        )
+        return transformation.transform(input_df)
+        
+        {% elif transformation.type == 'Router' -%}
+        # Use RouterTransformation class for reusability
+        transformation = RouterTransformation(
+            name="{{ transformation.name }}",
+            output_groups=self._get_{{ transformation.name | lower }}_output_groups()
+        )
+        return transformation.transform(input_df)
+        
+        {% elif transformation.type == 'Union' -%}
+        # Use UnionTransformation class for reusability
+        transformation = UnionTransformation(
+            name="{{ transformation.name }}",
+            union_type=self._get_{{ transformation.name | lower }}_union_type()
+        )
+        return transformation.transform(*additional_dfs) if additional_dfs else input_df
+        
+        {% elif transformation.type in ['Java', 'SCD'] -%}
+        # Use JavaTransformation class for custom logic including SCD
+        transformation = JavaTransformation(
+            name="{{ transformation.name }}",
+            logic_type=self._get_{{ transformation.name | lower }}_logic_type()
+        )
+        existing_df = self._get_{{ transformation.name | lower }}_existing_data() if hasattr(self, '_get_{{ transformation.name | lower }}_existing_data') else None
+        return transformation.transform(input_df, existing_df)
+        
         {% else -%}
-        # Generic transformation
-        self.logger.warning("Unknown transformation type: {{ transformation.type }}")
+        # Manual implementation needed for complex transformation type: {{ transformation.type }}
+        self.logger.warning("Using manual implementation for transformation type: {{ transformation.type }}")
+        # TODO: Implement {{ transformation.type }} transformation logic manually here
         return input_df
         {% endif %}
     
@@ -587,6 +617,48 @@ class {{ class_name }}(BaseMapping):
         # Implement lookup data retrieval
         return self.data_source_manager.read_source("LOOKUP_TABLE", "HIVE")
     {%- endif %}
+    
+    {%- elif transformation.type == 'Sequence' %}
+    
+    def _get_{{ transformation.name | lower }}_start_value(self) -> int:
+        """Get sequence start value"""
+        return 1  # Default start value
+    
+    def _get_{{ transformation.name | lower }}_increment_value(self) -> int:
+        """Get sequence increment value"""
+        return 1  # Default increment value
+        
+    {%- elif transformation.type == 'Sorter' %}
+    
+    def _get_{{ transformation.name | lower }}_sort_keys(self) -> list:
+        """Get sorter sort keys"""
+        return [
+            # Add your sort keys here
+            # {"field_name": "column1", "direction": "ASC"},
+            # {"field_name": "column2", "direction": "DESC"}
+        ]
+        
+    {%- elif transformation.type == 'Router' %}
+    
+    def _get_{{ transformation.name | lower }}_output_groups(self) -> list:
+        """Get router output groups"""
+        return [
+            # Add your routing conditions here
+            # {"name": "group1", "condition": "amount > 100"},
+            # {"name": "group2", "condition": "region = 'North'"}
+        ]
+        
+    {%- elif transformation.type == 'Union' %}
+    
+    def _get_{{ transformation.name | lower }}_union_type(self) -> str:
+        """Get union type"""
+        return "UNION_ALL"  # or "UNION_DISTINCT"
+        
+    {%- elif transformation.type in ['Java', 'SCD'] %}
+    
+    def _get_{{ transformation.name | lower }}_logic_type(self) -> str:
+        """Get Java transformation logic type"""
+        return "{% if transformation.type == 'SCD' %}scd_type2{% else %}custom{% endif %}"
     {%- endif %}
     {%- endfor %}
     

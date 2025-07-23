@@ -2,10 +2,10 @@
 Daily ETL Process Workflow Implementation
 Orchestrates the execution of mappings in the correct order
 """
-from core.base_classes import BaseWorkflow, Task, WorkflowLink
-from mappings.sales_staging import SalesStaging
-from mappings.customer_dim_load import CustomerDimLoad
-from utils.notifications import NotificationManager
+from src.core.base_classes import BaseWorkflow, Task, WorkflowLink
+from src.mappings.sales_staging import SalesStaging
+from src.mappings.customer_dim_load import CustomerDimLoad
+from src.utils.notifications import NotificationManager
 import time
 
 class DailyETLProcess(BaseWorkflow):

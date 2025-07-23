@@ -13,7 +13,8 @@ def sample_imx_content():
 <IMX xmlns="http://com.informatica.imx"
      xmlns:project="http://com.informatica.metadata.common.project/2"
      xmlns:folder="http://com.informatica.metadata.common.folder/2"
-     xmlns:legacy="http://com.informatica.legacy/1">
+     xmlns:legacy="http://com.informatica.legacy/1"
+     xmlns:powercenter="http://com.informatica.powercenter/1">
 
     <!-- Project Structure -->
     <project:Project id="PROJECT_1" name="TestIMXProject" shared="false">
@@ -28,7 +29,7 @@ def sample_imx_content():
                             <transformation name="TEST_FILTER" type="Expression"/>
                             <target name="TEST_TARGET" type="HIVE"/>
                         </components>
-                    </powercenter:TLoaderMapping>
+                    </legacy:TLoaderMapping>
                 </contents>
             </folder:Folder>
             

@@ -74,14 +74,43 @@ class InformaticaXMLParser:
             project_version = project_elem.get('version', '1.0')
             project = Project(project_name, project_version)
             
-            # Parse project description from annotations
-            for anno in project_elem.findall('.//{*}lGenericAnnotations/{*}Annotation'):
-                if anno.get('name') == 'Description':
-                    project.description = anno.get('value', '')
-                    break
+            # Parse project description - try multiple formats
+            # First try direct description element (with namespace handling)
+            desc_elem = project_elem.find('.//{*}description')
+            if desc_elem is not None and desc_elem.text:
+                project.description = desc_elem.text.strip()
+            else:
+                # Try without namespace
+                desc_elem = project_elem.find('.//description')
+                if desc_elem is not None and desc_elem.text:
+                    project.description = desc_elem.text.strip()
+                else:
+                    # Fallback to annotations format
+                    for anno in project_elem.findall('.//{*}lGenericAnnotations/{*}Annotation'):
+                        if anno.get('name') == 'Description':
+                            project.description = anno.get('value', '')
+                            break
                 
-            # Parse all children of the project element directly as contents
-            self._parse_imx_contents(project_elem, project)
+            # Parse project contents - first try direct contents element
+            contents_elem = project_elem.find('./{*}contents')
+            if contents_elem is not None:
+                self.logger.debug("Found project contents element")
+                self._parse_imx_contents(contents_elem, project)
+            else:
+                self.logger.debug("No direct contents element found, looking for folders")
+                # Look for folders directly under project (common pattern)
+                folders_found = False
+                for child in project_elem:
+                    local_name = self._get_local_name(child.tag)
+                    if local_name == "Folder":
+                        self.logger.debug(f"Found direct folder: {child.get('name')}")
+                        self._parse_imx_folder(child, project)
+                        folders_found = True
+                
+                # If no folders found, parse project element directly as contents
+                if not folders_found:
+                    self.logger.debug("No folders found, parsing project as contents")
+                    self._parse_imx_contents(project_elem, project)
         
         # Parse top-level IMX connections and parameters
         self._parse_imx_connections(imx_root, project)
@@ -92,23 +121,34 @@ class InformaticaXMLParser:
         
     def _parse_imx_contents(self, contents_elem: ET.Element, project: Project):
         """Parse contents section of IMX project, now more flexible."""
+        self.logger.debug(f"Parsing IMX contents with {len(list(contents_elem))} children")
         for child in contents_elem:
             local_name = self._get_local_name(child.tag)
+            self.logger.debug(f"Processing contents child: {local_name} with attributes {child.attrib}")
             
-            if local_name == "Folder":
+            # Handle XSD-compliant IObject elements first
+            if local_name == "IObject":
+                self.logger.debug("Found IObject in contents")
+                self._parse_iobject_element(child, project, "Root")
+            elif local_name == "Folder":
+                self.logger.debug(f"Found Folder in contents: {child.get('name')}")
                 self._parse_imx_folder(child, project)
             elif local_name in ["TLoaderMapping", "mapping", "Mapping"]:
                 # Handle mappings that might be directly in contents
+                self.logger.debug(f"Found direct mapping in contents: {child.get('name')}")
                 if "Mappings" not in project.folders:
                     project.folders["Mappings"] = []
                 mapping_info = self._extract_imx_mapping_info(child)
                 project.folders["Mappings"].append(mapping_info)
             elif local_name in ["TWorkflow", "workflow", "Workflow"]:
                 # Handle workflows that might be directly in contents
+                self.logger.debug(f"Found direct workflow in contents: {child.get('name')}")
                 if "Workflows" not in project.folders:
                     project.folders["Workflows"] = []
                 workflow_info = self._extract_imx_workflow_info(child)
                 project.folders["Workflows"].append(workflow_info)
+            else:
+                self.logger.debug(f"Skipping unknown contents child: {local_name}")
                 
     def _parse_imx_folder(self, folder_elem: ET.Element, project: Project):
         """Parse folder within IMX structure, supporting generic lObject tags."""
@@ -133,39 +173,93 @@ class InformaticaXMLParser:
             local_name = self._get_local_name(child.tag)
             self.logger.debug(f"Found child element: <{local_name}>")
             
-            # Determine object type from xsi:type or local tag name
-            xsi_type_attr = '{http://www.w3.org/2001/XMLSchema-instance}type'
-            object_type = None
-            if xsi_type_attr in child.attrib:
-                # Handle types like "mapping:Mapping"
-                object_type = child.attrib[xsi_type_attr].split(':')[-1]
-                self.logger.debug(f"Detected xsi:type = {object_type}")
+            # Handle XSD-compliant IObject elements
+            if local_name == "IObject":
+                self._parse_iobject_element(child, project, folder_name)
             else:
-                object_type = local_name
-                self.logger.debug(f"Using local name as object type: {object_type}")
+                # Legacy handling for lObject and direct elements
+                self._parse_legacy_object_element(child, project, folder_name)
+    
+    def _parse_iobject_element(self, iobject_elem: ET.Element, project: Project, folder_name: str):
+        """Parse XSD-compliant IObject element with xsi:type attribute"""
+        # Determine object type from xsi:type attribute
+        xsi_type_attr = '{http://www.w3.org/2001/XMLSchema-instance}type'
+        object_type = None
+        
+        if xsi_type_attr in iobject_elem.attrib:
+            # Handle types like "mapping:Mapping", "workflow:Workflow", "folder:Folder"
+            full_type = iobject_elem.attrib[xsi_type_attr]
+            object_type = full_type.split(':')[-1]  # Extract the local type name
+            self.logger.debug(f"Detected IObject xsi:type = {full_type} -> {object_type}")
+        else:
+            self.logger.warning(f"IObject element missing xsi:type attribute")
+            return
+            
+        # Route to appropriate handler based on object type
+        if object_type in ["TLoaderMapping", "Mapping"]:
+            self.logger.info(f"Found Mapping IObject: {iobject_elem.get('name', 'Unknown')}")
+            if "Mappings" not in project.folders:
+                project.folders["Mappings"] = []
+            mapping_info = self._extract_imx_mapping_info(iobject_elem)
+            project.folders["Mappings"].append(mapping_info)
+            # Also add to project.mappings for SparkCodeGenerator
+            project.mappings[mapping_info['name']] = mapping_info
+        elif object_type in ["TWorkflow", "Workflow"]:
+            self.logger.info(f"Found Workflow IObject: {iobject_elem.get('name', 'Unknown')}")
+            if "Workflows" not in project.folders:
+                project.folders["Workflows"] = []
+            workflow_info = self._extract_imx_workflow_info(iobject_elem)
+            project.folders["Workflows"].append(workflow_info)
+        elif object_type in ["Folder"]:
+            self.logger.info(f"Found Folder IObject: {iobject_elem.get('name', 'Unknown')}")
+            # Recursively parse nested folder
+            self._parse_imx_folder(iobject_elem, project)
+        elif object_type == "Application":
+            self.logger.info(f"Found Application IObject: {iobject_elem.get('name', 'Unknown')}")
+            if "Applications" not in project.folders:
+                project.folders["Applications"] = []
+            app_info = self._extract_application_info(iobject_elem)
+            project.folders["Applications"].append(app_info)
+        else:
+            self.logger.debug(f"Skipping unknown IObject type '{object_type}' (full type: {full_type})")
+    
+    def _parse_legacy_object_element(self, child: ET.Element, project: Project, folder_name: str):
+        """Parse legacy lObject and direct elements (backwards compatibility)"""
+        local_name = self._get_local_name(child.tag)
+        
+        # Determine object type from xsi:type or local tag name
+        xsi_type_attr = '{http://www.w3.org/2001/XMLSchema-instance}type'
+        object_type = None
+        if xsi_type_attr in child.attrib:
+            # Handle types like "mapping:Mapping"
+            object_type = child.attrib[xsi_type_attr].split(':')[-1]
+            self.logger.debug(f"Detected xsi:type = {object_type}")
+        else:
+            object_type = local_name
+            self.logger.debug(f"Using local name as object type: {object_type}")
 
-            if object_type in ["TLoaderMapping", "Mapping"]:
-                self.logger.info(f"Found Mapping: {child.get('name', 'Unknown')}")
-                if "Mappings" not in project.folders:
-                    project.folders["Mappings"] = []
-                mapping_info = self._extract_imx_mapping_info(child)
-                project.folders["Mappings"].append(mapping_info)
-                # Also add to project.mappings for SparkCodeGenerator
-                project.mappings[mapping_info['name']] = mapping_info
-            elif object_type in ["TWorkflow", "Workflow"]:
-                self.logger.info(f"Found Workflow: {child.get('name', 'Unknown')}")
-                if "Workflows" not in project.folders:
-                    project.folders["Workflows"] = []
-                workflow_info = self._extract_imx_workflow_info(child)
-                project.folders["Workflows"].append(workflow_info)
-            elif object_type == "Application":
-                self.logger.info(f"Found Application: {child.get('name', 'Unknown')}")
-                if "Applications" not in project.folders:
-                    project.folders["Applications"] = []
-                app_info = self._extract_application_info(child)
-                project.folders["Applications"].append(app_info)
-            else:
-                self.logger.debug(f"Skipping unknown object type '{object_type}'")
+        if object_type in ["TLoaderMapping", "Mapping"]:
+            self.logger.info(f"Found Mapping: {child.get('name', 'Unknown')}")
+            if "Mappings" not in project.folders:
+                project.folders["Mappings"] = []
+            mapping_info = self._extract_imx_mapping_info(child)
+            project.folders["Mappings"].append(mapping_info)
+            # Also add to project.mappings for SparkCodeGenerator
+            project.mappings[mapping_info['name']] = mapping_info
+        elif object_type in ["TWorkflow", "Workflow"]:
+            self.logger.info(f"Found Workflow: {child.get('name', 'Unknown')}")
+            if "Workflows" not in project.folders:
+                project.folders["Workflows"] = []
+            workflow_info = self._extract_imx_workflow_info(child)
+            project.folders["Workflows"].append(workflow_info)
+        elif object_type == "Application":
+            self.logger.info(f"Found Application: {child.get('name', 'Unknown')}")
+            if "Applications" not in project.folders:
+                project.folders["Applications"] = []
+            app_info = self._extract_application_info(child)
+            project.folders["Applications"].append(app_info)
+        else:
+            self.logger.debug(f"Skipping unknown object type '{object_type}'")
                     
     def _extract_imx_mapping_info(self, mapping_elem: ET.Element) -> Dict:
         """Extract mapping information from IMX format"""
@@ -195,11 +289,27 @@ class InformaticaXMLParser:
         # Handle both <transformations> and direct <components> tags
         components_container = mapping_elem.find('.//{*}transformations')
         if components_container is None:
+            components_container = mapping_elem.find('.//{*}components')
+        if components_container is None:
             components_container = mapping_elem
 
+        # Look for actual transformation elements
         for transformation in components_container.findall('.//{*}AbstractTransformation'):
             component_info = self._extract_transformation_details(transformation)
             mapping_info['components'].append(component_info)
+            
+        # Also handle simple component elements (for test XML)
+        # Use iterative approach to handle namespaced elements  
+        for child in components_container:
+            local_name = self._get_local_name(child.tag)
+            if local_name in ['source', 'transformation', 'target']:
+                component_info = {
+                    'name': child.get('name', 'Unknown'),
+                    'type': child.get('type', local_name),
+                    'format': child.get('format', ''),
+                    'category': local_name
+                }
+                mapping_info['components'].append(component_info)
                 
         return mapping_info
         
