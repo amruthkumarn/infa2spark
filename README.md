@@ -1,16 +1,17 @@
-# Informatica BDM to PySpark Converter - PoC
+# Informatica BDM to PySpark Converter Framework
 
-This Proof of Concept (PoC) demonstrates the conversion of Informatica BDM (Business Data Model) objects to PySpark-based Python code that can be executed using `spark3-submit`.
+This production-ready framework converts Informatica BDM (Business Data Model) and PowerCenter XML projects into fully executable, professionally formatted PySpark applications with proper code formatting and industry-standard structure.
 
 ## Overview
 
-The PoC converts the sample Informatica project (`sample_project.xml`) into executable PySpark code that replicates the ETL logic, including:
+The framework converts Informatica XML projects into complete, deployable Spark applications that replicate ETL logic, including:
 
-- **4 Mappings**: Sales Staging, Customer Dimension Load, Fact Order Load, Aggregate Reports
-- **1 Workflow**: Daily ETL Process with task dependencies
-- **Multiple Transformations**: Expression, Aggregator, Lookup, Joiner, Java (SCD Type 2)
-- **Field-Level Integration**: TransformationFieldPort and ExpressionField support with complete data lineage
-- **Various Data Sources**: HDFS, Hive, DB2, Oracle
+- **Production-Ready Code Generation**: Generates professionally formatted PySpark code using Black formatter
+- **Complete Application Structure**: Full project structure with configuration, deployment, and documentation
+- **Advanced Transformations**: Expression, Aggregator, Lookup, Joiner, Sequence, Sorter, Router, Union, and more
+- **Field-Level Integration**: Complete TransformationFieldPort and ExpressionField support with data lineage
+- **Multiple Project Support**: Works with various Informatica project formats (IMX, XML)
+- **Parameterized Generation**: Command-line interface for flexible code generation
 
 ## Project Structure
 
@@ -269,45 +270,125 @@ class GeneratedWorkflow(BaseWorkflow):
    pip install pyspark[sql]==3.4.0
    ```
 
-4. **Copy the sample project XML:**
+4. **Prepare input XML files:**
    ```bash
-   cp /Users/ninad/Downloads/informatica_xsd_xml/sample_project/sample_project.xml input/
+   # Create input directory and add your XML files
+   mkdir -p input/
+   # Place your Informatica XML project files in the input/ directory
+   # Example: cp your_project.xml input/
    ```
 
-## Running the PoC
+## Usage
 
-### Option 1: Using the run script (Recommended)
+### Generate Spark Application (Recommended)
+
+Generate a complete, production-ready PySpark application from any Informatica XML project:
+
 ```bash
-./run_poc.sh
+# Navigate to src directory
+cd src
+
+# Generate Spark application with command-line parameters
+python main.py --generate-spark-app \
+    --xml-file "path/to/your/informatica_project.xml" \
+    --app-name "YourApplicationName" \
+    --output-dir "../generated_spark_apps"
 ```
 
-### Option 2: Using spark-submit directly
+#### Example Generation Commands:
+
 ```bash
-spark3-submit \
-  --master local[*] \
-  --conf spark.sql.adaptive.enabled=true \
-  --conf spark.sql.adaptive.coalescePartitions.enabled=true \
-  src/main.py
+# Generate from sample project (basic example)
+python main.py --generate-spark-app \
+    --xml-file "../input/sample_project.xml" \
+    --app-name "SampleApp" \
+    --output-dir "../generated_spark_apps"
+
+# Generate with custom output directory
+python main.py --generate-spark-app \
+    --xml-file "../input/customer_processing.xml" \
+    --app-name "CustomerProcessingApp" \
+    --output-dir "../my_spark_apps"
+
+# Generate production application
+python main.py --generate-spark-app \
+    --xml-file "/path/to/production/project.xml" \
+    --app-name "ProductionETL" \
+    --output-dir "../production_apps"
 ```
 
-### Option 3: Using Python directly
+#### Command-Line Parameters:
+
+- `--generate-spark-app`: Flag to enable Spark application generation
+- `--xml-file`: Path to Informatica XML project file (required)
+- `--app-name`: Name for the generated Spark application (required)
+- `--output-dir`: Output directory for generated application (default: generated_spark_apps)
+
+### Run Generated Application
+
+After generation, execute the created Spark application:
+
 ```bash
+# Navigate to generated application
+cd ../generated_spark_apps/YourApplicationName
+
+# Run using the provided script
+./run.sh
+
+# Or run with spark-submit directly
+spark-submit --master local[*] src/main/python/main.py
+```
+
+### Legacy Execution (Framework Testing)
+
+For testing the framework itself (not recommended for production):
+
+```bash
+# Set up Python path and run framework directly
 export PYTHONPATH="${PYTHONPATH}:$(pwd)/src"
 python src/main.py
+
+# Note: This runs the framework in legacy mode for development/testing only
+# For production use, always generate standalone applications with --generate-spark-app
 ```
 
 ## Sample Output
 
-When executed successfully, the PoC will:
+When generating a Spark application successfully, the framework will:
 
-1. **Parse the XML project** and extract object definitions
-2. **Generate mock data** for all sources (sales, customer, order, product data)
-3. **Execute mappings in sequence:**
-   - Sales Staging: Filters and aggregates sales data
-   - Customer Dimension Load: Implements SCD Type 2 logic
-4. **Write results** to output directory in Parquet format
-5. **Send notifications** (simulated via logging)
-6. **Generate execution logs** in `informatica_poc.log`
+1. **Parse the XML project** and extract XSD-compliant object definitions
+2. **Generate complete Spark application** with professional structure:
+   ```
+   generated_spark_apps/YourApplicationName/
+   ├── README.md                    # Application-specific documentation
+   ├── requirements.txt             # Python dependencies
+   ├── run.sh                      # Execution script
+   ├── Dockerfile                  # Container deployment
+   ├── docker-compose.yml          # Multi-container orchestration
+   ├── config/
+   │   └── application.yaml        # Application configuration
+   ├── data/
+   │   ├── input/                  # Input data directory
+   │   └── output/                 # Output data directory
+   ├── src/main/python/
+   │   ├── main.py                 # Application entry point
+   │   ├── base_classes.py         # Base mapping and workflow classes
+   │   ├── mappings/               # Generated mapping implementations
+   │   │   └── m_process_customer_data.py
+   │   ├── transformations/        # Generated transformation classes
+   │   │   └── generated_transformations.py
+   │   └── workflows/              # Generated workflow classes
+   │       └── wf_process_daily_files.py
+   ├── scripts/                    # Deployment and utility scripts
+   └── logs/                       # Application logs
+   ```
+3. **Generate production-ready PySpark code** with:
+   - Professional formatting using Black formatter
+   - Complete field-level transformation logic
+   - Type-safe DataFrame operations
+   - Comprehensive error handling
+   - Audit trail and logging
+4. **Create executable application** that can run independently with `./run.sh`
 
 ## Configuration
 
@@ -343,14 +424,38 @@ Run the test suite:
 pytest tests/ -v
 ```
 
-## Output Structure
+## Generated Application Structure
 
-After execution, check the `output/` directory for results:
+After generation, each Spark application contains:
 ```
-output/
-├── stg_sales/           # Sales staging results
-├── dim_customer/        # Customer dimension with SCD Type 2
-└── informatica_poc.log  # Detailed execution logs
+generated_spark_apps/YourApplicationName/
+├── README.md                    # Application documentation
+├── requirements.txt             # Dependencies
+├── run.sh                      # Execution script
+├── Dockerfile                  # Container deployment
+├── docker-compose.yml          # Orchestration
+├── config/
+│   └── application.yaml        # Application config
+├── data/
+│   ├── input/                  # Input data
+│   └── output/                 # Output data
+├── src/main/python/
+│   ├── main.py                 # Entry point
+│   ├── base_classes.py         # Framework classes
+│   ├── mappings/               # Business logic
+│   │   └── *.py               # Generated mappings
+│   ├── transformations/        # Data transformations
+│   └── workflows/              # Generated workflows
+├── scripts/                    # Utility scripts
+└── logs/                       # Application logs
+```
+
+After execution, the application creates:
+```
+YourApplicationName/output/
+├── target_table_1/         # Processed data in Parquet format
+├── target_table_2/         # Additional outputs
+└── execution_logs/         # Detailed execution logs
 ```
 
 ## 🔄 XSD-Compliant Conversion Logic
@@ -418,11 +523,14 @@ scd_transformation.transform(source_df, existing_dim_df)
 - Email notifications are simulated
 - Limited error recovery mechanisms
 
-### Recent Achievements (Phase 5)
+### Recent Achievements (Phase 5 + Code Generation Enhancement)
 1. **✅ Field-Level Integration**: Complete TransformationFieldPort and ExpressionField support
-2. **✅ Code Formatting**: Professional PySpark code generation with proper indentation and structure
+2. **✅ Professional Code Formatting**: Black formatter integration with Jinja2 template enhancement
 3. **✅ Expression Conversion**: Automatic Informatica to Spark expression conversion (|| → concat())
 4. **✅ Data Type Mapping**: Intelligent type casting based on port definitions
+5. **✅ Parameterized Generation**: Command-line interface for flexible application generation
+6. **✅ Template System Enhancement**: Fixed Jinja2 formatting issues for perfect code alignment
+7. **✅ Production-Ready Applications**: Standalone Spark applications independent of framework
 
 ### Planned Enhancements
 1. **Real data source connections** (JDBC, HDFS, Hive)
@@ -444,7 +552,10 @@ scd_transformation.transform(source_df, existing_dim_df)
 - **[Phase 2 Completion](docs/testing/PHASE_2_COMPLETION_SUMMARY.md)**: Basic functionality implementation
 
 ### **Generated Applications**
-- **[Generated Spark Apps](generated_spark_apps/)**: Complete PySpark applications generated from XSD models
+- **[Generated Spark Apps](generated_spark_apps/)**: Complete, production-ready PySpark applications:
+  - `LINE32_FIXED_TEST/`: Example with fixed code formatting
+  - `FULLY_FIXED_TEST/`: Enhanced application with complete transformations
+  - `FinalFormattedApp/`: Latest formatted application example
 - **[Test Coverage](tests/)**: Comprehensive test suite covering all XSD components
 
 ## Support and Development
