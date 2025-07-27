@@ -220,6 +220,9 @@ class InformaticaXMLParser:
                 project.folders["Applications"] = []
             app_info = self._extract_application_info(iobject_elem)
             project.folders["Applications"].append(app_info)
+        elif 'Connectinfo' in object_type or object_type in ['HiveConnectinfo', 'HDFSConnectinfo']:
+            self.logger.info(f"Found Connection IObject: {iobject_elem.get('name', 'Unknown')} (type: {object_type})")
+            self._parse_specialized_connection(iobject_elem, project)
         else:
             self.logger.debug(f"Skipping unknown IObject type '{object_type}' (full type: {full_type})")
     
@@ -293,10 +296,39 @@ class InformaticaXMLParser:
         if components_container is None:
             components_container = mapping_elem
 
-        # Look for actual transformation elements
+        # Look for actual transformation elements (both old and new formats)
         for transformation in components_container.findall('.//{*}AbstractTransformation'):
             component_info = self._extract_transformation_details(transformation)
             mapping_info['components'].append(component_info)
+            
+        # Also handle new TransformationDefinition format
+        for transformation in components_container.findall('.//{*}TransformationDefinition'):
+            component_info = self._extract_transformation_details(transformation)
+            mapping_info['components'].append(component_info)
+            
+        # Handle SourceDefinition elements in dedicated sources container
+        sources_container = mapping_elem.find('.//{*}sources')
+        if sources_container is not None:
+            for source in sources_container.findall('.//{*}SourceDefinition'):
+                component_info = self._extract_transformation_details(source)
+                mapping_info['components'].append(component_info)
+        else:
+            # Fallback to search in components container
+            for source in components_container.findall('.//{*}SourceDefinition'):
+                component_info = self._extract_transformation_details(source)
+                mapping_info['components'].append(component_info)
+            
+        # Handle TargetDefinition elements in dedicated targets container
+        targets_container = mapping_elem.find('.//{*}targets')
+        if targets_container is not None:
+            for target in targets_container.findall('.//{*}TargetDefinition'):
+                component_info = self._extract_transformation_details(target)
+                mapping_info['components'].append(component_info)
+        else:
+            # Fallback to search in components container
+            for target in components_container.findall('.//{*}TargetDefinition'):
+                component_info = self._extract_transformation_details(target)
+                mapping_info['components'].append(component_info)
             
         # Also handle simple component elements (for test XML)
         # Use iterative approach to handle namespaced elements  
@@ -316,27 +348,57 @@ class InformaticaXMLParser:
     def _extract_transformation_details(self, transformation_elem: ET.Element) -> Dict:
         """Extract detailed transformation information including ports and expressions"""
         
-        # Basic info
-        transform_type = transformation_elem.get('type', '').lower()
+        # Get type from either type attribute or xsi:type attribute
+        transform_type = transformation_elem.get('type', '')
+        if not transform_type:
+            # Check for xsi:type attribute (new format)
+            xsi_type_attr = '{http://www.w3.org/2001/XMLSchema-instance}type'
+            if xsi_type_attr in transformation_elem.attrib:
+                transform_type = transformation_elem.attrib[xsi_type_attr]
+        
+        # Get element local name for classification
+        element_name = self._get_local_name(transformation_elem.tag)
         
         # Classify component type for template filtering
-        if transform_type in ['source', 'flatfilesource', 'relationalsource']:
+        if element_name == 'SourceDefinition' or transform_type.lower() in ['source', 'flatfilesource', 'relationalsource']:
             component_type = 'source'
-        elif transform_type in ['target', 'flatfiletarget', 'relationaltarget']:
+        elif element_name == 'TargetDefinition' or transform_type.lower() in ['target', 'flatfiletarget', 'relationaltarget']:
             component_type = 'target'
         else:
             component_type = 'transformation'
         
         transform_info = {
             'name': transformation_elem.get('name', ''),
-            'type': transformation_elem.get('type', ''),
+            'type': transform_type,
             'component_type': component_type,
             'ports': [],
             'expressions': [],
-            'characteristics': {}
+            'characteristics': {},
+            'connection': transformation_elem.get('connection', ''),
+            'instance': transformation_elem.get('instance', ''),
+            'data_object': None
         }
         
-        # Extract TransformationFieldPort elements
+        # Extract data object information for sources and targets
+        if component_type in ['source', 'target']:
+            data_source = transformation_elem.find('.//dataSource')
+            if data_source is not None:
+                data_object = data_source.find('DataObject')
+                if data_object is not None:
+                    transform_info['data_object'] = {
+                        'name': data_object.get('name', ''),
+                        'type': data_object.get('type', ''),
+                        'format': data_object.get('format', ''),
+                        'location': data_object.get('location', '')
+                    }
+                    
+        # Extract target-specific properties
+        if component_type == 'target':
+            transform_info['load_type'] = transformation_elem.get('loadType', '')
+            transform_info['update_strategy'] = transformation_elem.get('updateStrategy', '')
+        
+        # Extract TransformationFieldPort elements (handle both old and new structures)
+        # Old structure: ports/TransformationFieldPort
         ports_elem = transformation_elem.find('ports')
         if ports_elem is not None:
             for port in ports_elem.findall('TransformationFieldPort'):
@@ -349,6 +411,23 @@ class InformaticaXMLParser:
                     'scale': port.get('scale')
                 }
                 transform_info['ports'].append(port_info)
+        
+        # New structure: inputPorts/TransformationFieldPort and outputPorts/TransformationFieldPort
+        for ports_container in ['inputPorts', 'outputPorts']:
+            ports_elem = transformation_elem.find(ports_container)
+            if ports_elem is not None:
+                for port in ports_elem.findall('TransformationFieldPort'):
+                    port_info = {
+                        'name': port.get('name'),
+                        'type': port.get('type'),
+                        'direction': port.get('direction'),
+                        'length': port.get('length'),
+                        'precision': port.get('precision'),
+                        'scale': port.get('scale'),
+                        'fromPort': port.get('fromPort'),
+                        'toPort': port.get('toPort')
+                    }
+                    transform_info['ports'].append(port_info)
         
         # Extract ExpressionField elements (for Expression transformations)
         expr_interface = transformation_elem.find('.//expressioninterface')
@@ -381,7 +460,8 @@ class InformaticaXMLParser:
             'id': workflow_elem.get('id', ''),
             'description': '',
             'tasks': [],
-            'links': []
+            'links': [],
+            'sequence_flows': []
         }
         
         # Description
@@ -398,15 +478,48 @@ class InformaticaXMLParser:
             for task_elem in tasks_container:
                 task_info = {
                     'name': task_elem.get('name', ''),
+                    'id': task_elem.get('imx:id', task_elem.get('id', '')),
                     'type': task_elem.get('type', self._get_local_name(task_elem.tag)),
                     'mapping': '',
-                    'properties': {}
+                    'properties': {},
+                    'incoming_flows': [],
+                    'outgoing_flows': []
                 }
                 
                 # Extract mapping name if it's a mapping task
                 mapping_task_config = task_elem.find('.//{*}mappingTaskConfig')
                 if mapping_task_config is not None:
                     task_info['mapping'] = mapping_task_config.get('mapping', '')
+                
+                # Extract incoming sequence flows
+                incoming_flows = task_elem.find('.//{*}incomingSequenceFlows')
+                if incoming_flows is not None:
+                    for flow in incoming_flows.findall('.//{*}SequenceFlow'):
+                        flow_info = {
+                            'id': flow.get('imx:id', flow.get('id', '')),
+                            'from_instance': flow.get('fromInstance', ''),
+                            'to_instance': flow.get('toInstance', ''),
+                            'condition': flow.get('condition', 'SUCCEEDED'),
+                            'description': flow.get('description', '')
+                        }
+                        task_info['incoming_flows'].append(flow_info)
+                        workflow_info['sequence_flows'].append(flow_info)
+                
+                # Extract outgoing sequence flows
+                outgoing_flows = task_elem.find('.//{*}outgoingSequenceFlows')
+                if outgoing_flows is not None:
+                    for flow in outgoing_flows.findall('.//{*}SequenceFlow'):
+                        flow_info = {
+                            'id': flow.get('imx:id', flow.get('id', '')),
+                            'from_instance': flow.get('fromInstance', ''),
+                            'to_instance': flow.get('toInstance', ''),
+                            'condition': flow.get('condition', 'SUCCEEDED'),
+                            'description': flow.get('description', '')
+                        }
+                        task_info['outgoing_flows'].append(flow_info)
+                        # Avoid duplicates in sequence_flows
+                        if flow_info not in workflow_info['sequence_flows']:
+                            workflow_info['sequence_flows'].append(flow_info)
                             
                 workflow_info['tasks'].append(task_info)
                 
@@ -427,10 +540,12 @@ class InformaticaXMLParser:
         return workflow_info
         
     def _parse_imx_connections(self, imx_root: ET.Element, project: Project):
-        """Parse connections from IMX root level"""
+        """Parse connections from IMX root level including specialized connection types"""
         for child in imx_root:
             local_name = self._get_local_name(child.tag)
+            xsi_type = child.get('{http://www.w3.org/2001/XMLSchema-instance}type', '')
             
+            # Handle traditional connections
             if local_name in ["TRepConnection", "connection"]:
                 connection = Connection(
                     name=child.get('connectionName') or child.get('name', 'UnknownConnection'),
@@ -445,6 +560,55 @@ class InformaticaXMLParser:
                         connection.properties[attr] = child.get(attr)
                         
                 project.add_connection(connection)
+                
+            # Handle specialized connection types (Hive, HDFS, etc.)
+            elif 'Connectinfo' in xsi_type or local_name == 'IObject':
+                self._parse_specialized_connection(child, project)
+                
+    def _parse_specialized_connection(self, element: ET.Element, project: Project):
+        """Parse specialized connection types like HiveConnectinfo, HDFSConnectinfo"""
+        try:
+            xsi_type = element.get('{http://www.w3.org/2001/XMLSchema-instance}type', '')
+            name = element.get('name', 'UnknownConnection')
+            
+            # Only process if this is a connection object
+            if 'Connectinfo' not in xsi_type:
+                return
+                
+            # Determine connection type from xsi:type
+            if 'HiveConnectinfo' in xsi_type:
+                connection_type = 'HIVE'
+            elif 'HDFSConnectinfo' in xsi_type:
+                connection_type = 'HDFS'
+            else:
+                connection_type = xsi_type.replace('Connectinfo', '').upper()
+            
+            connection = Connection(
+                name=name,
+                connection_type=connection_type,
+                host=element.get('host', ''),
+                port=int(element.get('port', 0))
+            )
+            
+            # Add basic attributes
+            for attr in element.attrib:
+                if attr not in ['name', 'host', 'port']:
+                    connection.properties[attr] = element.get(attr)
+            
+            # Parse characteristics for additional configuration
+            characteristics = element.find('characteristics')
+            if characteristics is not None:
+                for char in characteristics.findall('Characteristic'):
+                    char_name = char.get('name')
+                    char_value = char.get('value')
+                    if char_name and char_value:
+                        connection.properties[char_name] = char_value
+            
+            project.add_connection(connection)
+            self.logger.info(f"Parsed {connection_type} connection: {name}")
+            
+        except Exception as e:
+            self.logger.warning(f"Error parsing specialized connection: {e}")
                 
     def _parse_imx_parameters(self, imx_root: ET.Element, project: Project):
         """Parse parameters from IMX root level"""

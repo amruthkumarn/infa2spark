@@ -13,8 +13,15 @@ import yaml
 from datetime import datetime
 
 from .xml_parser import InformaticaXMLParser
+from .workflow_dag_processor import WorkflowDAGProcessor
+from .mapping_dag_processor import MappingDAGProcessor
 from .base_classes import Project
 from .enhanced_spark_generator import EnhancedSparkCodeGenerator
+from .config_externalization import MappingConfigurationManager, RuntimeConfigResolver
+from .config_file_generator import ConfigurationFileGenerator
+from .templates.lean_mapping_template import LEAN_MAPPING_TEMPLATE
+from .templates.ultra_lean_mapping_template import ULTRA_LEAN_MAPPING_TEMPLATE
+from .templates.enterprise_ultra_lean_template import ENTERPRISE_ULTRA_LEAN_TEMPLATE
 
 
 class SparkCodeGenerator:
@@ -29,11 +36,14 @@ class SparkCodeGenerator:
     - Test data generation
     """
     
-    def __init__(self, output_base_dir: str = "generated_spark_app"):
+    def __init__(self, output_base_dir: str = "generated_spark_app", enable_config_externalization: bool = True, 
+                 enterprise_features: bool = True):
         self.output_base_dir = Path(output_base_dir)
         self.logger = logging.getLogger("SparkCodeGenerator")
         self.xml_parser = InformaticaXMLParser()
         self.enhanced_generator = EnhancedSparkCodeGenerator(output_base_dir)
+        self.enable_config_externalization = enable_config_externalization
+        self.enterprise_features = enterprise_features
         
         # Template environment for code generation
         self.jinja_env = Environment(
@@ -41,6 +51,9 @@ class SparkCodeGenerator:
             trim_blocks=True,
             lstrip_blocks=True
         )
+        
+        # Register global custom filters
+        self.jinja_env.filters['snake_to_camel'] = self._snake_to_camel_filter
         
     def generate_spark_application(self, xml_file_path: str, project_name: str = None) -> str:
         """
@@ -71,6 +84,11 @@ class SparkCodeGenerator:
             # Generate core application files
             self._generate_base_classes(app_dir, project)
             self._generate_transformations_module(app_dir)
+            
+            # Generate enterprise components if enabled
+            if self.enterprise_features:
+                self._generate_enterprise_components(app_dir, project)
+            
             self._generate_mapping_classes(app_dir, project)
             self._generate_workflow_classes(app_dir, project)
             self._generate_main_application(app_dir, project)
@@ -231,9 +249,23 @@ class DataSourceManager:
             df.write.mode(mode).parquet(output_path)
             
     def _read_hdfs_source(self, source_name: str, **kwargs) -> DataFrame:
-        """Read from HDFS source"""
+        """Read from HDFS source using configured connection"""
         format_type = kwargs.get('format', 'parquet').lower()
-        path = f"data/input/{source_name.lower()}"
+        connection_name = kwargs.get('connection', 'default')
+        
+        # Check for HDFS connection configuration
+        if connection_name in self.connections:
+            conn_config = self.connections[connection_name]
+            if conn_config.get('type') == 'HDFS':
+                namenode = conn_config.get('namenode', f"hdfs://{conn_config.get('host')}:{conn_config.get('port')}")
+                path = f"{namenode}/data/{source_name.lower()}"
+                self.logger.info(f"Reading from HDFS path: {path}")
+            else:
+                path = f"data/input/{source_name.lower()}"
+        else:
+            # Fallback to local path
+            path = f"data/input/{source_name.lower()}"
+            self.logger.warning(f"HDFS connection {connection_name} not found, using local path")
         
         if format_type == 'parquet':
             return self.spark.read.parquet(path)
@@ -245,8 +277,23 @@ class DataSourceManager:
             return self.spark.read.parquet(path)
             
     def _read_hive_source(self, source_name: str, **kwargs) -> DataFrame:
-        """Read from Hive table"""
-        return self.spark.table(source_name.lower())
+        """Read from Hive table using configured connection"""
+        # Get connection configuration
+        connection_name = kwargs.get('connection', 'default')
+        table_name = kwargs.get('table', source_name.lower())
+        
+        if connection_name in self.connections:
+            conn_config = self.connections[connection_name]
+            if conn_config.get('type') == 'HIVE':
+                # Use the configured database
+                database = conn_config.get('database', 'default')
+                full_table_name = f"{database}.{table_name}"
+                self.logger.info(f"Reading from Hive table: {full_table_name}")
+                return self.spark.table(full_table_name)
+        
+        # Fallback to simple table name
+        self.logger.warning(f"Connection {connection_name} not found, using default table access")
+        return self.spark.table(table_name)
         
     def _read_jdbc_source(self, source_name: str, source_type: str, **kwargs) -> DataFrame:
         """Read from JDBC source"""
@@ -354,17 +401,44 @@ __all__ = ['BaseMapping']
             # self.enhanced_generator.generate_production_mapping(app_dir, mapping, project)
     
     def _generate_single_mapping_class(self, app_dir: Path, mapping: Dict[str, Any], project: Project):
-        """Generate a single mapping class"""
+        """Generate a single mapping class with DAG analysis and optional external configuration"""
+        # Process mapping DAG for transformation dependencies
+        dag_processor = MappingDAGProcessor()
+        enhanced_mapping = dag_processor.process_mapping_dag(mapping)
+        execution_plan = dag_processor.generate_execution_plan(enhanced_mapping)
+        
+        # Generate external configuration files if enabled
+        if self.enable_config_externalization:
+            self._generate_external_configurations(app_dir, enhanced_mapping, execution_plan, project)
+        
         class_name = self._to_class_name(mapping['name'])
         file_name = self._sanitize_name(mapping['name']) + '.py'
         
         # Add custom filters for Informatica to Spark conversion
         self.jinja_env.filters['convert_informatica_to_spark'] = self._convert_informatica_expression_to_spark
         self.jinja_env.filters['convert_informatica_type_to_spark'] = self._convert_informatica_type_to_spark
+        self.jinja_env.filters['suffix_with'] = self._suffix_with_filter
+        self.jinja_env.filters['snake_to_camel'] = self._snake_to_camel_filter
         
-        mapping_template = '''"""
+        # Choose template based on configuration externalization and enterprise features
+        if self.enable_config_externalization:
+            if self.enterprise_features:
+                # Use enterprise ultra-lean template with advanced features
+                mapping_template = ENTERPRISE_ULTRA_LEAN_TEMPLATE
+            else:
+                # Use ultra-lean template
+                mapping_template = ULTRA_LEAN_MAPPING_TEMPLATE
+        else:
+            # Use original embedded template for backward compatibility
+            mapping_template = '''"""
 {{ mapping.name }} Mapping Implementation
 Generated from Informatica BDM Project: {{ project.name }}
+
+DAG Analysis Summary:
+- Total Components: {{ dag_analysis.total_components }}
+- Execution Phases: {{ execution_plan.total_phases }}
+- Estimated Duration: {{ execution_plan.estimated_duration }} seconds
+- Parallel Groups: {{ dag_analysis.parallel_groups | length }}
 
 Components:
 {% for component in mapping.components -%}
@@ -374,67 +448,211 @@ Components:
 from pyspark.sql import DataFrame
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
+import concurrent.futures
+from typing import Dict, Any
 from ..base_classes import BaseMapping, DataSourceManager
 from ..transformations.generated_transformations import *
 
 
 class {{ class_name }}(BaseMapping):
-    """{{ mapping.description or mapping.name + ' mapping implementation' }}"""
+    """{{ mapping.description or mapping.name + ' mapping implementation' }}
+    
+    DAG Execution Strategy:
+    {%- for phase in execution_plan.phases %}
+    Phase {{ phase.phase_number }}: {{ phase.parallel_components }} component(s) - {{ phase.phase_type }} - {{ 'Parallel' if phase.can_run_parallel else 'Sequential' }}
+    {%- for component in phase.components %}
+      - {{ component.component_name }} ({{ component.transformation_type }}) - {{ component.estimated_duration }}s
+    {%- endfor %}
+    {%- endfor %}
+    """
     
     def __init__(self, spark, config):
         super().__init__("{{ mapping.name }}", spark, config)
         self.data_source_manager = DataSourceManager(spark, config.get('connections', {}))
         
+        # DAG Execution Plan
+        self.execution_plan = {{ execution_plan | tojson }}
+        self.dag_analysis = {{ dag_analysis | tojson }}
+        
+        # Component execution order (topologically sorted)
+        self.execution_order = {{ dag_analysis.execution_order | tojson }}
+        
+        # Parallel execution groups
+        self.parallel_groups = {{ dag_analysis.parallel_groups | tojson }}
+        
+        # Component data cache for intermediate results
+        self.component_data_cache = {}
+        
     def execute(self) -> bool:
-        """Execute the {{ mapping.name }} mapping"""
+        """Execute mapping using DAG-based transformation execution strategy"""
         try:
-            self.logger.info("Starting {{ mapping.name }} mapping execution")
+            self.logger.info("Starting {{ mapping.name }} mapping execution with DAG processing")
+            self.logger.info(f"Execution plan: {len(self.parallel_groups)} phases, estimated {self.execution_plan['estimated_duration']} seconds")
             
-            {% set sources = mapping.components | selectattr('component_type', 'equalto', 'source') | list -%}
-            {% set transformations = mapping.components | selectattr('component_type', 'equalto', 'transformation') | list -%}
-            {% set targets = mapping.components | selectattr('component_type', 'equalto', 'target') | list -%}
-            
-            # Read source data
-            {%- for source in sources %}
-            {{ source.name | lower }}_df = self._read_{{ source.name | lower }}()
-            {%- endfor %}
-            
-            {%- if sources | length == 1 %}
-            # Apply transformations
-            current_df = {{ sources[0].name | lower }}_df
-            {%- for transformation in transformations %}
-            current_df = self._apply_{{ transformation.name | lower }}(current_df)
-            {%- endfor %}
-            
-            # Write to targets
-            {%- for target in targets %}
-            self._write_to_{{ target.name | lower }}(current_df)
-            {%- endfor %}
-            
-            {%- else %}
-            # Multiple sources - implement join logic
-            {%- for transformation in transformations %}
-            {%- if transformation.type == 'Joiner' %}
-            joined_df = self._apply_{{ transformation.name | lower }}({{ sources | map(attribute='name') | map('lower') | map('suffix_with', '_df') | join(', ') }})
-            {%- endif %}
-            {%- endfor %}
-            
-            # Apply remaining transformations
-            current_df = joined_df
-            {%- for transformation in transformations %}
-            {%- if transformation.type != 'Joiner' %}
-            current_df = self._apply_{{ transformation.name | lower }}(current_df)
-            {%- endif %}
-            {%- endfor %}
-            
-            # Write to targets
-            {%- for target in targets %}
-            self._write_to_{{ target.name | lower }}(current_df)
-            {%- endfor %}
-            {%- endif %}
+            # Execute components in parallel groups (phases)
+            for phase_idx, component_group in enumerate(self.parallel_groups):
+                phase_num = phase_idx + 1
+                self.logger.info(f"Starting execution phase {phase_num}/{len(self.parallel_groups)} with {len(component_group)} component(s)")
+                
+                if len(component_group) == 1:
+                    # Single component - execute directly
+                    component_name = component_group[0]
+                    success = self._execute_component(component_name)
+                    if not success:
+                        self.logger.error(f"Component {component_name} failed in phase {phase_num}")
+                        return False
+                else:
+                    # Multiple components - execute in parallel
+                    success = self._execute_parallel_components(component_group, phase_num)
+                    if not success:
+                        self.logger.error(f"One or more components failed in phase {phase_num}")
+                        return False
+                
+                self.logger.info(f"Phase {phase_num} completed successfully")
             
             self.logger.info("{{ mapping.name }} mapping executed successfully")
             return True
+            
+        except Exception as e:
+            self.logger.error(f"Error in {{ mapping.name }} mapping: {str(e)}")
+            raise
+    
+    def _execute_parallel_components(self, component_group: list, phase_num: int) -> bool:
+        """Execute a group of components in parallel"""
+        self.logger.info(f"Executing {len(component_group)} components in parallel for phase {phase_num}")
+        
+        with concurrent.futures.ThreadPoolExecutor(max_workers=min(len(component_group), 4)) as executor:
+            # Submit all components in the group
+            future_to_component = {
+                executor.submit(self._execute_component, comp_name): comp_name 
+                for comp_name in component_group
+            }
+            
+            # Wait for all components to complete
+            failed_components = []
+            for future in concurrent.futures.as_completed(future_to_component):
+                comp_name = future_to_component[future]
+                try:
+                    success = future.result()
+                    if not success:
+                        failed_components.append(comp_name)
+                except Exception as e:
+                    self.logger.error(f"Component {comp_name} raised exception: {str(e)}")
+                    failed_components.append(comp_name)
+            
+            if failed_components:
+                self.logger.error(f"Failed components in phase {phase_num}: {failed_components}")
+                return False
+            
+            return True
+    
+    def _execute_component(self, component_name: str) -> bool:
+        """Execute a single component (source, transformation, or target)"""
+        try:
+            # Get component info from DAG analysis
+            comp_info = self.dag_analysis['dependency_graph'][component_name]['component_info']
+            if not comp_info:
+                self.logger.error(f"No component info found for: {component_name}")
+                return False
+            
+            comp_type = comp_info.get('component_type', '').lower()
+            
+            if comp_type == 'source':
+                return self._execute_source_component(component_name, comp_info)
+            elif comp_type == 'transformation':
+                return self._execute_transformation_component(component_name, comp_info)
+            elif comp_type == 'target':
+                return self._execute_target_component(component_name, comp_info)
+            else:
+                self.logger.warning(f"Unknown component type '{comp_type}' for component: {component_name}")
+                return False
+                
+        except Exception as e:
+            self.logger.error(f"Error executing component {component_name}: {str(e)}")
+            return False
+    
+    def _execute_source_component(self, component_name: str, comp_info: dict) -> bool:
+        """Execute a source component (read data)"""
+        self.logger.info(f"Executing source component: {component_name}")
+        
+        # Read data using the source method
+        try:
+            method_name = f"_read_{component_name.lower()}"
+            if hasattr(self, method_name):
+                df = getattr(self, method_name)()
+                self.component_data_cache[component_name] = df
+                self.logger.info(f"Source {component_name} read successfully with {df.count()} rows")
+                return True
+            else:
+                self.logger.error(f"Source method {method_name} not found")
+                return False
+        except Exception as e:
+            self.logger.error(f"Error reading source {component_name}: {str(e)}")
+            return False
+    
+    def _execute_transformation_component(self, component_name: str, comp_info: dict) -> bool:
+        """Execute a transformation component"""
+        self.logger.info(f"Executing transformation component: {component_name}")
+        
+        try:
+            # Get input data from dependencies
+            dependencies = self.dag_analysis['dependency_graph'][component_name]['dependencies']
+            input_dfs = []
+            
+            for dep_name in dependencies:
+                if dep_name in self.component_data_cache:
+                    input_dfs.append(self.component_data_cache[dep_name])
+                else:
+                    self.logger.error(f"Dependency {dep_name} not found in cache for {component_name}")
+                    return False
+            
+            # Execute transformation
+            method_name = f"_apply_{component_name.lower()}"
+            if hasattr(self, method_name):
+                if len(input_dfs) == 1:
+                    result_df = getattr(self, method_name)(input_dfs[0])
+                else:
+                    result_df = getattr(self, method_name)(*input_dfs)
+                
+                self.component_data_cache[component_name] = result_df
+                self.logger.info(f"Transformation {component_name} executed successfully")
+                return True
+            else:
+                self.logger.error(f"Transformation method {method_name} not found")
+                return False
+                
+        except Exception as e:
+            self.logger.error(f"Error executing transformation {component_name}: {str(e)}")
+            return False
+    
+    def _execute_target_component(self, component_name: str, comp_info: dict) -> bool:
+        """Execute a target component (write data)"""
+        self.logger.info(f"Executing target component: {component_name}")
+        
+        try:
+            # Get input data from dependencies
+            dependencies = self.dag_analysis['dependency_graph'][component_name]['dependencies']
+            
+            for dep_name in dependencies:
+                if dep_name in self.component_data_cache:
+                    input_df = self.component_data_cache[dep_name]
+                    
+                    # Write data using the target method
+                    method_name = f"_write_to_{component_name.lower()}"
+                    if hasattr(self, method_name):
+                        getattr(self, method_name)(input_df)
+                        self.logger.info(f"Target {component_name} written successfully")
+                        return True
+                    else:
+                        self.logger.error(f"Target method {method_name} not found")
+                        return False
+            
+            self.logger.error(f"No input dependencies found for target {component_name}")
+            return False
+            
+        except Exception as e:
+            self.logger.error(f"Error writing target {component_name}: {str(e)}")
+            return False
             
         except Exception as e:
             self.logger.error(f"Error in {{ mapping.name }} mapping: {str(e)}")
@@ -467,16 +685,16 @@ class {{ class_name }}(BaseMapping):
         )
         result_df = transformation.transform(input_df)
         
-        {% set output_ports = transformation.ports | selectattr('direction', 'equalto', 'OUTPUT') | list -%}
-        {% if output_ports %}
+        {%- set output_ports = transformation.ports | selectattr('direction', 'equalto', 'OUTPUT') | list %}
+        {%- if output_ports %}
         # Apply data type casting based on port types (manual implementation for specific typing)
-        {% for port in output_ports -%}
-        {% if port.type %}
+        {%- for port in output_ports %}
+        {%- if port.type %}
         # Cast {{ port.name }} to {{ port.type }}
         result_df = result_df.withColumn("{{ port.name }}", col("{{ port.name }}").cast("{{ port.type | convert_informatica_type_to_spark }}"))
-        {% endif -%}
-        {% endfor %}
-        {% endif %}
+        {%- endif %}
+        {%- endfor %}
+        {%- endif %}
         
         return result_df
         
@@ -529,6 +747,7 @@ class {{ class_name }}(BaseMapping):
         return transformation.transform(input_df)
         
         {% elif transformation.type == 'Router' -%}
+        
         # Use RouterTransformation class for reusability
         transformation = RouterTransformation(
             name="{{ transformation.name }}",
@@ -537,6 +756,7 @@ class {{ class_name }}(BaseMapping):
         return transformation.transform(input_df)
         
         {% elif transformation.type == 'Union' -%}
+        
         # Use UnionTransformation class for reusability
         transformation = UnionTransformation(
             name="{{ transformation.name }}",
@@ -545,6 +765,7 @@ class {{ class_name }}(BaseMapping):
         return transformation.transform(*additional_dfs) if additional_dfs else input_df
         
         {% elif transformation.type in ['Java', 'SCD'] -%}
+        
         # Use JavaTransformation class for custom logic including SCD
         transformation = JavaTransformation(
             name="{{ transformation.name }}",
@@ -553,12 +774,12 @@ class {{ class_name }}(BaseMapping):
         existing_df = self._get_{{ transformation.name | lower }}_existing_data() if hasattr(self, '_get_{{ transformation.name | lower }}_existing_data') else None
         return transformation.transform(input_df, existing_df)
         
-        {% else -%}
+        {%- else %}
         # Manual implementation needed for complex transformation type: {{ transformation.type }}
         self.logger.warning("Using manual implementation for transformation type: {{ transformation.type }}")
         # TODO: Implement {{ transformation.type }} transformation logic manually here
         return input_df
-        {% endif %}
+        {%- endif %}
     
     {%- if transformation.type == 'Expression' %}
     
@@ -566,14 +787,14 @@ class {{ class_name }}(BaseMapping):
         """Get expression transformation expressions"""
         return {
             {% if transformation.expressions -%}
-            {% for expr in transformation.expressions -%}
+            {% for expr in transformation.expressions %}
             "{{ expr.name }}": "{{ expr.expression | convert_informatica_to_spark }}",
-            {% endfor -%}
+            {% endfor %}
             {% else -%}
             # Add your expression logic here
             "processed_date": "current_date()",
             "load_timestamp": "current_timestamp()"
-            {% endif %}
+            {% endif -%}
         }
     
     def _get_{{ transformation.name | lower }}_filters(self) -> list:
@@ -683,9 +904,11 @@ class {{ class_name }}(BaseMapping):
 
         template = self.jinja_env.from_string(mapping_template)
         output = template.render(
-            mapping=mapping, 
+            mapping=enhanced_mapping, 
             project=project, 
-            class_name=class_name
+            class_name=class_name,
+            dag_analysis=enhanced_mapping.get('dag_analysis', {}),
+            execution_plan=execution_plan
         )
         
         # Write the file
@@ -709,29 +932,50 @@ class {{ class_name }}(BaseMapping):
             self._generate_single_workflow_class(app_dir, workflow, project)
     
     def _generate_single_workflow_class(self, app_dir: Path, workflow: Dict[str, Any], project: Project):
-        """Generate a single workflow class"""
+        """Generate a single workflow class with DAG analysis"""
+        # Process workflow DAG
+        dag_processor = WorkflowDAGProcessor()
+        enhanced_workflow = dag_processor.process_workflow_dag(workflow)
+        execution_plan = dag_processor.generate_execution_plan(enhanced_workflow)
+        
         class_name = self._to_class_name(workflow['name'])
         file_name = self._sanitize_name(workflow['name']) + '.py'
         
         workflow_template = '''"""
 {{ workflow.name }} Workflow Implementation
 Generated from Informatica BDM Project: {{ project.name }}
+
+DAG Analysis Summary:
+- Total Tasks: {{ execution_plan.total_phases }}
+- Execution Phases: {{ execution_plan.total_phases }}
+- Estimated Duration: {{ execution_plan.estimated_duration }} minutes
+- Parallel Execution Groups: {{ dag_analysis.parallel_groups | length }}
 """
 from ..base_classes import BaseWorkflow
 {%- for task in workflow.tasks %}
-{%- if task.type == 'Mapping' %}
+{%- if task.type == 'SessionTask' and task.mapping %}
 from ..mappings.{{ task.mapping | lower }} import {{ task.mapping | title | replace('_', '') }}
 {%- endif %}
 {%- endfor %}
 import time
 import subprocess
 import json
+import concurrent.futures
 from datetime import datetime, timedelta
 from typing import Dict, Any, List
 
 
 class {{ class_name }}(BaseWorkflow):
-    """{{ workflow.description or workflow.name + ' workflow implementation' }}"""
+    """{{ workflow.description or workflow.name + ' workflow implementation' }}
+    
+    DAG Execution Strategy:
+    {%- for phase in execution_plan.phases %}
+    Phase {{ phase.phase_number }}: {{ phase.parallel_tasks }} task(s) - {{ 'Parallel' if phase.can_run_parallel else 'Sequential' }}
+    {%- for task in phase.tasks %}
+      - {{ task.task_name }} ({{ task.task_type }}) - {{ task.estimated_duration }}min
+    {%- endfor %}
+    {%- endfor %}
+    """
     
     def __init__(self, spark, config):
         super().__init__("{{ workflow.name }}", spark, config)
@@ -740,21 +984,24 @@ class {{ class_name }}(BaseWorkflow):
         self.workflow_parameters = config.get('workflow_parameters', {})
         self.workflow_start_time = datetime.now()
         
+        # DAG Execution Plan
+        self.execution_plan = {{ execution_plan | tojson }}
+        self.dag_analysis = {{ dag_analysis | tojson }}
+        
         # Initialize mapping classes
         self.mapping_classes = {
             {%- for task in workflow.tasks %}
-            {%- if task.type == 'Mapping' %}
-            "{{ task.name }}": {{ task.mapping | title | replace('_', '') }},
+            {%- if task.type == 'SessionTask' and task.mapping %}
+            "{{ task.id or task.name }}": {{ task.mapping | title | replace('_', '') }},
             {%- endif %}
             {%- endfor %}
         }
         
-        # Task execution order based on dependencies
-        self.execution_order = [
-            {%- for task in workflow.tasks %}
-            "{{ task.name }}",
-            {%- endfor %}
-        ]
+        # DAG-based execution order (topologically sorted)
+        self.execution_order = {{ dag_analysis.execution_order | tojson }}
+        
+        # Parallel execution groups
+        self.parallel_groups = {{ dag_analysis.parallel_groups | tojson }}
         
         # Task configurations
         self.task_configs = {
@@ -788,18 +1035,33 @@ class {{ class_name }}(BaseWorkflow):
         }
         
     def execute(self) -> bool:
-        """Execute the complete workflow with enhanced task support"""
+        """Execute workflow using DAG-based parallel execution strategy"""
         try:
-            self.logger.info("Starting {{ workflow.name }} workflow")
+            self.logger.info("Starting {{ workflow.name }} workflow with DAG execution")
+            self.logger.info(f"Execution plan: {len(self.parallel_groups)} phases, estimated {self.execution_plan['estimated_duration']} minutes")
             start_time = time.time()
             
-            # Execute tasks in order
-            for task_name in self.execution_order:
-                success = self._execute_task(task_name)
-                if not success:
-                    self.logger.error(f"Task {task_name} failed. Stopping workflow.")
-                    self._handle_workflow_failure(task_name)
-                    return False
+            # Execute tasks in parallel groups (phases)
+            for phase_idx, task_group in enumerate(self.parallel_groups):
+                phase_num = phase_idx + 1
+                self.logger.info(f"Starting execution phase {phase_num}/{len(self.parallel_groups)} with {len(task_group)} task(s)")
+                
+                if len(task_group) == 1:
+                    # Single task - execute directly
+                    task_id = task_group[0]
+                    success = self._execute_task(task_id)
+                    if not success:
+                        self.logger.error(f"Task {task_id} failed in phase {phase_num}")
+                        self._handle_workflow_failure(task_id)
+                        return False
+                else:
+                    # Multiple tasks - execute in parallel
+                    success = self._execute_parallel_tasks(task_group, phase_num)
+                    if not success:
+                        self.logger.error(f"One or more tasks failed in phase {phase_num}")
+                        return False
+                
+                self.logger.info(f"Phase {phase_num} completed successfully")
                     
             # Calculate execution time
             execution_time = time.time() - start_time
@@ -811,6 +1073,37 @@ class {{ class_name }}(BaseWorkflow):
             self.logger.error(f"Error in {{ workflow.name }} workflow: {str(e)}")
             self._handle_workflow_failure("UNKNOWN")
             raise
+    
+    def _execute_parallel_tasks(self, task_group: List[str], phase_num: int) -> bool:
+        """Execute a group of tasks in parallel"""
+        self.logger.info(f"Executing {len(task_group)} tasks in parallel for phase {phase_num}")
+        
+        with concurrent.futures.ThreadPoolExecutor(max_workers=min(len(task_group), 4)) as executor:
+            # Submit all tasks in the group
+            future_to_task = {
+                executor.submit(self._execute_task, task_id): task_id 
+                for task_id in task_group
+            }
+            
+            # Wait for all tasks to complete
+            failed_tasks = []
+            for future in concurrent.futures.as_completed(future_to_task):
+                task_id = future_to_task[future]
+                try:
+                    success = future.result()
+                    if not success:
+                        failed_tasks.append(task_id)
+                except Exception as e:
+                    self.logger.error(f"Task {task_id} raised exception: {str(e)}")
+                    failed_tasks.append(task_id)
+            
+            if failed_tasks:
+                self.logger.error(f"Failed tasks in phase {phase_num}: {failed_tasks}")
+                for task_id in failed_tasks:
+                    self._handle_workflow_failure(task_id)
+                return False
+            
+            return True
             
     def _execute_task(self, task_name: str) -> bool:
         """Execute a single task with enhanced task type support"""
@@ -1105,9 +1398,11 @@ class {{ class_name }}(BaseWorkflow):
 
         template = Template(workflow_template)
         output = template.render(
-            workflow=workflow, 
+            workflow=enhanced_workflow, 
             project=project, 
-            class_name=class_name
+            class_name=class_name,
+            dag_analysis=enhanced_workflow.get('dag_analysis', {}),
+            execution_plan=execution_plan
         )
         
         workflow_file = app_dir / "src/main/python/workflows" / file_name
@@ -1141,7 +1436,7 @@ current_dir = Path(__file__).parent
 sys.path.insert(0, str(current_dir))
 
 {%- if main_workflow %}
-from workflows.{{ main_workflow.name | lower }} import {{ main_workflow.name | title | replace('_', '') }}
+from workflows.{{ main_workflow.name | lower }} import {{ main_workflow.name | replace('_', ' ') | title | replace(' ', '') }}
 {%- endif %}
 
 
@@ -1218,7 +1513,7 @@ def main():
         
         {%- if main_workflow %}
         # Execute main workflow
-        workflow = {{ main_workflow.name | title | replace('_', '') }}(spark, config)
+        workflow = {{ main_workflow.name | replace('_', ' ') | title | replace(' ', '') }}(spark, config)
         
         if workflow.validate_workflow():
             logger.info("Workflow validation passed")
@@ -1274,27 +1569,8 @@ if __name__ == "__main__":
                 parameters.update(enhanced_config.get('project', {}))
                 parameters.update(enhanced_config.get('global', {}))
         
-        # Application configuration
-        connections_dict = {}
-        if connections:
-            for conn in connections:
-                if isinstance(conn, dict):
-                    # Connection is properly formatted as dictionary
-                    conn_name = conn.get('name', 'unknown_connection')
-                    connections_dict[conn_name] = {
-                        'type': conn.get('type', 'UNKNOWN'),
-                        'host': conn.get('host', 'localhost'),
-                        'port': conn.get('port', ''),
-                        'database': conn.get('database', '')
-                    }
-                elif isinstance(conn, str):
-                    # Connection is just a string, create a basic entry
-                    connections_dict[conn] = {
-                        'type': 'UNKNOWN',
-                        'host': 'localhost',
-                        'port': '',
-                        'database': ''
-                    }
+        # Use extracted connections (now returns a dict)
+        connections_dict = connections if isinstance(connections, dict) else {}
         
         app_config = {
             'spark': {
@@ -1806,9 +2082,42 @@ This application was generated automatically. For modifications:
             self.logger.warning(f"Could not create enhanced parameter for {param_name}: {e}")
             return None
 
-    def _extract_connections_from_project(self, project: Project) -> List[Dict[str, Any]]:
-        """Extract connections from parsed project"""
-        return getattr(project, 'connections', [])
+    def _extract_connections_from_project(self, project: Project) -> Dict[str, Dict[str, Any]]:
+        """Extract connections from parsed project and convert to configuration format"""
+        connections_dict = {}
+        connections = getattr(project, 'connections', {})
+        
+        # Handle both dictionary and list formats  
+        if isinstance(connections, dict):
+            connections = connections.values()
+        
+        for conn in connections:
+            if hasattr(conn, 'name'):
+                conn_config = {
+                    'type': conn.connection_type,
+                    'host': conn.host,
+                    'port': conn.port
+                }
+                
+                # Add all connection properties
+                conn_config.update(conn.properties)
+                
+                # Convert specific connection types to Spark-compatible configuration
+                if conn.connection_type == 'HIVE':
+                    conn_config.update({
+                        'driver': 'org.apache.hive.jdbc.HiveDriver',
+                        'url': f"jdbc:hive2://{conn.host}:{conn.port}/{conn_config.get('database', 'default')}",
+                        'format': 'hive'
+                    })
+                elif conn.connection_type == 'HDFS':
+                    conn_config.update({
+                        'namenode': conn_config.get('namenode', f"hdfs://{conn.host}:{conn.port}"),
+                        'format': 'parquet'
+                    })
+                
+                connections_dict[conn.name] = conn_config
+                
+        return connections_dict
     
     def _extract_parameters_from_project(self, project: Project) -> Dict[str, Any]:
         """Extract parameters from parsed project"""
@@ -1887,6 +2196,11 @@ This application was generated automatically. For modifications:
         spark_expr = spark_expr.replace('SYSDATE', 'current_date()')
         spark_expr = spark_expr.replace('SYSTIMESTAMP', 'current_timestamp()')
         
+        # Escape double quotes that appear in string literals to prevent Python syntax errors
+        # Convert SQL string literals from "value" to 'value' for better Python compatibility
+        import re
+        spark_expr = re.sub(r'"([^"]*)"', r"'\1'", spark_expr)
+        
         return spark_expr
     
     def _convert_informatica_type_to_spark(self, informatica_type: str) -> str:
@@ -1910,6 +2224,16 @@ This application was generated automatically. For modifications:
             'binary': 'binary'
         }
         return type_mapping.get(informatica_type.lower(), 'string')
+    
+    def _suffix_with_filter(self, value: str, suffix: str) -> str:
+        """Jinja2 filter to add suffix to string"""
+        return f"{value}{suffix}"
+    
+    def _snake_to_camel_filter(self, value: str) -> str:
+        """Convert snake_case to CamelCase"""
+        # Split by underscore, capitalize each part, then join
+        parts = value.split('_')
+        return ''.join(part.capitalize() for part in parts)
     
     def _apply_manual_formatting(self, file_path: Path):
         """Apply manual formatting fixes to resolve indentation issues"""
@@ -2249,4 +2573,61 @@ class JavaTransformation(BaseTransformation):
     
         transformations_file = app_dir / "src/main/python/transformations/generated_transformations.py"
         transformations_file.write_text(transformations_content)
-        self.logger.info("Generated transformations module") 
+        self.logger.info("Generated transformations module")
+        
+    def _generate_external_configurations(self, app_dir: Path, mapping: Dict[str, Any], execution_plan: Dict[str, Any], project: Project):
+        """Generate external configuration files for mapping (Phase 1 implementation)"""
+        try:
+            self.logger.info(f"Generating external configurations for mapping: {mapping['name']}")
+            
+            # Initialize configuration file generator
+            config_generator = ConfigurationFileGenerator(str(app_dir))
+            
+            # Extract DAG analysis from mapping
+            dag_analysis = mapping.get('dag_analysis', {})
+            
+            # Generate all configuration files
+            config_generator.generate_all_configs(mapping, dag_analysis, execution_plan)
+            
+            self.logger.info(f"Successfully generated external configurations for {mapping['name']}")
+            
+        except Exception as e:
+            self.logger.error(f"Error generating external configurations for {mapping['name']}: {e}")
+            # Don't fail the entire generation process if configuration externalization fails
+            if self.enable_config_externalization:
+                self.logger.warning("Continuing with embedded configuration approach")
+
+    def _generate_enterprise_components(self, app_dir: Path, project: Project):
+        """Generate enterprise components for advanced features"""
+        try:
+            self.logger.info("Generating enterprise components")
+            
+            # Copy enterprise framework files from the source framework
+            framework_dir = Path(__file__).parent
+            target_dir = app_dir / "src/main/python"
+            
+            enterprise_files = [
+                "config_management.py",
+                "monitoring_integration.py", 
+                "advanced_config_validation.py",
+                "config_migration_tools.py"
+            ]
+            
+            for file_name in enterprise_files:
+                source_file = framework_dir / file_name
+                target_file = target_dir / file_name
+                
+                if source_file.exists():
+                    # Copy the enterprise component file
+                    import shutil
+                    shutil.copy2(source_file, target_file)
+                    self.logger.info(f"Generated enterprise component: {file_name}")
+                else:
+                    self.logger.warning(f"Enterprise component source not found: {file_name}")
+            
+            self.logger.info("Enterprise components generated successfully")
+            
+        except Exception as e:
+            self.logger.error(f"Error generating enterprise components: {e}")
+            # Don't fail the entire generation process
+            self.logger.warning("Continuing without enterprise components") 

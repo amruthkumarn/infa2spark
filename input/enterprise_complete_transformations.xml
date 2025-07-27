@@ -1,0 +1,2019 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<imx:IMX xmlns:imx="http://com.informatica.imx"
+         xmlns:project="http://com.informatica.metadata.common.project/2"
+         xmlns:folder="http://com.informatica.metadata.common.folder/2"
+         xmlns:mapping="http://com.informatica.metadata.common.mapping/1"
+         xmlns:workflow="http://com.informatica.metadata.common.workflow/1"
+         xmlns:datasource="http://com.informatica.metadata.common.datasource/1"
+         xmlns:datarecord="http://com.informatica.metadata.common.datarecord/1"
+         xmlns:Hive="http://com.informatica.metadata.common.adapter.Hive/1"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         imx:version="2.1.1"
+         imx:timestamp="2025-01-26T17:30:00.000Z">
+
+    <project:Project imx:id="PROJECT_001" 
+                     xsi:type="project:Project" 
+                     name="Enterprise_Complete_Transformations" 
+                     shared="false"
+                     version="3.0.1">
+        <imx:annotations>
+            <imx:lGenericAnnotations>
+                <Annotation name="ProjectOwner" value="Enterprise Data Engineering Team"/>
+                <Annotation name="Description" value="Complete enterprise project demonstrating all transformation types and complex workflow patterns"/>
+                <Annotation name="Environment" value="Production"/>
+                <Annotation name="Version" value="3.0"/>
+                <Annotation name="Compliance" value="SOX,GDPR,HIPAA"/>
+            </imx:lGenericAnnotations>
+        </imx:annotations>
+
+        <!-- Project Contents -->
+        <contents>
+            <!-- Execution Environment Configuration -->
+            <IObject imx:id="ENV_001" 
+                     xsi:type="ExecutionEnvironment" 
+                     name="ENTERPRISE_PROD_ENV">
+                <environments>
+                    <Characteristic name="SparkMaster" value="yarn-cluster"/>
+                    <Characteristic name="SparkExecutorMemory" value="8g"/>
+                    <Characteristic name="SparkDriverMemory" value="4g"/>
+                    <Characteristic name="SparkExecutorCores" value="4"/>
+                    <Characteristic name="SparkDynamicAllocation" value="true"/>
+                    <Characteristic name="SparkMaxExecutors" value="100"/>
+                    <Characteristic name="SparkMinExecutors" value="10"/>
+                </environments>
+                <handlers>
+                    <Characteristic name="ErrorHandler" value="FailFast"/>
+                    <Characteristic name="RetryPolicy" value="5"/>
+                    <Characteristic name="CircuitBreaker" value="enabled"/>
+                </handlers>
+            </IObject>
+
+            <!-- Hive Connection Configuration -->
+            <IObject imx:id="CONN_001" 
+                     xsi:type="Hive:HiveConnectinfo" 
+                     name="ENTERPRISE_HIVE_CONN"
+                     description="Enterprise Hive data warehouse with HA configuration"
+                     host="hive-ha-cluster.enterprise.local"
+                     port="10000"
+                     database="enterprise_edw">
+                <characteristics>
+                    <Characteristic name="ConnectionTimeout" value="600"/>
+                    <Characteristic name="TransactionIsolation" value="READ_COMMITTED"/>
+                    <Characteristic name="MaxConnections" value="50"/>
+                    <Characteristic name="EnableSSL" value="true"/>
+                    <Characteristic name="Kerberos" value="enabled"/>
+                    <Characteristic name="Principal" value="hive/_HOST@ENTERPRISE.LOCAL"/>
+                </characteristics>
+            </IObject>
+
+            <!-- HDFS Connection Configuration -->
+            <IObject imx:id="CONN_002" 
+                     xsi:type="HDFSConnectinfo" 
+                     name="ENTERPRISE_HDFS_CONN"
+                     description="Enterprise HDFS cluster connection"
+                     namenode="hdfs://enterprise-cluster:8020">
+                <characteristics>
+                    <Characteristic name="ReplicationFactor" value="3"/>
+                    <Characteristic name="BlockSize" value="128MB"/>
+                    <Characteristic name="SecurityEnabled" value="true"/>
+                    <Characteristic name="EncryptionEnabled" value="true"/>
+                </characteristics>
+            </IObject>
+
+            <!-- Enterprise Folder Structure -->
+            <IObject imx:id="FOLDER_001" 
+                     xsi:type="folder:Folder" 
+                     name="Enterprise_Complete_ETL"
+                     description="Complete ETL processing folder with all transformation types">
+                
+                <imx:annotations>
+                    <imx:lGenericAnnotations>
+                        <Annotation name="BusinessOwner" value="Enterprise Data Team"/>
+                        <Annotation name="TechnicalOwner" value="Data Engineering"/>
+                        <Annotation name="DataClassification" value="Confidential"/>
+                        <Annotation name="SLA" value="2 hours"/>
+                    </imx:lGenericAnnotations>
+                </imx:annotations>
+
+                <!-- Mapping Parameters -->
+                <parameters>
+                    <UserDefinedParameter imx:id="PARAM_001" 
+                                        name="$$ProcessingDate" 
+                                        type="string" 
+                                        defaultValue="CURRENT_DATE"
+                                        description="Processing date for the ETL batch"/>
+                    <UserDefinedParameter imx:id="PARAM_002" 
+                                        name="$$BatchId" 
+                                        type="integer" 
+                                        defaultValue="1"
+                                        description="Unique batch identifier for tracking"/>
+                    <UserDefinedParameter imx:id="PARAM_003" 
+                                        name="$$ErrorThreshold" 
+                                        type="decimal" 
+                                        defaultValue="0.05"
+                                        description="Maximum error rate allowed (5%)"/>
+                </parameters>
+
+                <!-- Folder Contents -->
+                <contents>
+                    <!-- Main Mapping -->
+                    <IObject imx:id="MAPPING_001" 
+                             xsi:type="mapping:Mapping" 
+                             name="m_Complete_Transformation_Showcase"
+                             description="Comprehensive mapping demonstrating all transformation types"
+                             targetLoadOrder="0"
+                             isReusable="false">
+                        
+                        <imx:annotations>
+                            <imx:lGenericAnnotations>
+                                <Annotation name="BusinessPurpose" value="Customer data integration and quality enhancement"/>
+                                <Annotation name="DataLineage" value="Source Systems -> Staging -> Data Warehouse"/>
+                                <Annotation name="PerformanceTarget" value="Process 1M records in 30 minutes"/>
+                                <Annotation name="DataRetention" value="7 years"/>
+                            </imx:lGenericAnnotations>
+                        </imx:annotations>
+
+                        <!-- Source Definitions -->
+                        <sources>
+                            <SourceDefinition imx:id="SRC_001" 
+                                            xsi:type="SourceDefinition" 
+                                            name="SRC_Customer_Master"
+                                            description="Primary customer master data from CRM system"
+                                            connection="ENTERPRISE_HIVE_CONN"
+                                            instance="INST_SRC_001">
+                                <dataSource>
+                                    <DataObject name="customer_master" 
+                                              objectType="Table"
+                                              schema="crm"
+                                              database="enterprise_staging">
+                                        <dataRecords>
+                                            <DataRecord imx:id="REC_001" name="customer_master_record">
+                                                <DataRecordField imx:id="FIELD_001" 
+                                                               name="customer_id" 
+                                                               type="integer" 
+                                                               nullable="false" 
+                                                               primaryKey="true"/>
+                                                <DataRecordField imx:id="FIELD_002" 
+                                                               name="first_name" 
+                                                               type="string" 
+                                                               length="50" 
+                                                               nullable="true"/>
+                                                <DataRecordField imx:id="FIELD_003" 
+                                                               name="last_name" 
+                                                               type="string" 
+                                                               length="50" 
+                                                               nullable="true"/>
+                                                <DataRecordField imx:id="FIELD_004" 
+                                                               name="email" 
+                                                               type="string" 
+                                                               length="100" 
+                                                               nullable="true"/>
+                                                <DataRecordField imx:id="FIELD_005" 
+                                                               name="phone" 
+                                                               type="string" 
+                                                               length="20" 
+                                                               nullable="true"/>
+                                                <DataRecordField imx:id="FIELD_006" 
+                                                               name="date_of_birth" 
+                                                               type="date" 
+                                                               nullable="true"/>
+                                                <DataRecordField imx:id="FIELD_007" 
+                                                               name="created_date" 
+                                                               type="timestamp" 
+                                                               nullable="false"/>
+                                                <DataRecordField imx:id="FIELD_008" 
+                                                               name="updated_date" 
+                                                               type="timestamp" 
+                                                               nullable="true"/>
+                                            </DataRecord>
+                                        </dataRecords>
+                                    </DataObject>
+                                </dataSource>
+                                <!-- Source Output Ports -->
+                                <outputPorts>
+                                    <SourceFieldPort imx:id="PORT_SRC_001" 
+                                                   name="customer_id" 
+                                                   type="integer" 
+                                                   fromField="FIELD_001"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_002" 
+                                                   name="FirstName_IN" 
+                                                   type="string" 
+                                                   fromField="FIELD_002"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_003" 
+                                                   name="LastName_IN" 
+                                                   type="string" 
+                                                   fromField="FIELD_003"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_004" 
+                                                   name="Email_IN" 
+                                                   type="string" 
+                                                   fromField="FIELD_004"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_005" 
+                                                   name="Phone_IN" 
+                                                   type="string" 
+                                                   fromField="FIELD_005"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_006" 
+                                                   name="DateOfBirth_IN" 
+                                                   type="date" 
+                                                   fromField="FIELD_006"/>
+                                </outputPorts>
+                            </SourceDefinition>
+
+                            <SourceDefinition imx:id="SRC_002" 
+                                            xsi:type="SourceDefinition" 
+                                            name="SRC_Transaction_History"
+                                            description="Customer transaction history from payment system"
+                                            connection="ENTERPRISE_HIVE_CONN"
+                                            instance="INST_SRC_002">
+                                <dataSource>
+                                    <DataObject name="transaction_history" 
+                                              objectType="Table"
+                                              schema="payments"
+                                              database="enterprise_staging">
+                                        <dataRecords>
+                                            <DataRecord imx:id="REC_002" name="transaction_record">
+                                                <DataRecordField imx:id="FIELD_009" 
+                                                               name="transaction_id" 
+                                                               type="bigint" 
+                                                               nullable="false" 
+                                                               primaryKey="true"/>
+                                                <DataRecordField imx:id="FIELD_010" 
+                                                               name="customer_id" 
+                                                               type="integer" 
+                                                               nullable="false"/>
+                                                <DataRecordField imx:id="FIELD_011" 
+                                                               name="transaction_amount" 
+                                                               type="decimal" 
+                                                               precision="12" 
+                                                               scale="2" 
+                                                               nullable="false"/>
+                                                <DataRecordField imx:id="FIELD_012" 
+                                                               name="transaction_date" 
+                                                               type="timestamp" 
+                                                               nullable="false"/>
+                                                <DataRecordField imx:id="FIELD_013" 
+                                                               name="transaction_type" 
+                                                               type="string" 
+                                                               length="20" 
+                                                               nullable="false"/>
+                                            </DataRecord>
+                                        </dataRecords>
+                                    </DataObject>
+                                </dataSource>
+                                <!-- Source Output Ports -->
+                                <outputPorts>
+                                    <SourceFieldPort imx:id="PORT_SRC_007" 
+                                                   name="transaction_id" 
+                                                   type="bigint" 
+                                                   fromField="FIELD_009"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_008" 
+                                                   name="customer_id" 
+                                                   type="integer" 
+                                                   fromField="FIELD_010"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_009" 
+                                                   name="transaction_amount" 
+                                                   type="decimal" 
+                                                   fromField="FIELD_011"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_010" 
+                                                   name="transaction_date" 
+                                                   type="timestamp" 
+                                                   fromField="FIELD_012"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_011" 
+                                                   name="transaction_type" 
+                                                   type="string" 
+                                                   fromField="FIELD_013"/>
+                                </outputPorts>
+                            </SourceDefinition>
+
+                            <!-- Product Master Source -->
+                            <SourceDefinition imx:id="SRC_002" 
+                                            xsi:type="SourceDefinition" 
+                                            name="SRC_Product_Master"
+                                            description="Product master data source"
+                                            connection="ENTERPRISE_HIVE_CONN"
+                                            instance="INST_SRC_002">
+                                
+                                <!-- Source Data Object -->
+                                <dataSource>
+                                    <DataObject name="product_master" 
+                                              objectType="Table"
+                                              schema="enterprise_staging"
+                                              database="enterprise_staging">
+                                        <dataRecords>
+                                            <DataRecord imx:id="REC_PROD_001" name="product_master_record">
+                                                <DataRecordField imx:id="FIELD_PROD_001" 
+                                                               name="product_id" 
+                                                               type="integer" 
+                                                               nullable="false" 
+                                                               primaryKey="true"/>
+                                                <DataRecordField imx:id="FIELD_PROD_002" 
+                                                               name="product_name" 
+                                                               type="string" 
+                                                               length="100" 
+                                                               nullable="false"/>
+                                                <DataRecordField imx:id="FIELD_PROD_003" 
+                                                               name="category" 
+                                                               type="string" 
+                                                               length="50" 
+                                                               nullable="true"/>
+                                                <DataRecordField imx:id="FIELD_PROD_004" 
+                                                               name="price" 
+                                                               type="decimal" 
+                                                               precision="10" 
+                                                               scale="2" 
+                                                               nullable="true"/>
+                                                <DataRecordField imx:id="FIELD_PROD_005" 
+                                                               name="created_date" 
+                                                               type="timestamp" 
+                                                               nullable="false"/>
+                                            </DataRecord>
+                                        </dataRecords>
+                                    </DataObject>
+                                </dataSource>
+                                <!-- Product Source Output Ports -->
+                                <outputPorts>
+                                    <SourceFieldPort imx:id="PORT_SRC_012" 
+                                                   name="product_id" 
+                                                   type="integer" 
+                                                   fromField="FIELD_PROD_001"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_013" 
+                                                   name="product_name" 
+                                                   type="string" 
+                                                   fromField="FIELD_PROD_002"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_014" 
+                                                   name="category" 
+                                                   type="string" 
+                                                   fromField="FIELD_PROD_003"/>
+                                    <SourceFieldPort imx:id="PORT_SRC_015" 
+                                                   name="price" 
+                                                   type="decimal" 
+                                                   fromField="FIELD_PROD_004"/>
+                                </outputPorts>
+                            </SourceDefinition>
+                        </sources>
+
+                        <!-- Transformation Definitions -->
+                        <transformations>
+                            <!-- Expression Transformation -->
+                            <TransformationDefinition imx:id="TRANS_001" 
+                                                    xsi:type="ExpressionTransformation" 
+                                                    name="EXP_Data_Standardization"
+                                                    description="Standardize and cleanse customer data with quality scoring"
+                                                    instance="INST_TRANS_001">
+                                
+                                <imx:annotations>
+                                    <imx:lGenericAnnotations>
+                                        <Annotation name="BusinessRules" value="Name standardization, email validation, phone formatting"/>
+                                        <Annotation name="DataQuality" value="Implements DQ score calculation"/>
+                                        <Annotation name="Performance" value="CPU intensive - parallel processing recommended"/>
+                                    </imx:lGenericAnnotations>
+                                </imx:annotations>
+
+                                <!-- Input Ports - Direct from Source -->
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_EXP_IN_001" 
+                                                           name="FirstName_IN" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_SRC_002"/>
+                                    <TransformationFieldPort imx:id="PORT_EXP_IN_002" 
+                                                           name="LastName_IN" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_SRC_003"/>
+                                    <TransformationFieldPort imx:id="PORT_EXP_IN_003" 
+                                                           name="Email_IN" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_SRC_004"/>
+                                    <TransformationFieldPort imx:id="PORT_EXP_IN_004" 
+                                                           name="Phone_IN" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_SRC_005"/>
+                                    <TransformationFieldPort imx:id="PORT_EXP_IN_005" 
+                                                           name="DateOfBirth_IN" 
+                                                           type="date" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_SRC_006"/>
+                                </inputPorts>
+
+                                <!-- Output Ports -->
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_EXP_OUT_001" 
+                                                           name="FullName_OUT" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_EXP_OUT_002" 
+                                                           name="StandardizedEmail_OUT" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_EXP_OUT_003" 
+                                                           name="StandardizedPhone_OUT" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_EXP_OUT_004" 
+                                                           name="AgeGroup_OUT" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_EXP_OUT_005" 
+                                                           name="DataQualityScore_OUT" 
+                                                           type="decimal" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_EXP_OUT_006" 
+                                                           name="ProcessingTimestamp_OUT" 
+                                                           type="timestamp" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                </outputPorts>
+
+                                <!-- Expression Definitions -->
+                                <expressions>
+                                    <ExpressionField imx:id="EXPR_001" 
+                                                   name="FullName_OUT" 
+                                                   expression="concat(INITCAP(TRIM(FirstName_IN)), ' ', INITCAP(TRIM(LastName_IN)))"
+                                                   dataType="string"
+                                                   precision="100"/>
+                                    <ExpressionField imx:id="EXPR_002" 
+                                                   name="StandardizedEmail_OUT" 
+                                                   expression="CASE WHEN REGEXP_LIKE(LOWER(TRIM(Email_IN)), '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$') THEN LOWER(TRIM(Email_IN)) ELSE NULL END"
+                                                   dataType="string"
+                                                   precision="100"/>
+                                    <ExpressionField imx:id="EXPR_003" 
+                                                   name="StandardizedPhone_OUT" 
+                                                   expression="CASE WHEN LENGTH(REGEXP_REPLACE(Phone_IN, '[^0-9]', '')) &gt;= 10 THEN REGEXP_REPLACE(Phone_IN, '[^0-9]', '') ELSE NULL END"
+                                                   dataType="string"
+                                                   precision="20"/>
+                                    <ExpressionField imx:id="EXPR_004" 
+                                                   name="AgeGroup_OUT" 
+                                                   expression="CASE WHEN DATEDIFF(CURRENT_DATE, DateOfBirth_IN)/365 &lt; 25 THEN &quot;Young&quot; WHEN DATEDIFF(CURRENT_DATE, DateOfBirth_IN)/365 &lt; 45 THEN &quot;Middle&quot; WHEN DATEDIFF(CURRENT_DATE, DateOfBirth_IN)/365 &lt; 65 THEN &quot;Mature&quot; ELSE &quot;Senior&quot; END"
+                                                   dataType="string"
+                                                   precision="20"/>
+                                    <ExpressionField imx:id="EXPR_005" 
+                                                   name="DataQualityScore_OUT" 
+                                                   expression="(CASE WHEN FirstName_IN IS NOT NULL AND LENGTH(TRIM(FirstName_IN)) &gt; 0 THEN 0.2 ELSE 0 END) + (CASE WHEN LastName_IN IS NOT NULL AND LENGTH(TRIM(LastName_IN)) &gt; 0 THEN 0.2 ELSE 0 END) + (CASE WHEN StandardizedEmail_OUT IS NOT NULL THEN 0.3 ELSE 0 END) + (CASE WHEN StandardizedPhone_OUT IS NOT NULL THEN 0.2 ELSE 0 END) + (CASE WHEN DateOfBirth_IN IS NOT NULL THEN 0.1 ELSE 0 END)"
+                                                   dataType="decimal"
+                                                   precision="3"
+                                                   scale="2"/>
+                                    <ExpressionField imx:id="EXPR_006" 
+                                                   name="ProcessingTimestamp_OUT" 
+                                                   expression="CURRENT_TIMESTAMP"
+                                                   dataType="timestamp"/>
+                                </expressions>
+
+                                <!-- Characteristics -->
+                                <characteristics>
+                                    <Characteristic name="ExpressionType" value="Advanced"/>
+                                    <Characteristic name="OptimizationLevel" value="High"/>
+                                    <Characteristic name="ParallelExecution" value="true"/>
+                                    <Characteristic name="CacheExpressions" value="true"/>
+                                </characteristics>
+                            </TransformationDefinition>
+
+                            <!-- Joiner Transformation -->
+                            <TransformationDefinition imx:id="TRANS_002" 
+                                                    xsi:type="JoinerTransformation" 
+                                                    name="JNR_Customer_Transaction"
+                                                    description="Join customer master with transaction history"
+                                                    instance="INST_TRANS_002"
+                                                    joinType="INNER"
+                                                    joinCondition="customer_master.customer_id = transaction_history.customer_id">
+                                
+                                <!-- Master Input (Customer) -->
+                                <masterInputPorts>
+                                    <TransformationFieldPort imx:id="PORT_JNR_MST_001" 
+                                                           name="customer_id" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SRC_001"/>
+                                    <TransformationFieldPort imx:id="PORT_JNR_MST_002" 
+                                                           name="FullName_OUT" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_EXP_OUT_001"/>
+                                    <TransformationFieldPort imx:id="PORT_JNR_MST_003" 
+                                                           name="StandardizedEmail_OUT" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_EXP_OUT_002"/>
+                                </masterInputPorts>
+
+                                <!-- Detail Input (Transaction) -->
+                                <detailInputPorts>
+                                    <TransformationFieldPort imx:id="PORT_JNR_DTL_001" 
+                                                           name="customer_id" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SRC_008"/>
+                                    <TransformationFieldPort imx:id="PORT_JNR_DTL_002" 
+                                                           name="transaction_amount" 
+                                                           type="decimal" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SRC_009"/>
+                                    <TransformationFieldPort imx:id="PORT_JNR_DTL_003" 
+                                                           name="transaction_date" 
+                                                           type="timestamp" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SRC_010"/>
+                                </detailInputPorts>
+
+                                <!-- Output Ports -->
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_JNR_OUT_001" 
+                                                           name="customer_id" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_JNR_OUT_002" 
+                                                           name="FullName_OUT" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_JNR_OUT_003" 
+                                                           name="transaction_amount" 
+                                                           type="decimal" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_JNR_OUT_004" 
+                                                           name="transaction_date" 
+                                                           type="timestamp" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                </outputPorts>
+
+                                <!-- Join Conditions -->
+                                <joinConditions>
+                                    <JoinCondition imx:id="JOIN_001" 
+                                                 masterPort="PORT_JNR_MST_001" 
+                                                 detailPort="PORT_JNR_DTL_001" 
+                                                 operator="="
+                                                 description="Join on customer_id"/>
+                                </joinConditions>
+                            </TransformationDefinition>
+
+                            <!-- Aggregator Transformation -->
+                            <TransformationDefinition imx:id="TRANS_003" 
+                                                    xsi:type="AggregatorTransformation" 
+                                                    name="AGG_Customer_Metrics"
+                                                    description="Calculate customer transaction metrics and KPIs"
+                                                    instance="INST_TRANS_003">
+                                
+                                <!-- Input Ports - From Expression Transformation -->
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_AGG_IN_001" 
+                                                           name="customer_id" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_EXP_OUT_001"/>
+                                    <TransformationFieldPort imx:id="PORT_AGG_IN_002" 
+                                                           name="FullName_OUT" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_EXP_OUT_002"/>
+                                    <TransformationFieldPort imx:id="PORT_AGG_IN_003" 
+                                                           name="Email_Standardized" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_EXP_OUT_003"/>
+                                </inputPorts>
+
+                                <!-- Output Ports -->
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_AGG_OUT_001" 
+                                                           name="customer_id" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_AGG_OUT_002" 
+                                                           name="total_transaction_amount" 
+                                                           type="decimal" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_AGG_OUT_003" 
+                                                           name="transaction_count" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_AGG_OUT_004" 
+                                                           name="avg_transaction_amount" 
+                                                           type="decimal" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_AGG_OUT_005" 
+                                                           name="last_transaction_date" 
+                                                           type="timestamp" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                </outputPorts>
+
+                                <!-- Group By Fields -->
+                                <groupByFields>
+                                    <GroupByField imx:id="GRP_001" 
+                                                fieldName="customer_id" 
+                                                fromPort="PORT_AGG_IN_001"/>
+                                </groupByFields>
+
+                                <!-- Aggregate Expressions -->
+                                <aggregateExpressions>
+                                    <AggregateExpression imx:id="AGG_EXPR_001" 
+                                                       name="total_transaction_amount" 
+                                                       expression="SUM(transaction_amount)" 
+                                                       dataType="decimal"
+                                                       toPort="PORT_AGG_OUT_002"/>
+                                    <AggregateExpression imx:id="AGG_EXPR_002" 
+                                                       name="transaction_count" 
+                                                       expression="COUNT(*)" 
+                                                       dataType="integer"
+                                                       toPort="PORT_AGG_OUT_003"/>
+                                    <AggregateExpression imx:id="AGG_EXPR_003" 
+                                                       name="avg_transaction_amount" 
+                                                       expression="AVG(transaction_amount)" 
+                                                       dataType="decimal"
+                                                       toPort="PORT_AGG_OUT_004"/>
+                                    <AggregateExpression imx:id="AGG_EXPR_004" 
+                                                       name="last_transaction_date" 
+                                                       expression="MAX(transaction_date)" 
+                                                       dataType="timestamp"
+                                                       toPort="PORT_AGG_OUT_005"/>
+                                </aggregateExpressions>
+                            </TransformationDefinition>
+
+                            <!-- Lookup Transformation -->
+                            <TransformationDefinition imx:id="TRANS_004" 
+                                                    xsi:type="LookupTransformation" 
+                                                    name="LKP_Customer_Demographics"
+                                                    description="Lookup customer demographic information"
+                                                    instance="INST_TRANS_004"
+                                                    lookupPolicy="STATIC"
+                                                    cacheSize="10MB">
+                                
+                                <!-- Input Ports -->
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_LKP_IN_001" 
+                                                           name="customer_id" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_AGG_OUT_001"/>
+                                </inputPorts>
+
+                                <!-- Output Ports -->
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_LKP_OUT_001" 
+                                                           name="customer_id" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_LKP_OUT_002" 
+                                                           name="age_range" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_LKP_OUT_003" 
+                                                           name="income_bracket" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_LKP_OUT_004" 
+                                                           name="region" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                </outputPorts>
+
+                                <!-- Lookup Source -->
+                                <lookupSource>
+                                    <DataObject name="customer_demographics" 
+                                              objectType="Table"
+                                              schema="master_data"
+                                              database="enterprise_staging"/>
+                                </lookupSource>
+
+                                <!-- Lookup Conditions -->
+                                <lookupConditions>
+                                    <LookupCondition imx:id="LKP_COND_001" 
+                                                   inputPort="PORT_LKP_IN_001" 
+                                                   lookupField="customer_id" 
+                                                   operator="="
+                                                   description="Lookup by customer_id"/>
+                                </lookupConditions>
+                            </TransformationDefinition>
+
+                            <!-- Sequence Generator -->
+                            <TransformationDefinition imx:id="TRANS_005" 
+                                                    xsi:type="SequenceTransformation" 
+                                                    name="SEQ_Customer_Key"
+                                                    description="Generate unique sequence keys for customer records"
+                                                    instance="INST_TRANS_005"
+                                                    startValue="1"
+                                                    incrementBy="1"
+                                                    endValue="999999999"
+                                                    cycleFlag="false">
+                                
+                                <!-- Input Ports -->
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_SEQ_IN_001" 
+                                                           name="customer_id" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_LKP_OUT_001"/>
+                                </inputPorts>
+
+                                <!-- Output Ports -->
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_SEQ_OUT_001" 
+                                                           name="customer_id" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_SEQ_OUT_002" 
+                                                           name="customer_key" 
+                                                           type="bigint" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                </outputPorts>
+
+                                <!-- Sequence Definition -->
+                                <sequenceFields>
+                                    <SequenceField imx:id="SEQ_FIELD_001" 
+                                                 name="customer_key" 
+                                                 startValue="1" 
+                                                 incrementBy="1"
+                                                 toPort="PORT_SEQ_OUT_002"/>
+                                </sequenceFields>
+                            </TransformationDefinition>
+
+                            <!-- Sorter Transformation -->
+                            <TransformationDefinition imx:id="TRANS_006" 
+                                                    xsi:type="SorterTransformation" 
+                                                    name="SRT_Customer_Ranking"
+                                                    description="Sort customers by transaction metrics for ranking"
+                                                    instance="INST_TRANS_006"
+                                                    distinctRows="false"
+                                                    caseInsensitive="true">
+                                
+                                <!-- Input Ports - From Sequence Transformation -->
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_SRT_IN_001" 
+                                                           name="customer_key" 
+                                                           type="bigint" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SEQ_OUT_002"/>
+                                    <TransformationFieldPort imx:id="PORT_SRT_IN_002" 
+                                                           name="customer_id" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SEQ_OUT_001"/>
+                                </inputPorts>
+
+                                <!-- Output Ports -->
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_SRT_OUT_001" 
+                                                           name="customer_key" 
+                                                           type="bigint" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_SRT_OUT_002" 
+                                                           name="total_transaction_amount" 
+                                                           type="decimal" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                </outputPorts>
+
+                                <!-- Sort Keys -->
+                                <sortKeys>
+                                    <SortKey imx:id="SORT_KEY_001" 
+                                           fieldName="total_transaction_amount" 
+                                           direction="DESC" 
+                                           fromPort="PORT_SRT_IN_002"/>
+                                    <SortKey imx:id="SORT_KEY_002" 
+                                           fieldName="customer_key" 
+                                           direction="ASC" 
+                                           fromPort="PORT_SRT_IN_001"/>
+                                </sortKeys>
+                            </TransformationDefinition>
+
+                            <!-- Router Transformation -->
+                            <TransformationDefinition imx:id="TRANS_007" 
+                                                    xsi:type="RouterTransformation" 
+                                                    name="RTR_Customer_Segmentation"
+                                                    description="Route customers into different segments based on transaction patterns"
+                                                    instance="INST_TRANS_007">
+                                
+                                <!-- Input Ports - From Lookup Transformation -->
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_RTR_IN_001" 
+                                                           name="customer_id" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_LKP_OUT_001"/>
+                                    <TransformationFieldPort imx:id="PORT_RTR_IN_002" 
+                                                           name="age_range" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_LKP_OUT_002"/>
+                                    <TransformationFieldPort imx:id="PORT_RTR_IN_003" 
+                                                           name="income_level" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_LKP_OUT_003"/>
+                                </inputPorts>
+
+                                <!-- Output Groups -->
+                                <outputGroups>
+                                    <RouterGroup imx:id="RTR_GRP_001" 
+                                               name="HIGH_VALUE" 
+                                               condition="total_transaction_amount &gt; 10000"
+                                               description="High value customers">
+                                        <TransformationFieldPort imx:id="PORT_RTR_HIGH_001" 
+                                                               name="customer_key" 
+                                                               type="bigint" 
+                                                               direction="OUTPUT" 
+                                                               nullable="false"/>
+                                        <TransformationFieldPort imx:id="PORT_RTR_HIGH_002" 
+                                                               name="total_transaction_amount" 
+                                                               type="decimal" 
+                                                               direction="OUTPUT" 
+                                                               nullable="true"/>
+                                        <TransformationFieldPort imx:id="PORT_RTR_HIGH_003" 
+                                                               name="segment" 
+                                                               type="string" 
+                                                               direction="OUTPUT" 
+                                                               nullable="false"
+                                                               defaultValue="HIGH_VALUE"/>
+                                    </RouterGroup>
+                                    <RouterGroup imx:id="RTR_GRP_002" 
+                                               name="MEDIUM_VALUE" 
+                                               condition="total_transaction_amount BETWEEN 1000 AND 10000"
+                                               description="Medium value customers">
+                                        <TransformationFieldPort imx:id="PORT_RTR_MED_001" 
+                                                               name="customer_key" 
+                                                               type="bigint" 
+                                                               direction="OUTPUT" 
+                                                               nullable="false"/>
+                                        <TransformationFieldPort imx:id="PORT_RTR_MED_002" 
+                                                               name="total_transaction_amount" 
+                                                               type="decimal" 
+                                                               direction="OUTPUT" 
+                                                               nullable="true"/>
+                                        <TransformationFieldPort imx:id="PORT_RTR_MED_003" 
+                                                               name="segment" 
+                                                               type="string" 
+                                                               direction="OUTPUT" 
+                                                               nullable="false"
+                                                               defaultValue="MEDIUM_VALUE"/>
+                                    </RouterGroup>
+                                    <RouterGroup imx:id="RTR_GRP_003" 
+                                               name="DEFAULT" 
+                                               condition="1=1"
+                                               description="Default group for all other customers">
+                                        <TransformationFieldPort imx:id="PORT_RTR_DEF_001" 
+                                                               name="customer_key" 
+                                                               type="bigint" 
+                                                               direction="OUTPUT" 
+                                                               nullable="false"/>
+                                        <TransformationFieldPort imx:id="PORT_RTR_DEF_002" 
+                                                               name="total_transaction_amount" 
+                                                               type="decimal" 
+                                                               direction="OUTPUT" 
+                                                               nullable="true"/>
+                                        <TransformationFieldPort imx:id="PORT_RTR_DEF_003" 
+                                                               name="segment" 
+                                                               type="string" 
+                                                               direction="OUTPUT" 
+                                                               nullable="false"
+                                                               defaultValue="LOW_VALUE"/>
+                                    </RouterGroup>
+                                </outputGroups>
+                            </TransformationDefinition>
+
+                            <!-- Union Transformation -->
+                            <TransformationDefinition imx:id="TRANS_008" 
+                                                    xsi:type="UnionTransformation" 
+                                                    name="UNI_Combine_Segments"
+                                                    description="Combine all customer segments back into unified dataset"
+                                                    instance="INST_TRANS_008"
+                                                    unionType="UNION_ALL">
+                                
+                                <!-- Input Groups -->
+                                <inputGroups>
+                                    <UnionInputGroup imx:id="UNI_GRP_001" name="HIGH_VALUE_INPUT">
+                                        <TransformationFieldPort imx:id="PORT_UNI_HIGH_IN_001" 
+                                                               name="customer_key" 
+                                                               type="bigint" 
+                                                               direction="INPUT" 
+                                                               nullable="false"
+                                                               fromPort="PORT_RTR_HIGH_001"/>
+                                        <TransformationFieldPort imx:id="PORT_UNI_HIGH_IN_002" 
+                                                               name="segment" 
+                                                               type="string" 
+                                                               direction="INPUT" 
+                                                               nullable="false"
+                                                               fromPort="PORT_RTR_HIGH_003"/>
+                                    </UnionInputGroup>
+                                    <UnionInputGroup imx:id="UNI_GRP_002" name="MEDIUM_VALUE_INPUT">
+                                        <TransformationFieldPort imx:id="PORT_UNI_MED_IN_001" 
+                                                               name="customer_key" 
+                                                               type="bigint" 
+                                                               direction="INPUT" 
+                                                               nullable="false"
+                                                               fromPort="PORT_RTR_MED_001"/>
+                                        <TransformationFieldPort imx:id="PORT_UNI_MED_IN_002" 
+                                                               name="segment" 
+                                                               type="string" 
+                                                               direction="INPUT" 
+                                                               nullable="false"
+                                                               fromPort="PORT_RTR_MED_003"/>
+                                    </UnionInputGroup>
+                                    <UnionInputGroup imx:id="UNI_GRP_003" name="DEFAULT_INPUT">
+                                        <TransformationFieldPort imx:id="PORT_UNI_DEF_IN_001" 
+                                                               name="customer_key" 
+                                                               type="bigint" 
+                                                               direction="INPUT" 
+                                                               nullable="false"
+                                                               fromPort="PORT_RTR_DEF_001"/>
+                                        <TransformationFieldPort imx:id="PORT_UNI_DEF_IN_002" 
+                                                               name="segment" 
+                                                               type="string" 
+                                                               direction="INPUT" 
+                                                               nullable="false"
+                                                               fromPort="PORT_RTR_DEF_003"/>
+                                    </UnionInputGroup>
+                                </inputGroups>
+
+                                <!-- Output Ports -->
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_UNI_OUT_001" 
+                                                           name="customer_key" 
+                                                           type="bigint" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_UNI_OUT_002" 
+                                                           name="segment" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                </outputPorts>
+                            </TransformationDefinition>
+
+                            <!-- Java/SCD Transformation -->
+                            <TransformationDefinition imx:id="TRANS_009" 
+                                                    xsi:type="JavaTransformation" 
+                                                    name="SCD_Customer_Dimension"
+                                                    description="Slowly Changing Dimension Type 2 implementation for customer data"
+                                                    instance="INST_TRANS_009"
+                                                    javaCodeType="SCD_TYPE2">
+                                
+                                <!-- Input Ports -->
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_SCD_IN_001" 
+                                                           name="customer_key" 
+                                                           type="bigint" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_UNI_OUT_001"/>
+                                    <TransformationFieldPort imx:id="PORT_SCD_IN_002" 
+                                                           name="segment" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_UNI_OUT_002"/>
+                                </inputPorts>
+
+                                <!-- Output Ports -->
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_SCD_OUT_001" 
+                                                           name="customer_key" 
+                                                           type="bigint" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_SCD_OUT_002" 
+                                                           name="segment" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_SCD_OUT_003" 
+                                                           name="effective_date" 
+                                                           type="timestamp" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_SCD_OUT_004" 
+                                                           name="expiry_date" 
+                                                           type="timestamp" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_SCD_OUT_005" 
+                                                           name="is_current" 
+                                                           type="boolean" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_SCD_OUT_006" 
+                                                           name="version_number" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                </outputPorts>
+
+                                <!-- SCD Configuration -->
+                                <scdConfiguration>
+                                    <SCDType>TYPE2</SCDType>
+                                    <HistoryTableName>customer_dimension_history</HistoryTableName>
+                                    <EffectiveDateColumn>effective_date</EffectiveDateColumn>
+                                    <ExpiryDateColumn>expiry_date</ExpiryDateColumn>
+                                    <CurrentFlagColumn>is_current</CurrentFlagColumn>
+                                    <VersionColumn>version_number</VersionColumn>
+                                    <CompareColumns>
+                                        <CompareColumn>segment</CompareColumn>
+                                    </CompareColumns>
+                                </scdConfiguration>
+                            </TransformationDefinition>
+
+                            <!-- INDEPENDENT PARALLEL CHAIN: Product Data Processing -->
+                            
+                            <!-- Product Expression Transformation -->
+                            <TransformationDefinition imx:id="TRANS_010" 
+                                                    xsi:type="ExpressionTransformation" 
+                                                    name="EXP_Product_Enrichment"
+                                                    description="Enrich product data with calculated fields"
+                                                    instance="INST_TRANS_010">
+                                
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_PROD_EXP_IN_001" 
+                                                           name="product_id" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SRC_012"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_EXP_IN_002" 
+                                                           name="product_name" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SRC_013"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_EXP_IN_003" 
+                                                           name="category" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_SRC_014"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_EXP_IN_004" 
+                                                           name="price" 
+                                                           type="decimal" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_SRC_015"/>
+                                </inputPorts>
+
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_PROD_EXP_OUT_001" 
+                                                           name="product_id" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_EXP_OUT_002" 
+                                                           name="product_name_clean" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_EXP_OUT_003" 
+                                                           name="category_standardized" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_EXP_OUT_004" 
+                                                           name="price_tier" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_EXP_OUT_005" 
+                                                           name="profit_margin" 
+                                                           type="decimal" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                </outputPorts>
+
+                                <expressions>
+                                    <Expression>
+                                        <name>product_name_clean</name>
+                                        <formula>UPPER(TRIM(product_name))</formula>
+                                    </Expression>
+                                    <Expression>
+                                        <name>category_standardized</name>
+                                        <formula>IIF(ISNULL(category), 'UNCATEGORIZED', UPPER(category))</formula>
+                                    </Expression>
+                                    <Expression>
+                                        <name>price_tier</name>
+                                        <formula>IIF(price > 100, 'PREMIUM', IIF(price > 50, 'STANDARD', 'BUDGET'))</formula>
+                                    </Expression>
+                                    <Expression>
+                                        <name>profit_margin</name>
+                                        <formula>price * 0.25</formula>
+                                    </Expression>
+                                </expressions>
+                            </TransformationDefinition>
+
+                            <!-- Product Lookup Transformation -->
+                            <TransformationDefinition imx:id="TRANS_011" 
+                                                    xsi:type="LookupTransformation" 
+                                                    name="LKP_Product_Suppliers"
+                                                    description="Lookup supplier information for products"
+                                                    instance="INST_TRANS_011"
+                                                    lookupType="CONNECTED"
+                                                    cacheType="DYNAMIC">
+
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_PROD_LKP_IN_001" 
+                                                           name="product_id" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_PROD_EXP_OUT_001"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_LKP_IN_002" 
+                                                           name="category_standardized" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_PROD_EXP_OUT_003"/>
+                                </inputPorts>
+
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_PROD_LKP_OUT_001" 
+                                                           name="product_id" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_LKP_OUT_002" 
+                                                           name="supplier_id" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_LKP_OUT_003" 
+                                                           name="supplier_name" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_LKP_OUT_004" 
+                                                           name="supplier_rating" 
+                                                           type="decimal" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                </outputPorts>
+
+                                <lookupConditions>
+                                    <LookupCondition>
+                                        <sourceColumn>product_id</sourceColumn>
+                                        <lookupColumn>product_id</lookupColumn>
+                                        <operator>EQUALS</operator>
+                                    </LookupCondition>
+                                </lookupConditions>
+                            </TransformationDefinition>
+
+                            <!-- Product Aggregator Transformation -->
+                            <TransformationDefinition imx:id="TRANS_012" 
+                                                    xsi:type="AggregatorTransformation" 
+                                                    name="AGG_Product_Metrics"
+                                                    description="Calculate product performance metrics"
+                                                    instance="INST_TRANS_012">
+
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_PROD_AGG_IN_001" 
+                                                           name="supplier_id" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_PROD_LKP_OUT_002"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_AGG_IN_002" 
+                                                           name="supplier_name" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_PROD_LKP_OUT_003"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_AGG_IN_003" 
+                                                           name="supplier_rating" 
+                                                           type="decimal" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_PROD_LKP_OUT_004"/>
+                                </inputPorts>
+
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_PROD_AGG_OUT_001" 
+                                                           name="supplier_id" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_AGG_OUT_002" 
+                                                           name="supplier_name" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_AGG_OUT_003" 
+                                                           name="total_products" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_AGG_OUT_004" 
+                                                           name="avg_supplier_rating" 
+                                                           type="decimal" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                </outputPorts>
+
+                                <groupBy>
+                                    <GroupByColumn>supplier_id</GroupByColumn>
+                                    <GroupByColumn>supplier_name</GroupByColumn>
+                                </groupBy>
+
+                                <aggregateExpressions>
+                                    <AggregateExpression>
+                                        <name>total_products</name>
+                                        <function>COUNT</function>
+                                        <sourceColumn>supplier_id</sourceColumn>
+                                    </AggregateExpression>
+                                    <AggregateExpression>
+                                        <name>avg_supplier_rating</name>
+                                        <function>AVG</function>
+                                        <sourceColumn>supplier_rating</sourceColumn>
+                                    </AggregateExpression>
+                                </aggregateExpressions>
+                            </TransformationDefinition>
+
+                            <!-- Product Sorter Transformation -->
+                            <TransformationDefinition imx:id="TRANS_013" 
+                                                    xsi:type="SorterTransformation" 
+                                                    name="SRT_Product_Ranking"
+                                                    description="Rank suppliers by performance metrics"
+                                                    instance="INST_TRANS_013"
+                                                    caseSensitive="false"
+                                                    sortDistinct="false">
+
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_PROD_SRT_IN_001" 
+                                                           name="supplier_id" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_PROD_AGG_OUT_001"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_SRT_IN_002" 
+                                                           name="supplier_name" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_PROD_AGG_OUT_002"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_SRT_IN_003" 
+                                                           name="total_products" 
+                                                           type="integer" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_PROD_AGG_OUT_003"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_SRT_IN_004" 
+                                                           name="avg_supplier_rating" 
+                                                           type="decimal" 
+                                                           direction="INPUT" 
+                                                           nullable="true"
+                                                           fromPort="PORT_PROD_AGG_OUT_004"/>
+                                </inputPorts>
+
+                                <outputPorts>
+                                    <TransformationFieldPort imx:id="PORT_PROD_SRT_OUT_001" 
+                                                           name="supplier_id" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_SRT_OUT_002" 
+                                                           name="supplier_name" 
+                                                           type="string" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_SRT_OUT_003" 
+                                                           name="supplier_rank" 
+                                                           type="integer" 
+                                                           direction="OUTPUT" 
+                                                           nullable="false"/>
+                                    <TransformationFieldPort imx:id="PORT_PROD_SRT_OUT_004" 
+                                                           name="performance_score" 
+                                                           type="decimal" 
+                                                           direction="OUTPUT" 
+                                                           nullable="true"/>
+                                </outputPorts>
+
+                                <sortColumns>
+                                    <SortColumn>
+                                        <columnName>avg_supplier_rating</columnName>
+                                        <direction>DESC</direction>
+                                    </SortColumn>
+                                    <SortColumn>
+                                        <columnName>total_products</columnName>
+                                        <direction>DESC</direction>
+                                    </SortColumn>
+                                </sortColumns>
+                            </TransformationDefinition>
+                        </transformations>
+
+                        <!-- Target Definition -->
+                        <targets>
+                            <TargetDefinition imx:id="TGT_001" 
+                                            xsi:type="TargetDefinition" 
+                                            name="TGT_Customer_Data_Warehouse"
+                                            description="Enterprise customer data warehouse target"
+                                            connection="ENTERPRISE_HIVE_CONN"
+                                            instance="INST_TGT_001"
+                                            loadType="BULK"
+                                            updateStrategy="INSERT">
+                                
+                                <!-- Input Ports -->
+                                <inputPorts>
+                                    <TransformationFieldPort imx:id="PORT_TGT_IN_001" 
+                                                           name="customer_key" 
+                                                           type="bigint" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SCD_OUT_001"/>
+                                    <TransformationFieldPort imx:id="PORT_TGT_IN_002" 
+                                                           name="segment" 
+                                                           type="string" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SCD_OUT_002"/>
+                                    <TransformationFieldPort imx:id="PORT_TGT_IN_003" 
+                                                           name="effective_date" 
+                                                           type="timestamp" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SCD_OUT_003"/>
+                                    <TransformationFieldPort imx:id="PORT_TGT_IN_004" 
+                                                           name="is_current" 
+                                                           type="boolean" 
+                                                           direction="INPUT" 
+                                                           nullable="false"
+                                                           fromPort="PORT_SCD_OUT_005"/>
+                                </inputPorts>
+
+                                <!-- Target Data Object -->
+                                <dataTarget>
+                                    <DataObject name="customer_data_warehouse" 
+                                              objectType="Table"
+                                              schema="enterprise_edw"
+                                              database="enterprise_edw">
+                                        <dataRecords>
+                                            <DataRecord imx:id="REC_TGT_001" name="customer_dw_record">
+                                                <DataRecordField imx:id="FIELD_TGT_001" 
+                                                               name="customer_key" 
+                                                               type="bigint" 
+                                                               nullable="false" 
+                                                               primaryKey="true"/>
+                                                <DataRecordField imx:id="FIELD_TGT_002" 
+                                                               name="segment" 
+                                                               type="string" 
+                                                               length="50" 
+                                                               nullable="false"/>
+                                                <DataRecordField imx:id="FIELD_TGT_003" 
+                                                               name="effective_date" 
+                                                               type="timestamp" 
+                                                               nullable="false"/>
+                                                <DataRecordField imx:id="FIELD_TGT_004" 
+                                                               name="is_current" 
+                                                               type="boolean" 
+                                                               nullable="false"/>
+                                                <DataRecordField imx:id="FIELD_TGT_005" 
+                                                               name="load_timestamp" 
+                                                               type="timestamp" 
+                                                               nullable="false"/>
+                                                <DataRecordField imx:id="FIELD_TGT_006" 
+                                                               name="load_date" 
+                                                               type="date" 
+                                                               nullable="false"/>
+                                            </DataRecord>
+                                        </dataRecords>
+                                    </DataObject>
+                                </dataTarget>
+
+                                <!-- Field Mappings -->
+                                <fieldMappings>
+                                    <FieldMapping imx:id="MAP_001" 
+                                                sourcePort="PORT_TGT_IN_001" 
+                                                targetField="FIELD_TGT_001"/>
+                                    <FieldMapping imx:id="MAP_002" 
+                                                sourcePort="PORT_TGT_IN_002" 
+                                                targetField="FIELD_TGT_002"/>
+                                    <FieldMapping imx:id="MAP_003" 
+                                                sourcePort="PORT_TGT_IN_003" 
+                                                targetField="FIELD_TGT_003"/>
+                                    <FieldMapping imx:id="MAP_004" 
+                                                sourcePort="PORT_TGT_IN_004" 
+                                                targetField="FIELD_TGT_004"/>
+                                </fieldMappings>
+                            </TargetDefinition>
+                        </targets>
+
+                        <!-- Mapping Links (Data Flow Dependencies) -->
+                        <mappingLinks>
+                            <!-- Source to Expression -->
+                            <MappingLink imx:id="LINK_001" 
+                                       fromInstance="INST_SRC_001" 
+                                       fromPort="PORT_SRC_002" 
+                                       toInstance="INST_TRANS_001" 
+                                       toPort="PORT_EXP_IN_001"
+                                       linkType="DATA_FLOW"/>
+                            <MappingLink imx:id="LINK_002" 
+                                       fromInstance="INST_SRC_001" 
+                                       fromPort="PORT_SRC_003" 
+                                       toInstance="INST_TRANS_001" 
+                                       toPort="PORT_EXP_IN_002"
+                                       linkType="DATA_FLOW"/>
+                            
+                            <!-- Expression to Joiner (Master) -->
+                            <MappingLink imx:id="LINK_003" 
+                                       fromInstance="INST_TRANS_001" 
+                                       fromPort="PORT_EXP_OUT_001" 
+                                       toInstance="INST_TRANS_002" 
+                                       toPort="PORT_JNR_MST_002"
+                                       linkType="DATA_FLOW"/>
+                            
+                            <!-- Source to Joiner (Detail) -->
+                            <MappingLink imx:id="LINK_004" 
+                                       fromInstance="INST_SRC_002" 
+                                       fromPort="PORT_SRC_008" 
+                                       toInstance="INST_TRANS_002" 
+                                       toPort="PORT_JNR_DTL_001"
+                                       linkType="DATA_FLOW"/>
+                            
+                            <!-- Joiner to Aggregator -->
+                            <MappingLink imx:id="LINK_005" 
+                                       fromInstance="INST_TRANS_002" 
+                                       fromPort="PORT_JNR_OUT_001" 
+                                       toInstance="INST_TRANS_003" 
+                                       toPort="PORT_AGG_IN_001"
+                                       linkType="DATA_FLOW"/>
+                            
+                            <!-- Aggregator to Lookup -->
+                            <MappingLink imx:id="LINK_006" 
+                                       fromInstance="INST_TRANS_003" 
+                                       fromPort="PORT_AGG_OUT_001" 
+                                       toInstance="INST_TRANS_004" 
+                                       toPort="PORT_LKP_IN_001"
+                                       linkType="DATA_FLOW"/>
+                            
+                            <!-- Lookup to Sequence -->
+                            <MappingLink imx:id="LINK_007" 
+                                       fromInstance="INST_TRANS_004" 
+                                       fromPort="PORT_LKP_OUT_001" 
+                                       toInstance="INST_TRANS_005" 
+                                       toPort="PORT_SEQ_IN_001"
+                                       linkType="DATA_FLOW"/>
+                            
+                            <!-- Sequence to Sorter -->
+                            <MappingLink imx:id="LINK_008" 
+                                       fromInstance="INST_TRANS_005" 
+                                       fromPort="PORT_SEQ_OUT_002" 
+                                       toInstance="INST_TRANS_006" 
+                                       toPort="PORT_SRT_IN_001"
+                                       linkType="DATA_FLOW"/>
+                            
+                            <!-- Sorter to Router -->
+                            <MappingLink imx:id="LINK_009" 
+                                       fromInstance="INST_TRANS_006" 
+                                       fromPort="PORT_SRT_OUT_001" 
+                                       toInstance="INST_TRANS_007" 
+                                       toPort="PORT_RTR_IN_001"
+                                       linkType="DATA_FLOW"/>
+                            
+                            <!-- Router to Union (multiple paths) -->
+                            <MappingLink imx:id="LINK_010" 
+                                       fromInstance="INST_TRANS_007" 
+                                       fromPort="PORT_RTR_HIGH_001" 
+                                       toInstance="INST_TRANS_008" 
+                                       toPort="PORT_UNI_HIGH_IN_001"
+                                       linkType="DATA_FLOW"/>
+                            <MappingLink imx:id="LINK_011" 
+                                       fromInstance="INST_TRANS_007" 
+                                       fromPort="PORT_RTR_MED_001" 
+                                       toInstance="INST_TRANS_008" 
+                                       toPort="PORT_UNI_MED_IN_001"
+                                       linkType="DATA_FLOW"/>
+                            <MappingLink imx:id="LINK_012" 
+                                       fromInstance="INST_TRANS_007" 
+                                       fromPort="PORT_RTR_DEF_001" 
+                                       toInstance="INST_TRANS_008" 
+                                       toPort="PORT_UNI_DEF_IN_001"
+                                       linkType="DATA_FLOW"/>
+                            
+                            <!-- Union to SCD -->
+                            <MappingLink imx:id="LINK_013" 
+                                       fromInstance="INST_TRANS_008" 
+                                       fromPort="PORT_UNI_OUT_001" 
+                                       toInstance="INST_TRANS_009" 
+                                       toPort="PORT_SCD_IN_001"
+                                       linkType="DATA_FLOW"/>
+                            
+                            <!-- SCD to Target -->
+                            <MappingLink imx:id="LINK_014" 
+                                       fromInstance="INST_TRANS_009" 
+                                       fromPort="PORT_SCD_OUT_001" 
+                                       toInstance="INST_TGT_001" 
+                                       toPort="PORT_TGT_IN_001"
+                                       linkType="DATA_FLOW"/>
+                        </mappingLinks>
+                    </IObject>
+
+                    <!-- Workflow Definition -->
+                    <IObject imx:id="WORKFLOW_001" 
+                             xsi:type="workflow:Workflow" 
+                             name="wf_Enterprise_Complete_ETL"
+                             description="Master workflow orchestrating complete ETL process"
+                             version="2.1"
+                             isReusable="false"
+                             runOnce="false">
+                        
+                        <imx:annotations>
+                            <imx:lGenericAnnotations>
+                                <Annotation name="SchedulePattern" value="Daily at 2:00 AM"/>
+                                <Annotation name="MaxRunTime" value="4 hours"/>
+                                <Annotation name="NotificationLevel" value="ERROR_WARNING"/>
+                                <Annotation name="BusinessOwner" value="Data Operations Team"/>
+                            </imx:lGenericAnnotations>
+                        </imx:annotations>
+
+                        <!-- Workflow Parameters -->
+                        <parameters>
+                            <UserDefinedParameter imx:id="WF_PARAM_001" 
+                                                name="$$WorkflowRunId" 
+                                                type="integer" 
+                                                defaultValue="1"
+                                                description="Unique workflow run identifier"/>
+                            <UserDefinedParameter imx:id="WF_PARAM_002" 
+                                                name="$$MaxErrorCount" 
+                                                type="integer" 
+                                                defaultValue="10"
+                                                description="Maximum errors before workflow failure"/>
+                        </parameters>
+
+                        <!-- Workflow Tasks -->
+                        <tasks>
+                            <!-- Start Task -->
+                            <TaskInstance imx:id="TASK_001" 
+                                        xsi:type="StartTask" 
+                                        name="START"
+                                        description="Workflow start point"
+                                        instance="INST_TASK_001">
+                                <characteristics>
+                                    <Characteristic name="StartCondition" value="ON_DEMAND"/>
+                                    <Characteristic name="RecoveryStrategy" value="RESTART_TASK"/>
+                                </characteristics>
+                                
+                                <!-- Outgoing Sequence Flows -->
+                                <outgoingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_001" 
+                                                fromInstance="TASK_001" 
+                                                toInstance="TASK_002"
+                                                condition="SUCCEEDED"
+                                                description="Start to Pre-processing"/>
+                                </outgoingSequenceFlows>
+                            </TaskInstance>
+
+                            <!-- Pre-Session Command -->
+                            <TaskInstance imx:id="TASK_002" 
+                                        xsi:type="CommandTask" 
+                                        name="CMD_Pre_Processing"
+                                        description="Pre-processing validation and setup"
+                                        instance="INST_TASK_002"
+                                        command="$PMSourceDir/scripts/pre_validation.sh"
+                                        workingDirectory="/opt/informatica/scripts">
+                                <characteristics>
+                                    <Characteristic name="FailParentIfTaskFails" value="true"/>
+                                    <Characteristic name="TreatInputLinksAsAND" value="true"/>
+                                </characteristics>
+                                
+                                <!-- Incoming Sequence Flows -->
+                                <incomingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_001" 
+                                                fromInstance="TASK_001" 
+                                                toInstance="TASK_002"
+                                                condition="SUCCEEDED"
+                                                description="Start to Pre-processing"/>
+                                </incomingSequenceFlows>
+                                
+                                <!-- Outgoing Sequence Flows -->
+                                <outgoingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_002" 
+                                                fromInstance="TASK_002" 
+                                                toInstance="TASK_003"
+                                                condition="SUCCEEDED"
+                                                description="Pre-processing to Main Session"/>
+                                </outgoingSequenceFlows>
+                                
+                                <!-- Legacy Task Links (for backward compatibility) -->
+                                <inputLinks>
+                                    <TaskLink imx:id="TLINK_001" 
+                                            fromTask="TASK_001" 
+                                            toTask="TASK_002" 
+                                            linkCondition="SUCCEEDED"
+                                            linkDescription="Start to Pre-processing"/>
+                                </inputLinks>
+                            </TaskInstance>
+
+                            <!-- Session Task -->
+                            <TaskInstance imx:id="TASK_003" 
+                                        xsi:type="SessionTask" 
+                                        name="s_m_Complete_Transformation_Showcase"
+                                        description="Main ETL session for complete transformation showcase"
+                                        instance="INST_TASK_003"
+                                        mappingName="m_Complete_Transformation_Showcase"
+                                        mappingInstance="INST_MAPPING_001">
+                                
+                                <!-- Session Configuration -->
+                                <sessionConfig>
+                                    <Characteristic name="EnableCheckpoint" value="true"/>
+                                    <Characteristic name="CheckpointDirectory" value="/opt/informatica/server/infa_shared/Checkpoint"/>
+                                    <Characteristic name="CommitInterval" value="10000"/>
+                                    <Characteristic name="EnableRowErrorLogging" value="true"/>
+                                    <Characteristic name="StopOnErrors" value="10"/>
+                                    <Characteristic name="SessionLogLevel" value="NORMAL"/>
+                                    <Characteristic name="OptimizationLevel" value="FULL"/>
+                                    <Characteristic name="DTMBufferSize" value="12000000"/>
+                                    <Characteristic name="CollectPerformanceData" value="true"/>
+                                </sessionConfig>
+
+                                <!-- Connection Overrides -->
+                                <connectionOverrides>
+                                    <ConnectionOverride sourceConnection="ENTERPRISE_HIVE_CONN" 
+                                                      targetConnection="ENTERPRISE_HIVE_CONN"/>
+                                </connectionOverrides>
+
+                                <!-- Incoming Sequence Flows -->
+                                <incomingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_002" 
+                                                fromInstance="TASK_002" 
+                                                toInstance="TASK_003"
+                                                condition="SUCCEEDED"
+                                                description="Pre-processing to Main Session"/>
+                                </incomingSequenceFlows>
+                                
+                                <!-- Outgoing Sequence Flows -->
+                                <outgoingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_003" 
+                                                fromInstance="TASK_003" 
+                                                toInstance="TASK_004"
+                                                condition="SUCCEEDED"
+                                                description="Main Session Success to Post-processing"/>
+                                    <SequenceFlow imx:id="SEQ_FLOW_004" 
+                                                fromInstance="TASK_003" 
+                                                toInstance="TASK_006"
+                                                condition="FAILED"
+                                                description="Main Session Failure to Error Handler"/>
+                                    <SequenceFlow imx:id="SEQ_FLOW_005" 
+                                                fromInstance="TASK_003" 
+                                                toInstance="TASK_005"
+                                                condition="SUCCEEDED"
+                                                description="Main Session Success to Data Quality Check"/>
+                                </outgoingSequenceFlows>
+
+                                <!-- Legacy Task Dependencies -->
+                                <inputLinks>
+                                    <TaskLink imx:id="TLINK_002" 
+                                            fromTask="TASK_002" 
+                                            toTask="TASK_003" 
+                                            linkCondition="SUCCEEDED"
+                                            linkDescription="Pre-process to Main Session"/>
+                                </inputLinks>
+
+                                <!-- Legacy Task Success/Failure Links -->
+                                <outputLinks>
+                                    <TaskLink imx:id="TLINK_003" 
+                                            fromTask="TASK_003" 
+                                            toTask="TASK_004" 
+                                            linkCondition="SUCCEEDED"
+                                            linkDescription="Main Session Success to Post-processing"/>
+                                    <TaskLink imx:id="TLINK_004" 
+                                            fromTask="TASK_003" 
+                                            toTask="TASK_006" 
+                                            linkCondition="FAILED"
+                                            linkDescription="Main Session Failure to Error Handler"/>
+                                </outputLinks>
+                            </TaskInstance>
+
+                            <!-- Post-Session Success Command -->
+                            <TaskInstance imx:id="TASK_004" 
+                                        xsi:type="CommandTask" 
+                                        name="CMD_Post_Processing_Success"
+                                        description="Post-processing cleanup and notifications"
+                                        instance="INST_TASK_004"
+                                        command="$PMSourceDir/scripts/post_success.sh"
+                                        workingDirectory="/opt/informatica/scripts">
+                                <characteristics>
+                                    <Characteristic name="FailParentIfTaskFails" value="false"/>
+                                    <Characteristic name="TreatInputLinksAsAND" value="true"/>
+                                </characteristics>
+                                
+                                <!-- Incoming Sequence Flows -->
+                                <incomingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_003" 
+                                                fromInstance="TASK_003" 
+                                                toInstance="TASK_004"
+                                                condition="SUCCEEDED"
+                                                description="Main Session Success to Post-processing"/>
+                                </incomingSequenceFlows>
+                                
+                                <!-- Outgoing Sequence Flows -->
+                                <outgoingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_006" 
+                                                fromInstance="TASK_004" 
+                                                toInstance="TASK_005"
+                                                condition="SUCCEEDED"
+                                                description="Post-processing to Success Email"/>
+                                </outgoingSequenceFlows>
+                            </TaskInstance>
+
+                            <!-- Email Notification Success -->
+                            <TaskInstance imx:id="TASK_005" 
+                                        xsi:type="EmailTask" 
+                                        name="EMAIL_Success_Notification"
+                                        description="Send success notification to stakeholders"
+                                        instance="INST_TASK_005">
+                                
+                                <!-- Email Configuration -->
+                                <emailConfig>
+                                    <EmailContactDetails imx:id="EMAIL_001">
+                                        <toEmailRecipients>
+                                            <EmailRecipient imx:id="EMAIL_TO_001" 
+                                                          email="data-ops@enterprise.com" 
+                                                          name="Data Operations Team"/>
+                                            <EmailRecipient imx:id="EMAIL_TO_002" 
+                                                          email="business-users@enterprise.com" 
+                                                          name="Business Users"/>
+                                        </toEmailRecipients>
+                                        <ccEmailRecipients>
+                                            <EmailRecipient imx:id="EMAIL_CC_001" 
+                                                          email="data-governance@enterprise.com" 
+                                                          name="Data Governance"/>
+                                        </ccEmailRecipients>
+                                        <fromEmailRecipient imx:id="EMAIL_FROM_001" 
+                                                          email="informatica-noreply@enterprise.com" 
+                                                          name="Informatica System"/>
+                                    </EmailContactDetails>
+                                    <emailSubject>SUCCESS: Enterprise Complete ETL Workflow Completed</emailSubject>
+                                    <emailText>
+                                        The Enterprise Complete ETL workflow has completed successfully.
+                                        
+                                        Workflow: wf_Enterprise_Complete_ETL
+                                        Run ID: $$WorkflowRunId
+                                        Completion Time: $WORKFLOW_END_TIME
+                                        
+                                        Please verify data quality in the enterprise data warehouse.
+                                    </emailText>
+                                </emailConfig>
+
+                                <!-- Incoming Sequence Flows -->
+                                <incomingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_005" 
+                                                fromInstance="TASK_003" 
+                                                toInstance="TASK_005"
+                                                condition="SUCCEEDED"
+                                                description="Main Session Success to Data Quality Check"/>
+                                    <SequenceFlow imx:id="SEQ_FLOW_006" 
+                                                fromInstance="TASK_004" 
+                                                toInstance="TASK_005"
+                                                condition="SUCCEEDED"
+                                                description="Post-processing to Success Email"/>
+                                </incomingSequenceFlows>
+                                
+                                <!-- Outgoing Sequence Flows -->
+                                <outgoingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_007" 
+                                                fromInstance="TASK_005" 
+                                                toInstance="TASK_008"
+                                                condition="SUCCEEDED"
+                                                description="Success Email to Workflow End"/>
+                                </outgoingSequenceFlows>
+
+                                <!-- Legacy Task Links -->
+                                <inputLinks>
+                                    <TaskLink imx:id="TLINK_005" 
+                                            fromTask="TASK_004" 
+                                            toTask="TASK_005" 
+                                            linkCondition="SUCCEEDED"
+                                            linkDescription="Post-process to Success Email"/>
+                                </inputLinks>
+                            </TaskInstance>
+
+                            <!-- Error Handler Task -->
+                            <TaskInstance imx:id="TASK_006" 
+                                        xsi:type="CommandTask" 
+                                        name="CMD_Error_Handler"
+                                        description="Handle workflow errors and cleanup"
+                                        instance="INST_TASK_006"
+                                        command="$PMSourceDir/scripts/error_handler.sh"
+                                        workingDirectory="/opt/informatica/scripts">
+                                <characteristics>
+                                    <Characteristic name="FailParentIfTaskFails" value="false"/>
+                                    <Characteristic name="TreatInputLinksAsAND" value="false"/>
+                                </characteristics>
+                                
+                                <!-- Incoming Sequence Flows -->
+                                <incomingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_004" 
+                                                fromInstance="TASK_003" 
+                                                toInstance="TASK_006"
+                                                condition="FAILED"
+                                                description="Main Session Failure to Error Handler"/>
+                                </incomingSequenceFlows>
+                                
+                                <!-- Outgoing Sequence Flows -->
+                                <outgoingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_008" 
+                                                fromInstance="TASK_006" 
+                                                toInstance="TASK_007"
+                                                condition="SUCCEEDED"
+                                                description="Error Handler to Failure Email"/>
+                                </outgoingSequenceFlows>
+                            </TaskInstance>
+
+                            <!-- Email Notification Failure -->
+                            <TaskInstance imx:id="TASK_007" 
+                                        xsi:type="EmailTask" 
+                                        name="EMAIL_Failure_Notification"
+                                        description="Send failure notification to support team"
+                                        instance="INST_TASK_007">
+                                
+                                <!-- Email Configuration -->
+                                <emailConfig>
+                                    <EmailContactDetails imx:id="EMAIL_002">
+                                        <toEmailRecipients>
+                                            <EmailRecipient imx:id="EMAIL_TO_003" 
+                                                          email="support@enterprise.com" 
+                                                          name="Support Team"/>
+                                            <EmailRecipient imx:id="EMAIL_TO_004" 
+                                                          email="data-ops@enterprise.com" 
+                                                          name="Data Operations Team"/>
+                                        </toEmailRecipients>
+                                        <fromEmailRecipient imx:id="EMAIL_FROM_002" 
+                                                          email="informatica-alerts@enterprise.com" 
+                                                          name="Informatica Alerts"/>
+                                    </EmailContactDetails>
+                                    <emailSubject>FAILURE: Enterprise Complete ETL Workflow Failed</emailSubject>
+                                    <emailText>
+                                        ALERT: The Enterprise Complete ETL workflow has failed.
+                                        
+                                        Workflow: wf_Enterprise_Complete_ETL
+                                        Run ID: $$WorkflowRunId
+                                        Failure Time: $WORKFLOW_END_TIME
+                                        Error: $WORKFLOW_ERROR_MSG
+                                        
+                                        Please investigate immediately and take corrective action.
+                                    </emailText>
+                                </emailConfig>
+
+                                <!-- Incoming Sequence Flows -->
+                                <incomingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_008" 
+                                                fromInstance="TASK_006" 
+                                                toInstance="TASK_007"
+                                                condition="SUCCEEDED"
+                                                description="Error Handler to Failure Email"/>
+                                </incomingSequenceFlows>
+                                
+                                <!-- Outgoing Sequence Flows -->
+                                <outgoingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_009" 
+                                                fromInstance="TASK_007" 
+                                                toInstance="TASK_008"
+                                                condition="SUCCEEDED"
+                                                description="Failure Email to Workflow End"/>
+                                </outgoingSequenceFlows>
+
+                                <!-- Legacy Task Links -->
+                                <inputLinks>
+                                    <TaskLink imx:id="TLINK_006" 
+                                            fromTask="TASK_006" 
+                                            toTask="TASK_007" 
+                                            linkCondition="SUCCEEDED"
+                                            linkDescription="Error Handler to Failure Email"/>
+                                </inputLinks>
+                            </TaskInstance>
+
+                            <!-- End Task -->
+                            <TaskInstance imx:id="TASK_008" 
+                                        xsi:type="EndTask" 
+                                        name="END"
+                                        description="Workflow end point"
+                                        instance="INST_TASK_008">
+                                <characteristics>
+                                    <Characteristic name="EndCondition" value="SUCCESS_OR_FAILURE"/>
+                                    <Characteristic name="CleanupTempFiles" value="true"/>
+                                </characteristics>
+                                
+                                <!-- Incoming Sequence Flows -->
+                                <incomingSequenceFlows>
+                                    <SequenceFlow imx:id="SEQ_FLOW_007" 
+                                                fromInstance="TASK_005" 
+                                                toInstance="TASK_008"
+                                                condition="SUCCEEDED"
+                                                description="Success Email to Workflow End"/>
+                                    <SequenceFlow imx:id="SEQ_FLOW_009" 
+                                                fromInstance="TASK_007" 
+                                                toInstance="TASK_008"
+                                                condition="SUCCEEDED"
+                                                description="Failure Email to Workflow End"/>
+                                </incomingSequenceFlows>
+                            </TaskInstance>
+                        </tasks>
+
+                        <!-- Workflow Links -->
+                        <workflowLinks>
+                            <WorkflowLink imx:id="WFLINK_001" 
+                                        fromTask="TASK_001" 
+                                        toTask="TASK_002" 
+                                        linkCondition="SUCCEEDED"/>
+                            <WorkflowLink imx:id="WFLINK_002" 
+                                        fromTask="TASK_002" 
+                                        toTask="TASK_003" 
+                                        linkCondition="SUCCEEDED"/>
+                            <WorkflowLink imx:id="WFLINK_003" 
+                                        fromTask="TASK_003" 
+                                        toTask="TASK_004" 
+                                        linkCondition="SUCCEEDED"/>
+                            <WorkflowLink imx:id="WFLINK_004" 
+                                        fromTask="TASK_003" 
+                                        toTask="TASK_006" 
+                                        linkCondition="FAILED"/>
+                            <WorkflowLink imx:id="WFLINK_005" 
+                                        fromTask="TASK_004" 
+                                        toTask="TASK_005" 
+                                        linkCondition="SUCCEEDED"/>
+                            <WorkflowLink imx:id="WFLINK_006" 
+                                        fromTask="TASK_006" 
+                                        toTask="TASK_007" 
+                                        linkCondition="SUCCEEDED"/>
+                        </workflowLinks>
+
+                        <!-- Workflow Events -->
+                        <workflowEvents>
+                            <WorkflowEvent imx:id="EVENT_001" 
+                                         name="OnWorkflowStart" 
+                                         eventType="WORKFLOW_START"
+                                         description="Triggered when workflow starts">
+                                <eventActions>
+                                    <Notification imx:id="NOTIF_001" 
+                                                type="LOG" 
+                                                message="Enterprise Complete ETL Workflow Started"/>
+                                </eventActions>
+                            </WorkflowEvent>
+                            <WorkflowEvent imx:id="EVENT_002" 
+                                         name="OnWorkflowComplete" 
+                                         eventType="WORKFLOW_COMPLETE"
+                                         description="Triggered when workflow completes">
+                                <eventActions>
+                                    <Notification imx:id="NOTIF_002" 
+                                                type="LOG" 
+                                                message="Enterprise Complete ETL Workflow Completed"/>
+                                </eventActions>
+                            </WorkflowEvent>
+                        </workflowEvents>
+
+                        <!-- Transport Information -->
+                        <TransportInfo imx:id="TRANSPORT_001">
+                            <deploymentGroups>
+                                <DeploymentGroup name="PRODUCTION" 
+                                               environment="PROD"
+                                               description="Production deployment group"/>
+                                <DeploymentGroup name="UAT" 
+                                               environment="TEST"
+                                               description="User acceptance testing"/>
+                            </deploymentGroups>
+                            <versionControl>
+                                <Characteristic name="Repository" value="Git"/>
+                                <Characteristic name="Branch" value="main"/>
+                                <Characteristic name="CommitHash" value="abc123def456"/>
+                                <Characteristic name="LastModified" value="2025-01-26T17:30:00Z"/>
+                            </versionControl>
+                        </TransportInfo>
+                    </IObject>
+                </contents>
+            </IObject>
+        </contents>
+    </project:Project>
+</imx:IMX>
