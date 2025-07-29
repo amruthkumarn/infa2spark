@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REPO:Project xmlns:REPO="http://www.informatica.com/repository" 
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <REPO:IObject xsi:type="REPO:PowerMartProject" projectName="WorkflowTestProject">
+        <REPO:IObject xsi:type="REPO:Folder" folderName="Workflows" folderType="WORKFLOW">
+            <REPO:IObject xsi:type="REPO:Workflow" workflowName="CustomerProcessingWorkflow">
+                <REPO:IObject xsi:type="REPO:StartTask" taskName="Start"/>
+                <REPO:IObject xsi:type="REPO:SessionTask" taskName="LoadCustomers" 
+                             mappingName="CustomerMapping"/>
+                <REPO:IObject xsi:type="REPO:SessionTask" taskName="ProcessOrders" 
+                             mappingName="OrderMapping"/>
+                <REPO:IObject xsi:type="REPO:DecisionTask" taskName="CheckDataQuality"/>
+                <REPO:IObject xsi:type="REPO:EmailTask" taskName="SendNotification"/>
+                <REPO:IObject xsi:type="REPO:EndTask" taskName="End"/>
+                
+                <!-- Workflow Links -->
+                <REPO:IObject xsi:type="REPO:WorkflowLink" fromTask="Start" toTask="LoadCustomers"/>
+                <REPO:IObject xsi:type="REPO:WorkflowLink" fromTask="LoadCustomers" toTask="ProcessOrders"/>
+                <REPO:IObject xsi:type="REPO:WorkflowLink" fromTask="ProcessOrders" toTask="CheckDataQuality"/>
+                <REPO:IObject xsi:type="REPO:WorkflowLink" fromTask="CheckDataQuality" toTask="SendNotification" 
+                             condition="SUCCESS"/>
+                <REPO:IObject xsi:type="REPO:WorkflowLink" fromTask="SendNotification" toTask="End"/>
+            </REPO:IObject>
+        </REPO:IObject>
+    </REPO:IObject>
+</REPO:Project>

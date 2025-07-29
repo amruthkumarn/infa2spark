@@ -1,0 +1,65 @@
+{
+  "customer_schema": {
+    "fields": [
+      {
+        "name": "customer_id",
+        "type": "integer",
+        "nullable": false
+      },
+      {
+        "name": "first_name",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "last_name",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "email",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "phone",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "department",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "salary",
+        "type": "decimal",
+        "nullable": true
+      },
+      {
+        "name": "hire_date",
+        "type": "date",
+        "nullable": true
+      }
+    ]
+  },
+  "department_schema": {
+    "fields": [
+      {
+        "name": "dept_id",
+        "type": "string",
+        "nullable": false
+      },
+      {
+        "name": "dept_name",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "manager",
+        "type": "string",
+        "nullable": true
+      }
+    ]
+  }
+}

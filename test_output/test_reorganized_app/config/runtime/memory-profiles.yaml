@@ -1,0 +1,97 @@
+component_overrides:
+  AGG_Customer_Metrics:
+    executor_memory: 6g
+    reason: Large customer aggregation dataset
+    shuffle_partitions: 800
+  LKP_Customer_Demographics:
+    broadcast_threshold: 200MB
+    cache_tables: true
+    reason: Frequently accessed lookup table
+  SCD_Customer_Dimension:
+    executor_memory: 2g
+    reason: Complex SCD logic requires additional memory
+    shuffle_partitions: 300
+environments:
+  development:
+    checkpoint_dir: /tmp/spark-checkpoints
+    global_scale_factor: 0.5
+    log_level: DEBUG
+    max_executors: 2
+    monitoring_enabled: false
+  production:
+    checkpoint_dir: s3a://spark-checkpoints/
+    global_scale_factor: 2.0
+    log_level: WARN
+    max_executors: 20
+    metrics_namespace: spark.etl
+    monitoring_enabled: true
+  testing:
+    checkpoint_dir: /tmp/spark-checkpoints
+    global_scale_factor: 0.7
+    log_level: INFO
+    max_executors: 4
+    monitoring_enabled: true
+memory_profiles:
+  aggregator_transformation:
+    description: High-memory configuration for aggregation operations
+    driver_memory: 2g
+    dynamic_allocation: true
+    executor_cores: 4
+    executor_memory: 4g
+    shuffle_partitions: 400
+  expression_transformation:
+    description: Standard configuration for expression transformations
+    driver_memory: 1g
+    dynamic_allocation: false
+    executor_cores: 2
+    executor_memory: 1g
+    shuffle_partitions: 100
+  java_transformation:
+    description: Configuration for custom Java transformations
+    driver_memory: 1g
+    executor_cores: 2
+    executor_memory: 1g
+    shuffle_partitions: 100
+  joiner_transformation:
+    broadcast_threshold: 100MB
+    description: Configuration for join operations
+    driver_memory: 2g
+    executor_cores: 4
+    executor_memory: 3g
+    shuffle_partitions: 200
+  lookup_transformation:
+    broadcast_threshold: 100MB
+    cache_tables: true
+    description: Optimized configuration for lookup operations
+    driver_memory: 2g
+    executor_cores: 3
+    executor_memory: 3g
+    shuffle_partitions: 200
+  router_transformation:
+    description: Configuration for routing/filtering operations
+    driver_memory: 1g
+    executor_cores: 2
+    executor_memory: 1g
+    shuffle_partitions: 100
+  sequence_transformation:
+    description: Lightweight configuration for sequence generation
+    driver_memory: 1g
+    dynamic_allocation: false
+    executor_cores: 1
+    executor_memory: 1g
+    shuffle_partitions: 50
+  sorter_transformation:
+    description: Configuration for sorting operations
+    driver_memory: 1g
+    executor_cores: 3
+    executor_memory: 2g
+    shuffle_partitions: 200
+  union_transformation:
+    description: Configuration for union operations
+    driver_memory: 1g
+    executor_cores: 2
+    executor_memory: 1g
+    shuffle_partitions: 100
+metadata:
+  description: Memory and resource profiles for Spark transformations
+  generated_date: '2025-07-28T16:43:45.616995'

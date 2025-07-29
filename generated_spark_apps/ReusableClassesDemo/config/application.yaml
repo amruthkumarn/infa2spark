@@ -1,9 +1,0 @@
-connections: {}
-log_level: INFO
-parameters: {}
-spark:
-  spark.app.name: ReusableClassesDemo
-  spark.master: local[*]
-  spark.sql.adaptive.coalescePartitions.enabled: 'true'
-  spark.sql.adaptive.enabled: 'true'
-  spark.sql.warehouse.dir: ./spark-warehouse

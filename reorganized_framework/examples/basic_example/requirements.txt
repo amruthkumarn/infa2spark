@@ -1,0 +1,1 @@
+pyspark>=3.2.0\npyyaml>=6.0\npy4j>=0.10.9

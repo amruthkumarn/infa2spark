@@ -1,0 +1,32 @@
+application:
+  name: Enterprise_Complete_Transformations
+  version: 1.0.0
+connections:
+  ENTERPRISE_HDFS_CONN:
+    BlockSize: 128MB
+    EncryptionEnabled: 'true'
+    ReplicationFactor: '3'
+    SecurityEnabled: 'true'
+    description: Enterprise HDFS cluster connection
+    host: hdfs://enterprise-cluster:8020
+    namenode: hdfs://enterprise-cluster:8020
+    port: 0
+    type: HDFS
+  ENTERPRISE_HIVE_CONN:
+    ConnectionTimeout: '600'
+    EnableSSL: 'true'
+    Kerberos: enabled
+    MaxConnections: '50'
+    Principal: hive/_HOST@ENTERPRISE.LOCAL
+    TransactionIsolation: READ_COMMITTED
+    database: enterprise_edw
+    description: Enterprise Hive data warehouse with HA configuration
+    host: hive-ha-cluster.enterprise.local
+    port: 10000
+    type: HIVE
+log_level: INFO
+spark:
+  spark.app.name: Enterprise_Complete_Transformations
+  spark.master: local[*]
+  spark.sql.adaptive.coalescePartitions.enabled: 'true'
+  spark.sql.adaptive.enabled: 'true'

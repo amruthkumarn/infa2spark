@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REPO:Project xmlns:REPO="http://www.informatica.com/repository" 
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <REPO:IObject xsi:type="REPO:PowerMartProject" projectName="ComplexTestProject">
+        
+        <!-- Connections -->
+        <REPO:IObject xsi:type="REPO:Connection" connectionName="SOURCE_DB" connectionType="ODBC">
+            <REPO:IObject attributeName="ConnectionString" attributeValue="DSN=SourceDB"/>
+        </REPO:IObject>
+        <REPO:IObject xsi:type="REPO:Connection" connectionName="TARGET_DB" connectionType="ODBC">
+            <REPO:IObject attributeName="ConnectionString" attributeValue="DSN=TargetDB"/>
+        </REPO:IObject>
+        
+        <REPO:IObject xsi:type="REPO:Folder" folderName="ComplexMappings" folderType="MAPPING">
+            <REPO:IObject xsi:type="REPO:Mapping" mappingName="CustomerTransformationMapping">
+                
+                <!-- Multiple Sources -->
+                <REPO:IObject xsi:type="REPO:SourceDefinition" sourceName="CustomerSource" 
+                             connectionName="SOURCE_DB">
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="customer_id" dataType="integer"/>
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="first_name" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="last_name" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="email" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="phone" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="department" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="salary" dataType="decimal"/>
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="hire_date" dataType="date"/>
+                </REPO:IObject>
+                
+                <REPO:IObject xsi:type="REPO:SourceDefinition" sourceName="DepartmentSource" 
+                             connectionName="SOURCE_DB">
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="dept_id" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="dept_name" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="manager" dataType="string"/>
+                </REPO:IObject>
+                
+                <!-- Expression Transformation -->
+                <REPO:IObject xsi:type="REPO:Transformation" transformationName="CustomerEnrichment" 
+                             transformationType="Expression">
+                    <REPO:IObject xsi:type="REPO:TransformField" fieldName="customer_id" 
+                                 expression="customer_id"/>
+                    <REPO:IObject xsi:type="REPO:TransformField" fieldName="full_name" 
+                                 expression="first_name || ' ' || last_name"/>
+                    <REPO:IObject xsi:type="REPO:TransformField" fieldName="email_domain" 
+                                 expression="SUBSTR(email, INSTR(email, '@') + 1)"/>
+                    <REPO:IObject xsi:type="REPO:TransformField" fieldName="phone_clean" 
+                                 expression="REGEXP_REPLACE(phone, '[^0-9]', '')"/>
+                    <REPO:IObject xsi:type="REPO:TransformField" fieldName="salary_grade" 
+                                 expression="CASE WHEN salary > 80000 THEN 'HIGH' WHEN salary > 50000 THEN 'MEDIUM' ELSE 'LOW' END"/>
+                    <REPO:IObject xsi:type="REPO:TransformField" fieldName="years_employed" 
+                                 expression="TRUNC(MONTHS_BETWEEN(SYSDATE, hire_date) / 12)"/>
+                </REPO:IObject>
+                
+                <!-- Lookup Transformation -->
+                <REPO:IObject xsi:type="REPO:Transformation" transformationName="DepartmentLookup" 
+                             transformationType="Lookup">
+                    <REPO:IObject xsi:type="REPO:LookupField" fieldName="department" lookupKey="true"/>
+                    <REPO:IObject xsi:type="REPO:LookupField" fieldName="dept_name" returnField="true"/>
+                    <REPO:IObject xsi:type="REPO:LookupField" fieldName="manager" returnField="true"/>
+                </REPO:IObject>
+                
+                <!-- Aggregator Transformation -->
+                <REPO:IObject xsi:type="REPO:Transformation" transformationName="DepartmentStats" 
+                             transformationType="Aggregator">
+                    <REPO:IObject xsi:type="REPO:AggregateField" fieldName="department" groupBy="true"/>
+                    <REPO:IObject xsi:type="REPO:AggregateField" fieldName="employee_count" 
+                                 expression="COUNT(*)"/>
+                    <REPO:IObject xsi:type="REPO:AggregateField" fieldName="avg_salary" 
+                                 expression="AVG(salary)"/>
+                    <REPO:IObject xsi:type="REPO:AggregateField" fieldName="max_salary" 
+                                 expression="MAX(salary)"/>
+                    <REPO:IObject xsi:type="REPO:AggregateField" fieldName="min_salary" 
+                                 expression="MIN(salary)"/>
+                </REPO:IObject>
+                
+                <!-- Multiple Targets -->
+                <REPO:IObject xsi:type="REPO:TargetDefinition" targetName="EnrichedCustomers" 
+                             connectionName="TARGET_DB">
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="customer_id" dataType="integer"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="full_name" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="email_domain" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="phone_clean" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="dept_name" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="manager" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="salary_grade" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="years_employed" dataType="integer"/>
+                </REPO:IObject>
+                
+                <REPO:IObject xsi:type="REPO:TargetDefinition" targetName="DepartmentSummary" 
+                             connectionName="TARGET_DB">
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="department" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="employee_count" dataType="integer"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="avg_salary" dataType="decimal"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="max_salary" dataType="decimal"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="min_salary" dataType="decimal"/>
+                </REPO:IObject>
+                
+            </REPO:IObject>
+        </REPO:IObject>
+    </REPO:IObject>
+</REPO:Project>

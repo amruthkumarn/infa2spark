@@ -1,0 +1,18 @@
+connections:
+  TEST_HDFS_CONN:
+    base_path: ./tests/data/input
+    format: parquet
+    namenode: hdfs://localhost:8020
+    type: HDFS
+  TEST_HIVE_CONN:
+    database: test_db
+    host: localhost
+    port: 10000
+    type: HIVE
+log_level: INFO
+spark:
+  spark.app.name: InformaticaFrameworkTest
+  spark.master: local[2]
+  spark.sql.adaptive.enabled: 'false'
+  spark.sql.warehouse.dir: /tmp/spark-warehouse
+test_mode: true

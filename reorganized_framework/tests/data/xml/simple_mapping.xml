@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REPO:Project xmlns:REPO="http://www.informatica.com/repository" 
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <REPO:IObject xsi:type="REPO:PowerMartProject" projectName="SimpleTestProject">
+        <REPO:IObject xsi:type="REPO:Folder" folderName="BasicMappings" folderType="MAPPING">
+            <REPO:IObject xsi:type="REPO:Mapping" mappingName="SimpleMapping">
+                <REPO:IObject xsi:type="REPO:SourceDefinition" sourceName="CustomerSource">
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="id" dataType="integer"/>
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="name" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:SourceField" fieldName="email" dataType="string"/>
+                </REPO:IObject>
+                <REPO:IObject xsi:type="REPO:TargetDefinition" targetName="CustomerTarget">
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="id" dataType="integer"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="name" dataType="string"/>
+                    <REPO:IObject xsi:type="REPO:TargetField" fieldName="email" dataType="string"/>
+                </REPO:IObject>
+            </REPO:IObject>
+        </REPO:IObject>
+    </REPO:IObject>
+</REPO:Project>
