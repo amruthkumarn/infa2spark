@@ -30,9 +30,9 @@ import logging
 import os
 from pathlib import Path
 
-from ..base_classes import BaseMapping, DataSourceManager
-from ..transformations.generated_transformations import *
-from ..config_externalization import MappingConfigurationManager, RuntimeConfigResolver
+from base_classes import BaseMapping, DataSourceManager
+from transformations.generated_transformations import *
+from config_externalization import MappingConfigurationManager, RuntimeConfigResolver
 
 
 class {{ class_name }}(BaseMapping):

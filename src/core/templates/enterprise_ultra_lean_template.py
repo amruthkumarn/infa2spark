@@ -26,11 +26,11 @@ import concurrent.futures
 import logging
 import time
 
-from ..runtime.base_classes import BaseMapping, DataSourceManager
-from ..transformations.generated_transformations import *
-from ..runtime.config_management import EnterpriseConfigurationManager
-from ..runtime.monitoring_integration import MonitoringIntegration
-from ..runtime.advanced_config_validation import ConfigurationSchemaValidator, ConfigurationIntegrityChecker
+from base_classes import BaseMapping, DataSourceManager
+from transformations.generated_transformations import *
+from config_management import EnterpriseConfigurationManager
+from monitoring_integration import MonitoringIntegration
+from advanced_config_validation import ConfigurationSchemaValidator, ConfigurationIntegrityChecker
 
 
 class {{ class_name }}(BaseMapping):

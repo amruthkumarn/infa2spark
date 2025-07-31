@@ -951,10 +951,10 @@ DAG Analysis Summary:
 - Estimated Duration: {{ execution_plan.estimated_duration }} minutes
 - Parallel Execution Groups: {{ dag_analysis.parallel_groups | length }}
 """
-from ..runtime.base_classes import BaseWorkflow
+from base_classes import BaseWorkflow
 {%- for task in workflow.tasks %}
 {%- if task.type == 'SessionTask' and task.mapping %}
-from ..mappings.{{ task.mapping | lower }} import {{ task.mapping | title | replace('_', '') }}
+from mappings.{{ task.mapping | lower }} import {{ task.mapping | title | replace('_', '') }}
 {%- endif %}
 {%- endfor %}
 import time
@@ -1447,7 +1447,7 @@ def setup_logging(log_level: str = "INFO"):
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
             logging.StreamHandler(sys.stdout),
-            logging.FileHandler('logs/{{ project.name | lower }}.log')
+            logging.FileHandler('../../../logs/{{ project.name | lower }}.log')
         ]
     )
 
