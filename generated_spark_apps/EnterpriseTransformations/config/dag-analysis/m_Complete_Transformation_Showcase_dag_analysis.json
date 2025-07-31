@@ -1,0 +1,1559 @@
+{
+  "mapping_name": "m_Complete_Transformation_Showcase",
+  "dag_metadata": {
+    "total_components": 17,
+    "total_phases": 5,
+    "is_valid_dag": true,
+    "has_cycles": false,
+    "generated_date": "2025-07-31T08:09:33.579854"
+  },
+  "dependency_graph": {
+    "EXP_Data_Standardization": {
+      "dependencies": [
+        "SRC_Product_Master"
+      ],
+      "dependents": [],
+      "component_info": {
+        "name": "EXP_Data_Standardization",
+        "type": "ExpressionTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "FirstName_IN",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SRC_002",
+            "toPort": null
+          },
+          {
+            "name": "LastName_IN",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SRC_003",
+            "toPort": null
+          },
+          {
+            "name": "Email_IN",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SRC_004",
+            "toPort": null
+          },
+          {
+            "name": "Phone_IN",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SRC_005",
+            "toPort": null
+          },
+          {
+            "name": "DateOfBirth_IN",
+            "type": "date",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SRC_006",
+            "toPort": null
+          },
+          {
+            "name": "FullName_OUT",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "StandardizedEmail_OUT",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "StandardizedPhone_OUT",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "AgeGroup_OUT",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "DataQualityScore_OUT",
+            "type": "decimal",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "ProcessingTimestamp_OUT",
+            "type": "timestamp",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {
+          "ExpressionType": "Advanced",
+          "OptimizationLevel": "High",
+          "ParallelExecution": "true",
+          "CacheExpressions": "true"
+        },
+        "connection": "",
+        "instance": "INST_TRANS_001",
+        "data_object": null
+      }
+    },
+    "JNR_Customer_Transaction": {
+      "dependencies": [],
+      "dependents": [],
+      "component_info": {
+        "name": "JNR_Customer_Transaction",
+        "type": "JoinerTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "customer_id",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "FullName_OUT",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "transaction_amount",
+            "type": "decimal",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "transaction_date",
+            "type": "timestamp",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_002",
+        "data_object": null
+      }
+    },
+    "AGG_Customer_Metrics": {
+      "dependencies": [
+        "EXP_Product_Enrichment"
+      ],
+      "dependents": [],
+      "component_info": {
+        "name": "AGG_Customer_Metrics",
+        "type": "AggregatorTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "customer_id",
+            "type": "integer",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_EXP_OUT_001",
+            "toPort": null
+          },
+          {
+            "name": "FullName_OUT",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_EXP_OUT_002",
+            "toPort": null
+          },
+          {
+            "name": "Email_Standardized",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_EXP_OUT_003",
+            "toPort": null
+          },
+          {
+            "name": "customer_id",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "total_transaction_amount",
+            "type": "decimal",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "transaction_count",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "avg_transaction_amount",
+            "type": "decimal",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "last_transaction_date",
+            "type": "timestamp",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_003",
+        "data_object": null
+      }
+    },
+    "LKP_Customer_Demographics": {
+      "dependencies": [
+        "AGG_Product_Metrics"
+      ],
+      "dependents": [],
+      "component_info": {
+        "name": "LKP_Customer_Demographics",
+        "type": "LookupTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "customer_id",
+            "type": "integer",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_AGG_OUT_001",
+            "toPort": null
+          },
+          {
+            "name": "customer_id",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "age_range",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "income_bracket",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "region",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_004",
+        "data_object": null
+      }
+    },
+    "SEQ_Customer_Key": {
+      "dependencies": [
+        "LKP_Product_Suppliers"
+      ],
+      "dependents": [
+        "SRT_Customer_Ranking"
+      ],
+      "component_info": {
+        "name": "SEQ_Customer_Key",
+        "type": "SequenceTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "customer_id",
+            "type": "integer",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_LKP_OUT_001",
+            "toPort": null
+          },
+          {
+            "name": "customer_id",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "customer_key",
+            "type": "bigint",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_005",
+        "data_object": null
+      }
+    },
+    "SRT_Customer_Ranking": {
+      "dependencies": [
+        "SEQ_Customer_Key"
+      ],
+      "dependents": [],
+      "component_info": {
+        "name": "SRT_Customer_Ranking",
+        "type": "SorterTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "customer_key",
+            "type": "bigint",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SEQ_OUT_002",
+            "toPort": null
+          },
+          {
+            "name": "customer_id",
+            "type": "integer",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SEQ_OUT_001",
+            "toPort": null
+          },
+          {
+            "name": "customer_key",
+            "type": "bigint",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "total_transaction_amount",
+            "type": "decimal",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_006",
+        "data_object": null
+      }
+    },
+    "RTR_Customer_Segmentation": {
+      "dependencies": [
+        "LKP_Product_Suppliers"
+      ],
+      "dependents": [],
+      "component_info": {
+        "name": "RTR_Customer_Segmentation",
+        "type": "RouterTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "customer_id",
+            "type": "integer",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_LKP_OUT_001",
+            "toPort": null
+          },
+          {
+            "name": "age_range",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_LKP_OUT_002",
+            "toPort": null
+          },
+          {
+            "name": "income_level",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_LKP_OUT_003",
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_007",
+        "data_object": null
+      }
+    },
+    "UNI_Combine_Segments": {
+      "dependencies": [],
+      "dependents": [
+        "SCD_Customer_Dimension"
+      ],
+      "component_info": {
+        "name": "UNI_Combine_Segments",
+        "type": "UnionTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "customer_key",
+            "type": "bigint",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "segment",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_008",
+        "data_object": null
+      }
+    },
+    "SCD_Customer_Dimension": {
+      "dependencies": [
+        "UNI_Combine_Segments"
+      ],
+      "dependents": [
+        "TGT_Customer_Data_Warehouse"
+      ],
+      "component_info": {
+        "name": "SCD_Customer_Dimension",
+        "type": "JavaTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "customer_key",
+            "type": "bigint",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_UNI_OUT_001",
+            "toPort": null
+          },
+          {
+            "name": "segment",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_UNI_OUT_002",
+            "toPort": null
+          },
+          {
+            "name": "customer_key",
+            "type": "bigint",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "segment",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "effective_date",
+            "type": "timestamp",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "expiry_date",
+            "type": "timestamp",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "is_current",
+            "type": "boolean",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "version_number",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_009",
+        "data_object": null
+      }
+    },
+    "EXP_Product_Enrichment": {
+      "dependencies": [
+        "SRC_Product_Master"
+      ],
+      "dependents": [
+        "SRT_Product_Ranking",
+        "AGG_Customer_Metrics",
+        "AGG_Product_Metrics",
+        "LKP_Product_Suppliers"
+      ],
+      "component_info": {
+        "name": "EXP_Product_Enrichment",
+        "type": "ExpressionTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "product_id",
+            "type": "integer",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SRC_012",
+            "toPort": null
+          },
+          {
+            "name": "product_name",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SRC_013",
+            "toPort": null
+          },
+          {
+            "name": "category",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SRC_014",
+            "toPort": null
+          },
+          {
+            "name": "price",
+            "type": "decimal",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SRC_015",
+            "toPort": null
+          },
+          {
+            "name": "product_id",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "product_name_clean",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "category_standardized",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "price_tier",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "profit_margin",
+            "type": "decimal",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_010",
+        "data_object": null
+      }
+    },
+    "LKP_Product_Suppliers": {
+      "dependencies": [
+        "EXP_Product_Enrichment"
+      ],
+      "dependents": [
+        "SEQ_Customer_Key",
+        "RTR_Customer_Segmentation"
+      ],
+      "component_info": {
+        "name": "LKP_Product_Suppliers",
+        "type": "LookupTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "product_id",
+            "type": "integer",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_PROD_EXP_OUT_001",
+            "toPort": null
+          },
+          {
+            "name": "category_standardized",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_PROD_EXP_OUT_003",
+            "toPort": null
+          },
+          {
+            "name": "product_id",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "supplier_id",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "supplier_name",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "supplier_rating",
+            "type": "decimal",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_011",
+        "data_object": null
+      }
+    },
+    "AGG_Product_Metrics": {
+      "dependencies": [
+        "EXP_Product_Enrichment"
+      ],
+      "dependents": [
+        "LKP_Customer_Demographics"
+      ],
+      "component_info": {
+        "name": "AGG_Product_Metrics",
+        "type": "AggregatorTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "supplier_id",
+            "type": "integer",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_PROD_LKP_OUT_002",
+            "toPort": null
+          },
+          {
+            "name": "supplier_name",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_PROD_LKP_OUT_003",
+            "toPort": null
+          },
+          {
+            "name": "supplier_rating",
+            "type": "decimal",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_PROD_LKP_OUT_004",
+            "toPort": null
+          },
+          {
+            "name": "supplier_id",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "supplier_name",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "total_products",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "avg_supplier_rating",
+            "type": "decimal",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_012",
+        "data_object": null
+      }
+    },
+    "SRT_Product_Ranking": {
+      "dependencies": [
+        "EXP_Product_Enrichment"
+      ],
+      "dependents": [],
+      "component_info": {
+        "name": "SRT_Product_Ranking",
+        "type": "SorterTransformation",
+        "component_type": "transformation",
+        "ports": [
+          {
+            "name": "supplier_id",
+            "type": "integer",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_PROD_AGG_OUT_001",
+            "toPort": null
+          },
+          {
+            "name": "supplier_name",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_PROD_AGG_OUT_002",
+            "toPort": null
+          },
+          {
+            "name": "total_products",
+            "type": "integer",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_PROD_AGG_OUT_003",
+            "toPort": null
+          },
+          {
+            "name": "avg_supplier_rating",
+            "type": "decimal",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_PROD_AGG_OUT_004",
+            "toPort": null
+          },
+          {
+            "name": "supplier_id",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "supplier_name",
+            "type": "string",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "supplier_rank",
+            "type": "integer",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          },
+          {
+            "name": "performance_score",
+            "type": "decimal",
+            "direction": "OUTPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": null,
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "",
+        "instance": "INST_TRANS_013",
+        "data_object": null
+      }
+    },
+    "SRC_Customer_Master": {
+      "dependencies": [],
+      "dependents": [],
+      "component_info": {
+        "name": "SRC_Customer_Master",
+        "type": "SourceDefinition",
+        "component_type": "source",
+        "ports": [],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "ENTERPRISE_HIVE_CONN",
+        "instance": "INST_SRC_001",
+        "data_object": {
+          "name": "customer_master",
+          "type": "",
+          "format": "",
+          "location": ""
+        }
+      }
+    },
+    "SRC_Transaction_History": {
+      "dependencies": [],
+      "dependents": [],
+      "component_info": {
+        "name": "SRC_Transaction_History",
+        "type": "SourceDefinition",
+        "component_type": "source",
+        "ports": [],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "ENTERPRISE_HIVE_CONN",
+        "instance": "INST_SRC_002",
+        "data_object": {
+          "name": "transaction_history",
+          "type": "",
+          "format": "",
+          "location": ""
+        }
+      }
+    },
+    "SRC_Product_Master": {
+      "dependencies": [],
+      "dependents": [
+        "EXP_Product_Enrichment",
+        "EXP_Data_Standardization"
+      ],
+      "component_info": {
+        "name": "SRC_Product_Master",
+        "type": "SourceDefinition",
+        "component_type": "source",
+        "ports": [],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "ENTERPRISE_HIVE_CONN",
+        "instance": "INST_SRC_002",
+        "data_object": {
+          "name": "product_master",
+          "type": "",
+          "format": "",
+          "location": ""
+        }
+      }
+    },
+    "TGT_Customer_Data_Warehouse": {
+      "dependencies": [
+        "SCD_Customer_Dimension"
+      ],
+      "dependents": [],
+      "component_info": {
+        "name": "TGT_Customer_Data_Warehouse",
+        "type": "TargetDefinition",
+        "component_type": "target",
+        "ports": [
+          {
+            "name": "customer_key",
+            "type": "bigint",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SCD_OUT_001",
+            "toPort": null
+          },
+          {
+            "name": "segment",
+            "type": "string",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SCD_OUT_002",
+            "toPort": null
+          },
+          {
+            "name": "effective_date",
+            "type": "timestamp",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SCD_OUT_003",
+            "toPort": null
+          },
+          {
+            "name": "is_current",
+            "type": "boolean",
+            "direction": "INPUT",
+            "length": null,
+            "precision": null,
+            "scale": null,
+            "fromPort": "PORT_SCD_OUT_005",
+            "toPort": null
+          }
+        ],
+        "expressions": [],
+        "characteristics": {},
+        "connection": "ENTERPRISE_HIVE_CONN",
+        "instance": "INST_TGT_001",
+        "data_object": null,
+        "load_type": "BULK",
+        "update_strategy": "INSERT"
+      }
+    }
+  },
+  "execution_order": [
+    "JNR_Customer_Transaction",
+    "UNI_Combine_Segments",
+    "SRC_Customer_Master",
+    "SRC_Transaction_History",
+    "SRC_Product_Master",
+    "SCD_Customer_Dimension",
+    "EXP_Product_Enrichment",
+    "EXP_Data_Standardization",
+    "TGT_Customer_Data_Warehouse",
+    "SRT_Product_Ranking",
+    "AGG_Customer_Metrics",
+    "AGG_Product_Metrics",
+    "LKP_Product_Suppliers",
+    "LKP_Customer_Demographics",
+    "SEQ_Customer_Key",
+    "RTR_Customer_Segmentation",
+    "SRT_Customer_Ranking"
+  ],
+  "parallel_groups": [
+    [
+      "JNR_Customer_Transaction",
+      "UNI_Combine_Segments",
+      "SRC_Customer_Master",
+      "SRC_Transaction_History",
+      "SRC_Product_Master"
+    ],
+    [
+      "SCD_Customer_Dimension",
+      "EXP_Product_Enrichment",
+      "EXP_Data_Standardization"
+    ],
+    [
+      "TGT_Customer_Data_Warehouse",
+      "SRT_Product_Ranking",
+      "AGG_Customer_Metrics",
+      "AGG_Product_Metrics",
+      "LKP_Product_Suppliers"
+    ],
+    [
+      "LKP_Customer_Demographics",
+      "SEQ_Customer_Key",
+      "RTR_Customer_Segmentation"
+    ],
+    [
+      "SRT_Customer_Ranking"
+    ]
+  ],
+  "execution_levels": {
+    "JNR_Customer_Transaction": 0,
+    "UNI_Combine_Segments": 0,
+    "SRC_Customer_Master": 0,
+    "SRC_Transaction_History": 0,
+    "SRC_Product_Master": 0,
+    "SCD_Customer_Dimension": 1,
+    "EXP_Product_Enrichment": 1,
+    "EXP_Data_Standardization": 1,
+    "TGT_Customer_Data_Warehouse": 2,
+    "SRT_Product_Ranking": 2,
+    "AGG_Customer_Metrics": 2,
+    "AGG_Product_Metrics": 2,
+    "LKP_Product_Suppliers": 2,
+    "LKP_Customer_Demographics": 3,
+    "SEQ_Customer_Key": 3,
+    "RTR_Customer_Segmentation": 3,
+    "SRT_Customer_Ranking": 4
+  },
+  "is_valid_dag": true,
+  "sources": [
+    "SRC_Customer_Master",
+    "SRC_Transaction_History",
+    "SRC_Product_Master"
+  ],
+  "transformations": [
+    "EXP_Data_Standardization",
+    "JNR_Customer_Transaction",
+    "AGG_Customer_Metrics",
+    "LKP_Customer_Demographics",
+    "SEQ_Customer_Key",
+    "SRT_Customer_Ranking",
+    "RTR_Customer_Segmentation",
+    "UNI_Combine_Segments",
+    "SCD_Customer_Dimension",
+    "EXP_Product_Enrichment",
+    "LKP_Product_Suppliers",
+    "AGG_Product_Metrics",
+    "SRT_Product_Ranking"
+  ],
+  "targets": [
+    "TGT_Customer_Data_Warehouse"
+  ],
+  "total_components": 17,
+  "port_connections": [
+    {
+      "from_component": "SRC_Product_Master",
+      "to_component": "EXP_Data_Standardization",
+      "from_port": "PORT_SRC_002",
+      "to_port": "FirstName_IN",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "SRC_Product_Master",
+      "to_component": "EXP_Data_Standardization",
+      "from_port": "PORT_SRC_003",
+      "to_port": "LastName_IN",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "SRC_Product_Master",
+      "to_component": "EXP_Data_Standardization",
+      "from_port": "PORT_SRC_004",
+      "to_port": "Email_IN",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "SRC_Product_Master",
+      "to_component": "EXP_Data_Standardization",
+      "from_port": "PORT_SRC_005",
+      "to_port": "Phone_IN",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "SRC_Product_Master",
+      "to_component": "EXP_Data_Standardization",
+      "from_port": "PORT_SRC_006",
+      "to_port": "DateOfBirth_IN",
+      "data_type": "date",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "AGG_Customer_Metrics",
+      "from_port": "PORT_EXP_OUT_001",
+      "to_port": "customer_id",
+      "data_type": "integer",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "AGG_Customer_Metrics",
+      "from_port": "PORT_EXP_OUT_002",
+      "to_port": "FullName_OUT",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "AGG_Customer_Metrics",
+      "from_port": "PORT_EXP_OUT_003",
+      "to_port": "Email_Standardized",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "AGG_Product_Metrics",
+      "to_component": "LKP_Customer_Demographics",
+      "from_port": "PORT_AGG_OUT_001",
+      "to_port": "customer_id",
+      "data_type": "integer",
+      "nullable": true
+    },
+    {
+      "from_component": "LKP_Product_Suppliers",
+      "to_component": "SEQ_Customer_Key",
+      "from_port": "PORT_LKP_OUT_001",
+      "to_port": "customer_id",
+      "data_type": "integer",
+      "nullable": true
+    },
+    {
+      "from_component": "SEQ_Customer_Key",
+      "to_component": "SRT_Customer_Ranking",
+      "from_port": "PORT_SEQ_OUT_002",
+      "to_port": "customer_key",
+      "data_type": "bigint",
+      "nullable": true
+    },
+    {
+      "from_component": "SEQ_Customer_Key",
+      "to_component": "SRT_Customer_Ranking",
+      "from_port": "PORT_SEQ_OUT_001",
+      "to_port": "customer_id",
+      "data_type": "integer",
+      "nullable": true
+    },
+    {
+      "from_component": "LKP_Product_Suppliers",
+      "to_component": "RTR_Customer_Segmentation",
+      "from_port": "PORT_LKP_OUT_001",
+      "to_port": "customer_id",
+      "data_type": "integer",
+      "nullable": true
+    },
+    {
+      "from_component": "LKP_Product_Suppliers",
+      "to_component": "RTR_Customer_Segmentation",
+      "from_port": "PORT_LKP_OUT_002",
+      "to_port": "age_range",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "LKP_Product_Suppliers",
+      "to_component": "RTR_Customer_Segmentation",
+      "from_port": "PORT_LKP_OUT_003",
+      "to_port": "income_level",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "UNI_Combine_Segments",
+      "to_component": "SCD_Customer_Dimension",
+      "from_port": "PORT_UNI_OUT_001",
+      "to_port": "customer_key",
+      "data_type": "bigint",
+      "nullable": true
+    },
+    {
+      "from_component": "UNI_Combine_Segments",
+      "to_component": "SCD_Customer_Dimension",
+      "from_port": "PORT_UNI_OUT_002",
+      "to_port": "segment",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "SRC_Product_Master",
+      "to_component": "EXP_Product_Enrichment",
+      "from_port": "PORT_SRC_012",
+      "to_port": "product_id",
+      "data_type": "integer",
+      "nullable": true
+    },
+    {
+      "from_component": "SRC_Product_Master",
+      "to_component": "EXP_Product_Enrichment",
+      "from_port": "PORT_SRC_013",
+      "to_port": "product_name",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "SRC_Product_Master",
+      "to_component": "EXP_Product_Enrichment",
+      "from_port": "PORT_SRC_014",
+      "to_port": "category",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "SRC_Product_Master",
+      "to_component": "EXP_Product_Enrichment",
+      "from_port": "PORT_SRC_015",
+      "to_port": "price",
+      "data_type": "decimal",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "LKP_Product_Suppliers",
+      "from_port": "PORT_PROD_EXP_OUT_001",
+      "to_port": "product_id",
+      "data_type": "integer",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "LKP_Product_Suppliers",
+      "from_port": "PORT_PROD_EXP_OUT_003",
+      "to_port": "category_standardized",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "AGG_Product_Metrics",
+      "from_port": "PORT_PROD_LKP_OUT_002",
+      "to_port": "supplier_id",
+      "data_type": "integer",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "AGG_Product_Metrics",
+      "from_port": "PORT_PROD_LKP_OUT_003",
+      "to_port": "supplier_name",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "AGG_Product_Metrics",
+      "from_port": "PORT_PROD_LKP_OUT_004",
+      "to_port": "supplier_rating",
+      "data_type": "decimal",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "SRT_Product_Ranking",
+      "from_port": "PORT_PROD_AGG_OUT_001",
+      "to_port": "supplier_id",
+      "data_type": "integer",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "SRT_Product_Ranking",
+      "from_port": "PORT_PROD_AGG_OUT_002",
+      "to_port": "supplier_name",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "SRT_Product_Ranking",
+      "from_port": "PORT_PROD_AGG_OUT_003",
+      "to_port": "total_products",
+      "data_type": "integer",
+      "nullable": true
+    },
+    {
+      "from_component": "EXP_Product_Enrichment",
+      "to_component": "SRT_Product_Ranking",
+      "from_port": "PORT_PROD_AGG_OUT_004",
+      "to_port": "avg_supplier_rating",
+      "data_type": "decimal",
+      "nullable": true
+    },
+    {
+      "from_component": "SCD_Customer_Dimension",
+      "to_component": "TGT_Customer_Data_Warehouse",
+      "from_port": "PORT_SCD_OUT_001",
+      "to_port": "customer_key",
+      "data_type": "bigint",
+      "nullable": true
+    },
+    {
+      "from_component": "SCD_Customer_Dimension",
+      "to_component": "TGT_Customer_Data_Warehouse",
+      "from_port": "PORT_SCD_OUT_002",
+      "to_port": "segment",
+      "data_type": "string",
+      "nullable": true
+    },
+    {
+      "from_component": "SCD_Customer_Dimension",
+      "to_component": "TGT_Customer_Data_Warehouse",
+      "from_port": "PORT_SCD_OUT_003",
+      "to_port": "effective_date",
+      "data_type": "timestamp",
+      "nullable": true
+    },
+    {
+      "from_component": "SCD_Customer_Dimension",
+      "to_component": "TGT_Customer_Data_Warehouse",
+      "from_port": "PORT_SCD_OUT_005",
+      "to_port": "is_current",
+      "data_type": "boolean",
+      "nullable": true
+    }
+  ],
+  "performance_analysis": {
+    "bottlenecks": [
+      "EXP_Product_Enrichment"
+    ],
+    "optimization_opportunities": [
+      {
+        "component": "AGG_Customer_Metrics",
+        "suggestion": "Enable adaptive query execution for dynamic optimization",
+        "estimated_improvement": "20%"
+      },
+      {
+        "component": "LKP_Customer_Demographics",
+        "suggestion": "Consider broadcast join for small lookup tables",
+        "estimated_improvement": "30%"
+      },
+      {
+        "component": "LKP_Product_Suppliers",
+        "suggestion": "Consider broadcast join for small lookup tables",
+        "estimated_improvement": "30%"
+      },
+      {
+        "component": "AGG_Product_Metrics",
+        "suggestion": "Enable adaptive query execution for dynamic optimization",
+        "estimated_improvement": "20%"
+      }
+    ]
+  }
+}

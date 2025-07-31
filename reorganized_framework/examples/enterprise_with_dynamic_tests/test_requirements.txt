@@ -1,7 +1,0 @@
-# Test requirements
-pytest>=7.0.0
-pytest-cov>=4.0.0
-pytest-spark>=0.6.0
-pytest-mock>=3.10.0
-pyspark>=3.3.0
-pandas>=1.5.0

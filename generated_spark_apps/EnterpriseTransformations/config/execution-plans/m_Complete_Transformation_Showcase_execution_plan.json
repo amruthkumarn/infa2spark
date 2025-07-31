@@ -1,0 +1,309 @@
+{
+  "mapping_name": "m_Complete_Transformation_Showcase",
+  "metadata": {
+    "generated_date": "2025-07-31T08:09:33.579297",
+    "generator_version": "1.0.0",
+    "description": "Execution plan for m_Complete_Transformation_Showcase mapping"
+  },
+  "total_phases": 5,
+  "estimated_duration": 65,
+  "phases": [
+    {
+      "phase_number": 1,
+      "parallel_components": 5,
+      "components": [
+        {
+          "component_name": "JNR_Customer_Transaction",
+          "component_type": "transformation",
+          "transformation_type": "JoinerTransformation",
+          "dependencies": [],
+          "estimated_duration": 12,
+          "memory_requirements": {
+            "executor_memory": "3g",
+            "driver_memory": "2g",
+            "shuffle_partitions": 200
+          },
+          "parallel_eligible": true
+        },
+        {
+          "component_name": "UNI_Combine_Segments",
+          "component_type": "transformation",
+          "transformation_type": "UnionTransformation",
+          "dependencies": [],
+          "estimated_duration": 3,
+          "memory_requirements": {
+            "executor_memory": "1g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 100
+          },
+          "parallel_eligible": true
+        },
+        {
+          "component_name": "SRC_Customer_Master",
+          "component_type": "source",
+          "transformation_type": "SourceDefinition",
+          "dependencies": [],
+          "estimated_duration": 5,
+          "memory_requirements": {
+            "executor_memory": "1g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 100
+          },
+          "parallel_eligible": true
+        },
+        {
+          "component_name": "SRC_Transaction_History",
+          "component_type": "source",
+          "transformation_type": "SourceDefinition",
+          "dependencies": [],
+          "estimated_duration": 5,
+          "memory_requirements": {
+            "executor_memory": "1g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 100
+          },
+          "parallel_eligible": true
+        },
+        {
+          "component_name": "SRC_Product_Master",
+          "component_type": "source",
+          "transformation_type": "SourceDefinition",
+          "dependencies": [],
+          "estimated_duration": 5,
+          "memory_requirements": {
+            "executor_memory": "1g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 100
+          },
+          "parallel_eligible": true
+        }
+      ],
+      "can_run_parallel": true,
+      "estimated_phase_duration": 12,
+      "phase_type": "mixed_phase"
+    },
+    {
+      "phase_number": 2,
+      "parallel_components": 3,
+      "components": [
+        {
+          "component_name": "SCD_Customer_Dimension",
+          "component_type": "transformation",
+          "transformation_type": "JavaTransformation",
+          "dependencies": [
+            "UNI_Combine_Segments"
+          ],
+          "estimated_duration": 20,
+          "memory_requirements": {
+            "executor_memory": "1g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 100
+          },
+          "parallel_eligible": true
+        },
+        {
+          "component_name": "EXP_Product_Enrichment",
+          "component_type": "transformation",
+          "transformation_type": "ExpressionTransformation",
+          "dependencies": [
+            "SRC_Product_Master"
+          ],
+          "estimated_duration": 5,
+          "memory_requirements": {
+            "executor_memory": "1g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 100
+          },
+          "parallel_eligible": true
+        },
+        {
+          "component_name": "EXP_Data_Standardization",
+          "component_type": "transformation",
+          "transformation_type": "ExpressionTransformation",
+          "dependencies": [
+            "SRC_Product_Master"
+          ],
+          "estimated_duration": 5,
+          "memory_requirements": {
+            "executor_memory": "1g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 100
+          },
+          "parallel_eligible": true
+        }
+      ],
+      "can_run_parallel": true,
+      "estimated_phase_duration": 20,
+      "phase_type": "transformation_phase"
+    },
+    {
+      "phase_number": 3,
+      "parallel_components": 5,
+      "components": [
+        {
+          "component_name": "TGT_Customer_Data_Warehouse",
+          "component_type": "target",
+          "transformation_type": "TargetDefinition",
+          "dependencies": [
+            "SCD_Customer_Dimension"
+          ],
+          "estimated_duration": 5,
+          "memory_requirements": {
+            "executor_memory": "1g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 100
+          },
+          "parallel_eligible": true
+        },
+        {
+          "component_name": "SRT_Product_Ranking",
+          "component_type": "transformation",
+          "transformation_type": "SorterTransformation",
+          "dependencies": [
+            "EXP_Product_Enrichment"
+          ],
+          "estimated_duration": 8,
+          "memory_requirements": {
+            "executor_memory": "2g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 200
+          },
+          "parallel_eligible": true
+        },
+        {
+          "component_name": "AGG_Customer_Metrics",
+          "component_type": "transformation",
+          "transformation_type": "AggregatorTransformation",
+          "dependencies": [
+            "EXP_Product_Enrichment"
+          ],
+          "estimated_duration": 15,
+          "memory_requirements": {
+            "executor_memory": "4g",
+            "driver_memory": "2g",
+            "shuffle_partitions": 400
+          },
+          "parallel_eligible": true
+        },
+        {
+          "component_name": "AGG_Product_Metrics",
+          "component_type": "transformation",
+          "transformation_type": "AggregatorTransformation",
+          "dependencies": [
+            "EXP_Product_Enrichment"
+          ],
+          "estimated_duration": 15,
+          "memory_requirements": {
+            "executor_memory": "4g",
+            "driver_memory": "2g",
+            "shuffle_partitions": 400
+          },
+          "parallel_eligible": true
+        },
+        {
+          "component_name": "LKP_Product_Suppliers",
+          "component_type": "transformation",
+          "transformation_type": "LookupTransformation",
+          "dependencies": [
+            "EXP_Product_Enrichment"
+          ],
+          "estimated_duration": 10,
+          "memory_requirements": {
+            "executor_memory": "3g",
+            "driver_memory": "2g",
+            "shuffle_partitions": 200
+          },
+          "parallel_eligible": true
+        }
+      ],
+      "can_run_parallel": true,
+      "estimated_phase_duration": 15,
+      "phase_type": "mixed_phase"
+    },
+    {
+      "phase_number": 4,
+      "parallel_components": 3,
+      "components": [
+        {
+          "component_name": "LKP_Customer_Demographics",
+          "component_type": "transformation",
+          "transformation_type": "LookupTransformation",
+          "dependencies": [
+            "AGG_Product_Metrics"
+          ],
+          "estimated_duration": 10,
+          "memory_requirements": {
+            "executor_memory": "3g",
+            "driver_memory": "2g",
+            "shuffle_partitions": 200
+          },
+          "parallel_eligible": true
+        },
+        {
+          "component_name": "SEQ_Customer_Key",
+          "component_type": "transformation",
+          "transformation_type": "SequenceTransformation",
+          "dependencies": [
+            "LKP_Product_Suppliers"
+          ],
+          "estimated_duration": 2,
+          "memory_requirements": {
+            "executor_memory": "1g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 100
+          },
+          "parallel_eligible": false
+        },
+        {
+          "component_name": "RTR_Customer_Segmentation",
+          "component_type": "transformation",
+          "transformation_type": "RouterTransformation",
+          "dependencies": [
+            "LKP_Product_Suppliers"
+          ],
+          "estimated_duration": 4,
+          "memory_requirements": {
+            "executor_memory": "1g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 100
+          },
+          "parallel_eligible": true
+        }
+      ],
+      "can_run_parallel": true,
+      "estimated_phase_duration": 10,
+      "phase_type": "transformation_phase"
+    },
+    {
+      "phase_number": 5,
+      "parallel_components": 1,
+      "components": [
+        {
+          "component_name": "SRT_Customer_Ranking",
+          "component_type": "transformation",
+          "transformation_type": "SorterTransformation",
+          "dependencies": [
+            "SEQ_Customer_Key"
+          ],
+          "estimated_duration": 8,
+          "memory_requirements": {
+            "executor_memory": "2g",
+            "driver_memory": "1g",
+            "shuffle_partitions": 200
+          },
+          "parallel_eligible": true
+        }
+      ],
+      "can_run_parallel": false,
+      "estimated_phase_duration": 8,
+      "phase_type": "transformation_phase"
+    }
+  ],
+  "data_flow_strategy": "port_based",
+  "parallel_execution_enabled": true,
+  "optimization_hints": {
+    "cache_intermediate_results": true,
+    "checkpoint_frequency": "per_phase",
+    "resource_scaling": "auto"
+  }
+}
