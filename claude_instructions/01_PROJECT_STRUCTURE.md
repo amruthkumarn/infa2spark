@@ -40,14 +40,17 @@ mkdir -p docs/scripts
 mkdir -p docs/summaries
 mkdir -p docs/testing
 
-# Generated applications directory
+# Generated applications directory (will contain complete standalone applications)
 mkdir -p generated_spark_apps
 
 # Examples and samples
 mkdir -p examples
 
-# Informatica XSD schemas directory
+# Informatica XSD schemas directory (comprehensive XSD schema collection)
 mkdir -p informatica_xsd_xml/sample_project
+
+# Virtual environment (created by setup script)
+# Note: informatica_poc_env/ will be created by setup_test_environment.sh
 ```
 
 ## 📄 Essential Root Files

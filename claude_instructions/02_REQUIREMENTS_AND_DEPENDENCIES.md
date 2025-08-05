@@ -8,62 +8,65 @@ Set up all required dependencies, development tools, and environment configurati
 
 Replace the basic requirements.txt with the complete enterprise dependency list:
 
-```text
+# Repository-Aligned Requirements
+# Based on the actual requirements.txt from the repository
+
 # Core PySpark and Big Data
-pyspark>=3.4.0,<4.0.0
+pyspark>=3.4.0
 py4j>=0.10.9.7
 
-# Configuration Management
-PyYAML>=6.0.1
-python-dotenv>=1.0.0
+# Configuration and data handling
+PyYAML>=6.0
+pandas>=1.5.0
 
-# Data Processing
-pandas>=1.5.0,<3.0.0
-numpy>=1.21.0
-
-# Template Engine and Code Generation
+# Template Engine and Code Generation (Added for enterprise features)
 Jinja2>=3.1.2
 MarkupSafe>=2.1.0
 
-# XML Processing and Validation
+# XML Processing and Validation (Added for XSD compliance)
 lxml>=4.9.0
 xmlschema>=2.3.0
 
-# Logging and Monitoring
-colorlog>=6.7.0
-structlog>=23.1.0
-
 # Testing Framework
-pytest>=7.4.0
-pytest-cov>=4.1.0
-pytest-mock>=3.11.0
-pytest-xdist>=3.3.0
-pytest-timeout>=2.1.0
+pytest>=7.0.0
+pytest-spark>=0.6.0
 
-# Code Quality and Formatting  
-black>=23.7.0
-isort>=5.12.0
-flake8>=6.0.0
-mypy>=1.5.0
-pre-commit>=3.3.0
+# Development tools
+black>=22.0.0
+flake8>=5.0.0
+
+# Optional: For enhanced logging
+colorlog>=6.0.0
+
+# Additional Enterprise Dependencies (uncomment as needed)
+# Code Quality and Advanced Formatting
+# isort>=5.12.0
+# mypy>=1.5.0
+# pre-commit>=3.3.0
+
+# Testing Enhancements
+# pytest-cov>=4.1.0
+# pytest-mock>=3.11.0
+# pytest-xdist>=3.3.0
+# pytest-timeout>=2.1.0
 
 # Development Tools
-ipython>=8.12.0
-jupyter>=1.0.0
+# ipython>=8.12.0
+# jupyter>=1.0.0
 
 # Performance and Profiling
-memory-profiler>=0.61.0
-line-profiler>=4.1.0
+# memory-profiler>=0.61.0
+# line-profiler>=4.1.0
 
 # Documentation Generation
-sphinx>=7.1.0
-sphinx-rtd-theme>=1.3.0
-myst-parser>=2.0.0
+# sphinx>=7.1.0
+# sphinx-rtd-theme>=1.3.0
+# myst-parser>=2.0.0
 
 # Enterprise Features
-requests>=2.31.0
-urllib3>=2.0.0
-cryptography>=41.0.0
+# requests>=2.31.0
+# urllib3>=2.0.0
+# cryptography>=41.0.0
 
 # Optional: Database Connectivity (if needed)
 # psycopg2-binary>=2.9.0  # PostgreSQL
@@ -74,7 +77,6 @@ cryptography>=41.0.0
 # boto3>=1.28.0           # AWS S3
 # azure-storage-blob>=12.17.0  # Azure Blob
 # google-cloud-storage>=2.10.0  # Google Cloud
-```
 
 ## 🐳 Docker Configuration
 

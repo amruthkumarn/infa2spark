@@ -224,29 +224,35 @@ Create `src/engine/operation_dispatcher.py`:
 
 ### CLI Command Structure
 
-Create `src/engine/cli_interface.py`:
+The main execution engine is implemented in `src/main.py` with the following interface:
 
 **Main Commands:**
 ```bash
-# Full conversion with all stages
-python -m src.main convert --xml-file project.xml --output-dir ./generated
+# Generate standalone Spark application (PRIMARY FEATURE)
+python src/main.py --generate-spark-app \
+    --xml-file input/sample_project.xml \
+    --app-name MySparkApp \
+    --output-dir generated_spark_apps
 
-# Analysis only
-python -m src.main analyze --xml-file project.xml --report analysis.json
+# Run framework in development mode (legacy mode)
+python src/main.py
 
-# Code generation only
-python -m src.main generate --xml-file project.xml --app-name MyApp
-
-# Validation only
-python -m src.main validate --xml-file project.xml --config config.yaml
+# Get help
+python src/main.py --help
 ```
 
-**Global Options:**
-- `--config`: Configuration file path
-- `--log-level`: Logging level (DEBUG, INFO, WARN, ERROR)
-- `--parallel`: Enable parallel processing
-- `--output-format`: Output format (json, yaml, xml)
-- `--dry-run`: Preview operations without execution
+**Command-Line Arguments:**
+- `--generate-spark-app`: Generate standalone Spark application (primary feature)
+- `--xml-file`: Path to Informatica XML file (required for generation)
+- `--app-name`: Name for the generated Spark application (required for generation)
+- `--output-dir`: Output directory for generated application (default: generated_spark_apps)
+
+**Integration with Repository Structure:**
+The execution engine integrates with:
+- `src/core/spark_code_generator.py`: Core generation logic
+- `src/core/config_manager.py`: Configuration management
+- `src/core/xml_parser.py`: XML parsing functionality
+- `config/`: Configuration files directory
 
 ### Advanced CLI Features
 
